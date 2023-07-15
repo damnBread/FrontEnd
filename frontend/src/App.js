@@ -1,31 +1,44 @@
+import logo from "./logo.svg";
+import "./App.css";
 import { useEffect, useState } from "react";
 import React from "react";
-import Login from "./Login";
 
-function App () {
-  // 로그인 상태 관리
-   const [isLogin, setIsLogin] = useState(false)
-  
-   useEffect(() => {
-     if(sessionStorage.getItem('userID') === null){
-     // sessionStorage 에 user_id 라는 key 값으로 저장된 값이 없다면
-       console.log('isLogin ?? :: ', isLogin)
-     } else {
-     // sessionStorage 에 user_id 라는 key 값으로 저장된 값이 있다면
-     // 로그인 상태 변경
-       setIsLogin(true)
-       console.log('isLogin ?? :: ', isLogin)
-     }
-   })
-  
-  //  return (
-  //    <div>
-  //      {isLogin ? 
-  //        // Main 컴포넌트 호출 시 isLogin 이라는 props 값을 전달
-  //        <Main isLogin={isLogin} /> : 
-  //        <Login />}
-  //    </div>
-  //  )
- }
-  
- export default App;
+function App() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("/showMe")
+      .then((res) => {
+        return res.json();
+      })
+      .then(function (result) {
+        setData(result);
+      });
+  }, []);
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+        <ul>
+          {data.map((v, idx) => (
+            <li key={`${idx}-${v}`}>{v}</li>
+          ))}
+        </ul>
+      </header>
+    </div>
+  );
+}
+
+export default App;
