@@ -44,11 +44,23 @@
 // export default App;
 import React from "react";
 import Login from "./Login";
+import SignUP from './SignUP';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 
 function App() {
   return (
     <div>
-      <Login />
+      {/* <Router>
+        <Switch>
+          <Route path='/login'z component={<Login />} />
+          <Route path='/signUP' component={<SignUP />} />
+        </Switch>
+      </Router> */}
+      <Router>
+        <Login />
+        <SignUp />
+      </Router>
     </div>
   );
 }
