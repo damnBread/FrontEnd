@@ -45,12 +45,14 @@
 import React from "react";
 import Login from "./Login";
 import Agreement from "./Agreement";
+import SignUP from "./SignUP";
 
 function App() {
   return (
     <div>
       {/* <Login /> */}
-      <Agreement />
+      {/* <Agreement /> */}
+      <SignUP />
     </div>
   );
 }
