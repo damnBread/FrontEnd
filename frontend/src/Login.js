@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import useNavigate from "react-router-dom";
 import damnBreadLogo from "./images/damnBread_logo.png";
 import "./Login.css";
 
@@ -9,7 +8,6 @@ function Login() {
     const [InputID, setInputID] = useState("");         //로그인 입력창
     const [InputPW, setInputPW] = useState("");         //비밀번호 입력창
     const [infoSave, setInfoSave] = useState(false);    //아이디 저장 체크박스
-    const movePage = useNavigate();
 
     const handleInputID = (e) => {
         setInputID(e.target.value);
@@ -23,10 +21,6 @@ function Login() {
         setInfoSave(e.target.checked);
     };
 
-    function signUp() {
-        movePage('/SignUp');
-    }
-    
 
     const onClickLogin = () => {
         console.log("click login");
@@ -65,6 +59,9 @@ function Login() {
         .catch()
     },[])
 
+    const onClickSignUP = () => {
+        alert("회원가입창아앙");    //페이지 이동하는 거 아직 못 찾음 ,,,
+    }
 
     return(
         <div>
@@ -82,15 +79,15 @@ function Login() {
                     <img src={damnBreadLogo} alt="damnBreadLogo" width="120" className="logo-margin"/>
                     <div>
                         <input type='text' name='input_id' placeholder="아이디" value={InputID}
-                             onChange={handleInputID} style={{width:"350px", height: "30px", marginTop: "10px", fontSize: "15px"}} />
+                             onChange={handleInputID} style={{width:"350px", height: "30px", marginTop: "10px", fontSize: "15px", left:"200px", borderRadius: "15px", padding: ".2em"}} />
                     </div>
                     <div>
                         <input type='password' name='input_pw' placeholder="비밀번호" value={InputPW}
-                             onChange={handleInputPW} style={{width:"350px", height: "30px", marginTop: "15px", fontSize: "15px"}} />
+                             onChange={handleInputPW} style={{width:"350px", height: "30px", marginTop: "15px", fontSize: "15px", borderRadius: "15px", padding: ".2em"}} />
                     </div>
                     <div>
                         <button type='button' onClick={onClickLogin} style={{width:"357px", height:"40px",
-                             marginTop:"15px", backgroundColor:"#BF5E49", color:"#FFFFFF", border:"0px"}}>로그인</button>
+                             marginTop:"15px", backgroundColor:"#BF5E49", color:"#FFFFFF", border:"0px", borderRadius: "15px"}}>로그인</button>
                     </div>
                     <label style={{fontSize: "7px", color: "#7F7F7F"}}><input type="checkbox" name="info-save" value="login-info-save" 
                          style={{width: "11px", height: "11px", marginTop: "9px", color: "#BF5E49"}} checked={infoSave}
@@ -101,7 +98,7 @@ function Login() {
                     <label style={{fontSize: "7px", color: "#7F7F7F"}}>비밀번호 찾기</label>
 
                     <div>
-                        <label style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "314px"}}><b>회원가입</b></label>
+                        <label onClick={onClickSignUP} style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "314px"}}><b>회원가입</b></label>
                     </div>
 
                     <div className="division-line-1"></div>
