@@ -50,9 +50,9 @@ import SignUP from "./SignUP";
 function App() {
   return (
     <div>
-      {/* <Login /> */}
+      <Login />
       {/* <Agreement /> */}
-      <SignUP />
+      {/* <SignUP /> */}
     </div>
   );
 }
