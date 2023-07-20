@@ -7,7 +7,7 @@ const Header = () => {
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Brand>로고</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav"/>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <Nav.Link>땜빵구해요</Nav.Link>
