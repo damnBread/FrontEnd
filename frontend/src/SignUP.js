@@ -28,7 +28,7 @@ function SignUP() {
                     </span>
             </div>
             <div className="division-line"></div>
-
+{/* ... */}
             <div className="SignUP-form">
                 <body>
                     <div id="root"></div>
