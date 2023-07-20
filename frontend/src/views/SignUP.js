@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import damnBreadLogo from "./images/damnBread_logo.png";
-import "./SignUP.css";
+import damnBreadLogo from "../assets/img/damnBread_logo.png";
+import "../assets/css/SignUP.css";
 
 function SignUP() {
     const [InputID, setInputID] = useState("");         //로그인 입력창

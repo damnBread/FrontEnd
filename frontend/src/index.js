@@ -1,33 +1,42 @@
-// import React from "react";
-// import ReactDOM from "react-dom/client";
-// //import "./index.css";
-// import App from "./App";
-// import reportWebVitals from "./reportWebVitals";
-// //import 'bootstrap/dist/css/bootstrap.min.css';
-// import "./assets/css/bootstrap.min.css";
-
-
-// const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
-
-// // If you want to start measuring performance in your app, pass a function
-// // to log results (for example: reportWebVitals(console.log))
-// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// //hahaha/hihihi/upupup
-// //shshsh
-// reportWebVitals();
-
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.render(
-  <React.StrictMode>
-      <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+import { render } from 'react-dom';
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+
+//style
+import reportWebVitals from "./reportWebVitals";
+import "./assets/css/bootstrap.min.css";
+import "./assets/css/Agreement.css"
+import "./assets/css/Login.css"
+import "./assets/css/SignUP.css"
+
+
+
+//import App from "./App";
+import Agreement from "./views/Agreement";
+import Login from "./views/Login";
+import SignUP from "./views/SignUP";
+
+createRoot(document.getElementById('root')).render(
+  <BrowserRouter>
+    <Switch>
+      <Route path="/" component={Login} />
+      <Route path="/SignUP" component={SignUP} />
+      <Route path="/Agreement" component={Agreement} />
+    </Switch>
+  </BrowserRouter>
 );
+
+
+// ReactDOM.render(
+//   <BrowserRouter>
+//     <Switch>
+//       <Route path="/Login" exact component={Login}></Route>
+//       <Route path="/SignUP" exact component={SignUP}></Route>
+//       <Route Path="/Agreement" exact component={Agreement}></Route>
+//     </Switch>
+//   </BrowserRouter>,
+//   document.getElementById("root")
+// );

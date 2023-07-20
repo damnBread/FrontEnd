@@ -1,6 +1,6 @@
 import React from "react";
-import damnBreadLogo from "./images/damnBread_logo.png";
-import "./Agreement.css";
+import damnBreadLogo from "../assets/img/damnBread_logo.png";
+import "../assets/css/Agreement.css";
 
 function Agreement() {
     
