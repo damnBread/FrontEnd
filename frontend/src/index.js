@@ -22,9 +22,9 @@ import SignUP from "./views/SignUP";
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Switch>
-      <Route path="/" component={Login} />
-      <Route path="/SignUP" component={SignUP} />
-      <Route path="/Agreement" component={Agreement} />
+      <Route exact path="/" component={Login} />
+      <Route exact path="/SignUP" component={SignUP} />
+      <Route exact path="/Agreement" component={Agreement} />
     </Switch>
   </BrowserRouter>
 );

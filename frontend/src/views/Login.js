@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
 import "../assets/css/Login.css";
 
@@ -24,7 +24,7 @@ function Login() {
     const history = useHistory();
 
     function onClickSignUP() {
-      history.push('/SignUP'); // SignUP으로 url 이동
+      history.push('/Agreement'); // SignUP으로 url 이동
       window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
     }
 
@@ -96,11 +96,13 @@ function Login() {
                          onChange={handleInfoSaveChange}/><b> 아이디 저장</b></label>
                         
                     <label style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "153px"}}>아이디 찾기</label>
-                    <label style={{fontSize: "7px", color: "#7F7F7F"}}> | </label>
+                    <label style={{fontSize: "7px", color: "#7F7F7F"}}>  |  </label>
                     <label style={{fontSize: "7px", color: "#7F7F7F"}}>비밀번호 찾기</label>
 
                     <div>
-                        <label onClick={onClickSignUP} style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "314px", cursor: "pointer"}}><b>회원가입</b></label>
+                        <Link to={'/Agreement'}>
+                            <label onClick={onClickSignUP} style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "314px", cursor: "pointer"}}><b>회원가입</b></label>
+                        </Link>
                     </div>
 
                     <div className="division-line-1"></div>

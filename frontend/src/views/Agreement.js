@@ -1,8 +1,17 @@
 import React from "react";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
+import { useHistory, Link } from "react-router-dom";
 import "../assets/css/Agreement.css";
 
 function Agreement() {
+
+    const history = useHistory();
+
+    function onClickSignUP() {
+        history.push('/SignUP'); // SignUP으로 url 이동
+        window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+      //   location.reload();
+      }
     
     return(
         <div>
@@ -50,8 +59,10 @@ function Agreement() {
                     
                     </div>
                     <div className="border1">
-                        <button type='button' style={{fontSize: "15px", borderColor: "#BF5E49", marginLeft: "143px", marginTop: "8px",
-                             color:"#BF5E49", backgroundColor: "#FFFFFF", border:"0px", borderRadius: "15px"}}><b>회원가입</b></button>
+                        <Link to={'/SignUP'}>
+                            <button onClick={onClickSignUP} type='button' style={{fontSize: "15px", borderColor: "#BF5E49", marginLeft: "143px", marginTop: "8px",
+                                color:"#BF5E49", backgroundColor: "#FFFFFF", border:"0px", borderRadius: "15px"}}><b>회원가입</b></button>
+                        </Link>
                     </div>
                          
 
