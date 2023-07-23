@@ -23,7 +23,7 @@ function Login() {
 
     const history = useHistory();
 
-    function onClickSignUP() {
+    function onClickAgreement() {
       history.push('/Agreement'); // SignUP으로 url 이동
       window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
     }
@@ -81,27 +81,29 @@ function Login() {
                     <img src={damnBreadLogo} alt="damnBreadLogo" width="120" className="logo-margin"/>
                     <div>
                         <input type='text' name='input_id' placeholder="아이디" value={InputID}
-                             onChange={handleInputID} style={{width:"350px", height: "30px", marginTop: "10px", fontSize: "15px", left:"200px", borderRadius: "15px", padding: ".2em"}} />
+                             onChange={handleInputID} style={{width:"350px", height: "40px", marginTop: "10px", fontSize: "15px", left:"200px", 
+                             borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                     </div>
                     <div>
                         <input type='password' name='input_pw' placeholder="비밀번호" value={InputPW}
-                             onChange={handleInputPW} style={{width:"350px", height: "30px", marginTop: "15px", fontSize: "15px", borderRadius: "15px", padding: ".2em"}} />
+                             onChange={handleInputPW} style={{width:"350px", height: "40px", marginTop: "15px", fontSize: "15px", 
+                             borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                     </div>
                     <div>
                         <button type='button' onClick={onClickLogin} style={{width:"357px", height:"40px",
-                             marginTop:"15px", backgroundColor:"#BF5E49", color:"#FFFFFF", border:"0px", borderRadius: "15px"}}>로그인</button>
+                             marginTop:"15px", backgroundColor:"#BF5E49", color:"#FFFFFF", border:"0px", borderRadius: "10px"}}>로그인</button>
                     </div>
                     <label style={{fontSize: "7px", color: "#7F7F7F"}}><input type="checkbox" name="info-save" value="login-info-save" 
                          style={{width: "11px", height: "11px", marginTop: "9px", color: "#BF5E49"}} checked={infoSave}
                          onChange={handleInfoSaveChange}/><b> 아이디 저장</b></label>
                         
                     <label style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "153px"}}>아이디 찾기</label>
-                    <label style={{fontSize: "7px", color: "#7F7F7F"}}>  |  </label>
+                    <label style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "8px", marginRight: "8px"}}>|</label>
                     <label style={{fontSize: "7px", color: "#7F7F7F"}}>비밀번호 찾기</label>
 
                     <div>
                         <Link to={'/Agreement'}>
-                            <label onClick={onClickSignUP} style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "314px", cursor: "pointer"}}><b>회원가입</b></label>
+                            <label onClick={onClickAgreement} style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "314px", cursor: "pointer"}}><b>회원가입</b></label>
                         </Link>
                     </div>
 

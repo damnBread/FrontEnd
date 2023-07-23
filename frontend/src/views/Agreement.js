@@ -10,7 +10,6 @@ function Agreement() {
     function onClickSignUP() {
         history.push('/SignUP'); // SignUP으로 url 이동
         window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
-      //   location.reload();
       }
     
     return(
@@ -26,36 +25,36 @@ function Agreement() {
             <div className="Agreement-form">
                 <body>
                     <div id="root"></div>
-                    <label style={{fontSize: "20px", marginLeft: "390px"}}><b>약관 동의</b></label>
+                    <label style={{fontSize: "20px"}}><b>약관 동의</b></label>
 
                     <div className="box">
                         <label style={{fontSize: "13px", color: "#7F7F7F"}}><input type="checkbox"
                          style={{marginLeft: "20px", marginTop: "25px", marginBottom: "10px", color: "#BF5E49"}}/>
-                         <b>필수 동의 항목 및 개인정보수집 및 이용 동의-마케팅(선택), 광고성 정보 수신 동의(선택)에 전체 동의합니다.</b></label><br></br>
+                         <b> 필수 동의 항목 및 개인정보수집 및 이용 동의-마케팅(선택), 광고성 정보 수신 동의(선택)에 전체 동의합니다.</b></label><br></br>
 
                          <div className="division-line" style={{marginTop: "20px"}}></div>
 
                          <label style={{fontSize: "13px", color: "#7F7F7F"}}><input type="checkbox"
                          style={{marginLeft: "20px", marginTop: "25px", color: "#BF5E49"}}/>
-                         <b>(필수) 만 15세 이상입니다.</b></label><br></br>
+                         <b> (필수) 만 15세 이상입니다.</b></label><br></br>
 
                          <label style={{fontSize: "13px", color: "#7F7F7F"}}><input type="checkbox"
                          style={{marginLeft: "20px", marginTop: "20px", color: "#BF5E49"}}/>
-                         <b>(필수) 서비스 이용 약관 동의</b></label><br></br>
+                         <b> (필수) 서비스 이용 약관 동의</b></label><br></br>
 
                          <label style={{fontSize: "13px", color: "#7F7F7F"}}><input type="checkbox"
                          style={{marginLeft: "20px", marginTop: "20px",  marginBottom: "25px", color: "#BF5E49"}}/>
-                         <b>(필수) 개인정보 수집 및 이용 동의</b></label><br></br>
+                         <b> (필수) 개인정보 수집 및 이용 동의</b></label><br></br>
 
                          <div className="division-line" style={{marginTop: "20px"}}></div>
 
                          <label style={{fontSize: "13px", color: "#7F7F7F"}}><input type="checkbox"
                          style={{marginLeft: "20px", marginTop: "25px", color: "#BF5E49"}}/>
-                         <b>(선택) 개인정보 수집 및 이용 동의 - 마케팅</b></label><br></br>
+                         <b> (선택) 개인정보 수집 및 이용 동의 - 마케팅</b></label><br></br>
 
                          <label style={{fontSize: "13px", color: "#7F7F7F"}}><input type="checkbox"
                          style={{marginLeft: "20px", marginTop: "20px",  marginBottom: "25px", color: "#BF5E49"}}/>
-                         <b>(필수) 광고성 정보 이메일/SMS 수신 동의</b></label><br></br>
+                         <b> (필수) 광고성 정보 이메일/SMS 수신 동의</b></label><br></br>
                     
                     </div>
                     <div className="border1">
