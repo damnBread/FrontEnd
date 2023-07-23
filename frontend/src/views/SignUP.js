@@ -150,7 +150,6 @@ function SignUP() {
                     </div>
 
 
-                    
                     <div className="border1">
                         <button type='button' style={{fontSize: "15px", borderColor: "#BF5E49", marginLeft: "164px", marginTop: "8px",
                              color:"#BF5E49", backgroundColor: "#FFFFFF", border:"0px", borderRadius: "15px"}}><b>회원가입</b></button>

@@ -57,11 +57,9 @@ function Agreement() {
                          <b> (필수) 광고성 정보 이메일/SMS 수신 동의</b></label><br></br>
                     
                     </div>
-                    <div className="border1">
-                        <Link to={'/SignUP'}>
-                            <button onClick={onClickSignUP} type='button' style={{fontSize: "15px", borderColor: "#BF5E49", marginLeft: "143px", marginTop: "8px",
-                                color:"#BF5E49", backgroundColor: "#FFFFFF", border:"0px", borderRadius: "15px"}}><b>회원가입</b></button>
-                        </Link>
+                    <div className="border1" style={{marginLeft:"140px"}}>
+                            <button onClick={onClickSignUP} type='button' style={{fontSize: "15px", borderColor: "#BF5E49", marginLeft: "160px", marginTop: "8px",
+                                color:"#BF5E49", backgroundColor: "#FFFFFF", border:"0px", borderRadius: "10px"}}><b>회원가입</b></button>
                     </div>
                          
 

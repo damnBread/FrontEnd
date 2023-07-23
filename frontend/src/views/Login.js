@@ -90,7 +90,7 @@ function Login() {
                              borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                     </div>
                     <div>
-                        <button type='button' onClick={onClickLogin} style={{width:"357px", height:"40px",
+                        <button type='button' onClick={onClickLogin} style={{fontSize: "15px", width:"357px", height:"40px",
                              marginTop:"15px", backgroundColor:"#BF5E49", color:"#FFFFFF", border:"0px", borderRadius: "10px"}}>로그인</button>
                     </div>
                     <label style={{fontSize: "7px", color: "#7F7F7F"}}><input type="checkbox" name="info-save" value="login-info-save" 
