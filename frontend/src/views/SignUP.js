@@ -104,13 +104,13 @@ function SignUP() {
                         <b>회원가입</b>
                     </span>
             </div>
-            <div className="division-line" ></div>
+            <div className="division-line" style={{position: "relative", zIndex: 2}}></div>
 
             <div className="SignUP-form">
                 <body>
                     <div id="root"></div>
 
-                    <label style={{fontSize: "16px", marginTop: "500px", position: "relative", zIndex: 1}}><b>아이디</b></label>
+                    <label style={{fontSize: "16px", marginTop: "550px", position: "relative", zIndex: 1}}><b>아이디</b></label>
                     <div>
                         <input type='text' name='input_id' placeholder="아이디" value={InputID}
                              onChange={handleInputID} style={{width:"350px", height: "40px", marginTop: "15px", 
