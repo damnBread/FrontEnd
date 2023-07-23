@@ -33,22 +33,22 @@ function Login() {
         console.log("id: ", InputID);
         console.log("pw: ", InputPW);
 
-        axios.post('http://localhost:3000', {
+        axios.post('http://localhost:3000/login', {
             id: InputID,
-            pw: InputPW,
+            password: InputPW,
         })
         .then(response => {
             console.log(response);
             console.log("data.userId :: ", response.data.InputID);
-            if (response.data.userID === undefined) {
+            if (response.status == "Fail 400") {
                 //id가 일치하지 않은 경우
                 console.log("===========")
-                alert("입력하신 ID는 회원가입하지 않은 ID입니다.");
-            } else if (response.data.userID === null) {
-                //id는 있지만 pw가 다른 경우
-                console.log("+++++++++")
-                alert("비밀번호가 일치하지 않습니다.");
-            } else if(response.data.userID === InputID) {
+                alert("입력하신 ID는 회원가입하지 않은 ID이거나 비밀번호가 올바르지 않습니다.");
+            // } else if (response.status == "Fail 400") {
+            //     //id는 있지만 pw가 다른 경우
+            //     console.log("+++++++++")
+            //     alert("비밀번호가 일치하지 않습니다.");
+            } else if(response.status == "OK 200") {
                 //id, pw 일치 -> 로그인 성공
                 console.log("****로그인 성공*****");
                 sessionStorage.setItem("userID", InputID);
@@ -56,11 +56,11 @@ function Login() {
             }
             document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
         })
-        .catch();
+        .catch((error) => console.log(error.response));
     };
 
     useEffect(() => {
-        axios.get('http://localhost:3000')
+        axios.get('http://localhost:3000/login')
         .then(response => console.log(response))
         .catch()
     },[])

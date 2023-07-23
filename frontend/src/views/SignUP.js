@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
 import "../assets/css/SignUP.css";
+import axios from "axios";
 
 
 function SignUP() {
@@ -11,7 +12,9 @@ function SignUP() {
     const [InputName, setInputName] = useState("");         //이름 입력창
     const [InputPhoneNumber, setInputPhoneNumber] = useState("");   //전화번호 입력창
     const [InputBirth, setInputBirth] = useState("");   //생년월일 입력창
+    const [InputGender, setInputGender] = useState("");    //성별
     const [InputAddress, setInputAddress] = useState("");   //거주지 입력창
+    const [InputEmail, setInputEmail] = useState("");       //이메일 입력창
     const [InputWorkArea, setInputWorkArea] = useState("");   //희망근무지역 입력창
     
 
@@ -47,9 +50,50 @@ function SignUP() {
         setInputAddress(e.target.value);
     };
 
+    const handleInputGender = (e) => {
+        setInputGender(e.target.value);
+    };
+
+    const handleInputEmail = (e) => {
+        setInputEmail(e.target.value);
+    };
+
     const handleInputWorkArea = (e) => {
         setInputWorkArea(e.target.value);
     };
+
+    const onClickSignUP = () => {
+        console.log("click login");
+        console.log("id: ", InputID);
+        console.log("pw: ", InputPW);
+
+        axios.post('http://localhost:3000/signup', {
+            id: InputID,
+            pw: InputPW,
+            name: InputName,
+            email: InputEmail,
+            nickmame: InputNickName,
+            phone: InputPhoneNumber,
+            home: InputAddress,
+            hopeLocation: InputWorkArea,
+            birth: InputBirth,
+            // gender: 
+            // hopeJob: InputWorkArea,
+            hopeLocation: InputWorkArea
+        })
+        .then(response => {
+            console.log(response);
+            alert("회원가입 완료");
+            document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
+        })
+        .catch();
+    };
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/signup')
+        .then(response => console.log(response))
+        .catch()
+    },[])
 
     
     return(
@@ -61,8 +105,6 @@ function SignUP() {
                     </span>
             </div>
             <div className="division-line" ></div>
-
-            
 
             <div className="SignUP-form">
                 <body>
@@ -127,8 +169,8 @@ function SignUP() {
                               borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
                         
                         <select className="select-style" name="gender" id="gender" required="true">
-                            <option value="남">남</option>
-                            <option value="여">여</option>
+                            <option value="true">남</option>
+                            <option value="false">여</option>
                         </select>
 
                         <input type='text' name='input_address' placeholder="거주지" value={InputAddress}
@@ -139,6 +181,16 @@ function SignUP() {
                             marginTop: "22px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>      
                    
                     </div>
+
+                    <label style={{fontSize: "16px", marginTop: "30px"}}><b>이메일</b></label>
+                    <div>
+                        <input type='text' name='input_email' placeholder="이메일" value={InputEmail}
+                             onChange={handleInputEmail} style={{width:"350px", height: "40px", marginTop: "15px", 
+                              borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
+                        <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
+                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>중복 확인</button>      
+                    </div>
+
 
                     <label style={{fontSize: "16px", marginTop: "30px"}}><b>희망 근무 지역</b></label>
                     <div>
