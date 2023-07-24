@@ -1,0 +1,13 @@
+/* Header.css */
+
+/* Add styles for normal and hover states of nav-link */
+.nav-link {
+  font-size: 22px;
+  margin: 0 90px;
+  color: black; /* Set the default link color to grey */
+  cursor: pointer; /* Change the cursor to a pointer on hover */
+}
+
+.nav-link:hover {
+  color: brown; /* Change the link color to brown when hovering */
+}
