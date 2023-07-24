@@ -67,7 +67,7 @@ function SignUP() {
         console.log("id: ", InputID);
         console.log("pw: ", InputPW);
 
-        axios.post('http://localhost:3000/signup', {
+        axios.post('http://localhost:3000/SignUP', {
             id: InputID,
             pw: InputPW,
             name: InputName,
@@ -90,7 +90,7 @@ function SignUP() {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:3000/signup')
+        axios.get('http://localhost:3000/SignUP')
         .then(response => console.log(response))
         .catch()
     },[])
