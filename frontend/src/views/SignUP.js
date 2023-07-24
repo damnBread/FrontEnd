@@ -63,11 +63,11 @@ function SignUP() {
     };
 
     const onClickSignUP = () => {
-        console.log("click login");
+        console.log("click SignUP");
         console.log("id: ", InputID);
         console.log("pw: ", InputPW);
 
-        axios.post('http://localhost:3000/SignUP', {
+        axios.post('http://localhost:3000/signup', {
             id: InputID,
             pw: InputPW,
             name: InputName,
@@ -84,16 +84,16 @@ function SignUP() {
         .then(response => {
             console.log(response);
             alert("회원가입 완료");
-            document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
+            document.location.href = "/Login";  //회원가입 되면 로그인 페이지 이동(새로고침)
         })
         .catch();
     };
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/SignUP')
-        .then(response => console.log(response))
-        .catch()
-    },[])
+    // useEffect(() => {
+    //     axios.get('http://localhost:3000/SignUP')
+    //     .then(response => console.log(response))
+    //     .catch()
+    // },[])
 
     
     return(
