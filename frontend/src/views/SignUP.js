@@ -3,6 +3,7 @@ import damnBreadLogo from "../assets/img/damnBread_logo.png";
 import "../assets/css/SignUP.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import 'moment/locale/ko';
 
 
 function SignUP() {
@@ -16,8 +17,9 @@ function SignUP() {
     const [InputGender, setInputGender] = useState(true);    //성별
     const [InputAddress, setInputAddress] = useState("");   //거주지 입력창
     const [InputEmail, setInputEmail] = useState("");       //이메일 입력창
-    const [InputWorkArea, setInputWorkArea] = useState([]);   //희망근무지역 입력창
-    const [InputWorkJob, setInputWorkJob] = useState([]);   //희망업직종 입력창
+    const [InputWorkArea, setInputWorkArea] = useState([{}]);   //희망근무지역 입력창
+    const [InputWorkJob, setInputWorkJob] = useState({});   //희망업직종 입력창
+    
     
 
     const handleInputID = (e) => {
@@ -69,10 +71,20 @@ function SignUP() {
         setInputWorkJob(e.target.value);
     };
 
+
     const onClickSignUP = () => {
         console.log("click SignUP");
         console.log("id: ", InputID);
         console.log("pw: ", InputPW);
+        console.log("nickname: ", InputNickName);
+        console.log("email: ", InputEmail);
+        console.log("name: ", InputName);
+        console.log("Phone: ", InputPhoneNumber);
+        console.log("Address: ", InputAddress);
+        console.log("Birth: ", InputBirth);
+        console.log("Gender: ", InputGender);
+        console.log("Area: ", InputWorkArea);
+        console.log("Job: ", InputWorkJob);
 
         axios.post('http://localhost:3000/signup', {
             id: InputID,
@@ -88,14 +100,16 @@ function SignUP() {
             hopeLocation: InputWorkArea
         })
         .then(response => {
-            console.log(response);
-            document.location.href = "/login";  //회원가입 되면 로그인 페이지 이동(새로고침)
+            if (response.status === "CREATED 201") {
+                console.log(response);
+                document.location.href = "/login";  //회원가입 되면 로그인 페이지 이동(새로고침)
+            }
         })
         .catch((error) => {
             Swal.fire({
                 icon: "warning",
                 title: "경고",
-                text: "입력하신 ID는 회원가입하지 않은 ID이거나 비밀번호가 올바르지 않습니다.",
+                text: "회원가입할 수 없습니다. 다시 시도해주세요.",
                 showCancelButton: false,
                 confirmButtonText: "확인",
                 width: 800,
