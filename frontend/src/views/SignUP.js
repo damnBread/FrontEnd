@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
 import "../assets/css/SignUP.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 function SignUP() {
@@ -11,11 +12,12 @@ function SignUP() {
     const [InputNickName, setInputNickName] = useState("");         //닉네임 입력창
     const [InputName, setInputName] = useState("");         //이름 입력창
     const [InputPhoneNumber, setInputPhoneNumber] = useState("");   //전화번호 입력창
-    const [InputBirth, setInputBirth] = useState("");   //생년월일 입력창
-    const [InputGender, setInputGender] = useState("");    //성별
+    const [InputBirth, setInputBirth] = useState(Date);   //생년월일 입력창
+    const [InputGender, setInputGender] = useState(true);    //성별
     const [InputAddress, setInputAddress] = useState("");   //거주지 입력창
     const [InputEmail, setInputEmail] = useState("");       //이메일 입력창
-    const [InputWorkArea, setInputWorkArea] = useState("");   //희망근무지역 입력창
+    const [InputWorkArea, setInputWorkArea] = useState([]);   //희망근무지역 입력창
+    const [InputWorkJob, setInputWorkJob] = useState([]);   //희망업직종 입력창
     
 
     const handleInputID = (e) => {
@@ -52,6 +54,7 @@ function SignUP() {
 
     const handleInputGender = (e) => {
         setInputGender(e.target.value);
+        console.log(e.target.value);
     };
 
     const handleInputEmail = (e) => {
@@ -60,6 +63,10 @@ function SignUP() {
 
     const handleInputWorkArea = (e) => {
         setInputWorkArea(e.target.value);
+    };
+
+    const handleInputWorkJob = (e) => {
+        setInputWorkJob(e.target.value);
     };
 
     const onClickSignUP = () => {
@@ -75,18 +82,33 @@ function SignUP() {
             nickmame: InputNickName,
             phone: InputPhoneNumber,
             home: InputAddress,
-            hopeLocation: InputWorkArea,
             birth: InputBirth,
-            // gender: 
-            // hopeJob: InputWorkArea,
+            gender: InputGender,
+            hopeJob: InputWorkArea,
             hopeLocation: InputWorkArea
         })
         .then(response => {
             console.log(response);
-            alert("회원가입 완료");
-            document.location.href = "/Login";  //회원가입 되면 로그인 페이지 이동(새로고침)
+            document.location.href = "/login";  //회원가입 되면 로그인 페이지 이동(새로고침)
         })
-        .catch();
+        .catch((error) => {
+            Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "입력하신 ID는 회원가입하지 않은 ID이거나 비밀번호가 올바르지 않습니다.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+            }).then((res) => {
+                if (res.isConfirmed) {
+                     //삭제 요청 처리
+                }
+                else{
+                    //취소
+                }
+            });
+        });
     };
 
     // useEffect(() => {
@@ -168,7 +190,7 @@ function SignUP() {
                              onChange={handleInputBirth} style={{width:"130px", height: "40px", marginTop: "15px", 
                               borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
                         
-                        <select className="select-style" name="gender" id="gender" required="true">
+                        <select className="select-style" name="gender" id="gender" required="true" onChange={handleInputGender}>
                             <option value="true">남</option>
                             <option value="false">여</option>
                         </select>
@@ -202,8 +224,18 @@ function SignUP() {
                     </div>
 
 
+                    <label style={{fontSize: "16px", marginTop: "30px"}}><b>희망 업직종</b></label>
+                    <div>
+                        <input type='text' name='input_workarea' placeholder="희망 업직종" value={InputWorkJob}
+                             onChange={handleInputWorkJob} style={{width:"350px", height: "40px", marginTop: "15px", 
+                              borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
+                        <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
+                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>직종 검색</button>      
+                    </div>
+
+
                     <div className="border1">
-                        <button type='button' style={{fontSize: "15px", borderColor: "#BF5E49", marginLeft: "164px", marginTop: "8px",
+                        <button type='button' onClick={onClickSignUP} style={{fontSize: "15px", borderColor: "#BF5E49", marginLeft: "164px", marginTop: "8px",
                              color:"#BF5E49", backgroundColor: "#FFFFFF", border:"0px", borderRadius: "15px"}}><b>회원가입</b></button>
                     </div>
                          
