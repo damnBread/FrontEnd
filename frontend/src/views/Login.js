@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
 import "../assets/css/Login.css";
+import Swal from "sweetalert2";
 
 function Login() {
     const [InputID, setInputID] = useState("");         //로그인 입력창
@@ -28,7 +29,8 @@ function Login() {
       window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
     }
 
-    const onClickLogin = () => {
+
+    function onClickLogin() {
         console.log("click login");
         console.log("id: ", InputID);
         console.log("pw: ", InputPW);
@@ -40,15 +42,7 @@ function Login() {
         .then(response => {
             console.log(response);
             console.log("data.userId :: ", response.data.InputID);
-            if (response.status == "Fail 400") {
-                //id가 일치하지 않은 경우
-                console.log("===========")
-                alert("입력하신 ID는 회원가입하지 않은 ID이거나 비밀번호가 올바르지 않습니다.");
-            // } else if (response.status == "Fail 400") {
-            //     //id는 있지만 pw가 다른 경우
-            //     console.log("+++++++++")
-            //     alert("비밀번호가 일치하지 않습니다.");
-            } else if(response.status == "OK 200") {
+            if(response.status === "OK 200") {
                 //id, pw 일치 -> 로그인 성공
                 console.log("****로그인 성공*****");
                 sessionStorage.setItem("userID", InputID);
@@ -56,14 +50,31 @@ function Login() {
             }
             document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
         })
-        .catch((error) => console.log(error.response));
+        .catch((error) => {
+            Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "입력하신 ID는 회원가입하지 않은 ID이거나 비밀번호가 올바르지 않습니다.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+            }).then((res) => {
+                if (res.isConfirmed) {
+                     //삭제 요청 처리
+                }
+                else{
+                    //취소
+                }
+            });
+        });
     };
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/login')
-        .then(response => console.log(response))
-        .catch()
-    },[])
+    // useEffect(() => {
+    //     axios.get('http://localhost:3000/Login')
+    //     .then(response => console.log(response))
+    //     .catch()
+    // },[])
 
     return(
         <div>

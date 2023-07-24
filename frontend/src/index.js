@@ -29,9 +29,9 @@ import Page4Header from "./views/Page4Header";
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Switch>
-      <Route path="/Login" component={Login} />
-      <Route path="/SignUP" component={SignUP} />
-      <Route path="/Agreement" component={Agreement} />
+      <Route exact path="/Login" component={Login} />
+      <Route exact path="/SignUP" component={SignUP} />
+      <Route exact path="/Agreement" component={Agreement} />
       <Route path="/Header" component={Header} />
       <Route path="/Page1Header" component={Page1Header} />
       <Route path="/Page2Header" component={Page2Header} />
