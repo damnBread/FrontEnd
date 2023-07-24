@@ -68,7 +68,7 @@ function Login() {
             <div className="logo-container">
                     <img src={damnBreadLogo} alt="damnBreadLogo" width="30"/>
                     <span className="logo-container-1">
-                        <b>로그인</b>
+                        <b>로그인</b> 
                     </span>
             </div>
             <div className="division-line"></div>

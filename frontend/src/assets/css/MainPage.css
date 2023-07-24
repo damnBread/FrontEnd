@@ -1,0 +1,37 @@
+/* MainPage.css */
+
+.brown-line {
+  height: 1px;
+  background-color: brown;
+  margin-left: 200px; /* Adjust the left and right margin as needed */
+  margin-right: 200px;
+}
+
+.brown-line1 {
+  height: 1px;
+  background-color: brown;
+  margin-top: 150px;
+  margin-left: 200px; /* Adjust the left and right margin as needed */
+  margin-right: 200px;
+}
+
+.img1-locate {
+  width: 60px;
+  height: 60px;
+  margin-left: 380px;
+  margin-top: 80px;
+}
+
+.round-rectangle {
+  border-radius: 8px; 
+  background-color: #9e5b40; 
+  padding: 8px; 
+  width: fit-content; 
+  display: inline-block; 
+  margin-top: 70px;
+  margin-right: 30px;
+}
+
+.round-rectangle p {
+  margin: 0; /* 단락의 기본 마진을 제거하여 사각형의 여백과 충돌하지 않도록 합니다. */
+}
