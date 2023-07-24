@@ -12,7 +12,7 @@ const MainPage = () => {
     <div>
       <Header />
       <div>
-        <div className="brown-line"></div>
+      {/* <div className="brown-line"></div> */}  
         <a href="#" onClick={handleImageButtonClick}>
           <img
             className="img1-locate"

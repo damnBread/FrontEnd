@@ -3,11 +3,33 @@
 /* Add styles for normal and hover states of nav-link */
 .nav-link {
   font-size: 22px;
-  margin: 0 90px;
-  color: black; /* Set the default link color to grey */
-  cursor: pointer; /* Change the cursor to a pointer on hover */
+  margin-left: 150px;
+  margin-top: 30px;
+  color: black;
+  cursor: pointer;
 }
 
 .nav-link:hover {
-  color: brown; /* Change the link color to brown when hovering */
+  color: brown;
 }
+
+/* Styles for login and signup links */
+.Login,
+.SignUP {
+  font-size: 14px; /* Smaller font size for '로그인' and '회원가입' */
+  margin: 0 5px; /* Add space between the text and the separator */
+  color: black; /* Set color for the login and signup links */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.Login:hover,
+.SignUP:hover {
+  color: brown; /* Set color for the links on hover */
+}
+
+.login-divider {
+  font-size: 14px; /* Smaller font size for the | separator */
+  margin: 0 5px; /* Add space between the separator and the links */
+  color: black; /* Set color for the | separator */
+}
+
