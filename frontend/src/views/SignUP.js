@@ -17,8 +17,8 @@ function SignUP() {
     const [InputGender, setInputGender] = useState(true);    //성별
     const [InputAddress, setInputAddress] = useState("");   //거주지 입력창
     const [InputEmail, setInputEmail] = useState("");       //이메일 입력창
-    const [InputWorkArea, setInputWorkArea] = useState({});   //희망근무지역 입력창
-    const [InputWorkJob, setInputWorkJob] = useState({});   //희망업직종 입력창
+    const [InputWorkArea, setInputWorkArea] = useState([]);   //희망근무지역 입력창
+    const [InputWorkJob, setInputWorkJob] = useState([]);   //희망업직종 입력창
     
     
 
@@ -86,6 +86,15 @@ function SignUP() {
         console.log("Area: ", InputWorkArea);
         console.log("Job: ", InputWorkJob);
 
+        const workAreaArray = Array.isArray(InputWorkArea) ? InputWorkArea : [InputWorkArea];
+        const workJobArray = Array.isArray(InputWorkJob) ? InputWorkJob : [InputWorkJob];
+
+        const outputWorkArray = workAreaArray[0].split(', ');
+        const outputJobArray = workJobArray[0].split(', ');
+    
+        console.log("_____", outputWorkArray);
+        console.log("*****", outputJobArray);
+
         axios.post('http://localhost:3000/signup', {
             id: InputID,
             pw: InputPW,
@@ -96,8 +105,8 @@ function SignUP() {
             home: InputAddress,
             birth: InputBirth,
             gender: InputGender,
-            hopeJob: InputWorkArea,
-            hopeLocation: InputWorkArea
+            hopeJob: outputWorkArray,
+            hopeLocation: outputJobArray
         })
         .then(response => {
             if (response.status === "CREATED 201") {
