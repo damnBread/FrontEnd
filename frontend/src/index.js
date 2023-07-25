@@ -35,14 +35,14 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/Login" component={Login} />
       <Route exact path="/SignUP" component={SignUP} />
       <Route exact path="/Agreement" component={Agreement} />
-      <Route path="/Header" component={Header} />
-      <Route path="/Page1Header" component={Page1Header} />
-      <Route path="/Page2Header" component={Page2Header} />
-      <Route path="/Page3Header" component={Page3Header} />
-      <Route path="/Page4Header" component={Page4Header} />
-      <Route path="/" component={MainPage} />
+      <Route exact path="/Header" component={Header} />
+      <Route exact path="/Page1Header" component={Page1Header} />
+      <Route exact path="/Page2Header" component={Page2Header} />
+      <Route exact path="/Page3Header" component={Page3Header} />
+      <Route exact path="/Page4Header" component={Page4Header} />
+      <Route exact path="/" component={MainPage} />
       <Route exact path="/damnlist" component={damnlist} />
-      <Route path="/MainPageRecommend" component={MainPageRecommend} />
+      <Route exact path="/MainPageRecommend" component={MainPageRecommend} />
     </Switch>
   </BrowserRouter>
 );
