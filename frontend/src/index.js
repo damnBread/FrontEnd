@@ -12,13 +12,16 @@ import "./assets/css/Login.css";
 import "./assets/css/SignUP.css";
 import "./assets/css/Header.css";
 import "./assets/css/MainPage.css";
+import "./assets/css/damnlist.css";
 
 //import App from "./App";
 import Agreement from "./views/Agreement";
 import Login from "./views/Login";
 import SignUP from "./views/SignUP";
 import MainPage from "./views/MainPage";
+import MainPageRecommend from "./views/MainPageRecommend";
 import Header from "./components/Headers/Header";
+import damnlist from "./views/damnlist";
 
 //import Header from "./components/Headers/Page1Header";
 import Page1Header from "./views/Page1Header";
@@ -38,6 +41,8 @@ createRoot(document.getElementById("root")).render(
       <Route path="/Page3Header" component={Page3Header} />
       <Route path="/Page4Header" component={Page4Header} />
       <Route path="/" component={MainPage} />
+      <Route exact path="/damnlist" component={damnlist} />
+      <Route path="/MainPageRecommend" component={MainPageRecommend} />
     </Switch>
   </BrowserRouter>
 );
