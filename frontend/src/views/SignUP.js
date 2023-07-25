@@ -17,7 +17,7 @@ function SignUP() {
     const [InputGender, setInputGender] = useState(true);    //성별
     const [InputAddress, setInputAddress] = useState("");   //거주지 입력창
     const [InputEmail, setInputEmail] = useState("");       //이메일 입력창
-    const [InputWorkArea, setInputWorkArea] = useState([{}]);   //희망근무지역 입력창
+    const [InputWorkArea, setInputWorkArea] = useState({});   //희망근무지역 입력창
     const [InputWorkJob, setInputWorkJob] = useState({});   //희망업직종 입력창
     
     
