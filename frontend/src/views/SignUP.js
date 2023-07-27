@@ -76,8 +76,8 @@ function SignUP() {
 
     const idValidation = () => {   // 아이디 중복 확인
           axios
-            .get('/signup/verify/id', {
-                params: { id: InputID }
+            .post('/signup/verify/id', {
+                id: InputID 
             })
             .then((res) => {
                 console.log(res.data);
@@ -95,8 +95,8 @@ function SignUP() {
         };
         const nicknameValidation = () => {   // 닉네임 중복 확인
             axios
-              .get('/signup/verify/nickname', {
-                  params: { nickname: InputNickName }
+              .post('/signup/verify/nickname', {
+                nickname: InputNickName 
               })
               .then((res) => {
                   console.log(res.data);
@@ -114,8 +114,8 @@ function SignUP() {
 
           const emailValidation = () => {   // 이메일 중복 확인
             axios
-              .get('/signup/verify/email', {
-                  params: { email: InputEmail }
+              .post('/signup/verify/email', {
+                email: InputEmail 
               })
               .then((res) => {
                   console.log(res.data);
