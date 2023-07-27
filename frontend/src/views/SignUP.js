@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
 import "../assets/css/SignUP.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import 'moment/locale/ko';
-
+import Modal from "react-modal";
 
 function SignUP() {
     const [InputID, setInputID] = useState("");         //로그인 입력창
@@ -18,7 +18,7 @@ function SignUP() {
     const [InputAddress, setInputAddress] = useState("");   //거주지 입력창
     const [InputEmail, setInputEmail] = useState("");       //이메일 입력창
     const [InputWorkArea, setInputWorkArea] = useState([,]);   //희망근무지역 입력창
-    const [InputWorkJob, setInputWorkJob] = useState([]);   //희망업직종 입력창
+    const [InputWorkJob, setInputWorkJob] = useState([]);   //희망업직종 입력창 
 
     const [usableId, setUsableId] = useState(false);  //아이디 중복확인  -> true여야 사용 가능
     const [usableNickname, setUsableNickname] = useState(false);  //닉네임 중복확인
@@ -73,6 +73,14 @@ function SignUP() {
     const handleInputWorkJob = (e) => {
         setInputWorkJob(e.target.value);
     };
+
+    const [modalVisible, setModalVisible] = useState(false)
+    const openModal = () => {
+        setModalVisible(true)
+    }
+    const closeModal = () => {
+        setModalVisible(false)
+    }
 
     const idValidation = () => {   // 아이디 중복 확인
           axios
@@ -308,7 +316,7 @@ function SignUP() {
                              , marginTop: "15px", borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
 
                         <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
-                            marginTop: "22px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>      
+                            marginTop: "22px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>     
                    
                     </div>
 
@@ -327,8 +335,20 @@ function SignUP() {
                         <input type='text' id='hopeLocation' name='hopeLocation' placeholder="희망 근무 지역" value={InputWorkArea}
                              onChange={handleInputWorkArea} style={{width:"350px", height: "40px", marginTop: "15px", 
                               borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
-                        <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
-                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>      
+                        <button type='button' onClick={openModal} style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
+                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>   
+                        <Modal
+                            isOpen={openModal}
+                            onRequestClose={closeModal}
+                            style={{
+                            // Add custom styles for the modal if needed
+                            }}
+                            contentLabel="지역 선택"
+                        >
+                            <h2>지역 선택</h2>
+                            <p>Hello</p>
+                            <button onClick={closeModal}>Close Modal</button>
+                        </Modal>
                     </div>
 
 
