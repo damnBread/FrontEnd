@@ -174,7 +174,7 @@ function SignUP() {
             pw: InputPW,
             name: InputName,
             email: InputEmail,
-            nickmame: InputNickName,
+            nickname: InputNickName,
             phone: InputPhoneNumber,
             home: InputAddress,
             birth: InputBirth,
