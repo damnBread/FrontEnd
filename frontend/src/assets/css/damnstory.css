@@ -1,0 +1,92 @@
+.damnstory p {
+  font-family: 'GmarketSans', sans-bold;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-left: 120px;
+}
+
+.damnstorycount {
+  font-weight: bold;
+  margin-top: 30px;
+  margin-left: 170px;
+}
+
+.damnstorycontainer {
+  display: flex;
+  align-items: center; 
+}
+
+.damnstorysearch {
+  margin-left: auto;
+  margin-right: 150px;
+  margin-top: 20px;
+}
+
+.brown-line1 {
+  height: 1px;
+  background-color: brown;
+  margin-top: 10px;
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.damnstoryanno {
+  display: flex;
+  justify-content: space-between; /* Align the elements in a row with space between them */
+  align-items: center;
+  font-size: 18px;
+  margin-left: 150px; /* Adjusted to align with the left edge of gray-line1 */
+  margin-right: 150px; /* Adjusted to align with the right edge of gray-line1 */
+}
+
+.damnstoryanno .leftdamnstoryanno .annotext {
+  color: orange;
+  display: flex;
+  align-items: center;
+  margin-left: 0; /* Adjusted to align with the left edge of gray-line1 */
+  font-size: 16px;
+}
+
+.damnstoryanno .middamnstoryanno .annotext {
+  display: flex;
+  align-items: center;
+  margin-left: 70px; /* Adjusted to create space between left and middle texts */
+  font-size: 16px;
+}
+
+.damnstoryanno .rightdamnstoryanno .annotext {
+  display: flex;
+  align-items: center;
+  margin-left: 0; /* Adjusted to align with the right edge of gray-line1 */
+  font-size: 16px;
+}
+
+.gray-line1 {
+  height: 1px;
+  background-color: gainsboro;
+  margin-top: 10px;
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.damnstoryboardtitle {
+  font-size: 18px;
+  margin-left: 180px;
+  margin-top: 30px;
+}
+
+.damnstoryboardcontent {
+  color: gray;
+  font-size: 15px;
+  margin-left: 180px;
+  margin-top: 20px;
+}
+
+.damnstoryboardnickname {
+  color: gray;
+  font-size: 15px;
+  margin-left: 180px;
+  margin-top: 20px;
+}
+

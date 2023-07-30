@@ -22,12 +22,15 @@ import MainPage from "./views/MainPage";
 import MainPageRecommend from "./views/MainPageRecommend";
 import Header from "./components/Headers/Header";
 import damnlist from "./views/damnlist";
+import damnlistBoard from "./views/damnlistBoard";
+import damnstory from "./views/damnstory";
 
 //import Header from "./components/Headers/Page1Header";
 import Page1Header from "./views/Page1Header";
 import Page2Header from "./views/Page2Header";
 import Page3Header from "./views/Page3Header";
 import Page4Header from "./views/Page4Header";
+
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -43,6 +46,8 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/" component={MainPage} />
       <Route exact path="/damnlist" component={damnlist} />
       <Route exact path="/MainPageRecommend" component={MainPageRecommend} />
+      <Route exact path="/damnlistBoard" component={damnlistBoard} />
+      <Route exact path="/damnstory" component={damnstory} />
     </Switch>
   </BrowserRouter>
 );

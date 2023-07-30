@@ -34,13 +34,13 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <Link to="/damnlist" className={`nav-link ${activeLink === '땜빵구해요' ? 'active' : ''}`} 
-                style={{ fontFamily: 'GmarketSans, sans-light' }} onClick={() => handleLinkClick('땜빵구해요')}>땜빵구해요</Link>
-              <Link to="/Page2Header" className={`nav-link ${activeLink === '땜빵썰' ? 'active' : ''}`} 
-                style={{ fontFamily: 'GmarketSans, sans-light' }} onClick={() => handleLinkClick('땜빵썰')}>땜빵썰</Link>
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('땜빵구해요')}>땜빵구해요</Link>
+              <Link to="/damnstory" className={`nav-link ${activeLink === '땜빵썰' ? 'active' : ''}`} 
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('땜빵썰')}>땜빵썰</Link>
               <Link to="/Page3Header" className={`nav-link ${activeLink === '인재정보' ? 'active' : ''}`} 
-                style={{ fontFamily: 'GmarketSans, sans-light' }} onClick={() => handleLinkClick('인재정보')}>인재정보</Link>
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('인재정보')}>인재정보</Link>
               <Link to="/Page4Header" className={`nav-link ${activeLink === '마이페이지' ? 'active' : ''}`} 
-                style={{ fontFamily: 'GmarketSans, sans-light' }} onClick={() => handleLinkClick('마이페이지')}>마이페이지</Link>
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('마이페이지')}>마이페이지</Link>
             </Nav>
 
           </Navbar.Collapse>
