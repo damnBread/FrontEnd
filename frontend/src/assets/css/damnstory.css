@@ -33,18 +33,18 @@
 
 .damnstoryanno {
   display: flex;
-  justify-content: space-between; /* Align the elements in a row with space between them */
+  justify-content: space-between; 
   align-items: center;
   font-size: 18px;
-  margin-left: 150px; /* Adjusted to align with the left edge of gray-line1 */
-  margin-right: 150px; /* Adjusted to align with the right edge of gray-line1 */
+  margin-left: 150px; 
+  margin-right: 150px; 
 }
 
 .damnstoryanno .leftdamnstoryanno .annotext {
   color: orange;
   display: flex;
   align-items: center;
-  margin-left: 0; /* Adjusted to align with the left edge of gray-line1 */
+  margin-left: 0;
   font-size: 16px;
 }
 
@@ -89,4 +89,10 @@
   margin-left: 180px;
   margin-top: 20px;
 }
+
+.damnstoryboardcomment p {
+  font-size: 13px;
+}
+
+
 
