@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
 import "../assets/css/SignUP.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import 'moment/locale/ko';
-
+import Modal from "react-bootstrap/Modal";
+import Button from 'react-bootstrap/Button';
 
 function SignUP() {
     const [InputID, setInputID] = useState("");         //로그인 입력창
@@ -18,12 +19,16 @@ function SignUP() {
     const [InputAddress, setInputAddress] = useState("");   //거주지 입력창
     const [InputEmail, setInputEmail] = useState("");       //이메일 입력창
     const [InputWorkArea, setInputWorkArea] = useState([,]);   //희망근무지역 입력창
-    const [InputWorkJob, setInputWorkJob] = useState([]);   //희망업직종 입력창
+    const [InputWorkJob, setInputWorkJob] = useState([]);   //희망업직종 입력창 
 
     const [usableId, setUsableId] = useState(false);  //아이디 중복확인  -> true여야 사용 가능
     const [usableNickname, setUsableNickname] = useState(false);  //닉네임 중복확인
     const [usableEmail, setUsableEmail] = useState(false);  //이메일 중복확인    (인증하기 X -> 중복확인)
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleInputID = (e) => {
         setInputID(e.target.value);
@@ -73,6 +78,182 @@ function SignUP() {
     const handleInputWorkJob = (e) => {
         setInputWorkJob(e.target.value);
     };
+
+    const items = [     //지역 선택 아이템
+        { 
+            type: 'Seoul',
+            title: '서울',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '경기',
+        },
+        {
+            type: 'Incheon',
+            title: '인천',
+        },
+        {
+            type: 'Gwangwon',
+            title: '강원',
+        },
+        {
+            type: 'Daejeon',
+            title: '대전',
+        },
+        {
+            type: 'Sejong',
+            title: '세종',
+        },
+        {
+            type: 'Chungnam',
+            title: '충남'
+        },
+        {
+            type: 'Chungbuk',
+            title: '충북',
+        },
+        {
+            type: 'Busan',
+            title: '부산',
+        },
+        {
+            type: 'Ulsan',
+            title: '울산',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '경남',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '경북',
+        },
+        {
+            type: 'Daegu',
+            title: '대구',
+        },
+        {
+            type: 'Gwangju',
+            title: '광주',
+        },
+        {
+            type: 'Jeonnam',
+            title: '전남',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '전북',
+        },
+        {
+            type: 'Jeju',
+            title: '제주',
+        }
+      ];
+
+      const items_city = [     //지역 선택 아이템
+        { 
+            type: 'Gangnam',
+            title: '강남구',
+        },
+        {
+            type: 'Gangdong',
+            title: '강동구',
+        },
+        {
+            type: 'Gangbuk',
+            title: '강북구',
+        },
+        {
+            type: 'Gangseo',
+            title: '강서구',
+        },
+        {
+            type: 'Gwanak',
+            title: '관악구',
+        },
+        {
+            type: 'Gwangjin',
+            title: '광진구',
+        },
+        {
+            type: 'Guro',
+            title: '구로구'
+        },
+        {
+            type: 'Geumcheon',
+            title: '금천구',
+        },
+        {
+            type: 'Nowon',
+            title: '노원구',
+        },
+        {
+            type: 'Dobong',
+            title: '도봉구',
+        },
+        {
+            type: 'Dongdaemun',
+            title: '동대문구',
+        },
+        {
+            type: 'Dongjak',
+            title: '동작구',
+        },
+        {
+            type: 'Mapo',
+            title: '마포구',
+        },
+        {
+            type: 'Seodaemun',
+            title: '서대문구',
+        },
+        {
+            type: 'Seocho',
+            title: '서초구',
+        },
+        {
+            type: 'Seongdong',
+            title: '성동구',
+        },
+        {
+            type: 'Seongbuk',
+            title: '성북구',
+        },
+        {
+            type: 'Songpa',
+            title: '송파구',
+        },
+        {
+            type: 'Yangcheon',
+            title: '양천구',
+        },
+        {
+            type: 'Yeongdeungpo',
+            title: '영등포구',
+        },
+        {
+            type: 'Yongsan',
+            title: '용산구',
+        },
+        {
+            type: 'Eunpyeong',
+            title: '은평구',
+        },
+        {
+            type: 'Jung',
+            title: '중구',
+        },
+        {
+            type: 'Jungnang',
+            title: '중랑구',
+        }
+    ];
+
+      const [select, setSelect] = useState('');
+
+      const handleClick = (type) => {
+        setSelect(type);
+        };
 
     const idValidation = () => {   // 아이디 중복 확인
           axios
@@ -196,22 +377,22 @@ function SignUP() {
         })
         .catch((error) => {
             console.log(error.response);
-            // Swal.fire({
-            //     icon: "warning",
-            //     title: "경고",
-            //     text: "회원가입할 수 없습니다. 다시 시도해주세요.",
-            //     showCancelButton: false,
-            //     confirmButtonText: "확인",
-            //     width: 800,
-            //     height: 100,
-            // }).then((res) => {
-            //     if (res.isConfirmed) {
-            //          //삭제 요청 처리
-            //     }
-            //     else{
-            //         //취소
-            //     }
-            // });
+            Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "회원가입할 수 없습니다. 다시 시도해주세요.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+            }).then((res) => {
+                if (res.isConfirmed) {
+                     //삭제 요청 처리
+                }
+                else{
+                    //취소
+                }
+            });
             if (error.response) {
                 console.log("1", error.response.data);
                 console.log("2", error.response.status);
@@ -307,9 +488,42 @@ function SignUP() {
                              onChange={handleInputAddress} style={{width:"150px", height: "40px", marginLeft: "10px"
                              , marginTop: "15px", borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
 
-                        <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
-                            marginTop: "22px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>      
+                        <button type='button' variant="outline-primary" onClick={handleShow} style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
+                            marginTop: "22px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>     
                    
+                        <Modal dialogClassName="custom-modal-content" show={show} onHide={handleClose}>
+                            <Modal.Header>
+                                <Modal.Title>지역 선택</Modal.Title>
+                            </Modal.Header>
+                                <Modal.Body dialogClassName="custom-modal-box">
+                                        {items.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    onClick={() => handleClick(item.type)} 		      // type 받아 set함수에 넣어준다
+                                                    className={`custom-modal-box ${select === item.type ? 'select' : ''}`} // 클릭하면 select클래스가 추가
+                                                > 
+                                                    {item.title}
+                                                </div>
+                                            ))}
+                                        
+                                            {items_city.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    onClick={() => handleClick(item.type)} 		      // type 받아 set함수에 넣어준다
+                                                    className={`custom-modal-box ${select === item.type ? 'select' : ''}`} // 클릭하면 select클래스가 추가
+                                                > 
+                                                    {item.title}
+                                                </div>
+                                            ))}
+                                    
+
+                                </Modal.Body>
+                            <Modal.Footer>
+                                <Button className="btn_close" variant="secondary" onClick={handleClose}>
+                                    닫기
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
 
                     <label style={{fontSize: "16px", marginTop: "30px"}}><b>이메일</b></label>
@@ -328,7 +542,8 @@ function SignUP() {
                              onChange={handleInputWorkArea} style={{width:"350px", height: "40px", marginTop: "15px", 
                               borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
                         <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
-                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>      
+                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>   
+
                     </div>
 
 
