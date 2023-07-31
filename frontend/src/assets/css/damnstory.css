@@ -87,12 +87,24 @@
   color: gray;
   font-size: 15px;
   margin-left: 180px;
-  margin-top: 20px;
+  margin-top: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.damnstoryboardcomment p {
-  font-size: 13px;
+.right-content {
+  display: flex;
+  align-items: center;
+  margin-right: 240px;
 }
 
+.right-content img {
+  margin-top: 12px;
+  margin-left: 15px;
+}
 
-
+.right-content p {
+  font-size: 14px;
+  margin-left: 5px; /* Adjust the margin as per your requirement */
+}

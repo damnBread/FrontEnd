@@ -4,7 +4,7 @@ import "../assets/css/damnstory.css";
 import "../components/Footers/Footer";
 import Footer from "../components/Footers/Footer";
 import damnstorycomment2 from "../assets/img/damnstorycomment2.png";
-import damnstorysearchcount from "../assets/img/damnstorysearchcount.png";  
+import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";  
 
 const SectionDataWrite = [ //게시물 더미
     {
@@ -169,21 +169,17 @@ const Damnstory = () => {
                             <div className="damnstoryboardtitle">{section.title}</div>
                             <div className="damnstoryboardcontent">{section.post}</div>
                             <div className="damnstoryboardnickname">
-                                {section.nickname} | {section.time}
-                            </div>
 
-                            <div style={{ display: 'flex', alignItems: 'center' }}> 
-                                <div className="damnstoryboardcomment" style={{ flex: '1', position: 'relative', top: '-20px' }}>
+                                <div className="left-content">
+                                    {section.nickname} | {section.time}
+                                </div>
+                                <div className="right-content">
+                                    <img className="img1" src={damnstorycomment2}/>
                                     <p>{section.commentcount}</p>
-                                </div>
-
-                                <div>
-                                    <img src={damnstorycomment2} style={{ float: 'right', marginRight: '270px' }} />
+                                    <img className="img2" src={damnstorysearchcount2}/>
+                                    <p>{section.seecount}</p>
                                 </div>
                             </div>
-
-
-
 
 
 
