@@ -13,6 +13,8 @@ import "./assets/css/SignUP.css";
 import "./assets/css/Header.css";
 import "./assets/css/MainPage.css";
 import "./assets/css/damnlist.css";
+import "./assets/css/damnstory.css";
+import "./assets/css/damnstorywrite.css";
 
 //import App from "./App";
 import Agreement from "./views/Agreement";
@@ -24,6 +26,7 @@ import Header from "./components/Headers/Header";
 import damnlist from "./views/damnlist";
 import damnlistBoard from "./views/damnlistBoard";
 import damnstory from "./views/damnstory";
+import damnstorywrite from "./views/damnstorywrite";
 
 //import Header from "./components/Headers/Page1Header";
 import Page1Header from "./views/Page1Header";
@@ -48,6 +51,7 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/MainPageRecommend" component={MainPageRecommend} />
       <Route exact path="/damnlistBoard" component={damnlistBoard} />
       <Route exact path="/damnstory" component={damnstory} />
+      <Route exact path="/damnstory/register" component={damnstorywrite} />
     </Switch>
   </BrowserRouter>
 );

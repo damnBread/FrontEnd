@@ -1,0 +1,41 @@
+.write {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 60px;
+    margin-left: 120px;
+}
+
+.black-line1 {
+    height: 1px;
+    background-color: black;
+    margin-top: 10px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+.damnstorytitle {
+    display: flex; /* Use flexbox to arrange items in a row */
+    align-items: center; /* Align items vertically in the center */
+    margin-top: 40px;
+    margin-left: 200px;
+}
+
+.damnstorytitle p {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 150px; /* Add spacing between 제목 and input */
+}
+
+.title-input {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 900px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+

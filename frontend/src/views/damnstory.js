@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../components/Headers/Header";
+import Button from "@mui/material/Button";
 import "../assets/css/damnstory.css";
 import "../components/Footers/Footer";
 import Footer from "../components/Footers/Footer";
@@ -130,7 +132,16 @@ const Damnstory = () => {
         <div className="damnstorywhole">
             <Header />
             <div className="damnstory">
-                <p>땜빵썰</p>
+                <div className="header-container">
+                    <p>땜빵썰</p>
+                    <Button variant="outlined"
+                      sx={{ borderColor: "brown",
+                      color: "brown",
+                     }} 
+                      component={Link} // Use Link from react-router-dom
+                      to="/damnstory/register"
+                      >글쓰기</Button>
+                </div>
 
                 <div className="damnstorycontainer">
                     <div className="damnstorycount">총 n건</div>
