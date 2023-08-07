@@ -1,0 +1,127 @@
+.damnstory p {
+  font-family: 'GmarketSans', sans-bold;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: 120px;
+}
+
+.header-container p {
+  margin-right: 1100px;
+}
+
+.damnstorycount {
+  font-weight: bold;
+  margin-top: 30px;
+  margin-left: 170px;
+}
+
+.damnstorycontainer {
+  display: flex;
+  align-items: center; 
+}
+
+.damnstorysearch {
+  margin-left: auto;
+  margin-right: 150px;
+  margin-top: 20px;
+}
+
+.brown-line1 {
+  height: 1px;
+  background-color: brown;
+  margin-top: 10px;
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.damnstoryanno {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  font-size: 18px;
+  margin-left: 150px; 
+  margin-right: 150px; 
+}
+
+.damnstoryanno .leftdamnstoryanno .annotext {
+  color: orange;
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+  font-size: 16px;
+}
+
+.damnstoryanno .middamnstoryanno .annotext {
+  display: flex;
+  align-items: center;
+  margin-left: 70px; /* Adjusted to create space between left and middle texts */
+  font-size: 16px;
+}
+
+.damnstoryanno .rightdamnstoryanno .annotext {
+  display: flex;
+  align-items: center;
+  margin-left: 0; /* Adjusted to align with the right edge of gray-line1 */
+  font-size: 16px;
+}
+
+.gray-line1 {
+  height: 1px;
+  background-color: gainsboro;
+  margin-top: 10px;
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.damnstoryboardtitle {
+  font-size: 18px;
+  margin-left: 180px;
+  margin-top: 30px;
+}
+
+.damnstoryboardcontent {
+  color: gray;
+  font-size: 15px;
+  margin-left: 180px;
+  margin-top: 20px;
+}
+
+.damnstoryboardnickname {
+  color: gray;
+  font-size: 15px;
+  margin-left: 180px;
+  margin-top: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.right-content {
+  display: flex;
+  align-items: center;
+  margin-right: 240px;
+}
+
+.right-content img {
+  margin-top: 12px;
+  margin-left: 15px;
+}
+
+.right-content p {
+  font-size: 14px;
+  margin-left: 5px; /* Adjust the margin as per your requirement */
+}
+
+.title-content-search {
+  border: 1px solid #ccc;
+  border-radius: 20px; /* 조절 가능한 값 */
+  padding: 10px;
+  outline: none;
+}
