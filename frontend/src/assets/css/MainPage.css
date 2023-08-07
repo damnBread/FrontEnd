@@ -1,5 +1,10 @@
 /* MainPage.css */
 
+.images-container {
+  margin-left: 10px;
+}
+
+
 .brown-line {
   height: 1px;
   background-color: brown;
@@ -10,29 +15,96 @@
 .brown-line1 {
   height: 1px;
   background-color: brown;
-  margin-top: 150px;
-  margin-left: 200px; /* Adjust the left and right margin as needed */
-  margin-right: 200px;
+  margin-top: 60px;
+  margin-left: 150px; /* Adjust the left and right margin as needed */
+  margin-right: 150px;
+}
+
+.img1 {
+  margin-left:30px;
 }
 
 .img1-locate {
   width: 60px;
+  height: 75px;
+  margin-left: 325px;
+  margin-top: 70px;
+}
+
+.img2-locate {
+  width: 65px;
   height: 60px;
-  margin-left: 380px;
-  margin-top: 80px;
+  margin-left: 150px;
+  margin-top: 75px;
+}
+
+.img3-locate {
+  width: 60px;
+  height: 70px;
+  margin-left: 150px;
+  margin-top: 75px;
+}
+
+.img4-locate {
+  width: 60px;
+  height: 70px;
+  margin-left: 130px;
+  margin-top: 75px;
 }
 
 .round-rectangle {
   border-radius: 8px; 
-  background-color: #9e5b40; 
+  background-color: #e0b88a; 
   padding: 8px; 
-  width: fit-content; 
-  display: inline-block; 
-  margin-top: 70px;
-  margin-right: 30px;
+  width: 90px; 
+  height: 40px;
+  margin-left: 310px;
+  margin-top: 10px;
+}
+.round-rectangle2 {
+  border-radius: 8px; 
+  background-color: #ffffff; 
+  border: 3px solid #e0b88a;
+  padding: 8px; 
+  width: 130px; 
+  height: 40px;
+  margin-left: 115px;
+  margin-top: 20px;
+}
+
+.round-rectangle3 {
+  border-radius: 8px; 
+  background-color: #ffffff; 
+  border: 3px solid #e0b88a;
+  padding: 8px; 
+  width: 90px; 
+  height: 40px;
+  margin-left: 130px;
+  margin-top: 10px;
+}
+
+.round-rectangle4 {
+  border-radius: 8px; 
+  background-color: #ffffff; 
+  border: 3px solid #e0b88a;
+  padding: 8px; 
+  width: 60px; 
+  height: 40px;
+  margin-left: 120px;
+  margin-top: 10px;
 }
 
 .round-rectangle p {
-  margin: 0; /* 단락의 기본 마진을 제거하여 사각형의 여백과 충돌하지 않도록 합니다. */
+  margin: 0;
+  color: black;
 }
 
+.round-rectangle2 p {
+  margin: 0;
+  color: black;
+  
+}
+
+.images-container {
+  display: flex; /* Use flexbox to make img1 and img2 display side by side */
+}

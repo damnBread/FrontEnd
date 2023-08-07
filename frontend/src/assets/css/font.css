@@ -1,0 +1,6 @@
+@font-face {
+     font-family: 'GmarketSans';
+     src: url('../fonts/GmarketSansTTFLight.ttf') format('truetype'),
+          url('../fonts/GmarketSansTTFBold.ttf') format('truetype');
+}
+  

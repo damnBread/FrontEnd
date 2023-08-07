@@ -1,10 +1,19 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import damnBreadLogo from '../../assets/img/damnBread_logo.png';
 import '../../assets/css/Header.css';
+import '../../assets/css/font.css';
 
 const Header = () => {
+
+  const [activeLink, setActiveLink] = useState(''); 
+
+  const handleLinkClick = (link) => { //네비게이션 색상 바꾸기 위함
+    console.log('Clicked link:', link);
+    setActiveLink(link); 
+  };
+
   return (
     <header>
       <Navbar bg="light" expand="lg">
@@ -24,19 +33,23 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Link to="/Page1Header" className="nav-link">땜빵구해요</Link>
-              <Link to="/Page2Header" className="nav-link">땜빵썰</Link>
-              <Link to="/Page3Header" className="nav-link">인재정보</Link>
-              <Link to="/Page4Header" className="nav-link">마이페이지</Link>
+              <Link to="/damnlist" className={`nav-link ${activeLink === '땜빵구해요' ? 'active' : ''}`} 
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('땜빵구해요')}>땜빵구해요</Link>
+              <Link to="/damnstory" className={`nav-link ${activeLink === '땜빵썰' ? 'active' : ''}`} 
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('땜빵썰')}>땜빵썰</Link>
+              <Link to="/Page3Header" className={`nav-link ${activeLink === '인재정보' ? 'active' : ''}`} 
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('인재정보')}>인재정보</Link>
+              <Link to="/Page4Header" className={`nav-link ${activeLink === '마이페이지' ? 'active' : ''}`} 
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('마이페이지')}>마이페이지</Link>
             </Nav>
 
           </Navbar.Collapse>
         </Container>
 
         <Nav className="ml-auto">
-                <Link to="/Login" className="Login">로그인</Link>
+                <Link to="/Login" className="Login" style={{ fontFamily: 'GmarketSans, sans-light' }}>로그인</Link>
                 <span className="login-divider">|</span>
-                <Link to="/SignUP" className="SignUP">회원가입</Link>
+                <Link to="/SignUP" className="SignUP" style={{ fontFamily: 'GmarketSans, sans-light' }}>회원가입</Link>
             </Nav>
       </Navbar>
     </header>

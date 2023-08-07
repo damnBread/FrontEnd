@@ -1,0 +1,39 @@
+.daumlist p {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 26px; /* Increase the font size to 32px (you can adjust as needed) */
+    font-weight: bold; /* Set the font weight to bold */
+    margin-top: 30px;
+    margin-left: 80px;
+  }
+
+  .filtering {
+    margin-left: 100px;
+  }
+
+  .rounded-rectangle {
+    width: 1150px;
+    height: 200px; 
+    margin-top: 40px;
+    margin-left: 300px;
+    border-radius: 20px; 
+    align-items: center;
+    border: 2px solid #E2E2E2;
+    font-family: "Inter";
+}
+
+  .brown-line1 {
+    height: 1px;
+    background-color: brown;
+    margin-top: 60px;
+    margin-left: 150px; /* Adjust the left and right margin as needed */
+    margin-right: 150px;
+  }
+
+  .selectoption {
+    margin-left: 100px;
+  }
+
+  .listcount {
+    margin-top: 60px;
+    margin-left: 150px;
+  }

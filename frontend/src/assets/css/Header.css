@@ -9,6 +9,10 @@
   cursor: pointer;
 }
 
+.nav-link.active {
+  color: brown;
+}
+
 .nav-link:hover {
   color: brown;
 }
@@ -32,4 +36,5 @@
   margin: 0 5px; /* Add space between the separator and the links */
   color: black; /* Set color for the | separator */
 }
+
 
