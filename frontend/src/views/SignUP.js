@@ -257,63 +257,62 @@ function SignUP() {
     setSelect(type);
   };
 
-  const idValidation = () => {
-    // 아이디 중복 확인
-    axios
-      .post("/signup/verify/id", {
-        id: InputID,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === true) {
-          alert("이미 사용중인 아이디입니다.");
-          return true;
-        } else {
-          alert("사용 가능한 아이디입니다.");
-          return false;
-        }
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
-  const nicknameValidation = () => {
-    // 닉네임 중복 확인
-    axios
-      .post("/signup/verify/nickname", {
-        nickname: InputNickName,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === true) {
-          alert("이미 사용중인 닉네임입니다.");
-        } else {
-          alert("사용 가능한 닉네임입니다.");
-        }
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
+    const idValidation = () => {   // 아이디 중복 확인
+          axios
+            .post('/signup/verify/id', decodeURIComponent(InputID), {
+                responseType: 'text/plain', 
+            })
+            .then((res) => {
+                console.log(res.data);
+                console.log(InputID);
+                if(res.data === true) {
+                    alert("이미 사용중인 아이디입니다.");
+                    return true;
+                } else {
+                    alert("사용 가능한 아이디입니다.");
+                    return false;
+                }
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+        };
+        const nicknameValidation = () => {   // 닉네임 중복 확인
+            axios
+              .post('/signup/verify/nickname', InputNickName, {
+                responseType: 'text/plain',
+              })
+              .then((res) => {
+                  console.log(res.data);
+                  if(res.data === true) {
+                      alert("이미 사용중인 닉네임입니다.");
+                  } else {
+                      alert("사용 가능한 닉네임입니다.");
+                  }
+              })
+              .catch((error) => {
+                  console.log(error.response);
+              });
+          };
 
-  const emailValidation = () => {
-    // 이메일 중복 확인
-    axios
-      .post("/signup/verify/email", {
-        email: InputEmail,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === true) {
-          alert("이미 사용중인 이메일입니다.");
-        } else {
-          alert("사용 가능한 이메일입니다.");
-        }
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
+
+          const emailValidation = () => {   // 이메일 중복 확인
+            axios
+              .post('/signup/verify/email', {
+                email: InputEmail 
+              })
+              .then((res) => {
+                  console.log(res.data);
+                  if(res.data === true) {
+                      alert("이미 사용중인 이메일입니다.");
+                  } else {
+                      alert("사용 가능한 이메일입니다.");
+                  }
+              })
+              .catch((error) => {
+                  console.log(error.response);
+              });
+          };
 
   const onClickSignUP = async () => {
     console.log("click SignUP");
