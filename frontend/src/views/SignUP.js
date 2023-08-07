@@ -2323,258 +2323,43 @@ function SignUP() {
                             <Modal.Header>
                                 <Modal.Title>지역 선택</Modal.Title>
                             </Modal.Header>
+                            <div className="custom-modal-box-whole">
                                 <Modal.Body dialogClassName="custom-modal-box">
-                                        {items.map((item, index) => (
+                                    {items.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => handleClick(item.type)}
+                                            className={`custom-modal-box ${select === item.type ? 'select' : ''}`}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    ))}
+                                </Modal.Body>
+
+                                {showCityItems && (
+                                    <div className="city-items-container">
+                                        {items_city
+                                            .filter((cityItem) => cityItem.type === select)
+                                            .map((cityItem, index) => (
                                                 <div
                                                     key={index}
-                                                    onClick={() => handleClick(item.type)} 		      // type 받아 set함수에 넣어준다
-                                                    className={`custom-modal-box ${select === item.type ? 'select' : ''}`} // 클릭하면 select클래스가 추가
-                                                > 
-                                                    {item.title}
-
-                                                    {/* {showCityItems && select === 'Seoul' && index === selectedSeoulIndex && (
-                                                        <div>
-                                                        {items_seoul.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}
-
-                                                    {showCityItems && select === 'Gyeonggi' && index === selectedGyeonggiIndex && (
-                                                        <div>
-                                                        {items_gyeonggi.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}
-
-                                                    {showCityItems && select === 'Incheon' && index === selectedIncheonIndex && (
-                                                        <div>
-                                                        {items_incheon.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}
-
-                                                    {showCityItems && select === 'Gangwon' && index === selectedGangwoniIndex && (
-                                                        <div>
-                                                        {items_gangwon.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}
-
-                                                    {showCityItems && select === 'Daejeon' && index === selectedDaejeonIndex && (
-                                                        <div>
-                                                        {items_daejeon.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}
-
-                                                    {showCityItems && select === 'Sejong' && index === selectedSejongIndex && (
-                                                        <div>
-                                                        {items_sejong.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Chungnam' && index === selectedChungnamIndex && (
-                                                        <div>
-                                                        {items_chungnam.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Chungbuk' && index === selectedChungbukIndex && (
-                                                        <div>
-                                                        {items_chungbuk.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Busan' && index === selectedBusanIndex && (
-                                                        <div>
-                                                        {items_busan.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Ulsan' && index === selectedUlsanIndex && (
-                                                        <div>
-                                                        {items_ulsan.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Gyeongnam' && index === selectedGyeongnamIndex && (
-                                                        <div>
-                                                        {items_gyeongnam.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Gyeongbuk' && index === selectedGyeongbukIndex && (
-                                                        <div>
-                                                        {items_gyeongbuk.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Daegu' && index === selectedDaeguIndex && (
-                                                        <div>
-                                                        {items_daegu.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Gwangju' && index === selectedGwangjuIndex && (
-                                                        <div>
-                                                        {items_gwangju.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Jeonnam' && index === selectedJeonnamIndex && (
-                                                        <div>
-                                                        {items_jeonnam.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Jeonbuk' && index === selectedJeonbukIndex && (
-                                                        <div>
-                                                        {items_jeonbuk.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )}{showCityItems && select === 'Jeju' && index === selectedJejuIndex && (
-                                                        <div>
-                                                        {items_jeju.map((cityItem, cityIndex) => (
-                                                            <div 
-                                                                key={cityIndex} 
-                                                                onClick={() => CityhandleClick(cityItem.type)}
-                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                            >
-                                                            {cityItem.title}
-                                                            </div>
-                                                        ))}
-                                                        </div>
-                                                    )} */}
+                                                    onClick={() => CityhandleClick(cityItem.type)}
+                                                    className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                >
+                                                    {cityItem.title}
                                                 </div>
                                             ))}
-                                </Modal.Body>
-                        
-                        {showCityItems && (select === 'Seoul' || select === 'Gyeonggi' || select === 'Incheon' || select === 'Gangwon' || select === 'Daejeon' 
-                        || select === 'Sejong' || select === 'Chungnam' || select === 'Chungbuk' || select === 'Busan' || select === 'Ulsan' 
-                        || select === 'Gyeongnam' || select === 'Gyeongbuk' || select === 'Daegu' || select === 'Gwangju' || select === 'Jeonnam'
-                        || select === 'Jeonbuk' || select === 'Jeju') && (
-                            <div className="city-items-container">
-                            {items_city
-                                .filter((cityItem) => cityItem.type === select)
-                                .map((cityItem, index) => (
-                                <div
-                                    key={index}
-                                    onClick={() => CityhandleClick(cityItem.type)}
-                                    className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                >
-                                    {cityItem.title}
-                                </div>
-                                ))}
+                                    </div>
+                                )}
                             </div>
-                        )}
-                        <Modal.Footer>
+
+                            <Modal.Footer>
                                 <Button className="btn_close" variant="secondary" onClick={handleClose}>
                                     닫기
                                 </Button>
                             </Modal.Footer>
                         </Modal>
+
                     </div>
 
                     <label style={{fontSize: "16px", marginTop: "30px"}}><b>이메일</b></label>

@@ -76,3 +76,8 @@
   /* top: 89px; */
   left: 30px;
 }
+
+.custom-modal-box-whole {
+  display: flex; 
+  align-items: center;
+}
