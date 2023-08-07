@@ -257,11 +257,12 @@ function SignUP() {
 
     const idValidation = () => {   // 아이디 중복 확인
           axios
-            .post('/signup/verify/id', {
-                id: InputID 
+            .post('/signup/verify/id', decodeURIComponent(InputID), {
+                responseType: 'text/plain', 
             })
             .then((res) => {
                 console.log(res.data);
+                console.log(InputID);
                 if(res.data === true) {
                     alert("이미 사용중인 아이디입니다.");
                     return true;
@@ -276,8 +277,8 @@ function SignUP() {
         };
         const nicknameValidation = () => {   // 닉네임 중복 확인
             axios
-              .post('/signup/verify/nickname', {
-                nickname: InputNickName 
+              .post('/signup/verify/nickname', InputNickName, {
+                responseType: 'text/plain',
               })
               .then((res) => {
                   console.log(res.data);
@@ -295,8 +296,8 @@ function SignUP() {
 
           const emailValidation = () => {   // 이메일 중복 확인
             axios
-              .post('/signup/verify/email', {
-                email: InputEmail 
+              .post('/signup/verify/email', InputEmail, {
+                responseType: 'text/plain',
               })
               .then((res) => {
                   console.log(res.data);
