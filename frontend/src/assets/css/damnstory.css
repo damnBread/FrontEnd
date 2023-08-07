@@ -118,3 +118,10 @@
   font-size: 14px;
   margin-left: 5px; /* Adjust the margin as per your requirement */
 }
+
+.title-content-search {
+  border: 1px solid #ccc;
+  border-radius: 20px; /* 조절 가능한 값 */
+  padding: 10px;
+  outline: none;
+}

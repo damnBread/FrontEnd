@@ -146,8 +146,7 @@ const Damnstory = () => {
                 <div className="damnstorycontainer">
                     <div className="damnstorycount">총 n건</div>
                     <div className="damnstorysearch">
-                        <input type="text" placeholder="제목+본문 검색" />
-                        {/* 작성일, 제목검색 추가하기 */}
+                        <input type="text" className="title-content-search" placeholder="제목+본문 검색" />
                     </div>
                 </div>
 
