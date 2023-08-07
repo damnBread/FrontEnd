@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Header from "../components/Headers/Header";
 import Button from "@mui/material/Button";
 import { styled } from '@mui/system';
@@ -9,6 +10,7 @@ import Footer from "../components/Footers/Footer";
 const DamnStoryWrite = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [writerId, setWriter] = useState("gabinTest");
     const [isCancelled, setIsCancelled] = useState(false);
 
     const handleTitleChange = (event) => {
@@ -38,39 +40,39 @@ const DamnStoryWrite = () => {
         }
     };
 
-// Update handleRegisterClick function
-const handleRegisterClick = async () => {
-    if (!title && !content) {
-        alert('제목과 내용을 작성해주세요.');
-    } else if (!title) {
-        alert('제목을 작성해주세요.');
-    } else if (!content) {
-        alert('내용을 작성해주세요.');
-    } else {
-        try {
-            const response = await fetch('/api/posts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    title,
-                    content, //백엔드랑 맞춰서 수정해야함 어케하지
-                }),
-            });
 
-            if (response.ok) {
-                alert('글이 작성되었습니다.');
-                window.location.href = '/damnstory'; // Redirect to the main page
-            } else {
-                alert('글 작성 중 오류가 발생했습니다.');
+    const handleRegisterClick = async () => {
+        if (!title || !content) {
+            alert('제목과 내용을 작성해주세요.');
+        } else {
+            try {
+                console.log("click regist");
+                console.log("title: ", title);
+                console.log("content: ", content);
+    
+                const response = await axios.post('http://localhost:3000/damnstory/new', {
+                    title: title,
+                    content: content,
+                    writerId: writerId,
+                });
+    
+                console.log(response);
+                console.log("title: ", response.data.title);
+    
+                if (response.status === 200) {
+                    sessionStorage.setItem("title", title);
+                    alert('글이 작성되었습니다.');
+                    window.location.href = '/damnstory'; // Redirect to the main page
+                } else {
+                    alert('글 작성 중 오류1가 발생했습니다.');
+                }
+            } catch (error) {
+                console.error('Error creating post:', error);
+                alert('글 작성 중 오류2가 발생했습니다.');
             }
-        } catch (error) {
-            console.error('Error creating post:', error);
-            alert('글 작성 중 오류가 발생했습니다.');
         }
-    }
-};
+    };
+    
 
 
     return (

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import Header from "../components/Headers/Header";
 import Button from "@mui/material/Button";
@@ -10,87 +11,16 @@ import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";
 
 const SectionDataWrite = [ //게시물 더미
     {
-        id: 1,
         title: '비오니까 일자리도 없다',
-        post: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가..',
-        nickname: '전 메디니언', 
-        time: '2분전',
-        url: '',
-        commentcount: 1, //댓글 count는 댓글 테이블, 게시물 테이블에서 나머지 가져옴
-        seecount: 10
+        content: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가..',
+        writer: 'gabinTest'
     },
 
     {
-        id: 2,
         title: '이번시간에는 퍼싸아ㅏㅏㅏ드',
-        post: '막창 먹고싶다 아니야 그냥 다 먹고싶은거같아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ헤헿',
-        nickname: '전 메디니언', 
-        time: '2분전',
-        url: '',
-        commentcount: 7,
-        seecount: 90 
+        content: '막창 먹고싶다 아니야 그냥 다 먹고싶은거같아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ헤헿',
+        writer: 'gabinTest'
     },
-    {
-        id: 3,
-        title: '비오니까 일자리도 없다 ㅡㅇ아아아아 너무 더워',
-        post: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가가가 가능하나나나나나나',
-        nickname: '전 메디니언', 
-        time: '2분전',
-        url: '',
-        commentcount: 6,
-        seecount: 90
-    },
-    {
-        id: 4,
-        title: '비오니까 일자리도 없다 ㅡㅇ아아아아 너무 더워',
-        post: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가가가 가능하나나나나나나',
-        nickname: '전 메디니언', 
-        time: '2분전',
-        url: '',
-        commentcount: 1,
-        seecount: 90
-    },
-    {
-        id: 5,
-        title: 'hahaha',
-        post: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가..',
-        nickname: '전 메디니언', 
-        time: '2분전',
-        url: '',
-        commentcount: 1,
-        seecount: 90 
-    },
-
-    {
-        id: 6,
-        title: 'pacacacadededed',
-        post: '막창 먹고싶다 아니야 그냥 다 먹고싶은거같아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ헤헿',
-        nickname: '전 메디니언', 
-        time: '2분전',
-        url: '',
-        commentcount: 3,
-        seecount: 90
-    },
-    {
-        id: 7,
-        title: '깔깔 일자리도 없다 ㅡㅇ아아아아 너무 더워',
-        post: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가가가 가능하나나나나나나',
-        nickname: '전 메디니언', 
-        time: '2분전',
-        url: '',
-        commentcount: 4,
-        seecount: 90
-    },
-    {
-        id: 8,
-        title: '비오니까 일자리도 없다 ㅡㅇ아아아아 너무 더워',
-        post: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가가가 가능하나나나나나나',
-        nickname: '전 메디니언', 
-        time: '2분전',
-        url: '',
-        commentcount: 2,
-        seecount: 90
-    }
 ];
 
 const SectionData = [ //공지사항 더미
@@ -139,7 +69,7 @@ const Damnstory = () => {
                       color: "brown",
                      }} 
                       component={Link} // Use Link from react-router-dom
-                      to="/damnstory/register"
+                      to="/damnstory/new"
                       >글쓰기</Button>
                 </div>
 
@@ -177,11 +107,11 @@ const Damnstory = () => {
                     {currentPosts.map((section, index) => (
                         <a key={index} href={`/${section.url}${section.id}&sortType=CREATED_DATE`} style={sectionStyle}>
                             <div className="damnstoryboardtitle">{section.title}</div>
-                            <div className="damnstoryboardcontent">{section.post}</div>
+                            <div className="damnstoryboardcontent">{section.content}</div>
                             <div className="damnstoryboardnickname">
 
                                 <div className="left-content">
-                                    {section.nickname} | {section.time}
+                                    {section.writer} | {section.time}
                                 </div>
                                 <div className="right-content">
                                     <img className="img1" src={damnstorycomment2}/>
