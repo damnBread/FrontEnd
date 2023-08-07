@@ -25,10 +25,13 @@ function SignUP() {
     const [usableNickname, setUsableNickname] = useState(false);  //닉네임 중복확인
     const [usableEmail, setUsableEmail] = useState(false);  //이메일 중복확인    (인증하기 X -> 중복확인)
 
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false);   //모달창
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);   //모달창 닫기
+    const handleShow = () => setShow(true);     //모달창 켜기
+
+    const [select, setSelect] = useState(null);  //서울 등 선택
+    const [showCityItems, setShowCityItems] = useState(false);  //서울 안에 있는 강남구 등 선택
 
     const handleInputID = (e) => {
         setInputID(e.target.value);
@@ -93,7 +96,7 @@ function SignUP() {
             title: '인천',
         },
         {
-            type: 'Gwangwon',
+            type: 'Gangwon',
             title: '강원',
         },
         {
@@ -152,108 +155,1921 @@ function SignUP() {
 
       const items_city = [     //지역 선택 아이템
         { 
-            type: 'Gangnam',
+            type: 'Seoul',
             title: '강남구',
         },
         {
-            type: 'Gangdong',
+            type: 'Seoul',
             title: '강동구',
         },
         {
-            type: 'Gangbuk',
+            type: 'Seoul',
             title: '강북구',
         },
         {
-            type: 'Gangseo',
+            type: 'Seoul',
             title: '강서구',
         },
         {
-            type: 'Gwanak',
+            type: 'Seoul',
             title: '관악구',
         },
         {
-            type: 'Gwangjin',
+            type: 'Seoul',
             title: '광진구',
         },
         {
-            type: 'Guro',
+            type: 'Seoul',
             title: '구로구'
         },
         {
-            type: 'Geumcheon',
+            type: 'Seoul',
             title: '금천구',
         },
         {
-            type: 'Nowon',
+            type: 'Seoul',
             title: '노원구',
         },
         {
-            type: 'Dobong',
+            type: 'Seoul',
             title: '도봉구',
         },
         {
-            type: 'Dongdaemun',
+            type: 'Seoul',
             title: '동대문구',
         },
         {
-            type: 'Dongjak',
+            type: 'Seoul',
             title: '동작구',
         },
         {
-            type: 'Mapo',
+            type: 'Seoul',
             title: '마포구',
         },
         {
-            type: 'Seodaemun',
+            type: 'Seoul',
             title: '서대문구',
         },
         {
-            type: 'Seocho',
+            type: 'Seoul',
             title: '서초구',
         },
         {
-            type: 'Seongdong',
+            type: 'Seoul',
             title: '성동구',
         },
         {
-            type: 'Seongbuk',
+            type: 'Seoul',
             title: '성북구',
         },
         {
-            type: 'Songpa',
+            type: 'Seoul',
             title: '송파구',
         },
         {
-            type: 'Yangcheon',
+            type: 'Seoul',
             title: '양천구',
         },
         {
-            type: 'Yeongdeungpo',
+            type: 'Seoul',
             title: '영등포구',
         },
         {
-            type: 'Yongsan',
+            type: 'Seoul',
             title: '용산구',
         },
         {
-            type: 'Eunpyeong',
+            type: 'Seoul',
             title: '은평구',
         },
         {
-            type: 'Jung',
+            type: 'Seoul',
             title: '중구',
         },
         {
-            type: 'Jungnang',
+            type: 'Seoul',
             title: '중랑구',
-        }
+        },
+        { 
+            type: 'Gyeonggi',
+            title: '수원시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '고양시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '과천시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '광명시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '광주시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '구리시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '군포시'
+        },
+        {
+            type: 'Gyeonggi',
+            title: '김포시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '남양주시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '동두천시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '부천시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '성남시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '시흥시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '안산시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '안성시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '안양시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '양주시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '여주시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '오산시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '용인시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '의왕시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '의정부시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '이천시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '파주시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '평택시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '포천시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '하남시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '화성시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '가평군',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '양평군',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '연천군',
+        },
+        { 
+            type: 'Incheon',
+            title: '계양구',
+        },
+        {
+            type: 'Incheon',
+            title: '남구',
+        },
+        {
+            type: 'Incheon',
+            title: '남동구',
+        },
+        {
+            type: 'Incheon',
+            title: '동구',
+        },
+        {
+            type: 'Incheon',
+            title: '부평구',
+        },
+        {
+            type: 'Incheon',
+            title: '서구',
+        },
+        {
+            type: 'Incheon',
+            title: '연수구'
+        },
+        {
+            type: 'Incheon',
+            title: '중구',
+        },
+        {
+            type: 'Incheon',
+            title: '강화군',
+        },
+        {
+            type: 'Incheon',
+            title: '웅진군',
+        },
+        { 
+            type: 'Gangwon',
+            title: '춘천시',
+        },
+        {
+            type: 'Gangwon',
+            title: '강릉시',
+        },
+        {
+            type: 'Gangwon',
+            title: '동해시',
+        },
+        {
+            type: 'Gangwon',
+            title: '삼척시',
+        },
+        {
+            type: 'Gangwon',
+            title: '속초시',
+        },
+        {
+            type: 'Gangwon',
+            title: '원주시',
+        },
+        {
+            type: 'Gangwon',
+            title: '태백시'
+        },
+        {
+            type: 'Gangwon',
+            title: '고성군',
+        },
+        {
+            type: 'Gangwon',
+            title: '양구군',
+        },
+        {
+            type: 'Gangwon',
+            title: '양양군',
+        },
+        {
+            type: 'Gangwon',
+            title: '영월군',
+        },
+        {
+            type: 'Gangwon',
+            title: '인제군',
+        },
+        {
+            type: 'Gangwon',
+            title: '정선군',
+        },
+        {
+            type: 'Gangwon',
+            title: '철원군',
+        },
+        {
+            type: 'Gangwon',
+            title: '평창군',
+        },
+        {
+            type: 'Gangwon',
+            title: '홍천군',
+        },
+        {
+            type: 'Gangwon',
+            title: '화천군',
+        },
+        {
+            type: 'Gangwon',
+            title: '횡성군',
+        },
+        { 
+            type: 'Daejeon',
+            title: '대덕구',
+        },
+        {
+            type: 'Daejeon',
+            title: '동구',
+        },
+        {
+            type: 'Daejeon',
+            title: '서구',
+        },
+        {
+            type: 'Daejeon',
+            title: '유성구',
+        },
+        {
+            type: 'Daejeon',
+            title: '중구',
+        },
+        { 
+            type: 'Sejong',
+            title: '금남면',
+        },
+        {
+            type: 'Sejong',
+            title: '부강면',
+        },
+        {
+            type: 'Sejong',
+            title: '소정면',
+        },
+        {
+            type: 'Sejong',
+            title: '연기면',
+        },
+        {
+            type: 'Sejong',
+            title: '연동면',
+        },
+        {
+            type: 'Sejong',
+            title: '연서면',
+        },
+        {
+            type: 'Sejong',
+            title: '장군면',
+        },
+        {
+            type: 'Sejong',
+            title: '전동면',
+        },
+        {
+            type: 'Sejong',
+            title: '전의면',
+        },
+        {
+            type: 'Sejong',
+            title: '조치원읍',
+        },
+        { 
+            type: 'Chungnam',
+            title: '천안시',
+        },
+        {
+            type: 'Chungnam',
+            title: '공주시',
+        },
+        {
+            type: 'Chungnam',
+            title: '아산시',
+        },
+        {
+            type: 'Chungnam',
+            title: '보령시',
+        },
+        {
+            type: 'Chungnam',
+            title: '서산시',
+        },
+        {
+            type: 'Chungnam',
+            title: '논산시',
+        },
+        {
+            type: 'Chungnam',
+            title: '계룡시',
+        },
+        {
+            type: 'Chungnam',
+            title: '당진시',
+        },
+        {
+            type: 'Chungnam',
+            title: '부여군',
+        },
+        {
+            type: 'Chungnam',
+            title: '서천군',
+        },
+        {
+            type: 'Chungnam',
+            title: '청양군',
+        },
+        {
+            type: 'Chungnam',
+            title: '홍성군',
+        },
+        {
+            type: 'Chungnam',
+            title: '예산군',
+        },
+        {
+            type: 'Chungnam',
+            title: '태안군',
+        },
+        {
+            type: 'Chungnam',
+            title: '금산군',
+        },
+        { 
+            type: 'Chungbuk',
+            title: '청주시',
+        },
+        {
+            type: 'Chungbuk',
+            title: '제천시',
+        },
+        {
+            type: 'Chungbuk',
+            title: '충주시',
+        },
+        {
+            type: 'Chungbuk',
+            title: '괴산군',
+        },
+        {
+            type: 'Chungbuk',
+            title: '단양군',
+        },
+        {
+            type: 'Chungbuk',
+            title: '보은군',
+        },
+        {
+            type: 'Chungbuk',
+            title: '영동군',
+        },
+        {
+            type: 'Chungbuk',
+            title: '옥천군',
+        },
+        {
+            type: 'Chungbuk',
+            title: '증평군',
+        },
+        {
+            type: 'Chungbuk',
+            title: '진천군',
+        },
+        { 
+            type: 'Busan',
+            title: '강서구',
+        },
+        {
+            type: 'Busan',
+            title: '금정구',
+        },
+        {
+            type: 'Busan',
+            title: '남구',
+        },
+        {
+            type: 'Busan',
+            title: '동구',
+        },
+        {
+            type: 'Busan',
+            title: '동래구',
+        },
+        {
+            type: 'Busan',
+            title: '부산진구',
+        },
+        {
+            type: 'Busan',
+            title: '북구',
+        },
+        {
+            type: 'Busan',
+            title: '사상구',
+        },
+        {
+            type: 'Busan',
+            title: '사하구',
+        },
+        {
+            type: 'Busan',
+            title: '서구',
+        },
+        {
+            type: 'Busan',
+            title: '수영구',
+        },
+        {
+            type: 'Busan',
+            title: '연제구',
+        },
+        {
+            type: 'Busan',
+            title: '영도구',
+        },
+        {
+            type: 'Busan',
+            title: '중구',
+        },
+        {
+            type: 'Busan',
+            title: '해운대구',
+        },
+        {
+            type: 'Busan',
+            title: '기장군',
+        },
+        { 
+            type: 'Ulsan',
+            title: '남구',
+        },
+        {
+            type: 'Ulsan',
+            title: '동구',
+        },
+        {
+            type: 'Ulsan',
+            title: '북구',
+        },
+        {
+            type: 'Ulsan',
+            title: '중구',
+        },
+        {
+            type: 'Ulsan',
+            title: '울주군',
+        },
+        { 
+            type: 'Gyeongnam',
+            title: '창원시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '진주시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '사천시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '김해시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '밀양시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '양산시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '통영시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '거제시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '함안군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '창녕군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '의령군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '고성군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '남해군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '산청군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '합천군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '거창군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '함양군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '하동군',
+        },
+        { 
+                type: 'Gyeongbuk',
+                title: '포항시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '안동시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '구미시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '경주시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '경산시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '영주시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '영천시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '상주시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '문경시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '김천시',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '칠곡군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '의성군',
+            },
+            {
+                type: 'Gyeongnam',
+                title: '남해군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '성주군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '고령군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '예천군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '봉화군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '울진군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '영덕군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '청송군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '영양군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '군위군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '청도군',
+            },
+            {
+                type: 'Gyeongbuk',
+                title: '울릉군',
+            },
+            { 
+                type: 'Daegu',
+                title: '남구',
+            },
+            {
+                type: 'Daegu',
+                title: '달서구',
+            },
+            {
+                type: 'Daegu',
+                title: '동구',
+            },
+            {
+                type: 'Daegu',
+                title: '북구',
+            },
+            {
+                type: 'Daegu',
+                title: '서구',
+            },
+            {
+                type: 'Daegu',
+                title: '수성구',
+            },
+            {
+                type: 'Daegu',
+                title: '중구',
+            },
+            {
+                type: 'Daegu',
+                title: '달성군',
+            },
+            { 
+                type: 'Gwangju',
+                title: '광산구',
+            },
+            {
+                type: 'Gwangju',
+                title: '남구',
+            },
+            {
+                type: 'Gwangju',
+                title: '동구',
+            },
+            {
+                type: 'Gwangju',
+                title: '북구',
+            },
+            {
+                type: 'Gwangju',
+                title: '서구',
+            },
+            { 
+                type: 'Jeonnam',
+                title: '목포시',
+            },
+            {
+                type: 'Jeonnam',
+                title: '여수시',
+            },
+            {
+                type: 'Jeonnam',
+                title: '순천시',
+            },
+            {
+                type: 'Jeonnam',
+                title: '나주시',
+            },
+            {
+                type: 'Jeonnam',
+                title: '광양시',
+            },
+            {
+                type: 'Jeonnam',
+                title: '담양군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '곡성군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '구례군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '고흥군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '보성군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '화순군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '장흥군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '강진군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '해남군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '영암군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '무안군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '함평군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '영광군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '장성군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '완도군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '진도군',
+            },
+            {
+                type: 'Jeonnam',
+                title: '신안군',
+            },
+            { 
+                type: 'Jeonbuk',
+                title: '전주시',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '군산시',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '익산시',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '정읍시',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '남원시',
+            },
+            { 
+                type: 'Jeonbuk',
+                title: '김제시',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '완주군',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '진안군',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '무주군',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '장수군',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '임실군',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '순창군',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '고창군',
+            },
+            {
+                type: 'Jeonbuk',
+                title: '부안군',
+            },
+            { 
+                type: 'Jeju',
+                title: '제주시',
+            },
+            {
+                type: 'Jeju',
+                title: '서귀포시',
+            }
     ];
 
-      const [select, setSelect] = useState('');
+    // const items_gyeonggi = [     //지역 선택 아이템
+    //     { 
+    //         type: 'Gyeonggi',
+    //         title: '수원시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '고양시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '과천시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '광명시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '광주시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '구리시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '군포시'
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '김포시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '남양주시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '동두천시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '부천시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '성남시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '시흥시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '안산시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '안성시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '안양시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '양주시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '여주시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '오산시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '용인시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '의왕시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '의정부시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '이천시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '파주시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '평택시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '포천시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '하남시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '화성시',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '가평군',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '양평군',
+    //     },
+    //     {
+    //         type: 'Gyeonggi',
+    //         title: '연천군',
+    //     }
+    // ];
+
+    // const items_incheon = [     //지역 선택 아이템
+    //     { 
+    //         type: 'Incheon',
+    //         title: '계양구',
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '남구',
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '남동구',
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '동구',
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '부평구',
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '서구',
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '연수구'
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '중구',
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '강화군',
+    //     },
+    //     {
+    //         type: 'Incheon',
+    //         title: '웅진군',
+    //     }
+    // ];
+
+    // const items_gangwon = [     //지역 선택 아이템
+    //     { 
+    //         type: 'Gangwon',
+    //         title: '춘천시',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '강릉시',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '동해시',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '삼척시',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '속초시',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '원주시',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '태백시'
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '고성군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '양구군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '양양군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '영월군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '인제군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '정선군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '철원군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '평창군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '홍천군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '화천군',
+    //     },
+    //     {
+    //         type: 'Gangwon',
+    //         title: '횡성군',
+    //     }
+    // ];
+
+    // const items_daejeon = [     //지역 선택 아이템
+    //     { 
+    //         type: 'Daejeon',
+    //         title: '대덕구',
+    //     },
+    //     {
+    //         type: 'Daejeon',
+    //         title: '동구',
+    //     },
+    //     {
+    //         type: 'Daejeon',
+    //         title: '서구',
+    //     },
+    //     {
+    //         type: 'Daejeon',
+    //         title: '유성구',
+    //     },
+    //     {
+    //         type: 'Daejeon',
+    //         title: '중구',
+    //     }
+    // ];
+
+    
+    // const items_sejong = [     //지역 선택 아이템
+    //     { 
+    //         type: 'Sejong',
+    //         title: '금남면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '부강면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '소정면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '연기면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '연동면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '연서면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '장군면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '전동면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '전의면',
+    //     },
+    //     {
+    //         type: 'Sejong',
+    //         title: '조치원읍',
+    //     }
+    // ];
+
+//     const items_chungnam = [     //지역 선택 아이템
+//     { 
+//         type: 'Chungnam',
+//         title: '천안시',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '공주시',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '아산시',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '보령시',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '서산시',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '논산시',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '계룡시',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '당진시',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '부여군',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '서천군',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '청양군',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '홍성군',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '예산군',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '태안군',
+//     },
+//     {
+//         type: 'Chungnam',
+//         title: '금산군',
+//     }
+// ];
+
+// const items_chungbuk = [     //지역 선택 아이템
+//     { 
+//         type: 'Chungbuk',
+//         title: '청주시',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '제천시',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '충주시',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '괴산군',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '단양군',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '보은군',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '영동군',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '옥천군',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '증평군',
+//     },
+//     {
+//         type: 'Chungbuk',
+//         title: '진천군',
+//     }
+// ];
+
+
+// const items_busan = [     //지역 선택 아이템
+//     { 
+//         type: 'Busan',
+//         title: '강서구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '금정구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '남구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '동구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '동래구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '부산진구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '북구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '사상구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '사하구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '서구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '수영구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '연제구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '영도구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '중구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '해운대구',
+//     },
+//     {
+//         type: 'Busan',
+//         title: '기장군',
+//     }
+// ];
+
+// const items_ulsan = [     //지역 선택 아이템
+//     { 
+//         type: 'Ulsan',
+//         title: '남구',
+//     },
+//     {
+//         type: 'Ulsan',
+//         title: '동구',
+//     },
+//     {
+//         type: 'Ulsan',
+//         title: '북구',
+//     },
+//     {
+//         type: 'Ulsan',
+//         title: '중구',
+//     },
+//     {
+//         type: 'Ulsan',
+//         title: '울주군',
+//     }
+// ];
+
+// const items_gyeongnam = [     //지역 선택 아이템
+//     { 
+//         type: 'Gyeongnam',
+//         title: '창원시',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '진주시',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '사천시',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '김해시',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '밀양시',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '양산시',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '통영시',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '거제시',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '함안군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '창녕군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '의령군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '고성군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '남해군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '산청군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '합천군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '거창군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '함양군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '하동군',
+//     }
+// ];
+
+// const items_gyeongbuk = [     //지역 선택 아이템
+// { 
+//         type: 'Gyeongbuk',
+//         title: '포항시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '안동시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '구미시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '경주시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '경산시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '영주시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '영천시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '상주시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '문경시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '김천시',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '칠곡군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '의성군',
+//     },
+//     {
+//         type: 'Gyeongnam',
+//         title: '남해군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '성주군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '고령군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '예천군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '봉화군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '울진군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '영덕군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '청송군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '영양군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '군위군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '청도군',
+//     },
+//     {
+//         type: 'Gyeongbuk',
+//         title: '울릉군',
+//     }
+// ];
+
+// const items_daegu = [     //지역 선택 아이템
+//     { 
+//         type: 'Daegu',
+//         title: '남구',
+//     },
+//     {
+//         type: 'Daegu',
+//         title: '달서구',
+//     },
+//     {
+//         type: 'Daegu',
+//         title: '동구',
+//     },
+//     {
+//         type: 'Daegu',
+//         title: '북구',
+//     },
+//     {
+//         type: 'Daegu',
+//         title: '서구',
+//     },
+//     {
+//         type: 'Daegu',
+//         title: '수성구',
+//     },
+//     {
+//         type: 'Daegu',
+//         title: '중구',
+//     },
+//     {
+//         type: 'Daegu',
+//         title: '달성군',
+//     }
+// ];
+
+// const items_gwangju = [     //지역 선택 아이템
+//     { 
+//         type: 'Gwangju',
+//         title: '광산구',
+//     },
+//     {
+//         type: 'Gwangju',
+//         title: '남구',
+//     },
+//     {
+//         type: 'Gwangju',
+//         title: '동구',
+//     },
+//     {
+//         type: 'Gwangju',
+//         title: '북구',
+//     },
+//     {
+//         type: 'Gwangju',
+//         title: '서구',
+//     }
+// ];
+
+// const items_jeonnam = [     //지역 선택 아이템
+//     { 
+//         type: 'Jeonnam',
+//         title: '목포시',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '여수시',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '순천시',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '나주시',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '광양시',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '담양군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '곡성군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '구례군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '고흥군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '보성군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '화순군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '장흥군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '강진군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '해남군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '영암군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '무안군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '함평군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '영광군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '장성군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '완도군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '진도군',
+//     },
+//     {
+//         type: 'Jeonnam',
+//         title: '신안군',
+//     }
+// ];
+
+// const items_jeonbuk = [     //지역 선택 아이템
+//     { 
+//         type: 'Jeonbuk',
+//         title: '전주시',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '군산시',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '익산시',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '정읍시',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '남원시',
+//     },
+//     { 
+//         type: 'Jeonbuk',
+//         title: '김제시',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '완주군',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '진안군',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '무주군',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '장수군',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '임실군',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '순창군',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '고창군',
+//     },
+//     {
+//         type: 'Jeonbuk',
+//         title: '부안군',
+//     }
+// ];
+
+// const items_jeju = [     //지역 선택 아이템
+//     { 
+//         type: 'Jeju',
+//         title: '제주시',
+//     },
+//     {
+//         type: 'Jeju',
+//         title: '서귀포시',
+//     }
+// ];
+
 
       const handleClick = (type) => {
         setSelect(type);
+        switch(type) {
+            case 'Seoul':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Gyeonggi':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Incheon':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Gangwon':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Daejeon':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Sejong':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Chungnam':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Chungbuk':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Busan':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Ulsan':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Gyeongnam':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Gyeongbuk':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Daegu':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Gwangju':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Jeonnam':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Jeonbuk':
+                console.log(type);
+                setShowCityItems(true);
+            case 'Jeju':
+                console.log(type);
+                setShowCityItems(true);
+            default:
+                console.log("====");
+        }
         };
+
+        const CityhandleClick = (city_type) => {
+            setSelect(city_type);
+            console.log('Clicked City Item:', city_type);             
+        }
 
     const idValidation = () => {   // 아이디 중복 확인
           axios
@@ -314,14 +2130,6 @@ function SignUP() {
 
     const onClickSignUP = async () => {
         console.log("click SignUP");
-        const workAreaArray = Array.isArray(InputWorkArea) ? InputWorkArea : [InputWorkArea];
-        const workJobArray = Array.isArray(InputWorkJob) ? InputWorkJob : [InputWorkJob];
-
-        const outputWorkArray = workAreaArray[0].split(', ');
-        const outputJobArray = workJobArray[0].split(', ');
-    
-        console.log("_____", outputWorkArray);
-        console.log("*****", outputJobArray);
 
         if(InputPW !== InputPWCHK) {   
             // 비밀번호와 비밀번호 체크가 다를 때
@@ -361,8 +2169,8 @@ function SignUP() {
             home: InputAddress,
             birth: InputBirth,
             gender: InputGender,
-            hopeLocation: outputWorkArray,
-            hopeJob: outputJobArray
+            hopeLocation: InputWorkArea,
+            hopeJob: InputWorkJob
         },
         {
             headers: {
@@ -407,7 +2215,26 @@ function SignUP() {
         });
     };
 
-    
+    const selectedCityIndex = items_city.findIndex((item) => item.type === select);
+
+    // const selectedSeoulIndex = items_seoul.findIndex((item) => item.type === select);
+    // const selectedGyeonggiIndex = items_gyeonggi.findIndex((item) => item.type === select);
+    // const selectedIncheonIndex = items_incheon.findIndex((item) => item.type === select);
+    // const selectedGangwoniIndex = items_gangwon.findIndex((item) => item.type === select);
+    // const selectedDaejeonIndex = items_daejeon.findIndex((item) => item.type === select);
+    // const selectedSejongIndex = items_sejong.findIndex((item) => item.type === select);
+    // const selectedChungnamIndex = items_chungnam.findIndex((item) => item.type === select);
+    // const selectedChungbukIndex = items_chungbuk.findIndex((item) => item.type === select);
+    // const selectedBusanIndex = items_busan.findIndex((item) => item.type === select);
+    // const selectedUlsanIndex = items_ulsan.findIndex((item) => item.type === select);
+    // const selectedGyeongnamIndex = items_gyeongnam.findIndex((item) => item.type === select);
+    // const selectedGyeongbukIndex = items_gyeongbuk.findIndex((item) => item.type === select);
+    // const selectedDaeguIndex = items_daegu.findIndex((item) => item.type === select);
+    // const selectedGwangjuIndex = items_gwangju.findIndex((item) => item.type === select);
+    // const selectedJeonnamIndex = items_jeonnam.findIndex((item) => item.type === select);
+    // const selectedJeonbukIndex = items_jeonbuk.findIndex((item) => item.type === select);
+    // const selectedJejuIndex = items_jeju.findIndex((item) => item.type === select);
+
     return(
         <div>
             <div className="logo-container">
@@ -504,22 +2331,245 @@ function SignUP() {
                                                     className={`custom-modal-box ${select === item.type ? 'select' : ''}`} // 클릭하면 select클래스가 추가
                                                 > 
                                                     {item.title}
-                                                </div>
-                                            ))}
-                                        
-                                            {items_city.map((item, index) => (
-                                                <div
-                                                    key={index}
-                                                    onClick={() => handleClick(item.type)} 		      // type 받아 set함수에 넣어준다
-                                                    className={`custom-modal-box ${select === item.type ? 'select' : ''}`} // 클릭하면 select클래스가 추가
-                                                > 
-                                                    {item.title}
-                                                </div>
-                                            ))}
-                                    
 
+                                                    {/* {showCityItems && select === 'Seoul' && index === selectedSeoulIndex && (
+                                                        <div>
+                                                        {items_seoul.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}
+
+                                                    {showCityItems && select === 'Gyeonggi' && index === selectedGyeonggiIndex && (
+                                                        <div>
+                                                        {items_gyeonggi.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}
+
+                                                    {showCityItems && select === 'Incheon' && index === selectedIncheonIndex && (
+                                                        <div>
+                                                        {items_incheon.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}
+
+                                                    {showCityItems && select === 'Gangwon' && index === selectedGangwoniIndex && (
+                                                        <div>
+                                                        {items_gangwon.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}
+
+                                                    {showCityItems && select === 'Daejeon' && index === selectedDaejeonIndex && (
+                                                        <div>
+                                                        {items_daejeon.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}
+
+                                                    {showCityItems && select === 'Sejong' && index === selectedSejongIndex && (
+                                                        <div>
+                                                        {items_sejong.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Chungnam' && index === selectedChungnamIndex && (
+                                                        <div>
+                                                        {items_chungnam.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Chungbuk' && index === selectedChungbukIndex && (
+                                                        <div>
+                                                        {items_chungbuk.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Busan' && index === selectedBusanIndex && (
+                                                        <div>
+                                                        {items_busan.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Ulsan' && index === selectedUlsanIndex && (
+                                                        <div>
+                                                        {items_ulsan.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Gyeongnam' && index === selectedGyeongnamIndex && (
+                                                        <div>
+                                                        {items_gyeongnam.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Gyeongbuk' && index === selectedGyeongbukIndex && (
+                                                        <div>
+                                                        {items_gyeongbuk.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Daegu' && index === selectedDaeguIndex && (
+                                                        <div>
+                                                        {items_daegu.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Gwangju' && index === selectedGwangjuIndex && (
+                                                        <div>
+                                                        {items_gwangju.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Jeonnam' && index === selectedJeonnamIndex && (
+                                                        <div>
+                                                        {items_jeonnam.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Jeonbuk' && index === selectedJeonbukIndex && (
+                                                        <div>
+                                                        {items_jeonbuk.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}{showCityItems && select === 'Jeju' && index === selectedJejuIndex && (
+                                                        <div>
+                                                        {items_jeju.map((cityItem, cityIndex) => (
+                                                            <div 
+                                                                key={cityIndex} 
+                                                                onClick={() => CityhandleClick(cityItem.type)}
+                                                                className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                            >
+                                                            {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )} */}
+                                                </div>
+                                            ))}
                                 </Modal.Body>
-                            <Modal.Footer>
+                        
+                        {showCityItems && (select === 'Seoul' || select === 'Gyeonggi' || select === 'Incheon' || select === 'Gangwon' || select === 'Daejeon' 
+                        || select === 'Sejong' || select === 'Chungnam' || select === 'Chungbuk' || select === 'Busan' || select === 'Ulsan' 
+                        || select === 'Gyeongnam' || select === 'Gyeongbuk' || select === 'Daegu' || select === 'Gwangju' || select === 'Jeonnam'
+                        || select === 'Jeonbuk' || select === 'Jeju') && (
+                            <div className="city-items-container">
+                            {items_city
+                                .filter((cityItem) => cityItem.type === select)
+                                .map((cityItem, index) => (
+                                <div
+                                    key={index}
+                                    onClick={() => CityhandleClick(cityItem.type)}
+                                    className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                >
+                                    {cityItem.title}
+                                </div>
+                                ))}
+                            </div>
+                        )}
+                        <Modal.Footer>
                                 <Button className="btn_close" variant="secondary" onClick={handleClose}>
                                     닫기
                                 </Button>

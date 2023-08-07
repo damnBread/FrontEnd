@@ -52,22 +52,27 @@
 
 .custom-modal-box {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 150px;
   border: 1px solid #E7E6E6;
   padding: 10px;
 }
 
 .select {
-  background-color: #bf5f491f; /* Change the background color as desired */
+  background-color: #bf5f491f;
   border: 2px solid #bf5f4977;
 }
 
-/* .custom-modal-box2 {
-  flex-direction: row;
+.custom-modal-box2 {
+  flex-direction: column;
   width: 150px;
   border: 1px solid #E7E6E6;
   padding: 10px;
-  align-items: flex-start;
-  margin-left: 300px;
-} */
+  margin-left: 140px;
+}
+
+.city-items-container {
+  position: relative;
+  /* top: 89px; */
+  left: 30px;
+}
