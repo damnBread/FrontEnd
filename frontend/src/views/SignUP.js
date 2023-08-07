@@ -31,6 +31,7 @@ function SignUP() {
     const handleShow = () => setShow(true);     //모달창 켜기
 
     const [select, setSelect] = useState(null);  //서울 등 선택
+    const [citySelect, setCitySelect] = useState(null);  //서울 등 선택
     const [showCityItems, setShowCityItems] = useState(false);  //서울 안에 있는 강남구 등 선택
 
     const handleInputID = (e) => {
@@ -244,6 +245,10 @@ function SignUP() {
         },
         {
             type: 'Seoul',
+            title: '종로구',
+        },
+        {
+            type: 'Seoul',
             title: '중구',
         },
         {
@@ -252,11 +257,19 @@ function SignUP() {
         },
         { 
             type: 'Gyeonggi',
-            title: '수원시',
+            title: '가평군',
         },
         {
             type: 'Gyeonggi',
-            title: '고양시',
+            title: '고양시 덕양구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '고양시 일산동구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '고양시 일산서구',
         },
         {
             type: 'Gyeonggi',
@@ -296,7 +309,31 @@ function SignUP() {
         },
         {
             type: 'Gyeonggi',
-            title: '성남시',
+            title: '성남시 분당구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '성남시 수정구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '성남시 중원구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '수원시 권선구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '수원시 영통구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '수원시 장안구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '수원시 팔달구',
         },
         {
             type: 'Gyeonggi',
@@ -304,7 +341,11 @@ function SignUP() {
         },
         {
             type: 'Gyeonggi',
-            title: '안산시',
+            title: '안산시 단원구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '안산시 상록구',
         },
         {
             type: 'Gyeonggi',
@@ -312,7 +353,11 @@ function SignUP() {
         },
         {
             type: 'Gyeonggi',
-            title: '안양시',
+            title: '안양시 동안구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '안양시 만안구',
         },
         {
             type: 'Gyeonggi',
@@ -320,7 +365,15 @@ function SignUP() {
         },
         {
             type: 'Gyeonggi',
+            title: '양평군',
+        },
+        {
+            type: 'Gyeonggi',
             title: '여주시',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '연천군',
         },
         {
             type: 'Gyeonggi',
@@ -328,7 +381,15 @@ function SignUP() {
         },
         {
             type: 'Gyeonggi',
-            title: '용인시',
+            title: '용인시 기흥구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '용인시 수지구',
+        },
+        {
+            type: 'Gyeonggi',
+            title: '용인시 처인구',
         },
         {
             type: 'Gyeonggi',
@@ -363,24 +424,12 @@ function SignUP() {
             title: '화성시',
         },
         {
-            type: 'Gyeonggi',
-            title: '가평군',
-        },
-        {
-            type: 'Gyeonggi',
-            title: '양평군',
-        },
-        {
-            type: 'Gyeonggi',
-            title: '연천군',
+            type: 'Incheon',
+            title: '강화군',
         },
         { 
             type: 'Incheon',
             title: '계양구',
-        },
-        {
-            type: 'Incheon',
-            title: '남구',
         },
         {
             type: 'Incheon',
@@ -389,6 +438,10 @@ function SignUP() {
         {
             type: 'Incheon',
             title: '동구',
+        },
+        {
+            type: 'Incheon',
+            title: '미추홀구',
         },
         {
             type: 'Incheon',
@@ -404,23 +457,19 @@ function SignUP() {
         },
         {
             type: 'Incheon',
-            title: '중구',
+            title: '옹진군'
         },
         {
             type: 'Incheon',
-            title: '강화군',
-        },
-        {
-            type: 'Incheon',
-            title: '웅진군',
-        },
-        { 
-            type: 'Gangwon',
-            title: '춘천시',
+            title: '중구'
         },
         {
             type: 'Gangwon',
             title: '강릉시',
+        },
+        {
+            type: 'Gangwon',
+            title: '고성군',
         },
         {
             type: 'Gangwon',
@@ -436,18 +485,6 @@ function SignUP() {
         },
         {
             type: 'Gangwon',
-            title: '원주시',
-        },
-        {
-            type: 'Gangwon',
-            title: '태백시'
-        },
-        {
-            type: 'Gangwon',
-            title: '고성군',
-        },
-        {
-            type: 'Gangwon',
             title: '양구군',
         },
         {
@@ -460,6 +497,10 @@ function SignUP() {
         },
         {
             type: 'Gangwon',
+            title: '원주시',
+        },
+        {
+            type: 'Gangwon',
             title: '인제군',
         },
         {
@@ -469,6 +510,14 @@ function SignUP() {
         {
             type: 'Gangwon',
             title: '철원군',
+        },
+        {
+            type: 'Gangwon',
+            title: '춘천시',
+        },
+        {
+            type: 'Gangwon',
+            title: '태백시'
         },
         {
             type: 'Gangwon',
@@ -512,63 +561,7 @@ function SignUP() {
         },
         {
             type: 'Sejong',
-            title: '부강면',
-        },
-        {
-            type: 'Sejong',
-            title: '소정면',
-        },
-        {
-            type: 'Sejong',
-            title: '연기면',
-        },
-        {
-            type: 'Sejong',
-            title: '연동면',
-        },
-        {
-            type: 'Sejong',
-            title: '연서면',
-        },
-        {
-            type: 'Sejong',
-            title: '장군면',
-        },
-        {
-            type: 'Sejong',
-            title: '전동면',
-        },
-        {
-            type: 'Sejong',
-            title: '전의면',
-        },
-        {
-            type: 'Sejong',
-            title: '조치원읍',
-        },
-        { 
-            type: 'Chungnam',
-            title: '천안시',
-        },
-        {
-            type: 'Chungnam',
-            title: '공주시',
-        },
-        {
-            type: 'Chungnam',
-            title: '아산시',
-        },
-        {
-            type: 'Chungnam',
-            title: '보령시',
-        },
-        {
-            type: 'Chungnam',
-            title: '서산시',
-        },
-        {
-            type: 'Chungnam',
-            title: '논산시',
+            title: '세종시',
         },
         {
             type: 'Chungnam',
@@ -576,7 +569,23 @@ function SignUP() {
         },
         {
             type: 'Chungnam',
+            title: '공주시',
+        },
+        {
+            type: 'Chungnam',
+            title: '금산군',
+        },
+        {
+            type: 'Chungnam',
+            title: '논산시',
+        },
+        {
+            type: 'Chungnam',
             title: '당진시',
+        },
+        {
+            type: 'Chungnam',
+            title: '보령시',
         },
         {
             type: 'Chungnam',
@@ -584,15 +593,15 @@ function SignUP() {
         },
         {
             type: 'Chungnam',
+            title: '서산시',
+        },
+        {
+            type: 'Chungnam',
             title: '서천군',
         },
         {
             type: 'Chungnam',
-            title: '청양군',
-        },
-        {
-            type: 'Chungnam',
-            title: '홍성군',
+            title: '아산시',
         },
         {
             type: 'Chungnam',
@@ -600,23 +609,23 @@ function SignUP() {
         },
         {
             type: 'Chungnam',
+            title: '천안시 동남구',
+        },
+        {
+            type: 'Chungnam',
+            title: '천안시 서북구',
+        },
+        {
+            type: 'Chungnam',
+            title: '청양군',
+        },
+        {
+            type: 'Chungnam',
             title: '태안군',
         },
         {
             type: 'Chungnam',
-            title: '금산군',
-        },
-        { 
-            type: 'Chungbuk',
-            title: '청주시',
-        },
-        {
-            type: 'Chungbuk',
-            title: '제천시',
-        },
-        {
-            type: 'Chungbuk',
-            title: '충주시',
+            title: '홍성군',
         },
         {
             type: 'Chungbuk',
@@ -640,11 +649,39 @@ function SignUP() {
         },
         {
             type: 'Chungbuk',
+            title: '음성군',
+        },
+        {
+            type: 'Chungbuk',
+            title: '제천시',
+        },
+        {
+            type: 'Chungbuk',
             title: '증평군',
         },
         {
             type: 'Chungbuk',
             title: '진천군',
+        },
+        { 
+            type: 'Chungbuk',
+            title: '청주시 상당구',
+        },
+        { 
+            type: 'Chungbuk',
+            title: '청주시 서원구',
+        },
+        { 
+            type: 'Chungbuk',
+            title: '청주시 청원구',
+        },
+        { 
+            type: 'Chungbuk',
+            title: '청주시 흥덕구',
+        },
+        {
+            type: 'Chungbuk',
+            title: '충주시',
         },
         { 
             type: 'Busan',
@@ -653,6 +690,10 @@ function SignUP() {
         {
             type: 'Busan',
             title: '금정구',
+        },
+        {
+            type: 'Busan',
+            title: '기장군',
         },
         {
             type: 'Busan',
@@ -707,10 +748,6 @@ function SignUP() {
             title: '해운대구',
         },
         {
-            type: 'Busan',
-            title: '기장군',
-        },
-        { 
             type: 'Ulsan',
             title: '남구',
         },
@@ -724,55 +761,19 @@ function SignUP() {
         },
         {
             type: 'Ulsan',
-            title: '중구',
+            title: '울주군',
         },
         {
             type: 'Ulsan',
-            title: '울주군',
-        },
-        { 
-            type: 'Gyeongnam',
-            title: '창원시',
-        },
-        {
-            type: 'Gyeongnam',
-            title: '진주시',
-        },
-        {
-            type: 'Gyeongnam',
-            title: '사천시',
-        },
-        {
-            type: 'Gyeongnam',
-            title: '김해시',
-        },
-        {
-            type: 'Gyeongnam',
-            title: '밀양시',
-        },
-        {
-            type: 'Gyeongnam',
-            title: '양산시',
-        },
-        {
-            type: 'Gyeongnam',
-            title: '통영시',
+            title: '중구',
         },
         {
             type: 'Gyeongnam',
             title: '거제시',
         },
-        {
+        { 
             type: 'Gyeongnam',
-            title: '함안군',
-        },
-        {
-            type: 'Gyeongnam',
-            title: '창녕군',
-        },
-        {
-            type: 'Gyeongnam',
-            title: '의령군',
+            title: '거창군',
         },
         {
             type: 'Gyeongnam',
@@ -780,7 +781,19 @@ function SignUP() {
         },
         {
             type: 'Gyeongnam',
+            title: '김해시',
+        },
+        {
+            type: 'Gyeongnam',
             title: '남해군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '밀양시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '사천시',
         },
         {
             type: 'Gyeongnam',
@@ -788,11 +801,51 @@ function SignUP() {
         },
         {
             type: 'Gyeongnam',
-            title: '합천군',
+            title: '양산시',
         },
         {
             type: 'Gyeongnam',
-            title: '거창군',
+            title: '의령군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '진주시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '창녕군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '창원시 마산합포구',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '창원시 마산회원구',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '창원시 성산구',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '창원시 의창구',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '창원시 진해구',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '통영시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '하동군',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '함안군',
         },
         {
             type: 'Gyeongnam',
@@ -800,308 +853,323 @@ function SignUP() {
         },
         {
             type: 'Gyeongnam',
-            title: '하동군',
+            title: '합천군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '경산시',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '경주시',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '고령군',
         },
         { 
-                type: 'Gyeongbuk',
-                title: '포항시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '안동시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '구미시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '경주시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '경산시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '영주시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '영천시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '상주시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '문경시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '김천시',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '칠곡군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '의성군',
-            },
-            {
-                type: 'Gyeongnam',
-                title: '남해군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '성주군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '고령군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '예천군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '봉화군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '울진군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '영덕군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '청송군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '영양군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '군위군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '청도군',
-            },
-            {
-                type: 'Gyeongbuk',
-                title: '울릉군',
-            },
-            { 
-                type: 'Daegu',
-                title: '남구',
-            },
-            {
-                type: 'Daegu',
-                title: '달서구',
-            },
-            {
-                type: 'Daegu',
-                title: '동구',
-            },
-            {
-                type: 'Daegu',
-                title: '북구',
-            },
-            {
-                type: 'Daegu',
-                title: '서구',
-            },
-            {
-                type: 'Daegu',
-                title: '수성구',
-            },
-            {
-                type: 'Daegu',
-                title: '중구',
-            },
-            {
-                type: 'Daegu',
-                title: '달성군',
-            },
-            { 
-                type: 'Gwangju',
-                title: '광산구',
-            },
-            {
-                type: 'Gwangju',
-                title: '남구',
-            },
-            {
-                type: 'Gwangju',
-                title: '동구',
-            },
-            {
-                type: 'Gwangju',
-                title: '북구',
-            },
-            {
-                type: 'Gwangju',
-                title: '서구',
-            },
-            { 
-                type: 'Jeonnam',
-                title: '목포시',
-            },
-            {
-                type: 'Jeonnam',
-                title: '여수시',
-            },
-            {
-                type: 'Jeonnam',
-                title: '순천시',
-            },
-            {
-                type: 'Jeonnam',
-                title: '나주시',
-            },
-            {
-                type: 'Jeonnam',
-                title: '광양시',
-            },
-            {
-                type: 'Jeonnam',
-                title: '담양군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '곡성군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '구례군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '고흥군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '보성군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '화순군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '장흥군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '강진군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '해남군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '영암군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '무안군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '함평군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '영광군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '장성군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '완도군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '진도군',
-            },
-            {
-                type: 'Jeonnam',
-                title: '신안군',
-            },
-            { 
-                type: 'Jeonbuk',
-                title: '전주시',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '군산시',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '익산시',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '정읍시',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '남원시',
-            },
-            { 
-                type: 'Jeonbuk',
-                title: '김제시',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '완주군',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '진안군',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '무주군',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '장수군',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '임실군',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '순창군',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '고창군',
-            },
-            {
-                type: 'Jeonbuk',
-                title: '부안군',
-            },
-            { 
-                type: 'Jeju',
-                title: '제주시',
-            },
-            {
-                type: 'Jeju',
-                title: '서귀포시',
-            }
+            type: 'Gyeongbuk',
+            title: '구미시',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '김천시',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '문경시',
+        },            
+        {
+            type: 'Gyeongbuk',
+            title: '봉화군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '상주시',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '성주군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '안동시',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '영덕군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '영양군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '영주시',
+        },
+        {
+            type: 'Gyeongnam',
+            title: '영천시',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '예천군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '울릉군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '울진군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '의성군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '청도군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '청송군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '칠곡군',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '포항시 남구',
+        },
+        {
+            type: 'Gyeongbuk',
+            title: '포항시 북구',
+        },
+        { 
+            type: 'Daegu',
+            title: '군위군',
+        },
+        { 
+            type: 'Daegu',
+            title: '남구',
+        },
+        {
+            type: 'Daegu',
+            title: '달서구',
+        },
+        {
+            type: 'Daegu',
+            title: '달성군',
+        },
+        {
+            type: 'Daegu',
+            title: '동구',
+        },
+        {
+            type: 'Daegu',
+            title: '북구',
+        },
+        {
+            type: 'Daegu',
+            title: '서구',
+        },
+        {
+            type: 'Daegu',
+            title: '수성구',
+        },
+        {
+            type: 'Daegu',
+            title: '중구',
+        },
+        { 
+            type: 'Gwangju',
+            title: '광산구',
+        },
+        {
+            type: 'Gwangju',
+            title: '남구',
+        },
+        {
+            type: 'Gwangju',
+            title: '동구',
+        },
+        {
+            type: 'Gwangju',
+            title: '북구',
+        },
+        {
+            type: 'Gwangju',
+            title: '서구',
+        },
+        {
+            type: 'Jeonnam',
+            title: '강진군',
+        },
+        { 
+            type: 'Jeonnam',
+            title: '고흥군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '곡성군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '광양시',
+        },
+        {
+            type: 'Jeonnam',
+            title: '구례군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '나주시',
+        },
+        {
+            type: 'Jeonnam',
+            title: '담양군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '목포시',
+        },
+        {
+            type: 'Jeonnam',
+            title: '무안군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '보성군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '순천시',
+        },
+        {
+            type: 'Jeonnam',
+            title: '신안군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '여수시',
+        },
+        {
+            type: 'Jeonnam',
+            title: '영광군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '영암군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '완도군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '장성군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '장흥군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '진도군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '함평군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '해남군',
+        },
+        {
+            type: 'Jeonnam',
+            title: '화순군',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '고창군',
+        },
+        { 
+            type: 'Jeonbuk',
+            title: '군산시',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '김제시',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '남원시',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '무주군',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '부안군',
+        },
+        { 
+            type: 'Jeonbuk',
+            title: '순창군',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '완주군',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '익산시',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '임실군',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '장수군',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '임실군',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '전주시 덕진구',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '전주시 완산구',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '정읍시',
+        },
+        {
+            type: 'Jeonbuk',
+            title: '진안군',
+        },
+        { 
+            type: 'Jeju',
+            title: '서귀포시',
+        },
+        {
+            type: 'Jeju',
+            title: '제주시',
+        }
+    ];
+
+    const items_dong = [     //지역 선택 아이템
+        { 
+            type: '강남구',
+            title: '대치동',
+        }
     ];
 
 
@@ -1165,7 +1233,7 @@ function SignUP() {
         };
 
         const CityhandleClick = (city_type) => {
-            setSelect(city_type);
+            setCitySelect(city_type);
             console.log('Clicked City Item:', city_type);             
         }
 
@@ -1313,26 +1381,6 @@ function SignUP() {
         });
     };
 
-    const selectedCityIndex = items_city.findIndex((item) => item.type === select);
-
-    // const selectedSeoulIndex = items_seoul.findIndex((item) => item.type === select);
-    // const selectedGyeonggiIndex = items_gyeonggi.findIndex((item) => item.type === select);
-    // const selectedIncheonIndex = items_incheon.findIndex((item) => item.type === select);
-    // const selectedGangwoniIndex = items_gangwon.findIndex((item) => item.type === select);
-    // const selectedDaejeonIndex = items_daejeon.findIndex((item) => item.type === select);
-    // const selectedSejongIndex = items_sejong.findIndex((item) => item.type === select);
-    // const selectedChungnamIndex = items_chungnam.findIndex((item) => item.type === select);
-    // const selectedChungbukIndex = items_chungbuk.findIndex((item) => item.type === select);
-    // const selectedBusanIndex = items_busan.findIndex((item) => item.type === select);
-    // const selectedUlsanIndex = items_ulsan.findIndex((item) => item.type === select);
-    // const selectedGyeongnamIndex = items_gyeongnam.findIndex((item) => item.type === select);
-    // const selectedGyeongbukIndex = items_gyeongbuk.findIndex((item) => item.type === select);
-    // const selectedDaeguIndex = items_daegu.findIndex((item) => item.type === select);
-    // const selectedGwangjuIndex = items_gwangju.findIndex((item) => item.type === select);
-    // const selectedJeonnamIndex = items_jeonnam.findIndex((item) => item.type === select);
-    // const selectedJeonbukIndex = items_jeonbuk.findIndex((item) => item.type === select);
-    // const selectedJejuIndex = items_jeju.findIndex((item) => item.type === select);
-
     return(
         <div>
             <div className="logo-container">
@@ -1441,10 +1489,27 @@ function SignUP() {
                                             .map((cityItem, index) => (
                                                 <div
                                                     key={index}
-                                                    onClick={() => CityhandleClick(cityItem.type)}
-                                                    className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
+                                                    onClick={() => CityhandleClick(cityItem.title)}
+                                                    className={`custom-modal-box ${citySelect === cityItem.title ? 'select' : ''}`}
                                                 >
                                                     {cityItem.title}
+                                                </div>
+                                            ))}
+                                    </div>
+                                )}
+
+                                {/* 동 분류하는 중 */}
+                                {showCityItems && (
+                                    <div className="city-items-container">
+                                        {items_dong
+                                            .filter((dongItem) => dongItem.title === select)
+                                            .map((dongItem, index) => (
+                                                <div
+                                                    key={index}
+                                                    onClick={() => CityhandleClick(dongItem.title)}
+                                                    className={`custom-modal-box ${citySelect === dongItem.title ? 'select' : ''}`}
+                                                >
+                                                    {dongItem.title}
                                                 </div>
                                             ))}
                                     </div>
