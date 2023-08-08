@@ -1086,6 +1086,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '개포동',
+        },{ 
+            type: '강남구',
+            title: '개포1동',
         },
         { 
             type: '강남구',
@@ -1094,6 +1097,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '개포4동',
+        },{ 
+            type: '강남구',
+            title: '논현동',
         },
         { 
             type: '강남구',
@@ -1102,6 +1108,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '논현2동',
+        },{ 
+            type: '강남구',
+            title: '대치동',
         },
         { 
             type: '강남구',
@@ -1110,6 +1119,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '대치2동',
+        },{ 
+            type: '강남구',
+            title: '대치4동',
         },
         { 
             type: '강남구',
@@ -1118,6 +1130,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '도곡1동',
+        },{ 
+            type: '강남구',
+            title: '도곡2동',
         },
         { 
             type: '강남구',
@@ -1126,6 +1141,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '삼성1동',
+        },{ 
+            type: '강남구',
+            title: '삼성2동',
         },
         { 
             type: '강남구',
@@ -1134,6 +1152,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '수서동',
+        },{ 
+            type: '강남구',
+            title: '신사동',
         },
         { 
             type: '강남구',
@@ -1142,6 +1163,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '역삼동',
+        },{ 
+            type: '강남구',
+            title: '역삼1동',
         },
         { 
             type: '강남구',
@@ -1150,6 +1174,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '율현동',
+        },{ 
+            type: '강남구',
+            title: '일원동',
         },
         { 
             type: '강남구',
@@ -1158,6 +1185,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '일원2동',
+        },{ 
+            type: '강남구',
+            title: '일원본동',
         },
         { 
             type: '강남구',
@@ -1166,10 +1196,14 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강남구',
             title: '청담동',
-        },   //강남구 끝
+        },                          //강남구 끝
         { 
             type: '강동구',
             title: '강일동',
+        },
+        { 
+            type: '강동구',
+            title: '고덕동',
         },
         { 
             type: '강동구',
@@ -1178,6 +1212,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강동구',
             title: '고덕2동',
+        },{ 
+            type: '강동구',
+            title: '길동',
         },
         { 
             type: '강동구',
@@ -1186,6 +1223,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강동구',
             title: '둔촌1동',
+        },{ 
+            type: '강동구',
+            title: '둔촌2동',
         },
         { 
             type: '강동구',
@@ -1197,11 +1237,18 @@ export const items = [     //지역 선택 아이템
         },
         { 
             type: '강동구',
+            title: '명일2동',
+        },
+        { 
+            type: '강동구',
             title: '상일동',
         },
         { 
             type: '강동구',
             title: '성내동',
+        },{ 
+            type: '강동구',
+            title: '성내1동',
         },
         { 
             type: '강동구',
@@ -1210,6 +1257,9 @@ export const items = [     //지역 선택 아이템
         { 
             type: '강동구',
             title: '성내3동',
+        },{ 
+            type: '강동구',
+            title: '암사동',
         },
         { 
             type: '강동구',
@@ -1221,17 +1271,28 @@ export const items = [     //지역 선택 아이템
         },
         { 
             type: '강동구',
+            title: '암사3동',
+        },
+        { 
+            type: '강동구',
             title: '천호동',
-        },{ 
+        },
+        { 
             type: '강동구',
             title: '천호1동',
         },{ 
             type: '강동구',
+            title: '천호2동',
+        },{ 
+            type: '강동구',
             title: '천호3동',
-        },   //강동구 끝
+        },                              //강동구 끝
         { 
             type: '강북구',
             title: '미아동',
+        },{ 
+            type: '강북구',
+            title: '번동',
         },{ 
             type: '강북구',
             title: '번1동',
@@ -1240,10 +1301,16 @@ export const items = [     //지역 선택 아이템
             title: '번2동',
         },{ 
             type: '강북구',
+            title: '번3동',
+        },{ 
+            type: '강북구',
             title: '삼각산동',
         },{ 
             type: '강북구',
             title: '삼양동',
+        },{ 
+            type: '강북구',
+            title: '송중동',
         },{ 
             type: '강북구',
             title: '송천동',
@@ -1252,16 +1319,25 @@ export const items = [     //지역 선택 아이템
             title: '수유동',
         },{ 
             type: '강북구',
+            title: '수유1동',
+        },{ 
+            type: '강북구',
             title: '수유2동',
         },{ 
             type: '강북구',
             title: '수유3동',
         },{ 
             type: '강북구',
-            title: '인수동',  //강북구 끝
+            title: '우이동',
+        },{ 
+            type: '강북구',
+            title: '인수동',                //강북구 끝
         },{ 
             type: '강서구',
             title: '가양동',
+        },{ 
+            type: '강서구',
+            title: '가양1동',
         },{ 
             type: '강서구',
             title: '가양2동',
@@ -1270,10 +1346,16 @@ export const items = [     //지역 선택 아이템
             title: '가양3동',
         },{ 
             type: '강서구',
+            title: '개화동',
+        },{ 
+            type: '강서구',
             title: '공항동',
         },{ 
             type: '강서구',
             title: '과해동',
+        },{ 
+            type: '강서구',
+            title: '내발산동',
         },{ 
             type: '강서구',
             title: '등촌동',
@@ -1282,10 +1364,16 @@ export const items = [     //지역 선택 아이템
             title: '등촌1동',
         },{ 
             type: '강서구',
+            title: '등촌2동',
+        },{ 
+            type: '강서구',
             title: '등촌3동',
         },{ 
             type: '강서구',
             title: '마곡동',
+        },{ 
+            type: '강서구',
+            title: '방화동',
         },{ 
             type: '강서구',
             title: '방화1동',
@@ -1294,10 +1382,16 @@ export const items = [     //지역 선택 아이템
             title: '방화2동',
         },{ 
             type: '강서구',
+            title: '방화3동',
+        },{ 
+            type: '강서구',
             title: '염창동',
         },{ 
             type: '강서구',
             title: '오곡동',
+        },{ 
+            type: '강서구',
+            title: '오쇠동',
         },{ 
             type: '강서구',
             title: '외발산동',
@@ -1306,10 +1400,16 @@ export const items = [     //지역 선택 아이템
             title: '우장산동',
         },{ 
             type: '강서구',
+            title: '화곡동',
+        },{ 
+            type: '강서구',
             title: '화곡1동',
         },{ 
             type: '강서구',
             title: '화곡2동',
+        },{ 
+            type: '강서구',
+            title: '화곡3동',
         },{ 
             type: '강서구',
             title: '화곡4동',
@@ -1318,10 +1418,16 @@ export const items = [     //지역 선택 아이템
             title: '화곡6동',
         },{ 
             type: '강서구',
-            title: '화곡본동',   //강서구 끝
+            title: '화곡8동',
+        },{ 
+            type: '강서구',
+            title: '화곡본동',          //강서구 끝
         },{ 
             type: '관악구',
             title: '낙성대동',
+        },{ 
+            type: '관악구',
+            title: '난곡동',
         },{ 
             type: '관악구',
             title: '난향동',
@@ -1330,10 +1436,16 @@ export const items = [     //지역 선택 아이템
             title: '남현동',
         },{ 
             type: '관악구',
+            title: '대학동',
+        },{ 
+            type: '관악구',
             title: '미성동',
         },{ 
             type: '관악구',
             title: '보라매동',
+        },{ 
+            type: '관악구',
+            title: '봉천동',
         },{ 
             type: '관악구',
             title: '삼성동',
@@ -1342,10 +1454,16 @@ export const items = [     //지역 선택 아이템
             title: '서림동',
         },{ 
             type: '관악구',
+            title: '서원동',
+        },{ 
+            type: '관악구',
             title: '성현동',
         },{ 
             type: '관악구',
             title: '신림동',
+        },{ 
+            type: '관악구',
+            title: '신사동',
         },{ 
             type: '관악구',
             title: '신원동',
@@ -1354,19 +1472,28 @@ export const items = [     //지역 선택 아이템
             title: '은천동',
         },{ 
             type: '관악구',
+            title: '인헌동',
+        },{ 
+            type: '관악구',
             title: '조원동',
         },{ 
             type: '관악구',
             title: '중앙동',
         },{ 
             type: '관악구',
+            title: '청룡동',
+        },{ 
+            type: '관악구',
             title: '청림동',
         },{ 
             type: '관악구',
-            title: '행운동',   //관악구 끝
+            title: '행운동',        //관악구 끝
         },{ 
             type: '광진구',
             title: '광장동',
+        },{ 
+            type: '광진구',
+            title: '구의동',
         },{ 
             type: '광진구',
             title: '구의1동',
@@ -1375,10 +1502,16 @@ export const items = [     //지역 선택 아이템
             title: '구의2동',
         },{ 
             type: '광진구',
+            title: '구의3동',
+        },{ 
+            type: '광진구',
             title: '군자동',
         },{ 
             type: '광진구',
             title: '능동',
+        },{ 
+            type: '광진구',
+            title: '자양동',
         },{ 
             type: '광진구',
             title: '자양1동',
@@ -1387,10 +1520,16 @@ export const items = [     //지역 선택 아이템
             title: '자양2동',
         },{ 
             type: '광진구',
+            title: '자양3동',
+        },{ 
+            type: '광진구',
             title: '자양4동',
         },{ 
             type: '광진구',
             title: '중곡동',
+        },{ 
+            type: '광진구',
+            title: '중곡1동',
         },{ 
             type: '광진구',
             title: '중곡2동',
@@ -1399,10 +1538,16 @@ export const items = [     //지역 선택 아이템
             title: '중곡3동',
         },{ 
             type: '광진구',
-            title: '화양동',   //광진구 끝
+            title: '중곡4동',
+        },{ 
+            type: '광진구',
+            title: '화양동',        //광진구 끝
         },{ 
             type: '구로구',
             title: '가리봉동',
+        },{ 
+            type: '구로구',
+            title: '개봉동',
         },{ 
             type: '구로구',
             title: '개봉1동',
@@ -1411,10 +1556,16 @@ export const items = [     //지역 선택 아이템
             title: '개봉2동',
         },{ 
             type: '구로구',
+            title: '개봉3동',
+        },{ 
+            type: '구로구',
             title: '고척동',
         },{ 
             type: '구로구',
             title: '고척1동',
+        },{ 
+            type: '구로구',
+            title: '고척2동',
         },{ 
             type: '구로구',
             title: '구로동',
@@ -1423,10 +1574,16 @@ export const items = [     //지역 선택 아이템
             title: '구로1동',
         },{ 
             type: '구로구',
+            title: '구로2동',
+        },{ 
+            type: '구로구',
             title: '구로3동',
         },{ 
             type: '구로구',
             title: '구로4동',
+        },{ 
+            type: '구로구',
+            title: '구로5동',
         },{ 
             type: '구로구',
             title: '궁동',
@@ -1435,19 +1592,28 @@ export const items = [     //지역 선택 아이템
             title: '신도림동',
         },{ 
             type: '구로구',
+            title: '오류동',
+        },{ 
+            type: '구로구',
             title: '오류1동',
         },{ 
             type: '구로구',
             title: '오류2동',
         },{ 
             type: '구로구',
+            title: '온수동',
+        },{ 
+            type: '구로구',
             title: '천왕동',
         },{ 
             type: '구로구',
-            title: '항동',   //구로구 끝
+            title: '항동',          //구로구 끝
         },{ 
             type: '금천구',
             title: '가산동',
+        },{ 
+            type: '금천구',
+            title: '독산동',
         },{ 
             type: '금천구',
             title: '독산1동',
@@ -1456,10 +1622,16 @@ export const items = [     //지역 선택 아이템
             title: '독산2동',
         },{ 
             type: '금천구',
+            title: '독산3동',
+        },{ 
+            type: '금천구',
             title: '독산4동',
         },{ 
             type: '금천구',
             title: '시흥동',
+        },{ 
+            type: '금천구',
+            title: '시흥1동',
         },{ 
             type: '금천구',
             title: '시흥2동',
@@ -1468,10 +1640,16 @@ export const items = [     //지역 선택 아이템
             title: '시흥3동',
         },{ 
             type: '금천구',
+            title: '시흥4동',
+        },{ 
+            type: '금천구',
             title: '시흥5동',  //금천구 끝
         },{ 
             type: '노원구',
             title: '공릉동',
+        },{ 
+            type: '노원구',
+            title: '공릉1.3동',
         },{ 
             type: '노원구',
             title: '공릉2동',
@@ -1480,10 +1658,16 @@ export const items = [     //지역 선택 아이템
             title: '상계동',
         },{ 
             type: '노원구',
+            title: '상계1동',
+        },{ 
+            type: '노원구',
             title: '상계2동',
         },{ 
             type: '노원구',
             title: '상계3.4동',
+        },{ 
+            type: '노원구',
+            title: '상계5동',
         },{ 
             type: '노원구',
             title: '상계6.7동',
@@ -1492,10 +1676,16 @@ export const items = [     //지역 선택 아이템
             title: '상계8동',
         },{ 
             type: '노원구',
+            title: '상계9동',
+        },{ 
+            type: '노원구',
             title: '상계10동',
         },{ 
             type: '노원구',
             title: '월계동',
+        },{ 
+            type: '노원구',
+            title: '월계1동',
         },{ 
             type: '노원구',
             title: '월계2동',
@@ -1504,10 +1694,16 @@ export const items = [     //지역 선택 아이템
             title: '월계3동',
         },{ 
             type: '노원구',
+            title: '중계동',
+        },{ 
+            type: '노원구',
             title: '중계1동',
         },{ 
             type: '노원구',
             title: '중계2.3동',
+        },{ 
+            type: '노원구',
+            title: '중계4동',
         },{ 
             type: '노원구',
             title: '중계본동',
@@ -1516,10 +1712,16 @@ export const items = [     //지역 선택 아이템
             title: '하계동',
         },{ 
             type: '노원구',
-            title: '하계2동',   //노원구 끝
+            title: '하계1동',
+        },{ 
+            type: '노원구',
+            title: '하계2동',           //노원구 끝
         },{ 
             type: '도봉구',
             title: '도봉동',
+        },{ 
+            type: '도봉구',
+            title: '도봉1동',
         },{ 
             type: '도봉구',
             title: '도봉2동',
@@ -1528,10 +1730,16 @@ export const items = [     //지역 선택 아이템
             title: '방학동',
         },{ 
             type: '도봉구',
+            title: '방학1동',
+        },{ 
+            type: '도봉구',
             title: '방학2동',
         },{ 
             type: '도봉구',
             title: '방학3동',
+        },{ 
+            type: '도봉구',
+            title: '쌍문동',
         },{ 
             type: '도봉구',
             title: '쌍문1동',
@@ -1540,10 +1748,16 @@ export const items = [     //지역 선택 아이템
             title: '쌍문2동',
         },{ 
             type: '도봉구',
+            title: '쌍문3동',
+        },{ 
+            type: '도봉구',
             title: '쌍문4동',
         },{ 
             type: '도봉구',
             title: '창동',
+        },{ 
+            type: '도봉구',
+            title: '창1동',
         },{ 
             type: '도봉구',
             title: '창2동',
@@ -1552,10 +1766,16 @@ export const items = [     //지역 선택 아이템
             title: '창3동',
         },{ 
             type: '도봉구',
+            title: '창4동',
+        },{ 
+            type: '도봉구',
             title: '창5동',  //도봉구 끝
         },{ 
             type: '동대문구',
             title: '답십리동',
+        },{ 
+            type: '동대문구',
+            title: '답십리1동',
         },{ 
             type: '동대문구',
             title: '답십리2동',
@@ -1564,10 +1784,16 @@ export const items = [     //지역 선택 아이템
             title: '신설동',
         },{ 
             type: '동대문구',
+            title: '용두동',
+        },{ 
+            type: '동대문구',
             title: '이문동',
         },{ 
             type: '동대문구',
             title: '이문1동',
+        },{ 
+            type: '동대문구',
+            title: '이문2동',
         },{ 
             type: '동대문구',
             title: '장안동',
@@ -1576,10 +1802,16 @@ export const items = [     //지역 선택 아이템
             title: '장안1동',
         },{ 
             type: '동대문구',
+            title: '장안2동',
+        },{ 
+            type: '동대문구',
             title: '전농동',
         },{ 
             type: '동대문구',
             title: '전농1동',
+        },{ 
+            type: '동대문구',
+            title: '전농2동',
         },{ 
             type: '동대문구',
             title: '제기동',
@@ -1588,13 +1820,22 @@ export const items = [     //지역 선택 아이템
             title: '청량리동',
         },{ 
             type: '동대문구',
+            title: '회기동',
+        },{ 
+            type: '동대문구',
             title: '휘경동',
         },{ 
             type: '동대문구',
-            title: '휘경1동',   //동대문구 끝
+            title: '휘경1동', 
+        },{ 
+            type: '동대문구',
+            title: '휘경2동',           //동대문구 끝
         },{ 
             type: '동작구',
             title: '노량진동',
+        },{ 
+            type: '동작구',
+            title: '노량진1동',
         },{ 
             type: '동작구',
             title: '노량진2동',
@@ -1603,10 +1844,16 @@ export const items = [     //지역 선택 아이템
             title: '대방동',
         },{ 
             type: '동작구',
+            title: '동작동',
+        },{ 
+            type: '동작구',
             title: '본동',
         },{ 
             type: '동작구',
             title: '사당동',
+        },{ 
+            type: '동작구',
+            title: '사당1동',
         },{ 
             type: '동작구',
             title: '사당2동',
@@ -1615,10 +1862,16 @@ export const items = [     //지역 선택 아이템
             title: '사당3동',
         },{ 
             type: '동작구',
+            title: '사당4동',
+        },{ 
+            type: '동작구',
             title: '사당5동',
         },{ 
             type: '동작구',
             title: '상도동',
+        },{ 
+            type: '동작구',
+            title: '상도1동',
         },{ 
             type: '동작구',
             title: '상도2동',
@@ -1627,10 +1880,16 @@ export const items = [     //지역 선택 아이템
             title: '상도3동',
         },{ 
             type: '동작구',
+            title: '상도4동',
+        },{ 
+            type: '동작구',
             title: '신대방동',
         },{ 
             type: '동작구',
             title: '신대방1동',
+        },{ 
+            type: '동작구',
+            title: '신대방2동',
         },{ 
             type: '동작구',
             title: '흑석동',  //동작구 끝
@@ -1639,10 +1898,16 @@ export const items = [     //지역 선택 아이템
             title: '공덕동',
         },{ 
             type: '마포구',
+            title: '구수동',
+        },{ 
+            type: '마포구',
             title: '노고산동',
         },{ 
             type: '마포구',
             title: '당인동',
+        },{ 
+            type: '마포구',
+            title: '대흥동',
         },{ 
             type: '마포구',
             title: '도화동',
@@ -1651,10 +1916,16 @@ export const items = [     //지역 선택 아이템
             title: '동교동',
         },{ 
             type: '마포구',
+            title: '마포동',
+        },{ 
+            type: '마포구',
             title: '망원동',
         },{ 
             type: '마포구',
             title: '망원1동',
+        },{ 
+            type: '마포구',
+            title: '망원2동',
         },{ 
             type: '마포구',
             title: '상수동',
@@ -1663,10 +1934,16 @@ export const items = [     //지역 선택 아이템
             title: '상암동',
         },{ 
             type: '마포구',
+            title: '서교동',
+        },{ 
+            type: '마포구',
             title: '성산동',
         },{ 
             type: '마포구',
             title: '성산1동',
+        },{ 
+            type: '마포구',
+            title: '성산2동',
         },{ 
             type: '마포구',
             title: '신공덕동',
@@ -1675,10 +1952,16 @@ export const items = [     //지역 선택 아이템
             title: '신수동',
         },{ 
             type: '마포구',
+            title: '신정동',
+        },{ 
+            type: '마포구',
             title: '아현동',
         },{ 
             type: '마포구',
             title: '연남동',
+        },{ 
+            type: '마포구',
+            title: '염리동',
         },{ 
             type: '마포구',
             title: '용강동',
@@ -1687,16 +1970,25 @@ export const items = [     //지역 선택 아이템
             title: '중동',
         },{ 
             type: '마포구',
+            title: '창전동',
+        },{ 
+            type: '마포구',
             title: '토정동',
         },{ 
             type: '마포구',
             title: '하중동',
         },{ 
             type: '마포구',
-            title: '현석동',  //마포구 끝
+            title: '합정동',
+        },{ 
+            type: '마포구',
+            title: '현석동',     //마포구 끝
         },{ 
             type: '서대문구',
             title: '남가좌동',
+        },{ 
+            type: '서대문구',
+            title: '남가좌1동',
         },{ 
             type: '서대문구',
             title: '남가좌2동',
@@ -1705,10 +1997,16 @@ export const items = [     //지역 선택 아이템
             title: '냉천동',
         },{ 
             type: '서대문구',
+            title: '대신동',
+        },{ 
+            type: '서대문구',
             title: '대현동',
         },{ 
             type: '서대문구',
             title: '미근동',
+        },{ 
+            type: '서대문구',
+            title: '봉원동',
         },{ 
             type: '서대문구',
             title: '북가좌동',
@@ -1717,10 +2015,16 @@ export const items = [     //지역 선택 아이템
             title: '북가좌1동',
         },{ 
             type: '서대문구',
+            title: '북가좌2동',
+        },{ 
+            type: '서대문구',
             title: '북아현동',
         },{ 
             type: '서대문구',
             title: '신촌동',
+        },{ 
+            type: '서대문구',
+            title: '연희동',
         },{ 
             type: '서대문구',
             title: '영천동',
@@ -1729,10 +2033,16 @@ export const items = [     //지역 선택 아이템
             title: '옥천동',
         },{ 
             type: '서대문구',
+            title: '창천동',
+        },{ 
+            type: '서대문구',
             title: '천연동',
         },{ 
             type: '서대문구',
             title: '충정로2가',
+        },{ 
+            type: '서대문구',
+            title: '충정로3가',
         },{ 
             type: '서대문구',
             title: '충현동',
@@ -1741,10 +2051,16 @@ export const items = [     //지역 선택 아이템
             title: '합동',
         },{ 
             type: '서대문구',
+            title: '현저동',
+        },{ 
+            type: '서대문구',
             title: '홍은동',
         },{ 
             type: '서대문구',
             title: '홍은1동',
+        },{ 
+            type: '서대문구',
+            title: '홍은2동',
         },{ 
             type: '서대문구',
             title: '홍제동',
@@ -1753,10 +2069,16 @@ export const items = [     //지역 선택 아이템
             title: '홍제1동',
         },{ 
             type: '서대문구',
-            title: '홍제3동',  //서대문구 끝
+            title: '홍제2동',
+        },{ 
+            type: '서대문구',
+            title: '홍제3동',       //서대문구 끝
         },{ 
             type: '서초구',
             title: '내곡동',
+        },{ 
+            type: '서초구',
+            title: '반포동',
         },{ 
             type: '서초구',
             title: '반포1동',
@@ -1765,10 +2087,16 @@ export const items = [     //지역 선택 아이템
             title: '반포2동',
         },{ 
             type: '서초구',
+            title: '반포3동',
+        },{ 
+            type: '서초구',
             title: '반포4동',
         },{ 
             type: '서초구',
-            title: '반포본동',
+            title: '방배동',
+        },{ 
+            type: '서초구',
+            title: '방배1동',
         },{ 
             type: '서초구',
             title: '방배1동',
@@ -1777,10 +2105,16 @@ export const items = [     //지역 선택 아이템
             title: '방배2동',
         },{ 
             type: '서초구',
+            title: '방배3동',
+        },{ 
+            type: '서초구',
             title: '방배4동',
         },{ 
             type: '서초구',
             title: '방배본동',
+        },{ 
+            type: '서초구',
+            title: '서초동',
         },{ 
             type: '서초구',
             title: '서초1동',
@@ -1789,10 +2123,16 @@ export const items = [     //지역 선택 아이템
             title: '서초2동',
         },{ 
             type: '서초구',
+            title: '서초3동',
+        },{ 
+            type: '서초구',
             title: '서초4동',
         },{ 
             type: '서초구',
             title: '신원동',
+        },{ 
+            type: '서초구',
+            title: '양재동',
         },{ 
             type: '서초구',
             title: '양재1동',
@@ -1801,13 +2141,22 @@ export const items = [     //지역 선택 아이템
             title: '양재2동',
         },{ 
             type: '서초구',
+            title: '염곡동',
+        },{ 
+            type: '서초구',
             title: '우면동',
         },{ 
             type: '서초구',
-            title: '원지동',   //서초구 끝
+            title: '원지동',   
+        },{ 
+            type: '서초구',
+            title: '잠원동',            //서초구 끝
         },{ 
             type: '성동구',
             title: '금호동1가',
+        },{ 
+            type: '성동구',
+            title: '금호동2가',
         },{ 
             type: '성동구',
             title: '금호동3가',
@@ -1816,10 +2165,16 @@ export const items = [     //지역 선택 아이템
             title: '금호동4가',
         },{ 
             type: '성동구',
+            title: '도선동',
+        },{ 
+            type: '성동구',
             title: '마장동',
         },{ 
             type: '성동구',
             title: '사근동',
+        },{ 
+            type: '성동구',
+            title: '상왕십리동',
         },{ 
             type: '성동구',
             title: '성수동1가',
@@ -1828,10 +2183,16 @@ export const items = [     //지역 선택 아이템
             title: '성수동2가',
         },{ 
             type: '성동구',
+            title: '성수1가1동',
+        },{ 
+            type: '성동구',
             title: '성수1가2동',
         },{ 
             type: '성동구',
             title: '성수2가1동',
+        },{ 
+            type: '성동구',
+            title: '성수2가3동',
         },{ 
             type: '성동구',
             title: '송정동',
@@ -1840,19 +2201,31 @@ export const items = [     //지역 선택 아이템
             title: '옥수동',
         },{ 
             type: '성동구',
+            title: '용답동',
+        },{ 
+            type: '성동구',
             title: '응봉동',
         },{ 
             type: '성동구',
             title: '하왕십리동',
         },{ 
             type: '성동구',
+            title: '행당동',
+        },{ 
+            type: '성동구',
             title: '행당1동',
         },{ 
             type: '성동구',
-            title: '행당2동',   //성동구 끝
+            title: '행당2동', 
+        },{ 
+            type: '성동구',
+            title: '홍익동',            //성동구 끝
         },{ 
             type: '성북구',
             title: '길음동',
+        },{ 
+            type: '성북구',
+            title: '길음1동',
         },{ 
             type: '성북구',
             title: '길음2동',
@@ -1861,10 +2234,16 @@ export const items = [     //지역 선택 아이템
             title: '돈암동',
         },{ 
             type: '성북구',
+            title: '돈암1동',
+        },{ 
+            type: '성북구',
             title: '돈암2동',
         },{ 
             type: '성북구',
             title: '동선동1가',
+        },{ 
+            type: '성북구',
+            title: '동선동2가',
         },{ 
             type: '성북구',
             title: '동선동3가',
@@ -1873,10 +2252,16 @@ export const items = [     //지역 선택 아이템
             title: '동선동4가',
         },{ 
             type: '성북구',
+            title: '동선동5가',
+        },{ 
+            type: '성북구',
             title: '동소문동1가',
         },{ 
             type: '성북구',
             title: '동소문동2가',
+        },{ 
+            type: '성북구',
+            title: '동소문동3가',
         },{ 
             type: '성북구',
             title: '동소문동4가',
@@ -1885,10 +2270,16 @@ export const items = [     //지역 선택 아이템
             title: '동소문동5가',
         },{ 
             type: '성북구',
+            title: '동소문동6가',
+        },{ 
+            type: '성북구',
             title: '동소문동7가',
         },{ 
             type: '성북구',
             title: '보문동1가',
+        },{ 
+            type: '성북구',
+            title: '보문동2가',
         },{ 
             type: '성북구',
             title: '보문동3가',
@@ -1897,10 +2288,16 @@ export const items = [     //지역 선택 아이템
             title: '보문동4가',
         },{ 
             type: '성북구',
+            title: '보문동5가',
+        },{ 
+            type: '성북구',
             title: '보문동6가',
         },{ 
             type: '성북구',
             title: '보문동7가',
+        },{ 
+            type: '성북구',
+            title: '삼선동1가',
         },{ 
             type: '성북구',
             title: '삼선동2가',
@@ -1909,10 +2306,16 @@ export const items = [     //지역 선택 아이템
             title: '삼선동3가',
         },{ 
             type: '성북구',
+            title: '삼선동4가',
+        },{ 
+            type: '성북구',
             title: '삼선동5가',
         },{ 
             type: '성북구',
             title: '상월곡동',
+        },{ 
+            type: '성북구',
+            title: '석관동',
         },{ 
             type: '성북구',
             title: '성북동',
@@ -1921,10 +2324,16 @@ export const items = [     //지역 선택 아이템
             title: '성북동1가',
         },{ 
             type: '성북구',
+            title: '안암동1가',
+        },{ 
+            type: '성북구',
             title: '안암동2가',
         },{ 
             type: '성북구',
             title: '안암동3가',
+        },{ 
+            type: '성북구',
+            title: '안암동4가',
         },{ 
             type: '성북구',
             title: '안암동5가',
@@ -1933,10 +2342,16 @@ export const items = [     //지역 선택 아이템
             title: '월곡1동',
         },{ 
             type: '성북구',
+            title: '월곡2동',
+        },{ 
+            type: '성북구',
             title: '장위동',
         },{ 
             type: '성북구',
             title: '장위1동',
+        },{ 
+            type: '성북구',
+            title: '장위2동',
         },{ 
             type: '성북구',
             title: '장위3동',
@@ -1945,10 +2360,16 @@ export const items = [     //지역 선택 아이템
             title: '정릉동',
         },{ 
             type: '성북구',
+            title: '정릉1동',
+        },{ 
+            type: '성북구',
             title: '정릉2동',
         },{ 
             type: '성북구',
             title: '정릉3동',
+        },{ 
+            type: '성북구',
+            title: '정릉4동',
         },{ 
             type: '성북구',
             title: '종암동',
@@ -1960,10 +2381,16 @@ export const items = [     //지역 선택 아이템
             title: '가락동',
         },{ 
             type: '송파구',
+            title: '가락1동',
+        },{ 
+            type: '송파구',
             title: '가락2동',
         },{ 
             type: '송파구',
             title: '가락본동',
+        },{ 
+            type: '송파구',
+            title: '거여동',
         },{ 
             type: '송파구',
             title: '거여1동',
@@ -1972,10 +2399,16 @@ export const items = [     //지역 선택 아이템
             title: '거여2동',
         },{ 
             type: '송파구',
+            title: '마천동',
+        },{ 
+            type: '송파구',
             title: '마천1동',
         },{ 
             type: '송파구',
             title: '마천2동',
+        },{ 
+            type: '송파구',
+            title: '문정동',
         },{ 
             type: '송파구',
             title: '문정1동',
@@ -1984,10 +2417,16 @@ export const items = [     //지역 선택 아이템
             title: '문정2동',
         },{ 
             type: '송파구',
+            title: '방이동',
+        },{ 
+            type: '송파구',
             title: '방이1동',
         },{ 
             type: '송파구',
             title: '방이2동',
+        },{ 
+            type: '송파구',
+            title: '삼전동',
         },{ 
             type: '송파구',
             title: '석촌동',
@@ -1996,10 +2435,16 @@ export const items = [     //지역 선택 아이템
             title: '송파동',
         },{ 
             type: '송파구',
+            title: '송파1동',
+        },{ 
+            type: '송파구',
             title: '송파2동',
         },{ 
             type: '송파구',
             title: '신천동',
+        },{ 
+            type: '송파구',
+            title: '오금동',
         },{ 
             type: '송파구',
             title: '오륜동',
@@ -2008,10 +2453,16 @@ export const items = [     //지역 선택 아이템
             title: '위례동',
         },{ 
             type: '송파구',
+            title: '잠실동',
+        },{ 
+            type: '송파구',
             title: '잠실2동',
         },{ 
             type: '송파구',
             title: '잠실3동',
+        },{ 
+            type: '송파구',
+            title: '잠실4동',
         },{ 
             type: '송파구',
             title: '잠실6동',
@@ -2020,10 +2471,16 @@ export const items = [     //지역 선택 아이템
             title: '잠실7동',
         },{ 
             type: '송파구',
+            title: '잠실본동',
+        },{ 
+            type: '송파구',
             title: '장지동',
         },{ 
             type: '송파구',
             title: '풍납동',
+        },{ 
+            type: '송파구',
+            title: '풍납1동',
         },{ 
             type: '송파구',
             title: '풍납2동',  //송파구 끝
@@ -2032,10 +2489,16 @@ export const items = [     //지역 선택 아이템
             title: '목동',
         },{ 
             type: '양천구',
+            title: '목1동',
+        },{ 
+            type: '양천구',
             title: '목2동',
         },{ 
             type: '양천구',
             title: '목3동',
+        },{ 
+            type: '양천구',
+            title: '목4동',
         },{ 
             type: '양천구',
             title: '목5동',
@@ -2044,10 +2507,16 @@ export const items = [     //지역 선택 아이템
             title: '신월동',
         },{ 
             type: '양천구',
+            title: '신월1동',
+        },{ 
+            type: '양천구',
             title: '신월2동',
         },{ 
             type: '양천구',
             title: '신월3동',
+        },{ 
+            type: '양천구',
+            title: '신월4동',
         },{ 
             type: '양천구',
             title: '신월5동',
@@ -2056,10 +2525,16 @@ export const items = [     //지역 선택 아이템
             title: '신월6동',
         },{ 
             type: '양천구',
+            title: '신월7동',
+        },{ 
+            type: '양천구',
             title: '신정동',
         },{ 
             type: '양천구',
             title: '신정1동',
+        },{ 
+            type: '양천구',
+            title: '신정2동',
         },{ 
             type: '양천구',
             title: '신정3동',
@@ -2068,10 +2543,16 @@ export const items = [     //지역 선택 아이템
             title: '신정4동',
         },{ 
             type: '양천구',
-            title: '신정7동',  //양천구 끝
+            title: '신정6동',
+        },{ 
+            type: '양천구',
+            title: '신정7동',           //양천구 끝
         },{ 
             type: '영등포구',
             title: '당산동',
+        },{ 
+            type: '영등포구',
+            title: '당산동1가',
         },{ 
             type: '영등포구',
             title: '당산동2가',
@@ -2080,10 +2561,16 @@ export const items = [     //지역 선택 아이템
             title: '당산동3가',
         },{ 
             type: '영등포구',
+            title: '당산동4가',
+        },{ 
+            type: '영등포구',
             title: '당산동5가',
         },{ 
             type: '영등포구',
             title: '당산동6가',
+        },{ 
+            type: '영등포구',
+            title: '대림동',
         },{ 
             type: '영등포구',
             title: '대림1동',
@@ -2092,10 +2579,16 @@ export const items = [     //지역 선택 아이템
             title: '대림2동',
         },{ 
             type: '영등포구',
+            title: '대림3동',
+        },{ 
+            type: '영등포구',
             title: '도림동',
         },{ 
             type: '영등포구',
             title: '문래동',
+        },{ 
+            type: '영등포구',
+            title: '문래동1가',
         },{ 
             type: '영등포구',
             title: '문래동2가',
@@ -2104,10 +2597,16 @@ export const items = [     //지역 선택 아이템
             title: '문래동3가',
         },{ 
             type: '영등포구',
+            title: '문래동4가',
+        },{ 
+            type: '영등포구',
             title: '문래동5가',
         },{ 
             type: '영등포구',
             title: '문래동6가',
+        },{ 
+            type: '영등포구',
+            title: '신길동',
         },{ 
             type: '영등포구',
             title: '신길1동',
@@ -2116,10 +2615,16 @@ export const items = [     //지역 선택 아이템
             title: '신길3동',
         },{ 
             type: '영등포구',
+            title: '신길4동',
+        },{ 
+            type: '영등포구',
             title: '신길5동',
         },{ 
             type: '영등포구',
             title: '신길6동',
+        },{ 
+            type: '영등포구',
+            title: '신길7동',
         },{ 
             type: '영등포구',
             title: '양평동',
@@ -2128,10 +2633,16 @@ export const items = [     //지역 선택 아이템
             title: '양평동1가',
         },{ 
             type: '영등포구',
+            title: '양평동2가',
+        },{ 
+            type: '영등포구',
             title: '양평동3가',
         },{ 
             type: '영등포구',
             title: '양평동4가',
+        },{ 
+            type: '영등포구',
+            title: '양평동5가',
         },{ 
             type: '영등포구',
             title: '양평동6가',
@@ -2140,13 +2651,25 @@ export const items = [     //지역 선택 아이템
             title: '양화동',
         },{ 
             type: '영등포구',
+            title: '여의도동',
+        },{ 
+            type: '영등포구',
             title: '영등포동',
         },{ 
             type: '영등포구',
             title: '영등포동1가',
         },{ 
             type: '영등포구',
+            title: '영등포동2가',
+        },{ 
+            type: '영등포구',
             title: '영등포동3가',
+        },{ 
+            type: '영등포구',
+            title: '영등포동4가',
+        },{ 
+            type: '영등포구',
+            title: '영등포동5가',
         },{ 
             type: '영등포구',
             title: '영등포동6가',
@@ -2155,10 +2678,16 @@ export const items = [     //지역 선택 아이템
             title: '영등포동7가',
         },{ 
             type: '영등포구',
-            title: '영등포본동',   //영등포구 끝
+            title: '영등포동8가',
+        },{ 
+            type: '영등포구',
+            title: '영등포본동',        //영등포구 끝
         },{ 
             type: '용산구',
             title: '갈월동',
+        },{ 
+            type: '용산구',
+            title: '남영동',
         },{ 
             type: '용산구',
             title: '도원동',
@@ -2167,10 +2696,16 @@ export const items = [     //지역 선택 아이템
             title: '동빙고동',
         },{ 
             type: '용산구',
+            title: '동자동',
+        },{ 
+            type: '용산구',
             title: '문배동',
         },{ 
             type: '용산구',
             title: '보광동',
+        },{ 
+            type: '용산구',
+            title: '산천동',
         },{ 
             type: '용산구',
             title: '서계동',
@@ -2179,10 +2714,16 @@ export const items = [     //지역 선택 아이템
             title: '서빙고동',
         },{ 
             type: '용산구',
+            title: '신계동',
+        },{ 
+            type: '용산구',
             title: '신창동',
         },{ 
             type: '용산구',
             title: '용문동',
+        },{ 
+            type: '용산구',
+            title: '용산동1가',
         },{ 
             type: '용산구',
             title: '용산동2가',
@@ -2191,10 +2732,16 @@ export const items = [     //지역 선택 아이템
             title: '용산동3가',
         },{ 
             type: '용산구',
+            title: '용산동4가',
+        },{ 
+            type: '용산구',
             title: '용산동5가',
         },{ 
             type: '용산구',
             title: '용산동6가',
+        },{ 
+            type: '용산구',
+            title: '원효로1가',
         },{ 
             type: '용산구',
             title: '원효로2가',
@@ -2203,10 +2750,16 @@ export const items = [     //지역 선택 아이템
             title: '원효로3가',
         },{ 
             type: '용산구',
+            title: '원효로4가',
+        },{ 
+            type: '용산구',
             title: '이촌동',
         },{ 
             type: '용산구',
             title: '이촌1동',
+        },{ 
+            type: '용산구',
+            title: '이촌2동',
         },{ 
             type: '용산구',
             title: '이태원동',
@@ -2215,10 +2768,16 @@ export const items = [     //지역 선택 아이템
             title: '이태원1동',
         },{ 
             type: '용산구',
+            title: '이태원2동',
+        },{ 
+            type: '용산구',
             title: '주성동',
         },{ 
             type: '용산구',
             title: '청암동',
+        },{ 
+            type: '용산구',
+            title: '청파동1가',
         },{ 
             type: '용산구',
             title: '청파동2가',
@@ -2227,19 +2786,28 @@ export const items = [     //지역 선택 아이템
             title: '청파동3가',
         },{ 
             type: '용산구',
+            title: '한강로1가',
+        },{ 
+            type: '용산구',
             title: '한강로2가',
         },{ 
             type: '용산구',
             title: '한강로3가',
         },{ 
             type: '용산구',
+            title: '한남동',
+        },{ 
+            type: '용산구',
             title: '효창동',
         },{ 
             type: '용산구',
-            title: '후암동',   //용산구 끝
+            title: '후암동',            //용산구 끝
         },{ 
             type: '은평구',
             title: '갈현동',
+        },{ 
+            type: '은평구',
+            title: '갈현1동',
         },{ 
             type: '은평구',
             title: '갈현2동',
@@ -2248,10 +2816,16 @@ export const items = [     //지역 선택 아이템
             title: '구산동',
         },{ 
             type: '은평구',
+            title: '녹번동',
+        },{ 
+            type: '은평구',
             title: '대조동',
         },{ 
             type: '은평구',
             title: '불광동',
+        },{ 
+            type: '은평구',
+            title: '불광1동',
         },{ 
             type: '은평구',
             title: '불광2동',
@@ -2260,10 +2834,16 @@ export const items = [     //지역 선택 아이템
             title: '수색동',
         },{ 
             type: '은평구',
+            title: '신사동',
+        },{ 
+            type: '은평구',
             title: '신사1동',
         },{ 
             type: '은평구',
             title: '신사2동',
+        },{ 
+            type: '은평구',
+            title: '역촌동',
         },{ 
             type: '은평구',
             title: '응암동',
@@ -2272,13 +2852,22 @@ export const items = [     //지역 선택 아이템
             title: '응암1동',
         },{ 
             type: '은평구',
+            title: '응암2동',
+        },{ 
+            type: '은평구',
             title: '응암3동',
         },{ 
             type: '은평구',
-            title: '증산동',  //은평구 끝
+            title: '증산동',
+        },{ 
+            type: '은평구',
+            title: '진관동',        //은평구 끝
         },{ 
             type: '종로구',
             title: '가회동',
+        },{ 
+            type: '종로구',
+            title: '견지동',
         },{ 
             type: '종로구',
             title: '경운동',
@@ -2287,10 +2876,16 @@ export const items = [     //지역 선택 아이템
             title: '계동',
         },{ 
             type: '종로구',
+            title: '공평동',
+        },{ 
+            type: '종로구',
             title: '관수동',
         },{ 
             type: '종로구',
             title: '관철동',
+        },{ 
+            type: '종로구',
+            title: '관훈동',
         },{
             type: '종로구',
             title: '교남동',
@@ -2299,10 +2894,16 @@ export const items = [     //지역 선택 아이템
             title: '교북동',
         },{ 
             type: '종로구',
+            title: '구기동',
+        },{ 
+            type: '종로구',
             title: '궁정동',
         },{ 
             type: '종로구',
             title: '권농동',
+        },{ 
+            type: '종로구',
+            title: '낙원동',
         },{ 
             type: '종로구',
             title: '내수동',
@@ -2311,10 +2912,16 @@ export const items = [     //지역 선택 아이템
             title: '내자동',
         },{ 
             type: '종로구',
+            title: '누상동',
+        },{ 
+            type: '종로구',
             title: '누하동',
         },{ 
             type: '종로구',
             title: '당주동',
+        },{ 
+            type: '종로구',
+            title: '도렴동',
         },{ 
             type: '종로구',
             title: '돈의동',
@@ -2323,10 +2930,16 @@ export const items = [     //지역 선택 아이템
             title: '동숭동',
         },{ 
             type: '종로구',
+            title: '명륜1가',
+        },{ 
+            type: '종로구',
             title: '명륜2가',
         },{ 
             type: '종로구',
             title: '명륜3가',
+        },{ 
+            type: '종로구',
+            title: '명륜4가',
         },{ 
             type: '종로구',
             title: '묘동',
@@ -2335,10 +2948,16 @@ export const items = [     //지역 선택 아이템
             title: '무악동',
         },{ 
             type: '종로구',
+            title: '봉익동',
+        },{ 
+            type: '종로구',
             title: '부암동',
         },{ 
             type: '종로구',
             title: '사간동',
+        },{ 
+            type: '종로구',
+            title: '사직동',
         },{ 
             type: '종로구',
             title: '삼청동',
@@ -2347,10 +2966,16 @@ export const items = [     //지역 선택 아이템
             title: '서린동',
         },{ 
             type: '종로구',
+            title: '세종로',
+        },{ 
+            type: '종로구',
             title: '소격동',
         },{ 
             type: '종로구',
             title: '송월동',
+        },{ 
+            type: '종로구',
+            title: '송현동',
         },{ 
             type: '종로구',
             title: '수송동',
@@ -2359,10 +2984,16 @@ export const items = [     //지역 선택 아이템
             title: '숭인동',
         },{ 
             type: '종로구',
+            title: '숭인1동',
+        },{ 
+            type: '종로구',
             title: '숭인2동',
         },{ 
             type: '종로구',
             title: '신교동',
+        },{ 
+            type: '종로구',
+            title: '신문로1가',
         },{ 
             type: '종로구',
             title: '신문로2가',
@@ -2371,10 +3002,16 @@ export const items = [     //지역 선택 아이템
             title: '신영동',
         },{ 
             type: '종로구',
+            title: '안국동',
+        },{ 
+            type: '종로구',
             title: '연건동',
         },{ 
             type: '종로구',
             title: '연지동',
+        },{ 
+            type: '종로구',
+            title: '예지동',
         },{ 
             type: '종로구',
             title: '옥인동',
@@ -2383,10 +3020,16 @@ export const items = [     //지역 선택 아이템
             title: '와룡동',
         },{ 
             type: '종로구',
+            title: '운니동',
+        },{ 
+            type: '종로구',
             title: '원남동',
         },{ 
             type: '종로구',
             title: '원서동',
+        },{ 
+            type: '종로구',
+            title: '이화동',
         },{ 
             type: '종로구',
             title: '익선동',
@@ -2395,10 +3038,16 @@ export const items = [     //지역 선택 아이템
             title: '인사동',
         },{ 
             type: '종로구',
+            title: '인의동',
+        },{ 
+            type: '종로구',
             title: '장사동',
         },{ 
             type: '종로구',
             title: '재동',
+        },{ 
+            type: '종로구',
+            title: '적선동',
         },{ 
             type: '종로구',
             title: '종로1가',
@@ -2407,10 +3056,16 @@ export const items = [     //지역 선택 아이템
             title: '종로2가',
         },{ 
             type: '종로구',
+            title: '종로3가',
+        },{ 
+            type: '종로구',
             title: '종로4가',
         },{ 
             type: '종로구',
             title: '종로5가',
+        },{ 
+            type: '종로구',
+            title: '종로6가',
         },{ 
             type: '종로구',
             title: '중학동',
@@ -2419,10 +3074,16 @@ export const items = [     //지역 선택 아이템
             title: '창성동',
         },{ 
             type: '종로구',
+            title: '창신동',
+        },{ 
+            type: '종로구',
             title: '창신1동',
         },{ 
             type: '종로구',
             title: '창신2동',
+        },{ 
+            type: '종로구',
+            title: '창신3동',
         },{ 
             type: '종로구',
             title: '청운동',
@@ -2431,10 +3092,16 @@ export const items = [     //지역 선택 아이템
             title: '청진동',
         },{ 
             type: '종로구',
+            title: '체부동',
+        },{ 
+            type: '종로구',
             title: '충신동',
         },{ 
             type: '종로구',
             title: '통의동',
+        },{ 
+            type: '종로구',
+            title: '통인동',
         },{
             type: '종로구',
             title: '팔판동',
@@ -2443,7 +3110,13 @@ export const items = [     //지역 선택 아이템
             title: '평동',
         },{ 
             type: '종로구',
+            title: '평창동',
+        },{ 
+            type: '종로구',
             title: '필운동',
+        },{ 
+            type: '종로구',
+            title: '혜화동',
         },{ 
             type: '종로구',
             title: '행촌동',
@@ -2455,13 +3128,22 @@ export const items = [     //지역 선택 아이템
             title: '홍파동',
         },{ 
             type: '종로구',
+            title: '화동',
+        },{ 
+            type: '종로구',
             title: '효자동',
         },{ 
             type: '종로구',
-            title: '효제동',  //종로구 끝
+            title: '효제동', 
+        },{ 
+            type: '종로구',
+            title: '훈정동',        //종로구 끝
         },{ 
             type: '중구',
             title: '광희동1가',
+        },{ 
+            type: '중구',
+            title: '광희동2가',
         },{ 
             type: '중구',
             title: '남대문로1가',
@@ -2470,10 +3152,16 @@ export const items = [     //지역 선택 아이템
             title: '남대문로2가',
         },{ 
             type: '중구',
+            title: '남대문로3가',
+        },{ 
+            type: '중구',
             title: '남대문로4가',
         },{ 
             type: '중구',
             title: '남대문로5가',
+        },{ 
+            type: '중구',
+            title: '남산동1가',
         },{ 
             type: '중구',
             title: '남산동2가',
@@ -2482,10 +3170,16 @@ export const items = [     //지역 선택 아이템
             title: '남산동3가',
         },{ 
             type: '중구',
+            title: '남창동',
+        },{ 
+            type: '중구',
             title: '남학동',
         },{ 
             type: '중구',
             title: '다동',
+        },{ 
+            type: '중구',
+            title: '다산동',
         },{ 
             type: '중구',
             title: '동화동',
@@ -2494,10 +3188,16 @@ export const items = [     //지역 선택 아이템
             title: '만리동1가',
         },{ 
             type: '중구',
+            title: '만리동2가',
+        },{ 
+            type: '중구',
             title: '명동1가',
         },{ 
             type: '중구',
             title: '명동2가',
+        },{ 
+            type: '중구',
+            title: '무교동',
         },{ 
             type: '중구',
             title: '무학동',
@@ -2506,10 +3206,16 @@ export const items = [     //지역 선택 아이템
             title: '묵정동',
         },{ 
             type: '중구',
+            title: '방산동',
+        },{ 
+            type: '중구',
             title: '봉래동1가',
         },{ 
             type: '중구',
             title: '봉래동2가',
+        },{ 
+            type: '중구',
+            title: '북창동',
         },{ 
             type: '중구',
             title: '산림동',
@@ -2518,10 +3224,16 @@ export const items = [     //지역 선택 아이템
             title: '삼각동',
         },{ 
             type: '중구',
+            title: '서소문동',
+        },{ 
+            type: '중구',
             title: '소공동',
         },{ 
             type: '중구',
             title: '수표동',
+        },{ 
+            type: '중구',
+            title: '수하동',
         },{ 
             type: '중구',
             title: '순화동',
@@ -2530,10 +3242,16 @@ export const items = [     //지역 선택 아이템
             title: '신당동',
         },{ 
             type: '중구',
+            title: '신당1동',
+        },{ 
+            type: '중구',
             title: '신당5동',
         },{ 
             type: '중구',
             title: '쌍림동',
+        },{ 
+            type: '중구',
+            title: '약수동',
         },{ 
             type: '중구',
             title: '예관동',
@@ -2542,10 +3260,16 @@ export const items = [     //지역 선택 아이템
             title: '예장동',
         },{ 
             type: '중구',
+            title: '오장동',
+        },{ 
+            type: '중구',
             title: '을지로1가',
         },{ 
             type: '중구',
             title: '을지로2가',
+        },{ 
+            type: '중구',
+            title: '을지로3가',
         },{ 
             type: '중구',
             title: '을지로4가',
@@ -2554,7 +3278,16 @@ export const items = [     //지역 선택 아이템
             title: '을지로5가',
         },{ 
             type: '중구',
+            title: '을지로6가',
+        },{ 
+            type: '중구',
             title: '을지로7가',
+        },{ 
+            type: '중구',
+            title: '의주로1가',
+        },{ 
+            type: '중구',
+            title: '의주로2가',
         },{ 
             type: '중구',
             title: '인현동1가',
@@ -2563,10 +3296,16 @@ export const items = [     //지역 선택 아이템
             title: '인현동2가',
         },{ 
             type: '중구',
+            title: '입정동',
+        },{ 
+            type: '중구',
             title: '장교동',
         },{ 
             type: '중구',
             title: '장충동1가',
+        },{ 
+            type: '중구',
+            title: '장충동2가',
         },{ 
             type: '중구',
             title: '저동1가',
@@ -2575,10 +3314,16 @@ export const items = [     //지역 선택 아이템
             title: '저동2가',
         },{ 
             type: '중구',
+            title: '정동',
+        },{ 
+            type: '중구',
             title: '주교동',
         },{ 
             type: '중구',
             title: '주자동',
+        },{ 
+            type: '중구',
+            title: '중림동',
         },{ 
             type: '중구',
             title: '청구동',
@@ -2587,10 +3332,16 @@ export const items = [     //지역 선택 아이템
             title: '초동',
         },{ 
             type: '중구',
+            title: '충무로1가',
+        },{ 
+            type: '중구',
             title: '충무로2가',
         },{ 
             type: '중구',
             title: '충무로3가',
+        },{ 
+            type: '중구',
+            title: '충무로4가',
         },{ 
             type: '중구',
             title: '충무로5가',
@@ -2599,19 +3350,40 @@ export const items = [     //지역 선택 아이템
             title: '충정로1가',
         },{ 
             type: '중구',
+            title: '태평로1가',
+        },{ 
+            type: '중구',
             title: '태평로2가',
         },{ 
             type: '중구',
             title: '필동1가',
         },{ 
             type: '중구',
+            title: '필동2가',
+        },{ 
+            type: '중구',
             title: '필동3가',
         },{ 
             type: '중구',
-            title: '황학동',   //중구 끝
+            title: '황학동',  
+        },{ 
+            type: '중구',
+            title: '회현동1가',
+        },{ 
+            type: '중구',
+            title: '회현동2가',
+        },{ 
+            type: '중구',
+            title: '회현동3가',
+        },{ 
+            type: '중구',
+            title: '흥인동',         //중구 끝
         },{ 
             type: '중랑구',
             title: '망우동',
+        },{ 
+            type: '중랑구',
+            title: '망우3동',
         },{ 
             type: '중랑구',
             title: '망우본동',
@@ -2620,10 +3392,16 @@ export const items = [     //지역 선택 아이템
             title: '면목동',
         },{ 
             type: '중랑구',
+            title: '면목2동',
+        },{ 
+            type: '중랑구',
             title: '면목3.8동',
         },{ 
             type: '중랑구',
             title: '면목4동',
+        },{ 
+            type: '중랑구',
+            title: '면목5동',
         },{ 
             type: '중랑구',
             title: '면목7동',
@@ -2632,10 +3410,16 @@ export const items = [     //지역 선택 아이템
             title: '면목본동',
         },{ 
             type: '중랑구',
+            title: '묵동',
+        },{ 
+            type: '중랑구',
             title: '묵1동',
         },{ 
             type: '중랑구',
             title: '묵2동',
+        },{ 
+            type: '중랑구',
+            title: '상봉동',
         },{ 
             type: '중랑구',
             title: '상봉1동',
@@ -2644,10 +3428,16 @@ export const items = [     //지역 선택 아이템
             title: '상봉2동',
         },{ 
             type: '중랑구',
+            title: '신내동',
+        },{ 
+            type: '중랑구',
             title: '신내1동',
         },{ 
             type: '중랑구',
             title: '신내2동',
+        },{ 
+            type: '중랑구',
+            title: '중화동',
         },{ 
             type: '중랑구',
             title: '중화1동',
