@@ -54,7 +54,6 @@
 
 .custom-modal-box {
   display: flex;
-  flex-direction: column;
   width: 300px;
   border: 1px solid #E7E6E6;
   padding: 10px;
@@ -65,19 +64,18 @@
   border: 2px solid #bf5f4977;
 }
 
-.custom-modal-box2 {
-  flex-direction: column;
-  width: 300px;
-  border: 1px solid #E7E6E6;
-  padding: 10px;
-}
-
 .city-items-container {
   margin-top: 15px;
   margin-bottom: 15px;
-  margin-right: 1000px;
+}
+
+.dong-items-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  margin-right: 250px;
 }
 
 .custom-modal-box-whole {
-  display: flex; 
+  display: flex;
 }
