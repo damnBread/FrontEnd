@@ -37,7 +37,7 @@ function Login() {
 
         axios.post('http://localhost:3000/login', {
             id: InputID,
-            password: InputPW,
+            pw: InputPW,
         })
         .then(response => {
             console.log(response);
