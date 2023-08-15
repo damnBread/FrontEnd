@@ -44,7 +44,14 @@ const DamnStoryWrite = () => {
     const handleRegisterClick = async () => {
         if (!title || !content) {
             alert('제목과 내용을 작성해주세요.');
-        } else {
+        }
+        else if(!title) {
+            alert('제목을 입력해주세요.');
+        }
+        else if(!content) {
+            alert('내용을 입력해주세요');
+        }
+        else {
             try {
                 console.log("click regist");
                 console.log("title: ", title);
@@ -61,7 +68,11 @@ const DamnStoryWrite = () => {
     
                 if (response.status === 200) {
                     sessionStorage.setItem("title", title);
-                    alert('글이 작성되었습니다.');
+                    sessionStorage.setItem("content", content);
+                    sessionStorage.setItem("writerId", writerId);
+                    alert('글이 작성되었습니다.'); //작성 성공, db잘들어감. get으로 가져와야함
+
+
                     window.location.href = '/damnstory'; // Redirect to the main page
                 } else {
                     alert('글 작성 중 오류1가 발생했습니다.');
@@ -71,6 +82,7 @@ const DamnStoryWrite = () => {
                 alert('글 작성 중 오류2가 발생했습니다.');
             }
         }
+        
     };
     
 
@@ -131,8 +143,6 @@ const DamnStoryWrite = () => {
                                 backgroundColor: "darkbrown",
                             },
                         }}
-                        // component={Link}
-                        // to="/damnstory"
                         onClick={handleRegisterClick}
                     >
                         등록

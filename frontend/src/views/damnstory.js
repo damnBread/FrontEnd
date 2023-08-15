@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Header from "../components/Headers/Header";
@@ -13,13 +13,13 @@ const SectionDataWrite = [ //게시물 더미
     {
         title: '비오니까 일자리도 없다',
         content: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가..',
-        writer: 'gabinTest'
+        writerId: 'gabinTest'
     },
 
     {
         title: '이번시간에는 퍼싸아ㅏㅏㅏ드',
         content: '막창 먹고싶다 아니야 그냥 다 먹고싶은거같아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ헤헿',
-        writer: 'gabinTest'
+        writerId: 'gabinTest'
     },
 ];
 
@@ -44,6 +44,25 @@ const sectionStyle = {
 };
 
 const Damnstory = () => {
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        // Fetch data when the component mounts
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/damnstory'); // Replace with the actual endpoint for fetching posts
+                console.log(response);
+                setPosts(response.data); // Assuming the response contains an array of posts
+                console.log(setPosts);
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [clickCount, setClickCount] = useState(0);
     const postsPerPage = 4;
@@ -94,7 +113,7 @@ const Damnstory = () => {
                                         <p className="annotext" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{section.postTitle}</p>
                                     </div>
                                     <div className="rightdamnstoryanno">
-                                        <p className="annotext">{section.date}</p>
+                                        <p className="annotext">{section.createdDate}</p>
                                     </div>
                                 </div>
                                 <div className="gray-line1"></div>
@@ -104,24 +123,22 @@ const Damnstory = () => {
                 </div>
 
                 <div className="damnstoryboard">
-                    {currentPosts.map((section, index) => (
-                        <a key={index} href={`/${section.url}${section.id}&sortType=CREATED_DATE`} style={sectionStyle}>
-                            <div className="damnstoryboardtitle">{section.title}</div>
-                            <div className="damnstoryboardcontent">{section.content}</div>
+                    {posts.map(post => (
+                        <a key={post.id} href={`/damnstory/${post.id}`} style={sectionStyle}>
+                            <div className="damnstoryboardtitle">{post.title}</div>
+                            <div className="damnstoryboardcontent">{post.content}</div>
                             <div className="damnstoryboardnickname">
 
                                 <div className="left-content">
-                                    {section.writer} | {section.time}
+                                    {post.writerId} | {post.createdDate}
                                 </div>
                                 <div className="right-content">
                                     <img className="img1" src={damnstorycomment2}/>
-                                    <p>{section.commentcount}</p>
-                                    <img className="img2" src={damnstorysearchcount2}/>
-                                    <p>{section.seecount}</p>
+                                    {/* <p>{post.comments}</p> */}
+                                    <img className="imag2" src={damnstorysearchcount2}/>
+                                    {/* <p>{post.viewCount}</p> */}
                                 </div>
                             </div>
-
-
 
                             <div className="gray-line1"></div>
                         </a>
@@ -146,6 +163,7 @@ const Damnstory = () => {
                 </div>
 
             </div>
+
             <Footer />
         </div>
     );
