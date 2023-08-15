@@ -56,10 +56,10 @@ function Login() {
                 //     path: '/',             
                 //     // maxAge: 20000
                 // });
-                
-                console.log('token1', cookies.token);
 
                 // localStorage.setItem('token', cookies.token);       //웹브라우저에 localStroge에 저장
+                
+                console.log('token1', cookies.token);
             }
             document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
         })
