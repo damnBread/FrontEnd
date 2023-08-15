@@ -28,11 +28,35 @@ function SignUP() {
 
     const [show, setShow] = useState(false);   //모달창
 
-    const handleClose = () => setShow(false);   //모달창 닫기
-    const handleShow = () => setShow(true);     //모달창 켜기
+    const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
+    const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
 
-    const [select, setSelect] = useState(null);  //서울 등 선택
-    const [showCityItems, setShowCityItems] = useState(false);  //서울 안에 있는 강남구 등 선택
+    const handleClose = () => {
+        setShow(false);   //모달창 닫기
+    }
+    const handleCloseWorkArea = () => {
+        setShowWorkArea(false);   //모달창 닫기
+    }
+    const handleCloseWorkJob = () => {
+        setShowWorkJob(false);   //모달창 닫기
+    }
+
+    const handleShow = () => setShow(true);     //모달창 켜기
+    const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
+    const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
+
+    const [showCityItems, setShowCityItems] = useState(false);  //시/군/구
+    const [showDongItems, setShowDongItems] = useState(false);  //동/읍/면
+
+    const [SelectAddress, setSelectAddress] = useState("");  //시/도 선택
+    const [citySelectAddress, setCitySelectAddress] = useState("");  //시/군/구 선택
+    const [dongSelectAddress, setDongSelectAddress] = useState(""); //동/읍/면 선택
+
+    const [SelectWorkArea, setSelectWorkArea] = useState("");  //시/도 선택
+    const [citySelectWorkArea, setCitySelectWorkArea] = useState("");  //시/군/구 선택
+    const [dongSelectWorkArea, setDongSelectWorkArea] = useState(""); //동/읍/면 선택
+
+    const [allSelectWorkJob, setAllSelectWorkJob] = useState("");   //희망업직종 선택    
 
   const handleInputID = (e) => {
     setInputID(e.target.value);
@@ -474,46 +498,70 @@ function SignUP() {
                         <button type='button' variant="outline-primary" onClick={handleShow} style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
                             marginTop: "22px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 선택</button>     
                    
-                        <Modal dialogClassName="custom-modal-content" show={show} onHide={handleClose}>
-                            <Modal.Header>
-                                <Modal.Title>지역 선택</Modal.Title>
-                            </Modal.Header>
-                            <div className="custom-modal-box-whole">
-                                <Modal.Body dialogClassName="custom-modal-box">
-                                    {items.map((item, index) => (
-                                        <div
-                                            key={index}
-                                            onClick={() => handleClick(item.type)}
-                                            className={`custom-modal-box ${select === item.type ? 'select' : ''}`}
-                                        >
-                                            {item.title}
+                   <Modal dialogClassName="custom-modal-content" show={show} onHide={handleClose}>
+                                <Modal.Header>
+                                    <Modal.Title>거주지 선택</Modal.Title>
+                                </Modal.Header>
+                                <div className="custom-modal-box-whole">
+                                    <Modal.Body dialogClassName="custom-modal-box">
+
+                                        {/* 시/도 */}
+                                        {items.map((item, index) => (
+                                            <div
+                                                key={index}
+                                                onClick={() => handleClick(item.type)}
+                                                className={`custom-modal-box ${SelectAddress === item.type ? 'select' : ''}`}
+                                            >
+                                                {item.title}
+                                            </div>
+                                        ))}
+                                    </Modal.Body>
+
+                                        {/* 시/군/구 */}
+                                    {showCityItems && (
+                                        <div className="city-items-container">
+                                            {items_city
+                                                .filter((cityItem) => cityItem.type === SelectAddress)
+                                                .map((cityItem, index) => (
+                                                    <div
+                                                        key={index}
+                                                        onClick={() => CityhandleClick(cityItem.title)}
+                                                        className={`custom-modal-box ${citySelectAddress === cityItem.title ? 'select' : ''}`}
+                                                    >
+                                                        {cityItem.title}
+                                        
+                                                    </div>
+
+                                                    
+                                                ))}
                                         </div>
-                                    ))}
-                                </Modal.Body>
+                                    )}
+                                        
 
-                                {showCityItems && (
-                                    <div className="city-items-container">
-                                        {items_city
-                                            .filter((cityItem) => cityItem.type === select)
-                                            .map((cityItem, index) => (
-                                                <div
-                                                    key={index}
-                                                    onClick={() => CityhandleClick(cityItem.type)}
-                                                    className={`custom-modal-box2 ${select === cityItem.type ? 'select' : ''}`}
-                                                >
-                                                    {cityItem.title}
-                                                </div>
-                                            ))}
-                                    </div>
-                                )}
-                            </div>
+                                    {/* 동/읍/면 */}
+                                    {showDongItems && (
+                                            <div className="dong-items-container">
+                                                {items_dong
+                                                    .filter((dongItem) => dongItem.type === citySelectAddress)
+                                                    .map((dongItem, index) => (
+                                                        <div
+                                                            key={index}
+                                                            onClick={() => DonghandleClick(dongItem.title)}
+                                                            className={`custom-modal-box ${dongSelectAddress === dongItem.title ? 'select' : ''}`}
+                                                        >
+                                                            {dongItem.title}
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        )}
 
-                            <Modal.Footer>
-                                <Button className="btn_close" variant="secondary" onClick={handleClose}>
-                                    닫기
-                                </Button>
-                            </Modal.Footer>
-                        </Modal>
+                                </div>
+                                <Modal.Footer>
+                                    <Button onClick={handleSelectAddress}>
+                                        선택
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
 
                     </div>
 
@@ -529,25 +577,13 @@ function SignUP() {
 
                     <label style={{fontSize: "16px", marginTop: "30px"}}><b>희망 근무 지역</b></label>
                     <div>
-                        <input type='text' id='hopeLocation' name='hopeLocation' placeholder="희망 근무 지역" value={InputWorkArea}
+                        <input type='text' id='hopeLocation' name='hopeLocation' placeholder="희망 근무 지역" value={InputWorkArea} disabled
                              onChange={handleInputWorkArea} style={{width:"350px", height: "40px", marginTop: "15px", 
-                              borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
-                        <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
-                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button>   
-
-                    </div>
-
-
-                    <label style={{fontSize: "16px", marginTop: "30px"}}><b>희망 업직종</b></label>
-                    <div>
-                        <input type='text' id='hopeJob' name='hopeJob' placeholder="희망 업직종" value={InputWorkJob}
-                             onChange={handleInputWorkJob} style={{width:"350px", height: "40px", marginTop: "15px", 
-                              borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
-                        <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
-                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>직종 검색</button>      
-                    </div>
-
-                    <Modal dialogClassName="custom-modal-content" show={showWorkArea} onHide={handleCloseWorkArea}>
+                              borderColor: "#E7E6E6", backgroundColor: "#D3D3D364", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
+                        <button type='button' onClick={handleShowWorkArea} style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
+                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>지역 검색</button> 
+                        
+                        <Modal dialogClassName="custom-modal-content" show={showWorkArea} onHide={handleCloseWorkArea}>
                             <Modal.Header>
                                 <Modal.Title>희망 근무 지역 선택</Modal.Title>
                             </Modal.Header>
@@ -614,6 +650,19 @@ function SignUP() {
 
                         
                     </div>
+
+
+
+
+                    <label style={{fontSize: "16px", marginTop: "30px"}}><b>희망 업직종</b></label>
+                    <div>
+                        <input type='text' id='hopeJob' name='hopeJob' placeholder="희망 업직종" value={InputWorkJob}
+                             onChange={handleInputWorkJob} style={{width:"350px", height: "40px", marginTop: "15px", 
+                              borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
+                        <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
+                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>직종 검색</button>      
+                    </div>
+            
 
 
           <div className="border1">

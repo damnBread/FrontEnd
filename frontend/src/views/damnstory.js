@@ -10,19 +10,6 @@ import Footer from "../components/Footers/Footer";
 import damnstorycomment2 from "../assets/img/damnstorycomment2.png";
 import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";  
 
-const SectionDataWrite = [ //게시물 더미
-    {
-        title: '비오니까 일자리도 없다',
-        content: '주말에만 단기알바 했는데 객실 관리가 꿀이라 쏠쏠했는데 이번주는 자리가..',
-        writerId: 'gabinTest'
-    },
-
-    {
-        title: '이번시간에는 퍼싸아ㅏㅏㅏ드',
-        content: '막창 먹고싶다 아니야 그냥 다 먹고싶은거같아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ헤헿',
-        writerId: 'gabinTest'
-    },
-];
 
 const SectionData = [ //공지사항 더미
     {
@@ -76,7 +63,6 @@ const Damnstory = () => {
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = SectionDataWrite.slice(indexOfFirstPost, indexOfLastPost);
 
     const incrementClickCount = () => {
         setClickCount(prevClickCount => prevClickCount + 1);
@@ -152,18 +138,15 @@ const Damnstory = () => {
 
                 <div>
                     <ul className="pagination">
-                        {Array.from({ length: Math.ceil(SectionDataWrite.length / postsPerPage) }).map((_, index) => (
-                            <li key={index} className="page-item">
+                            <li className="page-item">
                                 <a
                                     className="page-link"
                                     href="#"
-                                    onClick={() => paginate(index + 1)}
                                     style={{ cursor: 'pointer' }}
                                 >
-                                    {index + 1}
                                 </a>
                             </li>
-                        ))}
+
                     </ul>
                 </div>
 
