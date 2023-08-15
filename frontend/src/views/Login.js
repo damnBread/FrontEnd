@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Cookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
@@ -11,6 +11,8 @@ function Login() {
     const [InputID, setInputID] = useState("");         //로그인 입력창
     const [InputPW, setInputPW] = useState("");         //비밀번호 입력창
     const [infoSave, setInfoSave] = useState(false);    //아이디 저장 체크박스
+
+    const [cookies, setCookie, removeCookie] = useCookies();
 
     const handleInputID = (e) => {
         setInputID(e.target.value);
@@ -41,23 +43,25 @@ function Login() {
             id: InputID,
             pw: InputPW,
         })
-        .then(response => {
+        .then(async response => {
             console.log(response);
             console.log("token", response.data); //회원의 고유 토큰
-            console.log("data.userId :: ", response.data.InputID);
 
             if(response.status === 200) {
                 //id, pw 일치 -> 로그인 성공
                 console.log("****로그인 성공*****");
-                sessionStorage.setItem("userID", InputID);
-                //sessionStorage.setItem("name", response.data.userID);
-
-                const cookies = new Cookies();
-                const token = cookies.set('token', response.data);
-                console.log('token1', token);
+                sessionStorage.setItem("token", response.data);     //웹브라우저에 SessionStorage에 저장
+                sessionStorage.setItem("id", InputID);
+                // setCookie('token', response.data, {                 //웹브라우저에 쿠키에 저장
+                //     path: '/',             
+                //     // maxAge: 20000
+                // });
                 
+                console.log('token1', cookies.token);
+
+                // localStorage.setItem('token', cookies.token);       //웹브라우저에 localStroge에 저장
             }
-            // document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
+            document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
         })
         .catch((error) => {
             Swal.fire({

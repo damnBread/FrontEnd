@@ -8,6 +8,9 @@ import '../../assets/css/font.css';
 const Header = () => {
 
   const [activeLink, setActiveLink] = useState(''); 
+  const sessionId = sessionStorage.getItem('id');
+
+  console.log("seesion: " + sessionId);
 
   const handleLinkClick = (link) => { //네비게이션 색상 바꾸기 위함
     console.log('Clicked link:', link);
@@ -46,11 +49,19 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
 
-        <Nav className="ml-auto">
-                <Link to="/Login" className="Login" style={{ fontFamily: 'GmarketSans, sans-light' }}>로그인</Link>
-                <span className="login-divider">|</span>
-                <Link to="/SignUP" className="SignUP" style={{ fontFamily: 'GmarketSans, sans-light' }}>회원가입</Link>
+            {sessionId.length === 0 ? 
+                <Nav className="ml-auto">
+                  <Link to="/Login" className="Login" style={{ fontFamily: 'GmarketSans, sans-light' }}>로그인</Link>
+                  <span className="login-divider">|</span>
+                  <Link to="/SignUP" className="SignUP" style={{ fontFamily: 'GmarketSans, sans-light' }}>회원가입</Link>
+                </Nav>
+             : 
+              <Nav className="session-id">
+              <Link to="/damnprofile" className="Login" style={{ fontFamily: 'GmarketSans, sans-light' }}>{sessionId}</Link>
             </Nav>
+            }
+
+
       </Navbar>
     </header>
   );
