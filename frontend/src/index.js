@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { render } from "react-dom";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 //style
 import reportWebVitals from "./reportWebVitals";
@@ -28,6 +28,7 @@ import damnlistBoard from "./views/damnlistBoard";
 import damnstory from "./views/damnstory";
 import damnstorywrite from "./views/damnstorywrite";
 import damnprofile from "./views/damnprofile";
+import DamnstoryDetail from "./views/damnstoryDetail";
 
 //import Header from "./components/Headers/Page1Header";
 import Page1Header from "./views/Page1Header";
@@ -51,6 +52,7 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/damnlistBoard" component={damnlistBoard} />
       <Route exact path="/damnstory" component={damnstory} />
       <Route exact path="/damnstory/new" component={damnstorywrite} />
+      <Route exact path="/damnstory/:storyid" component={DamnstoryDetail} />
       <Route exact path="/damnprofile" component={damnprofile}/>
     </Switch>
   </BrowserRouter>
