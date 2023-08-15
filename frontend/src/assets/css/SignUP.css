@@ -48,12 +48,13 @@
   max-width: 1200px; /* Optional: Add a max-width to limit the modal's width */
   height: 100%;
   max-height: 2000px;
+  margin-top: 50px;
+  margin-bottom: 200px;
 }
 
 .custom-modal-box {
   display: flex;
-  flex-direction: column;
-  width: 150px;
+  width: 300px;
   border: 1px solid #E7E6E6;
   padding: 10px;
 }
@@ -63,21 +64,18 @@
   border: 2px solid #bf5f4977;
 }
 
-.custom-modal-box2 {
-  flex-direction: column;
-  width: 150px;
-  border: 1px solid #E7E6E6;
-  padding: 10px;
-  margin-left: 140px;
+.city-items-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
-.city-items-container {
-  position: relative;
-  /* top: 89px; */
-  left: 30px;
+.dong-items-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  margin-right: 250px;
 }
 
 .custom-modal-box-whole {
-  display: flex; 
-  align-items: center;
+  display: flex;
 }
