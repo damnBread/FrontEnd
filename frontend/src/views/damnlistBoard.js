@@ -8,13 +8,12 @@ import ReactPaginate from 'react-paginate';
 const DamnlistBoard = () => {
   // 더미
   const boardData = [
-    { id: 1, title: '컴포즈커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 1', price: 10000 },
-    { id: 2, title: '메가커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 2', price: 12000 },
-    { id: 3, title: '이디아커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 2', price: 12000 },
-    { id: 4, title: '이디아커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 2', price: 12000 },
-    { id: 5, title: '이디아커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 2', price: 12000 },
-    { id: 6, title: '커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 2', price: 12000 },
-    { id: 7, title: '코피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 2', price: 12000 },
+    { id: 1, title: '컴포즈커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/15 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: '컴포즈 공릉점', price: 10000 },
+    { id: 2, title: '메가커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/08/15 18:00 ~ 2023/08/15 22:00', time: '2023/08/15 18:00', workplace: '메가커피 노원역점', price: 12000 },
+    { id: 3, title: '이디아커피 주말 오픈구합니다.(경력무관) ', createdAt: '2023/08/13 07:00 ~ 2023/08/13 12:00', time: '2023/08/13 07:00', workplace: '이디아커피 하계점', price: 10000 },
+    { id: 4, title: '새마을식당 하루땜빵. ', createdAt: '2023/08/12 12:00 ~ 2023/08/12 22:00', time: '2023/08/11 15:00', workplace: '새마을식당 노원점', price: 15000 },
+    { id: 5, title: '이디아커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/08/11 16:00 ~ 2023/08/11 23:00', time: '2023/07/15 18:00', workplace: 'ABC마트 홍대점', price: 12000 },
+    { id: 6, title: 'ABC마트 홍대점 하루 땜빵 구해요. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 2', price: 12000 },
   ];
 
   const itemsPerPage = 10; // Number of items to display per page

@@ -27,22 +27,25 @@ const damnlist = () => {
         <p>땜빵구해요</p>
       </div>
 
-      <div className = "filtering"> 
+      {/* <div className = "filtering"> 
 
-      <div className="selectoption" style={{ display: 'flex' }}>
-        <Select options={options} />
-        <Select options={options} />
-        <Select options={options} />
-        <Select options={options} /> 
-      </div>
+        <div className="selectoption" style={{ display: 'flex' }}>
+          <Select options={options} />
+          <Select options={options} />
+          <Select options={options} />
+          <Select options={options} /> 
+        </div>
 
-      <div className="rounded-rectangle" style={{marginTop: "10px"}}>
+        <div className="rounded-rectangle" style={{marginTop: "10px"}}>
 
-      </div>
-      </div>
-      <div>
-        <p className="listcount" style={{ fontFamily: 'Inter', fontWeight: 'bold'}}>총 30건</p>   
-      </div>
+        </div>
+        
+      </div> */}
+
+
+        <div>
+          <p className="listcount" style={{ fontFamily: 'Inter', fontWeight: 'bold'}}>총 6건</p>   
+        </div>
       
       <div className="brown-line1"></div>
   

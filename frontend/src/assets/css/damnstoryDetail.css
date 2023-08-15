@@ -1,3 +1,8 @@
+
+.damnstorydetailcontainer {
+    margin-left: 50px;
+}
+
 .damnstorydetail p {
     font-family: 'GmarketSans', sans-bold;
     color: gray;
@@ -91,7 +96,8 @@
     font-family: 'GmarketSans', sans-bold;
     font-size: 18px;
     padding: 20px;
-    border: 1px solid black;
+    border: 1px solid brown;
+    border-color: light #ebb;
     border-radius: 8px;
     width: 800px;
     height: 40px;
