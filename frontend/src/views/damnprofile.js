@@ -8,11 +8,10 @@ import Footer from "../components/Footers/Footer";
 
 const damnprofile = () => {
     
-    const localToken = localStorage.getItem('token');
+    const sessionToken = sessionStorage.getItem('token');
 
     function token() {
-      console.log("tooo: " + localToken);
-
+      console.log("SSSSS: " + sessionToken);
     }
 
     return (

@@ -1,4 +1,5 @@
 import React , {useState} from 'react';
+import axios from "axios";
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import damnBreadLogo from '../../assets/img/damnBread_logo.png';
@@ -10,11 +11,29 @@ const Header = () => {
 
   const [activeLink, setActiveLink] = useState(''); 
   let sessionId = sessionStorage.getItem('id');
+  const sessionToken = sessionStorage.getItem('token');
 
   const handleLinkClick = (link) => { //네비게이션 색상 바꾸기 위함
     console.log('Clicked link:', link);
     setActiveLink(link); 
   };
+
+
+  function mypageSession() {
+    axios
+      .get('http://localhost:3000/', {
+        headers: {
+          Authorization: sessionToken,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(err.Authorization);
+      });
+  }
 
   function onClickLogout() {
     Swal.fire({
@@ -32,8 +51,8 @@ const Header = () => {
       else{
           //취소
       }
-    });
-  }
+    })
+  };
 
   return (
     <header>
@@ -61,7 +80,7 @@ const Header = () => {
               <Link to="/Page3Header" className={`nav-link ${activeLink === '인재정보' ? 'active' : ''}`} 
                 style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('인재정보')}>인재정보</Link>
               <Link to="/damnprofile" className={`nav-link ${activeLink === '마이페이지' ? 'active' : ''}`} 
-                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('마이페이지')}>마이페이지</Link>
+                style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => {handleLinkClick('마이페이지'); mypageSession()}}>마이페이지</Link>
             </Nav>
 
           </Navbar.Collapse>
