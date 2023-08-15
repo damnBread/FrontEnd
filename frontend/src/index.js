@@ -27,12 +27,12 @@ import damnlist from "./views/damnlist";
 import damnlistBoard from "./views/damnlistBoard";
 import damnstory from "./views/damnstory";
 import damnstorywrite from "./views/damnstorywrite";
+import damnprofile from "./views/damnprofile";
 
 //import Header from "./components/Headers/Page1Header";
 import Page1Header from "./views/Page1Header";
 import Page2Header from "./views/Page2Header";
 import Page3Header from "./views/Page3Header";
-import Page4Header from "./views/Page4Header";
 
 
 createRoot(document.getElementById("root")).render(
@@ -45,13 +45,13 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/Page1Header" component={Page1Header} />
       <Route exact path="/Page2Header" component={Page2Header} />
       <Route exact path="/Page3Header" component={Page3Header} />
-      <Route exact path="/Page4Header" component={Page4Header} />
       <Route exact path="/" component={MainPage} />
       <Route exact path="/damnlist" component={damnlist} />
       <Route exact path="/MainPageRecommend" component={MainPageRecommend} />
       <Route exact path="/damnlistBoard" component={damnlistBoard} />
       <Route exact path="/damnstory" component={damnstory} />
-      <Route exact path="/damnstory/register" component={damnstorywrite} />
+      <Route exact path="/damnstory/new" component={damnstorywrite} />
+      <Route exact path="/damnprofile" component={damnprofile}/>
     </Switch>
   </BrowserRouter>
 );

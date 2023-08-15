@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Cookies } from 'react-cookie';
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
@@ -6,6 +7,7 @@ import "../assets/css/Login.css";
 import Swal from "sweetalert2";
 
 function Login() {
+
     const [InputID, setInputID] = useState("");         //로그인 입력창
     const [InputPW, setInputPW] = useState("");         //비밀번호 입력창
     const [infoSave, setInfoSave] = useState(false);    //아이디 저장 체크박스
@@ -37,16 +39,23 @@ function Login() {
 
         axios.post('http://localhost:3000/login', {
             id: InputID,
-            password: InputPW,
+            pw: InputPW,
         })
         .then(response => {
             console.log(response);
+            console.log("token", response.data); //회원의 고유 토큰
             console.log("data.userId :: ", response.data.InputID);
-            if(response.status === "OK 200") {
+
+            if(response.status === 200) {
                 //id, pw 일치 -> 로그인 성공
                 console.log("****로그인 성공*****");
                 sessionStorage.setItem("userID", InputID);
                 //sessionStorage.setItem("name", response.data.userID);
+
+                const cookies = new Cookies();
+                const token = cookies.set('token', response.data);
+                console.log('token1', token);
+                
             }
             document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
         })

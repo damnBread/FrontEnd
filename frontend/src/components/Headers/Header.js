@@ -39,7 +39,7 @@ const Header = () => {
                 style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('땜빵썰')}>땜빵썰</Link>
               <Link to="/Page3Header" className={`nav-link ${activeLink === '인재정보' ? 'active' : ''}`} 
                 style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('인재정보')}>인재정보</Link>
-              <Link to="/Page4Header" className={`nav-link ${activeLink === '마이페이지' ? 'active' : ''}`} 
+              <Link to="/damnprofile" className={`nav-link ${activeLink === '마이페이지' ? 'active' : ''}`} 
                 style={{ fontFamily: 'GmarketSans, sans-light', fontWeight: 'bold' }} onClick={() => handleLinkClick('마이페이지')}>마이페이지</Link>
             </Nav>
 
