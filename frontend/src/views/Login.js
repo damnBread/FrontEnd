@@ -57,7 +57,7 @@ function Login() {
                 console.log('token1', token);
                 
             }
-            document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
+            // document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
         })
         .catch((error) => {
             Swal.fire({
