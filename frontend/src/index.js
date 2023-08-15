@@ -27,7 +27,7 @@ import damnlist from "./views/damnlist";
 import damnlistBoard from "./views/damnlistBoard";
 import damnstory from "./views/damnstory";
 import damnstorywrite from "./views/damnstorywrite";
-import damnprofile from "./views/damnprofile"
+import damnprofile from "./views/damnprofile";
 
 //import Header from "./components/Headers/Page1Header";
 import Page1Header from "./views/Page1Header";

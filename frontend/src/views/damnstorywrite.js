@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Cookies } from 'react-cookie';
 import axios from "axios";
 import Header from "../components/Headers/Header";
 import Button from "@mui/material/Button";
@@ -8,6 +9,7 @@ import "../assets/css/damnstorywrite.css";
 import Footer from "../components/Footers/Footer";
 
 const DamnStoryWrite = () => {
+
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [writerId, setWriter] = useState("gabinTest");
@@ -42,6 +44,7 @@ const DamnStoryWrite = () => {
 
 
     const handleRegisterClick = async () => {
+
         if (!title || !content) {
             alert('제목과 내용을 작성해주세요.');
         }
@@ -53,15 +56,28 @@ const DamnStoryWrite = () => {
         }
         else {
             try {
+                const cookies = new Cookies();
+                const token = cookies.get('token'); // Get token from cookies
+
                 console.log("click regist");
                 console.log("title: ", title);
                 console.log("content: ", content);
+                console.log("token: ", token);
+                
     
-                const response = await axios.post('http://localhost:3000/damnstory/new', {
-                    title: title,
-                    content: content,
-                    writerId: writerId,
-                });
+                const response = await axios.post(
+                    'http://localhost:3000/damnstory/new',
+                    {
+                        title: title,
+                        content: content,
+                        // writerId: writerId,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
     
                 console.log(response);
                 console.log("title: ", response.data.title);
@@ -69,9 +85,7 @@ const DamnStoryWrite = () => {
                 if (response.status === 200) {
                     sessionStorage.setItem("title", title);
                     sessionStorage.setItem("content", content);
-                    sessionStorage.setItem("writerId", writerId);
                     alert('글이 작성되었습니다.'); //작성 성공, db잘들어감. get으로 가져와야함
-
 
                     window.location.href = '/damnstory'; // Redirect to the main page
                 } else {

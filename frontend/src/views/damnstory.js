@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Cookies } from 'react-cookie';
 import { Link } from "react-router-dom";
 import Header from "../components/Headers/Header";
 import Button from "@mui/material/Button";
@@ -51,7 +52,11 @@ const Damnstory = () => {
         // Fetch data when the component mounts
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/damnstory'); // Replace with the actual endpoint for fetching posts
+                const response = await axios.get('http://localhost:3000/damnstory', {
+                    params: {
+                      page: 1 // Change this value to the appropriate page number
+                    }
+                  }) // Replace with the actual endpoint for fetching posts
                 console.log(response);
                 setPosts(response.data); // Assuming the response contains an array of posts
                 console.log(setPosts);
@@ -87,7 +92,7 @@ const Damnstory = () => {
                       sx={{ borderColor: "brown",
                       color: "brown",
                      }} 
-                      component={Link} // Use Link from react-router-dom
+                      component={Link} //Use Link from react-router-dom
                       to="/damnstory/new"
                       >글쓰기</Button>
                 </div>
@@ -130,13 +135,13 @@ const Damnstory = () => {
                             <div className="damnstoryboardnickname">
 
                                 <div className="left-content">
-                                    {post.writerId} | {post.createdDate}
+                                    {post.nickname} | {post.createdDate}
                                 </div>
                                 <div className="right-content">
                                     <img className="img1" src={damnstorycomment2}/>
-                                    {/* <p>{post.comments}</p> */}
+                                    <p>{post.comments}</p>
                                     <img className="imag2" src={damnstorysearchcount2}/>
-                                    {/* <p>{post.viewCount}</p> */}
+                                    <p>{post.viewCount}</p>
                                 </div>
                             </div>
 
