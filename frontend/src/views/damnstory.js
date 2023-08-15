@@ -14,13 +14,13 @@ import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";
 const SectionData = [ //공지사항 더미
     {
         title: '공지사항',
-        postTitle: '게시물 제목입니다다ㅏㅏㅏ',
+        postTitle: '비속어 사용을 금지합니다.',
         date: '2023-07-29',
         url: 'https://example.com/notice',
       },
       {
         title: '공지사항',
-        postTitle: '다른 게시물 제목입니다다ㅏㅏㅏ',
+        postTitle: '서로를 존중하는 표현 사용 부탁드립니다',
         date: '2023-08-01',
         url: 'https://example.com/another-notice',
       },

@@ -1,5 +1,110 @@
+.damnstorydetail p {
+    font-family: 'GmarketSans', sans-bold;
+    color: gray;
+    font-size: 7px;
+    font-weight: bold;
+
+  }
+
 .damnstorydetailtitle {
-    font-size: 18px;
-    margin-left: 180px;
+    font-family: 'GmarketSans', sans-bold;
+    font-weight: bold;
+    font-size: 25px;
+    margin-left: 250px;
+    margin-top: 80px;
+}
+
+.damnstorydetailnickname {
+    margin-left: 250px;
+    margin-top: 20px;
+    color: gray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-container {
+    display: flex;
+    align-items: center; /* Vertically center-align the contents */
+    margin-top: 10px; /* Adjust margin as needed */
+}
+
+.left-content1 {
+   margin-left: 250px;
+   color: gray;
+}
+
+.right-content1 {
+    display: flex;
+    align-items: center;
+    margin-left: 500px;
+}
+
+.right-content-item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Adjust the spacing as needed */
+}
+
+.right-content-item img {
+    margin-right: 5px; /* Add some spacing between the image and text */
+}
+
+.gray-line1 {
+    height: 1px;
+    background-color: gainsboro;
+    margin-top: 10px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.damnstorydetailcontent {
+    color: gray;
     margin-top: 30px;
+    margin-left: 250px;
+}
+
+.damnstorydetailcomment {
+    margin-top: 90px;
+    margin-left: 220px;
+    display: flex; /* 부모 요소를 플렉스 컨테이너로 설정 */
+    align-items: center; /* 자식 요소들을 수직으로 중앙 정렬 */
+}
+
+.damnstorydetailcomment img.img1 {
+    margin-right: 10px; 
+}
+
+.damnstorydetailcomment p {
+    margin: 0;
+}
+
+.gray-line2 {
+    height: 1px;
+    background-color: gainsboro;
+    margin-top: 30px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.comment-input {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 800px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 250px;
+}
+
+.comment-input {
+    /* 이전 스타일 유지 */
+    margin-right: 20px; /* 원하는 마진 값 설정 */
+}
+
+.comment-button {
+    /* 이전 스타일 유지 */
+    margin-left: 20px; /* 원하는 마진 값 설정 */
 }
