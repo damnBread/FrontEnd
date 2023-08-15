@@ -7,12 +7,20 @@ import "../assets/css/damnstoryprofile.css";
 import Footer from "../components/Footers/Footer";
 
 const damnprofile = () => {
+    
+    const localToken = localStorage.getItem('token');
+
+    function token() {
+      console.log("tooo: " + localToken);
+
+    }
+
     return (
       <div className="damnprofilewhole">
         <Header />
         <div className="damnprofile">
-            <div className="damnprofileleft">
-
+            <div className="damnprofileleft" onClick={token()}>
+              <h1>마이 페이지</h1>
             </div>
 
             <div className="damnprofileright">

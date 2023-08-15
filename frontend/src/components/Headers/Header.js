@@ -4,15 +4,36 @@ import { Link } from 'react-router-dom';
 import damnBreadLogo from '../../assets/img/damnBread_logo.png';
 import '../../assets/css/Header.css';
 import '../../assets/css/font.css';
+import Swal from "sweetalert2";
 
 const Header = () => {
 
   const [activeLink, setActiveLink] = useState(''); 
+  let sessionId = sessionStorage.getItem('id');
 
   const handleLinkClick = (link) => { //네비게이션 색상 바꾸기 위함
     console.log('Clicked link:', link);
     setActiveLink(link); 
   };
+
+  function onClickLogout() {
+    Swal.fire({
+      icon: "warning",
+      title: "경고",
+      text: "로그아웃하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "확인",
+      width: 800,
+      height: 100,
+    }).then((res) => {
+      if (res.isConfirmed) {
+        sessionId = sessionStorage.clear();
+      }
+      else{
+          //취소
+      }
+    });
+  }
 
   return (
     <header>
@@ -46,11 +67,21 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
 
-        <Nav className="ml-auto">
-                <Link to="/Login" className="Login" style={{ fontFamily: 'GmarketSans, sans-light' }}>로그인</Link>
-                <span className="login-divider">|</span>
-                <Link to="/SignUP" className="SignUP" style={{ fontFamily: 'GmarketSans, sans-light' }}>회원가입</Link>
-            </Nav>
+            {sessionId === null ? 
+                <Nav className="session">
+                  <Link to="/Login" className="Login" style={{ fontFamily: 'GmarketSans, sans-light' }}>로그인</Link>
+                  <span className="login-divider">|</span>
+                  <Link to="/SignUP" className="SignUP" style={{ fontFamily: 'GmarketSans, sans-light' }}>회원가입</Link>
+                </Nav>
+             : 
+                <Nav className="session">
+                  <Link to="/damnprofile" className="Login" style={{ fontFamily: 'GmarketSans, sans-light' }}>{sessionId}</Link>
+                  <span className="login-divider">|</span>
+                  <Link to="/" className="SignUP" onClick={onClickLogout} style={{ fontFamily: 'GmarketSans, sans-light' }}>로그아웃</Link>
+                </Nav>
+            }
+
+
       </Navbar>
     </header>
   );
