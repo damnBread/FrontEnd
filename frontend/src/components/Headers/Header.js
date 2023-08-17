@@ -1,5 +1,6 @@
 import React , {useState} from 'react';
 import axios from "axios";
+import { useCookies } from 'react-cookie';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import damnBreadLogo from '../../assets/img/damnBread_logo.png';
@@ -10,8 +11,12 @@ import Swal from "sweetalert2";
 const Header = () => {
 
   const [activeLink, setActiveLink] = useState(''); 
+  const [cookies, setCookie, removeCookie] = useCookies();
+
   let sessionId = sessionStorage.getItem('id');
   const sessionToken = sessionStorage.getItem('token');
+  const sessionAccessToken = sessionStorage.getItem('AccessToken');
+  const sessionRefreshToken = sessionStorage.getItem('RefreshToken');
 
   const handleLinkClick = (link) => { //네비게이션 색상 바꾸기 위함
     console.log('Clicked link:', link);
@@ -26,13 +31,56 @@ const Header = () => {
           Authorization: sessionToken,
         },
       })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log(err.Authorization);
-      });
+      .then((res) => {              //올바른 경우
+          console.log("success: " + res);   //성공 !
+
+        })
+        .catch(async (err) => {
+          console.log(err);
+
+          if (err.response.status === "401") {   //잘못된 스펠링, Bearer 형식 오류 등
+            console.log("1: " + err);
+            
+            await axios.get('http://localhost:3000/issue', {
+                headers: {
+                  AccessToken: sessionAccessToken,
+                  RefreshToken: sessionRefreshToken
+                },
+              })
+              .then((response) => {
+                console.log("access: " + response.data.AccessToken);
+                console.log("refresh: " + response.data.RefreshToken);
+  
+                sessionStorage.setItem("AccessToken", response.data.AccessToken);     //웹브라우저에 SessionStorage에 저장 -> 찾아보니 이게 베스트인 거 같아요
+                sessionStorage.setItem("RefreshToken", response.data.RefreshToken);
+  
+                console.log("access1: " + cookies.AccessToken);
+                console.log("refresh1: " + cookies.RefreshToken);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+  
+          } else if (err.response.status === "404") {     //토큰이 만료된 경우
+              console.log("2: " + err);
+              Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "토큰이 만료되어 재로그인이 필요합니다. 다시 로그인 해주세요.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    document.location.href = "/login";  //로그인 페이지로 이동
+                }
+                else{
+                    //취소
+                }
+            });
+            }
+        });
   }
 
   function onClickLogout() {
@@ -90,7 +138,7 @@ const Header = () => {
                 <Nav className="session">
                   <Link to="/Login" className="Login" style={{ fontFamily: 'GmarketSans, sans-light' }}>로그인</Link>
                   <span className="login-divider">|</span>
-                  <Link to="/SignUP" className="SignUP" style={{ fontFamily: 'GmarketSans, sans-light' }}>회원가입</Link>
+                  <Link to="/Agreement" className="SignUP" style={{ fontFamily: 'GmarketSans, sans-light' }}>회원가입</Link>
                 </Nav>
              : 
                 <Nav className="session">

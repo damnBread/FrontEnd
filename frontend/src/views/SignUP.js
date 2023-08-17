@@ -41,20 +41,23 @@ function SignUP() {
         setShowWorkJob(false);   //모달창 닫기
     }
 
-    const handleShow = () => setShow(true);     //모달창 켜기
+    const handleShow = () =>{ setShow(true)};     //모달창 켜기
     const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
     const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
 
-    const [showCityItems, setShowCityItems] = useState(false);  //시/군/구
-    const [showDongItems, setShowDongItems] = useState(false);  //동/읍/면
+    const [showCityItems, setShowCityItems] = useState(true);  //시/군/구
+    const [showDongItems, setShowDongItems] = useState(true);  //동/읍/면
 
+    //거주지
     const [SelectAddress, setSelectAddress] = useState("");  //시/도 선택
     const [citySelectAddress, setCitySelectAddress] = useState("");  //시/군/구 선택
     const [dongSelectAddress, setDongSelectAddress] = useState(""); //동/읍/면 선택
 
+    //희망근무지역
     const [SelectWorkArea, setSelectWorkArea] = useState("");  //시/도 선택
     const [citySelectWorkArea, setCitySelectWorkArea] = useState("");  //시/군/구 선택
     const [dongSelectWorkArea, setDongSelectWorkArea] = useState(""); //동/읍/면 선택
+    const [addedWorkAreas, setAddedWorkAreas] = useState([]);
 
     const [allSelectWorkJob, setAllSelectWorkJob] = useState("");   //희망업직종 선택    
 
@@ -146,17 +149,79 @@ function SignUP() {
     }
 
 
-    const handleSelectAddress = (e) => {
-        setInputAddress(SelectAddress + " " + citySelectAddress + " " + dongSelectAddress);
+    const handleSelectAddress = (e) => {   //거주지 적용 버튼 클릭시
+        if(SelectAddress && citySelectAddress && dongSelectAddress) {
+          setInputAddress(SelectAddress + " " + citySelectAddress + " " + dongSelectAddress);
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "경고",
+            text: "거주지가 모두 선택되지 않았습니다. 다시 선택해주세요.",
+            showCancelButton: false,
+            confirmButtonText: "확인",
+            width: 800,
+            height: 100,
+          }).then((res) => {});
+        }
         setShow(false);
     }
 
-    const handleSelectWorkArea = (e) => {
-        setInputWorkArea(SelectWorkArea + " " + citySelectWorkArea + " " + dongSelectWorkArea);
-        setShowWorkArea(false);
+    const handleAddWorkArea = () => {   //희망근무지역 추가 버튼 클릭시
+      if (SelectWorkArea && citySelectWorkArea && dongSelectWorkArea) {
+        const addWorkArea = SelectWorkArea + " " + citySelectWorkArea + " " + dongSelectWorkArea;
+        if (addedWorkAreas.includes(addWorkArea)) {
+          Swal.fire({
+            icon: "warning",
+            title: "경고",
+            text: "이미 추가된 지역입니다.",
+            showCancelButton: false,
+            confirmButtonText: "확인",
+            width: 800,
+            height: 100,
+          }).then((res) => {});
+        } else {
+          setAddedWorkAreas(prevWorkAreas => [...prevWorkAreas, addWorkArea]);
+        }
+        console.log(addWorkArea);
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "경고",
+          text: "거주지가 모두 선택되지 않았습니다. 다시 선택해주세요.",
+          showCancelButton: false,
+          confirmButtonText: "확인",
+          width: 800,
+          height: 100,
+        }).then((res) => {});
+      }
     }
 
-    const handleSelectWorkJob = (e) => {
+    const removeWorkArea = (workAreaToRemove) => {    //희망근무지역 하나씩 삭제
+      setAddedWorkAreas(prevWorkAreas =>
+        prevWorkAreas.filter(workArea => workArea !== workAreaToRemove)
+    );
+    }
+
+    const handleSelectWorkArea = (e) => {   //희망근무지역 완료 버튼 클릭시
+      if(SelectWorkArea === null || citySelectWorkArea === null || dongSelectWorkArea === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "경고",
+          text: "희망근무지역이 없습니다. 다시 선택해주세요.",
+          showCancelButton: false,
+          confirmButtonText: "확인",
+          width: 800,
+          height: 100,
+        }).then((res) => {});
+      } 
+      else {
+        setInputWorkArea(addedWorkAreas.join("|"));
+        setShowWorkArea(false);
+        setAddedWorkAreas([]);
+      }
+    }
+
+    const handleSelectWorkJob = (e) => {  
         // setAllSelectAddressJob("123");
         setInputWorkJob(allSelectWorkJob);
         setShowWorkJob(false);
@@ -224,14 +289,6 @@ function SignUP() {
 
     const onClickSignUP = async () => {
         console.log("click SignUP");
-        const workAreaArray = Array.isArray(InputWorkArea) ? InputWorkArea : [InputWorkArea];
-        const workJobArray = Array.isArray(InputWorkJob) ? InputWorkJob : [InputWorkJob];
-
-        const outputWorkArray = workAreaArray[0].split(', ');
-        const outputJobArray = workJobArray[0].split(', ');
-    
-        console.log("_____", outputWorkArray);
-        console.log("*****", outputJobArray);
 
     if (InputPW !== InputPWCHK) {
       // 비밀번호와 비밀번호 체크가 다를 때
@@ -278,8 +335,8 @@ function SignUP() {
             home: InputAddress,
             birth: InputBirth,
             gender: InputGender,
-            hopeLocation: outputWorkArray,
-            hopeJob: outputJobArray
+            hopeLocation: InputWorkArea,
+            hopeJob: InputWorkJob
         },
         {
             headers: {
@@ -288,10 +345,7 @@ function SignUP() {
         })
         .then(response => {
             console.log(response);
-            // if (response.status === "CREATED 201") {
-                console.log(response);
-                document.location.href = "/login";  //회원가입 되면 로그인 페이지 이동(새로고침)
-            // }
+            document.location.href = "/login";  //회원가입 되면 로그인 페이지 이동(새로고침)
         })
         .catch((error) => {
             console.log(error.response);
@@ -303,14 +357,7 @@ function SignUP() {
                 confirmButtonText: "확인",
                 width: 800,
                 height: 100,
-            }).then((res) => {
-                if (res.isConfirmed) {
-                     //삭제 요청 처리
-                }
-                else{
-                    //취소
-                }
-            });
+            }).then((res) => {});
             if (error.response) {
                 console.log("1", error.response.data);
                 console.log("2", error.response.status);
@@ -506,20 +553,22 @@ function SignUP() {
                                     <Modal.Body dialogClassName="custom-modal-box">
 
                                         {/* 시/도 */}
-                                        {items.map((item, index) => (
-                                            <div
-                                                key={index}
-                                                onClick={() => handleClick(item.type)}
-                                                className={`custom-modal-box ${SelectAddress === item.type ? 'select' : ''}`}
-                                            >
-                                                {item.title}
-                                            </div>
-                                        ))}
+                                        <div className="items-container scrollable-container">
+                                          {items.map((item, index) => (
+                                              <div
+                                                  key={index}
+                                                  onClick={() => handleClick(item.type)}
+                                                  className={`custom-modal-box ${SelectAddress === item.type ? 'select' : ''}`}
+                                              >
+                                                  {item.title}
+                                              </div>
+                                          ))}
+                                        </div>
                                     </Modal.Body>
 
                                         {/* 시/군/구 */}
                                     {showCityItems && (
-                                        <div className="city-items-container">
+                                        <div className="city-items-container scrollable-container">
                                             {items_city
                                                 .filter((cityItem) => cityItem.type === SelectAddress)
                                                 .map((cityItem, index) => (
@@ -531,8 +580,6 @@ function SignUP() {
                                                         {cityItem.title}
                                         
                                                     </div>
-
-                                                    
                                                 ))}
                                         </div>
                                     )}
@@ -540,7 +587,7 @@ function SignUP() {
 
                                     {/* 동/읍/면 */}
                                     {showDongItems && (
-                                            <div className="dong-items-container">
+                                            <div className="dong-items-container scrollable-container">
                                                 {items_dong
                                                     .filter((dongItem) => dongItem.type === citySelectAddress)
                                                     .map((dongItem, index) => (
@@ -557,7 +604,7 @@ function SignUP() {
 
                                 </div>
                                 <Modal.Footer>
-                                    <Button onClick={handleSelectAddress}>
+                                    <Button className="footerButton-style" varient="primary" onClick={handleSelectAddress}>
                                         선택
                                     </Button>
                                 </Modal.Footer>
@@ -585,26 +632,30 @@ function SignUP() {
                         
                         <Modal dialogClassName="custom-modal-content" show={showWorkArea} onHide={handleCloseWorkArea}>
                             <Modal.Header>
-                                <Modal.Title>희망 근무 지역 선택</Modal.Title>
+                                <Modal.Title>
+                                  <h5>희망 근무 지역 선택</h5>
+                                </Modal.Title>
                             </Modal.Header>
                             <div className="custom-modal-box-whole">
                                 <Modal.Body dialogClassName="custom-modal-box">
 
                                     {/* 시/도 */}
-                                    {items.map((item, index) => (
-                                        <div
-                                            key={index}
-                                            onClick={() => handleClickWorkArea(item.type)}
-                                            className={`custom-modal-box ${SelectWorkArea === item.type ? 'select' : ''}`}
-                                        >
-                                            {item.title}
-                                        </div>
-                                    ))}
+                                    <div className="items-container scrollable-container">
+                                      {items.map((item, index) => (
+                                          <div
+                                              key={index}
+                                              onClick={() => handleClickWorkArea(item.type)}
+                                              className={`custom-modal-box ${SelectWorkArea === item.type ? 'select' : ''}`}
+                                          >
+                                              {item.title}
+                                          </div>
+                                      ))}
+                                    </div>
                                 </Modal.Body>
 
                                     {/* 시/군/구 */}
                                 {showCityItems && (
-                                    <div className="city-items-container">
+                                    <div className="city-items-container scrollable-container">
                                         {items_city
                                             .filter((cityItem) => cityItem.type === SelectWorkArea)
                                             .map((cityItem, index) => (
@@ -614,10 +665,7 @@ function SignUP() {
                                                     className={`custom-modal-box ${citySelectWorkArea === cityItem.title ? 'select' : ''}`}
                                                 >
                                                     {cityItem.title}
-                                    
                                                 </div>
-
-                                                
                                             ))}
                                     </div>
                                 )}
@@ -625,7 +673,7 @@ function SignUP() {
 
                                 {/* 동/읍/면 */}
                                 {showDongItems && (
-                                        <div className="dong-items-container">
+                                        <div className="dong-items-container scrollable-container">
                                             {items_dong
                                                 .filter((dongItem) => dongItem.type === citySelectWorkArea)
                                                 .map((dongItem, index) => (
@@ -640,10 +688,31 @@ function SignUP() {
                                         </div>
                                     )}
 
+
+                                    
+
                             </div>
                             <Modal.Footer>
-                                <Button onClick={handleSelectWorkArea}>
-                                    선택
+                              {/* 희망 근무 지역 여러개 선택 */}
+                              <div className="addedWorkArea-style">
+                                {addedWorkAreas.length > 0 && (     
+                                      <div className="added-work-areas left-align-footer">
+                                          {addedWorkAreas.map((workArea, index) => (
+                                              <div key={index}>
+                                                {workArea}
+                                                <button className="close" onClick={() => removeWorkArea(workArea)}>   
+                                                    x
+                                                </button>
+                                              </div>
+                                          ))}
+                                      </div>
+                                  )}
+                              </div>
+                                <Button varient="secondary" onClick={handleAddWorkArea}>
+                                    추가
+                                </Button>
+                                <Button varient="primary" onClick={handleSelectWorkArea}>
+                                    완료
                                 </Button>
                             </Modal.Footer>
                         </Modal>
