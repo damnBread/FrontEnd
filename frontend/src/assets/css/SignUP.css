@@ -117,3 +117,46 @@
   margin-right: 10px;
   margin-left: 10px;
 }
+
+.work-icon {
+  display: flex;
+  flex-direction: row;
+}
+
+.job-box {
+  width: 100%; /* Adjust the width as per your requirement */
+  max-width: 1200px; /* Optional: Add a max-width to limit the modal's width */
+  height: 80%;
+  min-height: 500px;
+  max-height: 1200px;
+}
+
+.custom-job-box {
+  display: flex;
+  width: 300px;
+  border: 1px solid #E7E6E6;
+  padding: 10px;
+}
+
+.margin {
+  margin-top: 260px;
+}
+
+.icon-style {
+  right: 10px;
+  border: none;
+  color: #ce9a75;
+  background-color: #bf5f4900;
+  cursor: pointer;
+  position: sticky;
+}
+
+.icon-style.active {
+  border: 3px solid #bf5f4977;
+  border-radius: 100px;
+}
+
+.icon-style:hover {
+  border: 3px solid #bf5f4977;
+  border-radius: 100px;
+}

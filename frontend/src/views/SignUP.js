@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
 import damnBreadLogo from "../assets/img/damnBread_logo.png";
+import workstaff from "../assets/img/workicon-staff.png";
+import workcoffeebeans from "../assets/img/workicon-coffeebeans.png";
+import workcustomer from "../assets/img/workicon-customer.png";
+import workdelivery from "../assets/img/workicon-delivery.png";
+import workdesign from "../assets/img/workicon-design.png";
+import workknife from "../assets/img/workicon-knife.png";
+import workeducation from "../assets/img/workicon-education.png";
+import workmedia from "../assets/img/workicon-media.png";
+import workplatter from "../assets/img/workicon-platter.png";
+import worksale from "../assets/img/workicon-sale.png";
+import workbackground from "../assets/img/workicon-background.png";
 import "../assets/css/SignUP.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -59,7 +70,8 @@ function SignUP() {
     const [dongSelectWorkArea, setDongSelectWorkArea] = useState(""); //동/읍/면 선택
     const [addedWorkAreas, setAddedWorkAreas] = useState([]);
 
-    const [allSelectWorkJob, setAllSelectWorkJob] = useState("");   //희망업직종 선택    
+    const [SelectWorkJob, setSelectWorkJob] = useState([]);  //희망업직종 선택 
+    const [activeWorkJob, setActiveWorkJob] = useState('');  //색 변경
 
   const handleInputID = (e) => {
     setInputID(e.target.value);
@@ -197,11 +209,16 @@ function SignUP() {
     const removeWorkArea = (workAreaToRemove) => {    //희망근무지역 하나씩 삭제
       setAddedWorkAreas(prevWorkAreas =>
         prevWorkAreas.filter(workArea => workArea !== workAreaToRemove)
-    );
+      );
     }
 
     const handleSelectWorkArea = (e) => {   //희망근무지역 완료 버튼 클릭시
-      if(SelectWorkArea === null || citySelectWorkArea === null || dongSelectWorkArea === null) {
+      if(SelectWorkArea && citySelectWorkArea && dongSelectWorkArea) {
+        setInputWorkArea(addedWorkAreas.join("|"));
+        setShowWorkArea(false);
+        setAddedWorkAreas([]);
+      } 
+      else {
         Swal.fire({
           icon: "warning",
           title: "경고",
@@ -211,19 +228,39 @@ function SignUP() {
           width: 800,
           height: 100,
         }).then((res) => {});
-      } 
-      else {
-        setInputWorkArea(addedWorkAreas.join("|"));
-        setShowWorkArea(false);
-        setAddedWorkAreas([]);
       }
     }
 
-    const handleSelectWorkJob = (e) => {  
-        // setAllSelectAddressJob("123");
-        setInputWorkJob(allSelectWorkJob);
-        setShowWorkJob(false);
-    }
+    //희망 업직종
+    const handleWorkJobClick = (job) => {
+      if (SelectWorkJob.includes(job)) {
+        setSelectWorkJob((prevSelected) =>
+          prevSelected.filter((selectedJob) => selectedJob !== job)
+        );
+      } else if (SelectWorkJob.length < 3) {
+        if (!SelectWorkJob.includes(job)) {
+          setActiveWorkJob(job);
+          setSelectWorkJob((prevSelected) => [...prevSelected, job]);
+        }
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "경고",
+          text: "최대 3개까지 가능합니다.",
+          showCancelButton: false,
+          confirmButtonText: "확인",
+          width: 800,
+          height: 100,
+        }).then((res) => {});
+      }
+    };
+
+    const handleSelectWorkJob = () => {
+      const workJobsString = SelectWorkJob.join("|");
+      setInputWorkJob(workJobsString);
+      setShowWorkJob(false);
+      setSelectWorkJob([]); // Reset selected work jobs
+    };
 
     const idValidation = () => {   // 아이디 중복 확인
           axios
@@ -746,11 +783,165 @@ function SignUP() {
 
                     <label style={{fontSize: "16px", marginTop: "30px"}}><b>희망 업직종</b></label>
                     <div>
-                        <input type='text' id='hopeJob' name='hopeJob' placeholder="희망 업직종" value={InputWorkJob}
+                        <input type='text' id='hopeJob' name='hopeJob' placeholder="희망 업직종" value={InputWorkJob} disabled
                              onChange={handleInputWorkJob} style={{width:"350px", height: "40px", marginTop: "15px", 
-                              borderColor: "#E7E6E6", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
-                        <button type='button' style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
-                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>직종 검색</button>      
+                              borderColor: "#E7E6E6", backgroundColor: "#D3D3D364", fontSize: "15px", borderRadius: "10px", padding: ".5em"}} />
+                        <button type='button' onClick={handleShowWorkJob} style={{fontSize: "11px", width: "70px", height: "25px", borderColor: "#BF5E49", marginLeft: "10px",
+                        marginTop: "8px",backgroundColor: "#BF5E49B0", border:"0px", borderRadius: "5px"}}>직종 선택</button>
+
+                        <Modal dialogClassName="job-box" show={showWorkJob} onHide={handleCloseWorkJob}>
+                            <Modal.Header>
+                                <Modal.Title>
+                                  <h5>희망 업직종 선택 (최대 3개)</h5>
+                                </Modal.Title>
+                            </Modal.Header>
+                            <div>
+                                <Modal.Body dialogClassName="custom-job-box">
+                                  <div className="work-icon">
+                                    <div className={`icon-style ${activeWorkJob === '카페' || SelectWorkJob.includes('카페') ? 'active' : ''}`} style={{position: "relative", left: "60px", top: "50px"}}>
+                                        <button className="icon-style" onClick={() => handleWorkJobClick('카페')}>
+                                          <img src={workbackground} width="130" alt="cafeImage1"/>
+                                            <span style={{position: "absolute", top: "32px", left:"40px"}}>
+                                              <img src={workcoffeebeans} id="카페" width="65" alt="cafeImage2"/>
+                                            </span>
+                                        </button>
+                                      </div>
+                                      <span style={{position: "absolute", top: "210px", left:"125px"}}>
+                                          <b>카페</b>
+                                      </span>
+                                    
+                                    <span>
+                                      <div className={`icon-style ${activeWorkJob === '서빙' || SelectWorkJob.includes('서빙') ? 'active' : ''}`} style={{position: "relative", left:"140px", top: "50px"}}>
+                                        <button className="icon-style" onClick={() => handleWorkJobClick('서빙')}>
+                                          <img src={workbackground} width="130" alt="platterImage1"/>
+                                            <span style={{position: "absolute", top: "37px", left:"40px"}}>
+                                              <img src={workplatter} id="서빙" width="65" alt="platterImage2"/>
+                                            </span>
+                                        </button>
+                                      </div>
+                                      <span style={{position: "absolute", top: "210px", left:"350px"}}>
+                                          <b>서빙</b>
+                                      </span>
+                                    </span>
+
+                                    <span>
+                                      <div className={`icon-style ${activeWorkJob === '판매' || SelectWorkJob.includes('판매') ? 'active' : ''}`} style={{position: "relative", left:"220px", top: "50px"}}>
+                                        <button className="icon-style" onClick={() => handleWorkJobClick('판매')}>
+                                          <img src={workbackground} width="130" alt="saleImage1"/>
+                                            <span style={{position: "absolute", top: "37px", left:"40px"}}>
+                                              <img src={worksale} id="판매" width="65" alt="saleImage2"/>
+                                            </span>
+                                        </button>
+                                      </div>
+                                      <span style={{position: "absolute", top: "210px", left:"575px"}}>
+                                          <b>판매</b>
+                                      </span>
+                                    </span>
+
+                                    <span>
+                                      <div className={`icon-style ${activeWorkJob === '주방 보조' || SelectWorkJob.includes('주방 보조') ? 'active' : ''}`} style={{position: "relative", left:"300px", top: "50px"}}>
+                                        <button className="icon-style" onClick={() => handleWorkJobClick('주방 보조')}>
+                                          <img src={workbackground} width="130" alt="knifeImage1"/>
+                                            <span style={{position: "absolute", top: "37px", left:"40px"}}>
+                                              <img src={workknife} id="주방 보조" width="65" alt="knifeImage2"/>
+                                            </span>
+                                        </button>
+                                      </div>
+                                      <span style={{position: "absolute", top: "210px", left:"777px"}}>
+                                          <b>주방 보조</b>
+                                      </span>
+                                    </span>
+
+                                    <div>
+                                      <div className={`icon-style ${activeWorkJob === '배달' || SelectWorkJob.includes('배달') ? 'active' : ''}`} style={{position: "relative", left:"380px", top: "50px"}}>
+                                        <button className="icon-style" onClick={() => handleWorkJobClick('배달')}>
+                                          <img src={workbackground} width="130" alt="deliveryImage1"/>
+                                            <span style={{position: "absolute", top: "37px", left:"40px"}}>
+                                              <img src={workdelivery} id="배달" width="65" alt="deliveryImage2"/>
+                                            </span>
+                                        </button>
+                                      </div>
+                                      <span style={{position: "absolute", top: "210px", left:"1020px"}}>
+                                          <b>배달</b>
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className="work-icon">
+                                    <div className={`icon-style ${activeWorkJob === '교육' || SelectWorkJob.includes('교육') ? 'active' : ''}`} style={{position: "relative", left: "60px", top: "170px"}}>
+                                          <button className="icon-style" onClick={() => handleWorkJobClick('교육')}>
+                                            <img src={workbackground} width="130" alt="educationImage1"/>
+                                              <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                <img src={workeducation} id="교육" width="65" alt="educationImage2"/>
+                                              </span>
+                                          </button>
+                                        </div>
+                                        <span style={{position: "absolute", top: "460px", left:"130px"}}>
+                                            <b>교육</b>
+                                        </span>
+
+                                        <div className={`icon-style ${activeWorkJob === '스태프' || SelectWorkJob.includes('스태프') ? 'active' : ''}`} style={{position: "relative", left: "140px", top: "170px"}}>
+                                          <button className="icon-style" onClick={() => handleWorkJobClick('스태프')}>
+                                            <img src={workbackground} width="130" alt="staffImage1"/>
+                                              <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                <img src={workstaff} id="스태프"width="65" alt="staffImage2"/>
+                                              </span>
+                                          </button>
+                                        </div>
+                                        <span style={{position: "absolute", top: "460px", left:"340px"}}>
+                                            <b>스태프</b>
+                                        </span>
+
+                                        <div className={`icon-style ${activeWorkJob === '생산' || SelectWorkJob.includes('생산') ? 'active' : ''}`} style={{position: "relative", left: "220px", top: "170px"}}>
+                                          <button className="icon-style" onClick={() => handleWorkJobClick('생산')}>
+                                            <img src={workbackground} width="130" alt="designImage1"/>
+                                              <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                <img src={workdesign} id="생산" width="65" alt="designImage2"/>
+                                              </span>
+                                          </button>
+                                        </div>
+                                        <span style={{position: "absolute", top: "460px", left:"570px"}}>
+                                            <b>생산</b>
+                                        </span>
+
+                                        <div className={`icon-style ${activeWorkJob === '미디어' || SelectWorkJob.includes('미디어') ? 'active' : ''}`} style={{position: "relative", left: "300px", top: "170px"}}>
+                                          <button className="icon-style" onClick={() => handleWorkJobClick('미디어')}>
+                                            <img src={workbackground} width="130" alt="mediaImage1"/>
+                                              <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                <img src={workmedia} id="미디어" width="65" alt="mediaImage2"/>
+                                              </span>
+                                          </button>
+                                        </div>
+                                        <span style={{position: "absolute", top: "460px", left:"790px"}}>
+                                            <b>미디어</b>
+                                        </span>
+
+                                        <div className={`icon-style ${activeWorkJob === '고객 상담' || SelectWorkJob.includes('고객 상담') ? 'active' : ''}`} style={{position: "relative", left: "380px", top: "170px"}}>
+                                          <button className="icon-style" onClick={() => handleWorkJobClick('고객 상담')}>
+                                            <img src={workbackground} width="130" alt="customerImage1"/>
+                                              <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                <img src={workcustomer} id="고객 상담" width="65" alt="customerImage2"/>
+                                              </span>
+                                          </button>
+                                        </div>
+                                        <span style={{position: "absolute", top: "460px", left:"1000px"}}>
+                                            <b>고객 상담</b>
+                                        </span>
+
+                                        
+                                    </div>
+
+                                    <div className="margin"/>
+                                </Modal.Body>
+                            </div>
+                            <Modal.Footer>
+                                <Button varient="primary" onClick={handleSelectWorkJob}>
+                                    선택 완료
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+
+                         
                     </div>
             
 
