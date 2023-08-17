@@ -95,7 +95,6 @@ function SignUP() {
 
   const handleInputGender = (e) => {
     setInputGender(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleInputEmail = (e) => {
@@ -147,7 +146,6 @@ function SignUP() {
     const DonghandleClickWorkArea = (dongItem) => {
         setDongSelectWorkArea(dongItem);         
     }
-
 
     const handleSelectAddress = (e) => {   //거주지 적용 버튼 클릭시
         if(SelectAddress && citySelectAddress && dongSelectAddress) {
@@ -290,85 +288,108 @@ function SignUP() {
     const onClickSignUP = async () => {
         console.log("click SignUP");
 
-    if (InputPW !== InputPWCHK) {
-      // 비밀번호와 비밀번호 체크가 다를 때
-      Swal.fire({
-        icon: "warning",
-        title: "경고",
-        text: "비밀번호를 다시 확인해주세요.",
-        showCancelButton: false,
-        confirmButtonText: "확인",
-        width: 800,
-        height: 100,
-      }).then((res) => {});
-    } else if (
-      InputID === "" ||
-      InputPW === "" ||
-      InputNickName === "" ||
-      InputEmail === "" ||
-      InputName === "" ||
-      InputPhoneNumber === "" ||
-      InputAddress === "" ||
-      InputBirth === "" ||
-      InputGender === ""
-    ) {
-      // 항목들이 비어있을 때
-      Swal.fire({
-        icon: "warning",
-        title: "경고",
-        text: "필수 항목을 모두 채워주세요.",
-        showCancelButton: false,
-        confirmButtonText: "확인",
-        width: 800,
-        height: 100,
-      }).then((res) => {});
-    }
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-]).{8,20}$/;
 
+        if (InputPW !== InputPWCHK) {
+          // 비밀번호와 비밀번호 체크가 다를 때
+          Swal.fire({
+            icon: "error",
+            title: "경고",
+            text: "비밀번호를 다시 확인해주세요.",
+            showCancelButton: false,
+            confirmButtonText: "확인",
+            width: 800,
+            height: 100,
+          }).then((res) => {});
+        } else if (
+          InputID === "" ||
+          InputPW === "" ||
+          InputNickName === "" ||
+          InputEmail === "" ||
+          InputName === "" ||
+          InputPhoneNumber === "" ||
+          InputAddress === "" ||
+          InputBirth === "" ||
+          InputGender === ""
+        ) {
+          // 항목들이 비어있을 때
+          Swal.fire({
+            icon: "error",
+            title: "경고",
+            text: "필수 항목을 모두 채워주세요.",
+            showCancelButton: false,
+            confirmButtonText: "확인",
+            width: 800,
+            height: 100,
+          }).then((res) => {});
+        } else if (!passwordPattern.test(InputPW)) {
+          Swal.fire({
+            icon: "error",
+            title: "경고",
+            text: "비밀번호는 8~20자 이면서 하나 이상의 대문자와 특수문자를 포함해야 합니다.",
+            showCancelButton: false,
+            confirmButtonText: "확인",
+            width: 800,
+            height: 100,
+          }).then((res) => {});
+        } else {
         //모든 항목을 채웠을 경우
-        await axios.post('http://localhost:3000/signup', {
-            id: InputID,
-            pw: InputPW,
-            name: InputName,
-            email: InputEmail,
-            nickname: InputNickName,
-            phone: InputPhoneNumber,
-            home: InputAddress,
-            birth: InputBirth,
-            gender: InputGender,
-            hopeLocation: InputWorkArea,
-            hopeJob: InputWorkJob
-        },
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
-            console.log(response);
-            document.location.href = "/login";  //회원가입 되면 로그인 페이지 이동(새로고침)
-        })
-        .catch((error) => {
-            console.log(error.response);
-            Swal.fire({
-                icon: "warning",
-                title: "경고",
-                text: "회원가입할 수 없습니다. 다시 시도해주세요.",
+          await axios.post('http://localhost:3000/signup', {
+              id: InputID,
+              pw: InputPW,
+              name: InputName,
+              email: InputEmail,
+              nickname: InputNickName,
+              phone: InputPhoneNumber,
+              home: InputAddress,
+              birth: InputBirth,
+              gender: InputGender,
+              hopeLocation: InputWorkArea,
+              hopeJob: InputWorkJob
+          },
+          {
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+          })
+          .then(response => {
+              console.log(response);
+              Swal.fire({
+                icon: "success",
+                title: "성공",
+                text: "회원가입이 완료되었습니다. 로그인 후 이용해주세요.",
                 showCancelButton: false,
                 confirmButtonText: "확인",
                 width: 800,
                 height: 100,
-            }).then((res) => {});
-            if (error.response) {
-                console.log("1", error.response.data);
-                console.log("2", error.response.status);
-                console.log("3", error.response.headers);
-              } else if (error.request) {
-                console.log("4", error.request);
-              } else {
-                console.log('Error', error.message);
-              }
-              console.log("5", error.config);
-        });
+            }).then((res) => {
+              document.location.href = "/login";  //회원가입 되면 로그인 페이지 이동(새로고침)
+            });
+              
+          })
+          .catch((error) => {
+              console.log(error.response);
+              Swal.fire({
+                  icon: "warning",
+                  title: "경고",
+                  text: "회원가입할 수 없습니다. 다시 시도해주세요.",
+                  showCancelButton: false,
+                  confirmButtonText: "확인",
+                  width: 800,
+                  height: 100,
+              }).then((res) => {});
+              if (error.response) {
+                  console.log("1", error.response.data);
+                  console.log("2", error.response.status);
+                  console.log("3", error.response.headers);
+                } else if (error.request) {
+                  console.log("4", error.request);
+                } else {
+                  console.log('Error', error.message);
+                }
+                console.log("5", error.config);
+          });
+        }
     };
 
     return(
