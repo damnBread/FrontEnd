@@ -20,6 +20,10 @@
   margin-right: 150px;
 }
 
+.damnnear {
+  margin-top: 50px;
+}
+
 .img1 {
   margin-left:30px;
 }
@@ -94,15 +98,14 @@
   margin-top: 10px;
 }
 
-.round-rectangle p {
-  margin: 0;
-  color: black;
-}
 
-.round-rectangle2 p {
+
+.round-rectangle2 p,
+.round-rectangle3 p,
+.round-rectangle4 p {
   margin: 0;
   color: black;
-  
+  text-decoration: none; /* Remove underline */
 }
 
 .images-container {

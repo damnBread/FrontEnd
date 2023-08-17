@@ -52,12 +52,12 @@ function Login() {
                 console.log("****로그인 성공*****");
                 sessionStorage.setItem("token", response.data);     //웹브라우저에 SessionStorage에 저장
                 sessionStorage.setItem("id", InputID);
-                // setCookie('token', response.data, {                 //웹브라우저에 쿠키에 저장
-                //     path: '/',             
-                //     // maxAge: 20000
-                // });
+                setCookie('token', response.data, {                 //웹브라우저에 쿠키에 저장
+                    path: '/',             
+                    // maxAge: 20000
+                });
 
-                // localStorage.setItem('token', cookies.token);       //웹브라우저에 localStroge에 저장
+                localStorage.setItem('token', cookies.token);       //웹브라우저에 localStroge에 저장
                 
                 console.log('token1', cookies.token);
             }

@@ -31,7 +31,7 @@ const MainPageRecommend = () => {
   };
 
   return (
-    <div>
+    <div className="damnhomewhole">
           <div className="images-container">
 
           <div className="img1">
@@ -78,7 +78,10 @@ const MainPageRecommend = () => {
             </Link>
           </div>
         </div>
-        <div className="brown-line1"></div>
+
+        <div className="damnnear">
+          <div className="brown-line1"></div>
+        </div>
     </div>
   );
 };

@@ -9,6 +9,30 @@
     margin-top: 30px;
   }
 
+  .round-rectangle-basic1 {
+    border-radius: 10px; 
+    background-color: #ffffff; 
+    border: 2px solid #e0b88a;
+    padding: 8px; 
+    width: 270px; 
+    height:160px;
+    margin-left: 220px;
+    margin-top: 30px;
+  }
+
+  .round-rectangle-basic2 {
+    border-radius: 10px; 
+    background-color: #ffffff; 
+    border: 2px solid #e0b88a;
+    padding: 8px; 
+    width: 270px; 
+    height:160px;
+    margin-left: 220px;
+    margin-top: 30px;
+  }
+
+  
+
   .neardaum {
     margin-left: 200px;
     margin-top: 30px;
@@ -18,3 +42,25 @@
     margin-top: 10px;
     margin-left:20px;   
   }
+
+  .elements-container {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+  }
+
+  .round-rectangle-basic {
+    margin-left: 200px; /* Adjust as needed */
+    margin-right: auto;
+  }
+
+  .round-rectangle-basic1 {
+    margin-left: auto;
+    
+  }
+
+  .round-rectangle-basic2 {
+    margin-left: auto;
+    margin-right: 200px; /* Adjust as needed */
+  }
+
+  
