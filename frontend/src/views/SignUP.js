@@ -663,7 +663,7 @@ function SignUP() {
                                 </div>
                                 <Modal.Footer>
                                     <Button className="footerButton-style" varient="primary" onClick={handleSelectAddress}>
-                                        선택
+                                        선택 완료
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
