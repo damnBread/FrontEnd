@@ -50,7 +50,7 @@ function Login() {
             if(response.status === 200) {
                 //id, pw 일치 -> 로그인 성공
                 console.log("****로그인 성공*****");
-                sessionStorage.setItem("token", response.data);     //웹브라우저에 SessionStorage에 저장
+                sessionStorage.setItem("token", response.data);     //웹브라우저에 SessionStorage에 저장 -> 찾아보니 이게 베스트인 거 같아요
                 sessionStorage.setItem("id", InputID);
                 setCookie('token', response.data, {                 //웹브라우저에 쿠키에 저장
                     path: '/',             
