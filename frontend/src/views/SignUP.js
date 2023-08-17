@@ -798,7 +798,7 @@ function SignUP() {
                             <div>
                                 <Modal.Body dialogClassName="custom-job-box">
                                   <div className="work-icon">
-                                    <div className={`icon-style ${activeWorkJob === '카페' || SelectWorkJob.includes('카페') ? 'active' : ''}`} style={{position: "relative", left: "60px", top: "50px"}}>
+                                    <div className={`icon-style ${SelectWorkJob.includes('카페') ? 'active' : ''}`} style={{position: "relative", left: "60px", top: "50px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('카페')}>
                                           <img src={workbackground} width="130" alt="cafeImage1"/>
                                             <span style={{position: "absolute", top: "32px", left:"40px"}}>
@@ -811,7 +811,7 @@ function SignUP() {
                                       </span>
                                     
                                     <span>
-                                      <div className={`icon-style ${activeWorkJob === '서빙' || SelectWorkJob.includes('서빙') ? 'active' : ''}`} style={{position: "relative", left:"140px", top: "50px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('서빙') ? 'active' : ''}`} style={{position: "relative", left:"140px", top: "50px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('서빙')}>
                                           <img src={workbackground} width="130" alt="platterImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
@@ -825,7 +825,7 @@ function SignUP() {
                                     </span>
 
                                     <span>
-                                      <div className={`icon-style ${activeWorkJob === '판매' || SelectWorkJob.includes('판매') ? 'active' : ''}`} style={{position: "relative", left:"220px", top: "50px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('판매') ? 'active' : ''}`} style={{position: "relative", left:"220px", top: "50px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('판매')}>
                                           <img src={workbackground} width="130" alt="saleImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
@@ -839,7 +839,7 @@ function SignUP() {
                                     </span>
 
                                     <span>
-                                      <div className={`icon-style ${activeWorkJob === '주방 보조' || SelectWorkJob.includes('주방 보조') ? 'active' : ''}`} style={{position: "relative", left:"300px", top: "50px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('주방 보조') ? 'active' : ''}`} style={{position: "relative", left:"300px", top: "50px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('주방 보조')}>
                                           <img src={workbackground} width="130" alt="knifeImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
@@ -853,7 +853,7 @@ function SignUP() {
                                     </span>
 
                                     <div>
-                                      <div className={`icon-style ${activeWorkJob === '배달' || SelectWorkJob.includes('배달') ? 'active' : ''}`} style={{position: "relative", left:"380px", top: "50px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('배달') ? 'active' : ''}`} style={{position: "relative", left:"380px", top: "50px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('배달')}>
                                           <img src={workbackground} width="130" alt="deliveryImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
@@ -868,7 +868,7 @@ function SignUP() {
                                   </div>
 
                                   <div className="work-icon">
-                                    <div className={`icon-style ${activeWorkJob === '교육' || SelectWorkJob.includes('교육') ? 'active' : ''}`} style={{position: "relative", left: "60px", top: "170px"}}>
+                                    <div className={`icon-style ${SelectWorkJob.includes('교육') ? 'active' : ''}`} style={{position: "relative", left: "60px", top: "170px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('교육')}>
                                             <img src={workbackground} width="130" alt="educationImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
@@ -880,7 +880,7 @@ function SignUP() {
                                             <b>교육</b>
                                         </span>
 
-                                        <div className={`icon-style ${activeWorkJob === '스태프' || SelectWorkJob.includes('스태프') ? 'active' : ''}`} style={{position: "relative", left: "140px", top: "170px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('스태프') ? 'active' : ''}`} style={{position: "relative", left: "140px", top: "170px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('스태프')}>
                                             <img src={workbackground} width="130" alt="staffImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
@@ -892,7 +892,7 @@ function SignUP() {
                                             <b>스태프</b>
                                         </span>
 
-                                        <div className={`icon-style ${activeWorkJob === '생산' || SelectWorkJob.includes('생산') ? 'active' : ''}`} style={{position: "relative", left: "220px", top: "170px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('생산') ? 'active' : ''}`} style={{position: "relative", left: "220px", top: "170px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('생산')}>
                                             <img src={workbackground} width="130" alt="designImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
@@ -904,7 +904,7 @@ function SignUP() {
                                             <b>생산</b>
                                         </span>
 
-                                        <div className={`icon-style ${activeWorkJob === '미디어' || SelectWorkJob.includes('미디어') ? 'active' : ''}`} style={{position: "relative", left: "300px", top: "170px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('미디어') ? 'active' : ''}`} style={{position: "relative", left: "300px", top: "170px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('미디어')}>
                                             <img src={workbackground} width="130" alt="mediaImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
@@ -916,7 +916,7 @@ function SignUP() {
                                             <b>미디어</b>
                                         </span>
 
-                                        <div className={`icon-style ${activeWorkJob === '고객 상담' || SelectWorkJob.includes('고객 상담') ? 'active' : ''}`} style={{position: "relative", left: "380px", top: "170px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('고객 상담') ? 'active' : ''}`} style={{position: "relative", left: "380px", top: "170px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('고객 상담')}>
                                             <img src={workbackground} width="130" alt="customerImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
