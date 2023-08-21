@@ -23,12 +23,14 @@ import SignUP from "./views/SignUP";
 import MainPage from "./views/MainPage";
 import MainPageRecommend from "./views/MainPageRecommend";
 import Header from "./components/Headers/Header";
-import damnlist from "./views/damnlist";
-import damnlistBoard from "./views/damnlistBoard";
+import damnprofile from "./views/damnprofile";
 import damnstory from "./views/damnstory";
 import damnstorywrite from "./views/damnstorywrite";
-import damnprofile from "./views/damnprofile";
 import DamnstoryDetail from "./views/damnstoryDetail";
+import damnlistBoard from "./views/damnlistBoard";
+import damnlist from "./views/damnlist";
+import damnlistDetail from "./views/damnlistDetail";
+import damnlistwrite from "./views/damnlistwrite";
 
 //import Header from "./components/Headers/Page1Header";
 import Page1Header from "./views/Page1Header";
@@ -47,12 +49,14 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/Page2Header" component={Page2Header} />
       <Route exact path="/Page3Header" component={Page3Header} />
       <Route exact path="/" component={MainPage} />
-      <Route exact path="/damnlist" component={damnlist} />
       <Route exact path="/MainPageRecommend" component={MainPageRecommend} />
-      <Route exact path="/damnlistBoard" component={damnlistBoard} />
       <Route exact path="/damnstory" component={damnstory} />
       <Route exact path="/damnstory/new" component={damnstorywrite} />
       <Route exact path="/damnstory/:storyid" component={DamnstoryDetail} />
+      <Route exact path="/damnlistBoard" component={damnlistBoard} />
+      <Route exact path="/damnlist" component={damnlist} />
+      <Route exact path="/damnlist/new" component={damnlistwrite} />
+      <Route exact path="/damnlist/:listid" component={damnlistDetail} />
       <Route exact path="/damnprofile" component={damnprofile}/>
     </Switch>
   </BrowserRouter>

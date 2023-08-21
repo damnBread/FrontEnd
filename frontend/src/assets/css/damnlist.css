@@ -1,9 +1,28 @@
-.daumlist p {
+.damnlist p {
     font-family: 'GmarketSans', sans-bold;
-    font-size: 26px; /* Increase the font size to 32px (you can adjust as needed) */
-    font-weight: bold; /* Set the font weight to bold */
-    margin-top: 30px;
-    margin-left: 80px;
+    font-size: 26px; 
+    font-weight: bold; 
+  }
+
+  .damnlist {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+  }
+  
+  .content-wrapper {
+    display: flex; /* Use flexbox layout for the content */
+    align-items: center; /* Align items vertically in the center */
+    margin-top: 60px;
+    margin-left: 120px;
+  }
+
+  .content-wrapper p {
+    margin: 0 1000px 0 0; /* Added margin to the paragraph */
+  }
+  
+  .content-wrapper button {
+    margin-left: 20px; /* Added margin to the button */
   }
 
   .filtering {

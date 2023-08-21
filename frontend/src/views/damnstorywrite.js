@@ -12,7 +12,6 @@ const DamnStoryWrite = () => {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [writerId, setWriter] = useState("gabinTest");
     const [isCancelled, setIsCancelled] = useState(false);
 
     const handleTitleChange = (event) => {
@@ -25,7 +24,7 @@ const DamnStoryWrite = () => {
     };
 
     const handleContentChange = (event) => {
-        const maxLength = 30;
+        const maxLength = 2000;
         const inputValue = event.target.value;
 
         if (inputValue.length <= maxLength) {

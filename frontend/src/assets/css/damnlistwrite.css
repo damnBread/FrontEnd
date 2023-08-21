@@ -1,0 +1,24 @@
+.title-input1 {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 900px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+.damnlistrecommend p {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 150px; /* Add spacing between 제목 and input */
+}
+
+.damnlistrecommend {
+    display: flex; /* Use flexbox to arrange items in a row */
+    align-items: center; /* Align items vertically in the center */
+    margin-top: 40px;
+    margin-left: 220px;
+}

@@ -4,7 +4,9 @@ import Header from "../components/Headers/Header";
 import DamnlistBoard from "./damnlistBoard";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import Button from "@mui/material/Button";
 import "../assets/css/damnlist.css";
+
 
 const options = [
   { value: 'option1', label: 'Option 1' },
@@ -14,42 +16,38 @@ const options = [
 ];
 
 const damnlist = () => {
-  const linkStyle = {
-    textDecoration: 'none', // Removes the underline
-    color: 'black' // Sets the text color to black
-  };
 
   return (
-    <div>
+    <div className="damnlistwhole">
       <Header/>
+      <div className="damnlist-container">
 
-      <div className="daumlist">
-        <p>땜빵구해요</p>
-      </div>
+              <div className="damnlist">
+                <div className="content-wrapper">
+                  <p>땜빵구해요</p>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      borderColor: "brown",
+                      color: "brown",
+                    }}
+                    component={Link}
+                    to="/damnlist/new"
+                  >
+                    구직구하기
+                  </Button>
+                </div>
+              </div>
 
-      {/* <div className = "filtering"> 
 
-        <div className="selectoption" style={{ display: 'flex' }}>
-          <Select options={options} />
-          <Select options={options} />
-          <Select options={options} />
-          <Select options={options} /> 
-        </div>
-
-        <div className="rounded-rectangle" style={{marginTop: "10px"}}>
-
-        </div>
+          <div>
+            <p className="listcount" style={{ fontFamily: 'Inter', fontWeight: 'bold'}}>총 6건</p>   
+          </div>
         
-      </div> */}
-
-
-        <div>
-          <p className="listcount" style={{ fontFamily: 'Inter', fontWeight: 'bold'}}>총 6건</p>   
-        </div>
-      
-      <div className="brown-line1"></div>
-  
-      <DamnlistBoard/>
+        <div className="brown-line1"></div>
+    
+        <DamnlistBoard/>
+      </div>
     </div>
   );
 };
