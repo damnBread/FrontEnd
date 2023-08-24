@@ -28,27 +28,6 @@ const Page3Header = () => {
   const [imageRotationJob, setImageRotationJob] = useState(0);
   const [imageRotationCondi, setImageRotationCondi] = useState(0);
 
-  const handleToggleArea = () => {
-    setShowArea(prevState => !prevState);
-    setImageRotationArea(prevRotation => (prevRotation === 0 ? 180 : 0));
-    setShowJob(false);
-    setShowConditions(false);
-  };
-
-  const handleToggleJob = () => {
-    setShowJob(prevState => !prevState);
-    setImageRotationJob(prevRotation => (prevRotation === 0 ? 180 : 0));
-    setShowArea(false);
-    setShowConditions(false);
-  };
-
-  const handleToggleConditions = () => {
-    setShowConditions(prevState => !prevState);
-    setImageRotationCondi(prevRotation => (prevRotation === 0 ? 180 : 0));
-    setShowArea(false);
-    setShowJob(false);
-  };
-
     const [showCityItems, setShowCityItems] = useState(true);  //시/군/구
     const [showDongItems, setShowDongItems] = useState(true);  //동/읍/면
 
@@ -65,6 +44,31 @@ const Page3Header = () => {
 
     const [selectedAges, setSelectedAges] = useState([]);   //나이
     const [InputAge, setInputAge] = useState("");
+
+    const handleToggleArea = () => {
+      setShowArea(prevState => !prevState);
+      setImageRotationArea(prevRotation => (prevRotation === 0 ? 180 : 0));
+      setShowJob(false);
+      setShowConditions(false);
+    };
+  
+    const handleToggleJob = () => {
+      setShowJob(prevState => !prevState);
+      setImageRotationJob(prevRotation => (prevRotation === 0 ? 180 : 0));
+      setShowArea(false);
+      setShowConditions(false);
+    };
+  
+    const handleToggleConditions = () => {
+      setShowConditions(prevState => !prevState);
+      setImageRotationCondi(prevRotation => (prevRotation === 0 ? 180 : 0));
+      setShowArea(false);
+      setShowJob(false);
+    };
+  
+    const shouldApplyActiveStyle = (clickedElement) => {
+      return clickedElement === true;
+    };
 
   
 
@@ -390,6 +394,8 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                     </div>
               )}
 
+
+              {/* 세부조건 */}
               {showConditions && (
                 <div  className="custom-modal-content-rank1">
                     <div>
@@ -447,14 +453,11 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
               type="button"
               className="default-filter-rank added-work-areas-rank"
             >
-              {dongSelectWorkArea === "" || SelectWorkJob === "" || selectedGenders === "" || selectedAges === ""  ? (
-                "검색 조건을 선택해주세요."
-              ) : (
-                <>
                 {(
-                  <span className="addedWorkArea-style-rank left-align-footer-rank">
+                  <span className="left-align-footer-rank">
                     {addedWorkAreas.map((workArea, index) => (
-                      <div key={index}>
+                      <div key={index}
+                      className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(workArea) ? 'active' : ''}`}>
                         {workArea}
                         <button
                           className="close-rank"
@@ -467,7 +470,8 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                   
 
                   {SelectWorkJob.map((workJob, index) => (
-                    <div key={index}>
+                    <div key={index}
+                    className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(workJob) ? 'active' : ''}`}>
                       {workJob}
                       <button
                         className="close-rank"
@@ -479,7 +483,8 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                   ))}
 
                     {selectedGenders.map((gender, index) => (
-                      <div key={index}>
+                      <div key={index}
+                      className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(gender) ? 'active' : ''}`}>
                         {gender}
                         <button
                           className="close-rank"
@@ -491,7 +496,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                     ))}
 
                         {selectedAges.map((age, index) => (
-                          <span key={index} className="selected-age-style">
+                          <span key={index} className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(age) ? 'active' : ''}`}>
                             {age}세
                             <button
                               className="close-rank"
@@ -503,8 +508,6 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                         ))}
                     </span>
                     )}
-                </>
-              )}
             </button>
             
           )}
