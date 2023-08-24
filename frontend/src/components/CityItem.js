@@ -1,4 +1,3 @@
-import React from "react";
 
 export const items = [     //지역 선택 아이템
         { 

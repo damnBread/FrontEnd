@@ -1,20 +1,18 @@
-.items-align {
+.items-align-rank {
     display: flex;
     justify-content: center;
 }
 
-.default-filter {
+.default-filter-rank {
     margin-top: 20px;
     padding-top: 30px;
     padding-bottom: 30px;
-    padding-left: 550px;
-    padding-right: 550px;
     border: 1px solid #D9D9D9;
     border-radius: 5px;
     background-color: white;
 }
 
-.filter {
+.filter-rank {
     margin-top: 50px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -25,7 +23,7 @@
     background-color: white;
 }
 
-.filter1 {
+.filter1-rank {
     margin-top: 50px;
     margin-left: 20px;
     padding-top: 5px;
@@ -37,7 +35,7 @@
     background-color: white;
 }
 
-.filter-select  {
+.filter-select-rank  {
     margin-top: 50px;
     margin-left: 810px;
     padding-top: 5px;
@@ -49,7 +47,7 @@
     background-color: white;
 }
 
-.select-icon {
+.select-icon-rank {
     margin-bottom: 3px;
 }
 
@@ -59,13 +57,13 @@
 
 
 
-.custom-modal-box-whole {
+.custom-modal-box-whole-rank {
     display: flex;
     margin-top: 20px;
-    margin-left: 310px;
+    margin-left: 370px;
   }
 
-.custom-modal-content {
+.custom-modal-content-rank {
     display: flex;
     border: 1px solid #E7E6E6;
     width: 15000%; /* Adjust the width as per your requirement */
@@ -73,13 +71,22 @@
     height: 100%;
 }
 
-.custom-modal-box {
+.custom-modal-content-rank1 {
+  border: 1px solid #E7E6E6;
+  width: 15000%; /* Adjust the width as per your requirement */
+  max-width: 1300px; /* Optional: Add a max-width to limit the modal's width */
+  height: 100%;
+  margin-top: 20px;
+  margin-left: 370px;
+}
+
+.custom-modal-box-rank {
   width: 300px;
   border: 1px solid #E7E6E6;
   padding: 10px;
 }
 
-.custom-modal-box1 {
+.custom-modal-box1-rank {
     display: inline-block;
     width: 33%;
     box-sizing: border-box;
@@ -87,90 +94,138 @@
     padding: 10px;
   }
 
-.select {
+.select-rank {
   background-color: #bf5f491f;
   border: 2px solid #bf5f4977;
 }
 
-.items-container {
+.items-container-rank {
     margin-left: 15px;
     margin-top: 15px;
-  width: 320%; 
-  max-width: 1400px;
+    margin-bottom: 15px;
+    width: 330%; 
+    max-width: 1400px;
 }
 
-.city-items-container {
+.city-items-container-rank {
     margin-left: 15px;
-  width: 320%; 
-  max-width: 1500px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 330%; 
+    max-width: 1500px;
 }
 
-.dong-items-container {
+.dong-items-container-rank {
+  margin-left: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   width: 600%; 
   max-width: 1000px;
   margin-right: 10px;
 }
 
-
-
-
-
-
-
-
-
-.scrollable-container {
+.scrollable-container-rank {
   max-height: 500px;
   max-width: 1500px;
   overflow-y: auto;
 }
 
-.addedWorkArea-style {
-  text-align: center;
-  background-color: #bf5f491f;
-  padding: 5px;
-  border-radius: 15px;
+  .addedWorkArea-style-rank {
+    background-color: #bf5f491f;
+    padding: 5px 20px;
+    border-radius: 15px;
+  }
+
+.added-work-areas-rank {
+  width: 1300px;
+  margin-left: 370px;
+  margin-right: 370px;
 }
 
-.close {
+.close-rank {
   right: 10px;
   border: none;
   color: #ce9a75;
   background-color: #bf5f4900;
 }
 
-.left-align-footer {
+.left-align-footer-rank {
   display: flex;
   flex-direction: row; /* Arrange items horizontally */
-  flex-wrap: wrap; /* Wrap items to the next row if they overflow */
+  flex-wrap: nowrap; /* Wrap items to the next row if they overflow */
   justify-content: flex-start;
 }
 
-.left-align-footer > div{
+.left-align-footer-rank > div{
   margin-right: 10px;
   margin-left: 10px;
 }
 
-.work-icon {
-  display: flex;
-  flex-direction: row;
+.label-style {
+  margin-top: 30px;
+  margin-left: 40px;
+  position: relative;
 }
 
-.job-box {
-  width: 100%; /* Adjust the width as per your requirement */
-  max-width: 1200px; /* Optional: Add a max-width to limit the modal's width */
-  height: 80%;
-  min-height: 500px;
-  max-height: 1200px;
+.label-style1 {
+  margin-top: 60px;
+  margin-left: 40px;
+  position: relative;
 }
 
-.custom-job-box {
-  display: flex;
-  width: 300px;
-  border: 1px solid #E7E6E6;
-  padding: 10px;
+.label-style2 {
+  margin-top: 60px;
+  margin-left: 105px;
+  position: relative;
 }
 
-.margin {
-  margin-top: 260px;
+.gender-style {
+  margin-left: 20px;
+  border-radius: 12px;
+  color:#b5b4b4;
+  background-color: white;
+  border: 2px solid #D2D2D2;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.gender-style1 {
+  margin-left: 100px;
+  border-radius: 12px;
+  color:#b5b4b4;
+  background-color: white;
+  border: 2px solid #D2D2D2;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.gender-select-style {
+  background-color: #bf5f491f;
+  border: 2px solid #bf5f4977;
+  color: #bf5f49;
+}
+
+.margin-bottom-conditions {
+  margin-bottom: 30px;
+}
+
+.inputAge-style {
+  border-radius: 15px;
+  margin-left: 30px;
+  background-color: white;
+  border: 3px solid #D2D2D2;
+  text-align: right;
+}
+
+.inputAge-btn-style {
+  border-radius: 15px;
+  margin-left: 10px;
+  color:#b5b4b4;
+  background-color: white;
+  border: 2px solid #D2D2D2;
+}
+
+.inputAge-label-style {
+  color:#b5b4b4;
+  background-color: white;
 }

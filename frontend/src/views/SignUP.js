@@ -608,10 +608,10 @@ function SignUP() {
                                     <Modal.Title>거주지 선택</Modal.Title>
                                 </Modal.Header>
                                 <div className="custom-modal-box-whole">
-                                    <Modal.Body dialogClassName="custom-modal-box">
+                                    <Modal.Body>
 
                                         {/* 시/도 */}
-                                        <div className="items-container scrollable-container">
+                                        <div className="scrollable-container">
                                           {items.map((item, index) => (
                                               <div
                                                   key={index}
@@ -698,7 +698,7 @@ function SignUP() {
                                 <Modal.Body dialogClassName="custom-modal-box">
 
                                     {/* 시/도 */}
-                                    <div className="items-container scrollable-container">
+                                    <div className="scrollable-container">
                                       {items.map((item, index) => (
                                           <div
                                               key={index}
