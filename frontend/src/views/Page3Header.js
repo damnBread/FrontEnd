@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "../components/Headers/Header";
 import "../assets/css/Page3Header.css";
 import DamnrankBoard from "./damnrankBoard";
-import Select from 'react-select';
 import selecticon from "../assets/img/select-icon.png";
 import Swal from "sweetalert2";
 import {items, items_city, items_dong} from '../components/CityItem.js'

@@ -1,0 +1,11 @@
+.custom-modal-content-rank11 {
+    width: 15000%; /* Adjust the width as per your requirement */
+    max-width: 1300px; /* Optional: Add a max-width to limit the modal's width */
+    height: 100%;
+    margin-top: 40px;
+    margin-left: 370px;
+  }
+
+  .label-margin {
+    margin-left: 10px;
+  }

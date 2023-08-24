@@ -1,10 +1,12 @@
 import React from "react";
-import Header from "../components/Headers/Header";
+import "../assets/css/damnrankBoard.css";
+import rank from "../assets/img/damnRank.png";
 
 const damnrankBoard = () => {
   return (
-    <div>
-      <h1>인재정보 board</h1>
+    <div className="custom-modal-content-rank11">
+      <img src={rank} width="40" alt="rank"/>
+      <label className="label-margin" style={{zIndex: 1}}><b>새로운 인재</b></label>
     </div>
   );
 };
