@@ -5,8 +5,8 @@ import rank from "../assets/img/damnRank.png";
 const damnrankBoard = () => {
   return (
     <div className="custom-modal-content-rank11">
-      <img src={rank} width="40" alt="rank"/>
-      <label className="label-margin" style={{zIndex: 1}}><b>새로운 인재</b></label>
+      <img src={rank} width="35" alt="rank" style={{marginTop: '-10px'}}/>
+      <label className="label-margin" style={{zIndex: 1}}><b>인재 랭킹</b></label>
     </div>
   );
 };
