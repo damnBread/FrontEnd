@@ -4,6 +4,7 @@ import "../assets/css/Page3Header.css";
 import DamnrankBoard from "./damnrankBoard";
 import selecticon from "../assets/img/select-icon.png";
 import Swal from "sweetalert2";
+import axios from "axios";
 import {items, items_city, items_dong} from '../components/CityItem.js'
 import workstaff from "../assets/img/workicon-staff.png";
 import workcoffeebeans from "../assets/img/workicon-coffeebeans.png";
@@ -35,14 +36,19 @@ const Page3Header = () => {
     const [citySelectWorkArea, setCitySelectWorkArea] = useState("");  //시/군/구 선택
     const [dongSelectWorkArea, setDongSelectWorkArea] = useState(""); //동/읍/면 선택
     const [addedWorkAreas, setAddedWorkAreas] = useState([]);
+    const [InputWorkArea, setInputWorkArea] = useState("");   //지역
 
     const [SelectWorkJob, setSelectWorkJob] = useState([]);  //업직종 선택 
+    const [InputWorkJob, setInputWorkJob] = useState("");   //업직종 
     const [activeWorkJob, setActiveWorkJob] = useState('');  //색 변경
 
     const [selectedGenders, setSelectedGenders] = useState([]);  // 성별
 
     const [selectedAges, setSelectedAges] = useState([]);   //나이
-    const [InputAge, setInputAge] = useState("");
+    const [InputAge, setInputAge] = useState(0);
+
+    const [selectedCareers, setSelectedCareers] = useState([]);  //경력
+    const [InputCareer, setInputCareer] = useState(0); 
 
     const handleToggleArea = () => {
       setShowArea(prevState => !prevState);
@@ -87,11 +93,13 @@ const Page3Header = () => {
 
   const DonghandleClickWorkArea = (dongItem) => {
       setDongSelectWorkArea(dongItem);
-      
+     
         const addWorkArea = SelectWorkArea + " " + citySelectWorkArea + " " + dongItem;
 
         if (!addedWorkAreas.includes(addWorkArea)) {
-          setAddedWorkAreas(prevWorkAreas => [...prevWorkAreas, addWorkArea]);
+          const newWorkAreas = [...addedWorkAreas, addWorkArea];
+          setAddedWorkAreas(newWorkAreas);
+          setInputWorkArea(newWorkAreas.join("|"));
         } else {
           Swal.fire({
             icon: "warning",
@@ -105,6 +113,7 @@ const Page3Header = () => {
         }
 
         console.log(addWorkArea);
+        
   }
 
   const removeWorkArea = (workAreaToRemove) => {    //지역 하나씩 삭제
@@ -121,57 +130,143 @@ const Page3Header = () => {
       setSelectWorkJob((prevSelected) =>
         prevSelected.filter((selectedJob) => selectedJob !== job)
       );
-    } else if (!SelectWorkJob.includes(job)) {
-        setActiveWorkJob(job);
-        setSelectWorkJob((prevSelected) => [...prevSelected, job]);
-    } else {
-      
-    }
+    } else  {
+      setActiveWorkJob(job);
+      setSelectWorkJob((prevSelected) => [...prevSelected, job]);
+      setInputWorkJob([...SelectWorkJob, job].join("|"));
+    } 
   };
 
   const removeWorkJob = (workJobToRemove) => {    //업직종 하나씩 삭제
     setSelectWorkJob(prevWorkJobs =>
       prevWorkJobs.filter(workJob => workJob !== workJobToRemove)
     );
+    updateInputWorkJob(workJobToRemove);
     }  
+
+    const updateInputWorkJob = (removedJob) => {
+      setInputWorkJob(SelectWorkJob.filter(job => job !== removedJob).join("|"));
+    };
 
 
 
 //세부조건 -> 성별
-    const handleGenderClick = (gender) => {
-      if (selectedGenders.includes(gender)) {
-        setSelectedGenders(selectedGenders.filter(item => item !== gender));
-      } else {
-        setSelectedGenders([...selectedGenders, gender]);
-      }
-    };
+  const handleGenderClick = (gender) => {
+    let updatedGenders;
+  
+    if (selectedGenders.includes(gender)) {
+      updatedGenders = selectedGenders.filter(item => item !== gender);
+    } else {
+      updatedGenders = [...selectedGenders, gender];
+    }
+  
+    setSelectedGenders(updatedGenders);
+  };
+  
+  const removeGender = (genderToRemove) => {
+    const updatedGenders = selectedGenders.filter(gender => gender !== genderToRemove);
+    setSelectedGenders(updatedGenders);
+  };
 
-  const removeGender = (GenderToRemove) => {    //성별 하나씩 삭제
-    setSelectedGenders(prevGender =>
-      prevGender.filter(gender => gender !== GenderToRemove)
-    );
-    }  
+  const getGenderLabel = (genderIndex) => {
+    switch (genderIndex) {
+      case 0:
+        return '남';
+      case 1:
+        return '여';
+      case 2:
+        return '무관';
+      default:
+        return '';
+    }
+  };
+  
 
 //세부조건 -> 나이
 const handleInputAge = (event) => {
-  setInputAge(event.target.value);
+  const value = event.target.value;
+  setInputAge(value);
 };
 
 const handleAgeClick = () => {
-  if (InputAge && !selectedAges.includes(InputAge)) {
-    setSelectedAges([...selectedAges, InputAge]);
-    setInputAge('');
+  if (InputAge !== '' && !selectedAges.includes(InputAge)) {
+    const ageInt = parseInt(InputAge, 10); // Convert the entered age to an integer
+    if (!isNaN(ageInt)) {
+      setSelectedAges([...selectedAges, ageInt]);
+    }
   }
 };
 
 const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
-    setSelectedAges(prevAges =>
-      prevAges.filter(age => age !== AgeToRemove)
-    );
-  }  
+  setSelectedAges(prevAges =>
+    prevAges.filter(age => age !== AgeToRemove)
+  );
+};
 
-  function onClickSelect() {
 
+
+  //세부조건 -> 경력
+  const handleInputCarrer = (event) => {
+    setInputCareer(event.target.value);
+  };
+
+  const handleCareerClick = () => {
+    if (InputCareer !== '' && !selectedCareers.includes(InputCareer)) {
+      const careerInt = parseInt(InputCareer, 10); // Convert the entered age to an integer
+      
+      if (InputCareer === '') {
+        setInputCareer(-1);
+      } else {
+        setSelectedCareers([...selectedCareers, careerInt]);
+      }
+    }
+  };
+  
+  const removeCareer = (CareerToRemove) => {    //경력 하나씩 삭제
+      setSelectedCareers(prevCareers =>
+        prevCareers.filter(career => career !== CareerToRemove)
+      );
+    }  
+
+  function onClickFilter() {
+    
+
+    console.log("1111: ", InputWorkArea);
+    console.log("2222: ", InputWorkJob);
+    console.log('3: ', selectedGenders);
+    console.log('4444: ', InputAge);
+    console.log('5555: ', InputCareer);
+
+    //requestParam
+    // location (String) // 지역 size:3
+    // job (String) // 업직종 size:3
+    // gender (ArrayList<Integer>) //성별 조건 
+    // age (int) // 연령 조건 
+    // careere(int) // 해당없으면 -1
+            axios
+              .get('http://localhost:3000/damnrank/filter', {    //연동 안됨 왜지 ?
+                location: InputWorkArea,
+                job: InputWorkJob,
+                gender: selectedGenders,
+                age: InputAge,
+                career: InputCareer
+              })
+              .then((res) => {
+                  console.log(res.data);
+                  console.log("인재정보 끝 !");
+              })
+              .catch((error) => {
+                if (error.response) {
+                  console.log("1", error.response.data);
+                  console.log("2", error.response.status);
+                  console.log("3", error.response.headers);
+                } else if (error.request) {
+                  console.log("4", error.request);
+                } else {
+                  console.log('Error', error.message);
+                }
+                console.log("5", error.config);
+              });
   }
 
   return (
@@ -195,7 +290,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                 <img src={selecticon} alt="selecticon" className="select-icon" width="15" style={{marginLeft: "30px", transform: `rotate(${imageRotationCondi}deg)`}}/>
               </button> 
 
-              <button type="button" onClick={onClickSelect} className="filter-select-rank">적용</button> 
+              <button type="button" onClick={onClickFilter} className="filter-select-rank">적용</button> 
           </div>             
         </div>
     
@@ -258,134 +353,134 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
               {/* 업직종 */}
               {showJob && (
                 <div className="custom-modal-content-rank1">
-                                <div className="work-icon">
-                                    <div className={`icon-style ${SelectWorkJob.includes('카페') ? 'active' : ''}`} style={{position: "relative", left: "110px", top: "50px"}}>
+                                <div className="work-icon1">
+                                    <div className={`icon-style ${SelectWorkJob.includes('카페') ? 'active' : ''}`} style={{position: "relative", left: "170px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('카페')}>
-                                          <img src={workbackground} width="130" alt="cafeImage1"/>
+                                          <img src={workbackground} width="105" alt="cafeImage1"/>
                                             <span style={{position: "absolute", top: "32px", left:"40px"}}>
-                                              <img src={workcoffeebeans} id="카페" width="65" alt="cafeImage2"/>
+                                              <img src={workcoffeebeans} id="카페" width="40" alt="cafeImage2"/>
                                             </span>
                                         </button>
                                       </div>
-                                      <span style={{position: "absolute", top: "400px", left:"530px"}}>
+                                      <span className="jobicon-margin" style={{position: "absolute", top: "320px", left:"577px"}}>
                                           <b>카페</b>
                                       </span>
                                     
                                     <span>
-                                      <div className={`icon-style ${SelectWorkJob.includes('서빙') ? 'active' : ''}`} style={{position: "relative", left:"190px", top: "50px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('서빙') ? 'active' : ''}`} style={{position: "relative", left:"250px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('서빙')}>
-                                          <img src={workbackground} width="130" alt="platterImage1"/>
+                                          <img src={workbackground} width="105" alt="platterImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
-                                              <img src={workplatter} id="서빙" width="65" alt="platterImage2"/>
+                                              <img src={workplatter} id="서빙" width="40" alt="platterImage2"/>
                                             </span>
                                         </button>
                                       </div>
-                                      <span style={{position: "absolute", top: "400px", left:"755px"}}>
+                                      <span className="jobicon-margin" style={{position: "absolute", top: "320px", left:"777px"}}>
                                           <b>서빙</b>
                                       </span>
                                     </span>
 
                                     <span>
-                                      <div className={`icon-style ${SelectWorkJob.includes('판매') ? 'active' : ''}`} style={{position: "relative", left:"270px", top: "50px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('판매') ? 'active' : ''}`} style={{position: "relative", left:"330px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('판매')}>
-                                          <img src={workbackground} width="130" alt="saleImage1"/>
+                                          <img src={workbackground} width="105" alt="saleImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
-                                              <img src={worksale} id="판매" width="65" alt="saleImage2"/>
+                                              <img src={worksale} id="판매" width="40" alt="saleImage2"/>
                                             </span>
                                         </button>
                                       </div>
-                                      <span style={{position: "absolute", top: "400px", left:"980px"}}>
+                                      <span className="jobicon-margin" style={{position: "absolute", top: "320px", left:"974px"}}>
                                           <b>판매</b>
                                       </span>
                                     </span>
 
                                     <span>
-                                      <div className={`icon-style ${SelectWorkJob.includes('주방 보조') ? 'active' : ''}`} style={{position: "relative", left:"350px", top: "50px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('주방 보조') ? 'active' : ''}`} style={{position: "relative", left:"410px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('주방 보조')}>
-                                          <img src={workbackground} width="130" alt="knifeImage1"/>
+                                          <img src={workbackground} width="105" alt="knifeImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
-                                              <img src={workknife} id="주방 보조" width="65" alt="knifeImage2"/>
+                                              <img src={workknife} id="주방 보조" width="40" alt="knifeImage2"/>
                                             </span>
                                         </button>
                                       </div>
-                                      <span style={{position: "absolute", top: "400px", left:"1190px"}}>
+                                      <span className="jobicon-margin" style={{position: "absolute", top: "320px", left:"1150px"}}>
                                           <b>주방 보조</b>
                                       </span>
                                     </span>
 
                                     <div>
-                                      <div className={`icon-style ${SelectWorkJob.includes('배달') ? 'active' : ''}`} style={{position: "relative", left:"430px", top: "50px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('배달') ? 'active' : ''}`} style={{position: "relative", left:"490px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('배달')}>
-                                          <img src={workbackground} width="130" alt="deliveryImage1"/>
+                                          <img src={workbackground} width="105" alt="deliveryImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
-                                              <img src={workdelivery} id="배달" width="65" alt="deliveryImage2"/>
+                                              <img src={workdelivery} id="배달" width="40" alt="deliveryImage2"/>
                                             </span>
                                         </button>
                                       </div>
-                                      <span style={{position: "absolute", top: "400px", left:"1432px"}}>
+                                      <span className="jobicon-margin" style={{position: "absolute", top: "320px", left:"1370px"}}>
                                           <b>배달</b>
                                       </span>
                                     </div>
                                   </div>
 
                                   <div className="work-icon">
-                                    <div className={`icon-style ${SelectWorkJob.includes('교육') ? 'active' : ''}`} style={{position: "relative", left: "110px", top: "170px"}}>
+                                    <div className={`icon-style ${SelectWorkJob.includes('교육') ? 'active' : ''}`} style={{position: "relative", left: "170px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('교육')}>
-                                            <img src={workbackground} width="130" alt="educationImage1"/>
+                                            <img src={workbackground} width="105" alt="educationImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
-                                                <img src={workeducation} id="교육" width="65" alt="educationImage2"/>
+                                                <img src={workeducation} id="교육" width="40" alt="educationImage2"/>
                                               </span>
                                           </button>
                                         </div>
-                                        <span style={{position: "absolute", top: "650px", left:"530px"}}>
+                                        <span className="jobicon-margin" style={{position: "absolute", top: "478px", left:"577px"}}>
                                             <b>교육</b>
                                         </span>
 
-                                        <div className={`icon-style ${SelectWorkJob.includes('스태프') ? 'active' : ''}`} style={{position: "relative", left: "190px", top: "170px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('스태프') ? 'active' : ''}`} style={{position: "relative", left: "250px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('스태프')}>
-                                            <img src={workbackground} width="130" alt="staffImage1"/>
+                                            <img src={workbackground} width="105" alt="staffImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
-                                                <img src={workstaff} id="스태프"width="65" alt="staffImage2"/>
+                                                <img src={workstaff} id="스태프"width="40" alt="staffImage2"/>
                                               </span>
                                           </button>
                                         </div>
-                                        <span style={{position: "absolute", top: "650px", left:"750px"}}>
+                                        <span className="jobicon-margin" style={{position: "absolute", top: "478px", left:"770px"}}>
                                             <b>스태프</b>
                                         </span>
 
-                                        <div className={`icon-style ${SelectWorkJob.includes('생산') ? 'active' : ''}`} style={{position: "relative", left: "270px", top: "170px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('생산') ? 'active' : ''}`} style={{position: "relative", left: "330px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('생산')}>
-                                            <img src={workbackground} width="130" alt="designImage1"/>
+                                            <img src={workbackground} width="105" alt="designImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
-                                                <img src={workdesign} id="생산" width="65" alt="designImage2"/>
+                                                <img src={workdesign} id="생산" width="40" alt="designImage2"/>
                                               </span>
                                           </button>
                                         </div>
-                                        <span style={{position: "absolute", top: "650px", left:"980px"}}>
+                                        <span className="jobicon-margin" style={{position: "absolute", top: "478px", left:"974px"}}>
                                             <b>생산</b>
                                         </span>
 
-                                        <div className={`icon-style ${SelectWorkJob.includes('미디어') ? 'active' : ''}`} style={{position: "relative", left: "350px", top: "170px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('미디어') ? 'active' : ''}`} style={{position: "relative", left: "410px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('미디어')}>
-                                            <img src={workbackground} width="130" alt="mediaImage1"/>
+                                            <img src={workbackground} width="105" alt="mediaImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
-                                                <img src={workmedia} id="미디어" width="65" alt="mediaImage2"/>
+                                                <img src={workmedia} id="미디어" width="40" alt="mediaImage2"/>
                                               </span>
                                           </button>
                                         </div>
-                                        <span style={{position: "absolute", top: "650px", left:"1200px"}}>
+                                        <span className="jobicon-margin" style={{position: "absolute", top: "478px", left:"1165px"}}>
                                             <b>미디어</b>
                                         </span>
 
-                                        <div className={`icon-style ${SelectWorkJob.includes('고객 상담') ? 'active' : ''}`} style={{position: "relative", left: "430px", top: "170px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('고객 상담') ? 'active' : ''}`} style={{position: "relative", left: "490px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('고객 상담')}>
-                                            <img src={workbackground} width="130" alt="customerImage1"/>
+                                            <img src={workbackground} width="105" alt="customerImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
-                                                <img src={workcustomer} id="고객 상담" width="65" alt="customerImage2"/>
+                                                <img src={workcustomer} id="고객 상담" width="40" alt="customerImage2"/>
                                               </span>
                                           </button>
                                         </div>
-                                        <span style={{position: "absolute", top: "650px", left:"1420px"}}>
+                                        <span className="jobicon-margin" style={{position: "absolute", top: "478px", left:"1350px"}}>
                                             <b>고객 상담</b>
                                         </span>
                                     </div>
@@ -402,24 +497,24 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                       
                           <button
                             type="button"
-                            className={`gender-style1 ${selectedGenders.includes('남') ? 'gender-select-style' : ''}`}
-                            onClick={() => handleGenderClick('남')}
+                            className={`gender-style1 ${selectedGenders.includes(0) ? 'gender-select-style' : ''}`}
+                            onClick={() => handleGenderClick(0)}
                           >
                             남
                           </button>
 
                           <button
                             type="button"
-                            className={`gender-style ${selectedGenders.includes('여') ? 'gender-select-style' : ''}`}
-                            onClick={() => handleGenderClick('여')}
+                            className={`gender-style ${selectedGenders.includes(1) ? 'gender-select-style' : ''}`}
+                            onClick={() => handleGenderClick(1)}
                           >
                             여
                           </button>
 
                           <button
                             type="button"
-                            className={`gender-style ${selectedGenders.includes('무관') ? 'gender-select-style' : ''}`}
-                            onClick={() => handleGenderClick('무관')}
+                            className={`gender-style ${selectedGenders.includes(2) ? 'gender-select-style' : ''}`}
+                            onClick={() => handleGenderClick(2)}
                           >
                             무관
                           </button>
@@ -437,7 +532,13 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                     </div>
 
                     <div>
-                      <label className="label-style1" style={{zIndex: 1}}><b>경력</b></label>
+                      <label className="label-style1" style={{zIndex: 1}}><b>경력</b>
+
+                      <input type='text' className="inputAge-style" id='career' name='career' placeholder="0" value={InputCareer}
+                             onChange={handleInputCarrer} style={{width: "150px", marginLeft: "100px"}} />
+                             <label className="inputAge-label-style" style={{marginLeft: "10px", marginRight: "30px"}}>개월 이상</label>
+                        <button type='button' onClick={handleCareerClick} className="inputAge-btn-style" disabled={!InputCareer}>확인</button>   
+                      </label>
 
                     </div>
 
@@ -484,7 +585,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                     {selectedGenders.map((gender, index) => (
                       <div key={index}
                       className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(gender) ? 'active' : ''}`}>
-                        {gender}
+                        {getGenderLabel(gender)}
                         <button
                           className="close-rank"
                           onClick={() => removeGender(gender)}
@@ -500,6 +601,18 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                             <button
                               className="close-rank"
                               onClick={() => removeAge(age)}
+                            >
+                              x
+                            </button>
+                          </span>
+                        ))}
+
+                        {selectedCareers.map((career, index) => (
+                          <span key={index} className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(career) ? 'active' : ''}`}>
+                            {career}개월 이상
+                            <button
+                              className="close-rank"
+                              onClick={() => removeCareer(career)}
                             >
                               x
                             </button>

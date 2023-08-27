@@ -1,6 +1,8 @@
 .items-align-rank {
     display: flex;
     justify-content: center;
+    margin-left: 370px;
+    margin-right: 370px;
 }
 
 .default-filter-rank {
@@ -37,7 +39,7 @@
 
 .filter-select-rank  {
     margin-top: 50px;
-    margin-left: 810px;
+    margin-left: 775px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 15px;
@@ -55,23 +57,30 @@
     display: flex;
     margin-top: 20px;
     margin-left: 370px;
+    margin-right: 370px;
   }
 
 .custom-modal-content-rank {
     display: flex;
     border: 1px solid #E7E6E6;
-    width: 15000%; /* Adjust the width as per your requirement */
-    max-width: 1300px; /* Optional: Add a max-width to limit the modal's width */
+    width: 14000%; /* Adjust the width as per your requirement */
+    max-width: 1275px; /* Optional: Add a max-width to limit the modal's width */
     height: 100%;
+}
+
+.jobicon-margin {
+  margin-top: 20px;
 }
 
 .custom-modal-content-rank1 {
   border: 1px solid #E7E6E6;
   width: 15000%; /* Adjust the width as per your requirement */
-  max-width: 1300px; /* Optional: Add a max-width to limit the modal's width */
+  max-width: 1275px; /* Optional: Add a max-width to limit the modal's width */
   height: 100%;
+  max-height: 332px;
   margin-top: 20px;
   margin-left: 370px;
+  margin-right: 370px;
 }
 
 .custom-modal-box-rank {
@@ -97,8 +106,8 @@
     margin-left: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
-    width: 330%; 
-    max-width: 1400px;
+    width: 300%; 
+    max-width: 1280px;
 }
 
 .city-items-container-rank {
@@ -119,21 +128,29 @@
 }
 
 .scrollable-container-rank {
-  max-height: 500px;
+  max-height: 300px;
   max-width: 1500px;
   overflow-y: auto;
 }
 
   .addedWorkArea-style-rank {
     background-color: #bf5f491f;
-    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
     border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
 .added-work-areas-rank {
-  width: 1300px;
+  width: 1275px;
   margin-left: 370px;
   margin-right: 370px;
+}
+
+.work-icon1 {
+  display: flex;
+  flex-direction: row;
 }
 
 .close-rank {
