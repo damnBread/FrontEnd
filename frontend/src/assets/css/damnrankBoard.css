@@ -82,3 +82,14 @@
   right: 430px;
   float: right;
 }
+
+.modal-whole-rank {
+  display: flex;
+  width: 35%; /* Adjust the width as per your requirement */
+  max-width: 1200px; /* Optional: Add a max-width to limit the modal's width */
+  height: 90%;
+}
+
+.footer-style {
+  height: 90%;
+}
