@@ -37,6 +37,10 @@ function SignUP() {
     const [usableNickname, setUsableNickname] = useState("");  //닉네임 중복확인
     const [usableEmail, setUsableEmail] = useState("");  //이메일 중복확인    (인증하기 X -> 중복확인)
 
+    const shouldApplyActiveStyle = (clickedElement) => {
+      return clickedElement === true;
+    };
+
     const [show, setShow] = useState(false);   //모달창
 
     const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
@@ -608,10 +612,10 @@ function SignUP() {
                                     <Modal.Title>거주지 선택</Modal.Title>
                                 </Modal.Header>
                                 <div className="custom-modal-box-whole">
-                                    <Modal.Body dialogClassName="custom-modal-box">
+                                    <Modal.Body>
 
                                         {/* 시/도 */}
-                                        <div className="items-container scrollable-container">
+                                        <div className="scrollable-container">
                                           {items.map((item, index) => (
                                               <div
                                                   key={index}
@@ -663,7 +667,7 @@ function SignUP() {
                                 </div>
                                 <Modal.Footer>
                                     <Button className="footerButton-style" varient="primary" onClick={handleSelectAddress}>
-                                        선택
+                                        선택 완료
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
@@ -698,7 +702,7 @@ function SignUP() {
                                 <Modal.Body dialogClassName="custom-modal-box">
 
                                     {/* 시/도 */}
-                                    <div className="items-container scrollable-container">
+                                    <div className="scrollable-container">
                                       {items.map((item, index) => (
                                           <div
                                               key={index}
@@ -752,11 +756,12 @@ function SignUP() {
                             </div>
                             <Modal.Footer>
                               {/* 희망 근무 지역 여러개 선택 */}
-                              <div className="addedWorkArea-style">
+                              <div>
                                 {addedWorkAreas.length > 0 && (     
-                                      <div className="added-work-areas left-align-footer">
+                                      <div className="left-align-footer">
                                           {addedWorkAreas.map((workArea, index) => (
-                                              <div key={index}>
+                                              <div key={index}
+                                              className={`addedWorkArea-style-rank  ${shouldApplyActiveStyle(workArea) ? 'active' : ''}`}>
                                                 {workArea}
                                                 <button className="close" onClick={() => removeWorkArea(workArea)}>   
                                                     x

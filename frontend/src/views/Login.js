@@ -64,6 +64,8 @@ function Login() {
             document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
         })
         .catch((error) => {
+            console.log(error);
+            console.log(error.data);
             Swal.fire({
                 icon: "warning",
                 title: "경고",
@@ -82,13 +84,7 @@ function Login() {
             });
         });
     };
-
-    // useEffect(() => {
-    //     axios.get('http://localhost:3000/Login')
-    //     .then(response => console.log(response))
-    //     .catch()
-    // },[])
-
+    
     return(
         <div>
                 <div className="logo-container">
