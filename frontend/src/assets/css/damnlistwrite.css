@@ -9,16 +9,128 @@
     margin-bottom: 20px;
 }
 
+
+.content-input {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 900px;
+    height: 300px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
 .damnlistrecommend p {
     font-family: 'GmarketSans', sans-bold;
     font-size: 18px;
     font-weight: bold;
-    margin-right: 150px; /* Add spacing between 제목 and input */
+    margin-right: 170px; /* Add spacing between 제목 and input */
 }
 
 .damnlistrecommend {
     display: flex; /* Use flexbox to arrange items in a row */
     align-items: center; /* Align items vertically in the center */
     margin-top: 40px;
-    margin-left: 220px;
+    margin-left: 200px;
+}
+
+.damnlistrecommend button {
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.damnlistjobbrand p { 
+    font-family: 'GmarketSans', sans-bold;
+    font-weight: bold;
+    margin-left: 420px;
+}
+
+.damnlistjobbrand p span {
+    color: brown;
+}
+
+.damnlistworktime p { 
+    font-family: 'GmarketSans', sans-bold;
+    font-weight: bold;
+}
+
+.damnlistworktime {
+    display: flex; /* Use flexbox to arrange items in a row */
+    align-items: center; /* Align items vertically in the center */
+    margin-top: 40px;
+    margin-left: 200px;
+}
+
+.damnlistworkperiod p { 
+    font-family: 'GmarketSans', sans-bold;
+    font-weight: bold;
+}
+
+.damnlistworkperiod {
+    display: flex; /* Use flexbox to arrange items in a row */
+    align-items: center; /* Align items vertically in the center */
+    margin-top: 40px;
+    margin-left: 200px;
+}
+
+.damnlistcalander {
+    margin-left: 150px;
+    margin-bottom: 20px;
+}
+
+.count-input1 {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 150px;
+    height: 40px;
+    margin-bottom: 20px;
+    margin-left: 150px;
+    margin-right: 10px;
+}
+
+
+.damnlistworktime label {
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+
+.damnlistworktime input[type="checkbox"]:checked + label::before {
+    border-color: brown;
+    background-color: brown;
+  }
+
+
+
+.age-input1 {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 150px;
+    height: 40px;
+    margin-bottom: 20px;
+    margin-left: 150px;
+    margin-right: 10px;
+}
+
+.damnlistage {
+    display: flex; 
+    align-items: center; 
+    margin-top: 40px;
+    margin-left: 200px;
+}
+
+.damnlistage p { 
+    font-family: 'GmarketSans', sans-bold;
+    font-weight: bold;
+}
+
+.damnlist-age-controller {
+    margin-left: 100px;
 }
