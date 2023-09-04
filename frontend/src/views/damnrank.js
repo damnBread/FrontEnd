@@ -18,7 +18,7 @@ import workplatter from "../assets/img/workicon-platter.png";
 import worksale from "../assets/img/workicon-sale.png";
 import workbackground from "../assets/img/workicon-background.png";
 
-const Page3Header = () => {
+const Damnrank = () => {
 
   const [showArea, setShowArea] = useState(false);      //지역
   const [showJob, setShowJob] = useState(false);        //업직종
@@ -45,7 +45,7 @@ const Page3Header = () => {
     const [selectedGenders, setSelectedGenders] = useState([]);  // 성별
 
     const [selectedAges, setSelectedAges] = useState([]);   //나이
-    const [InputAge, setInputAge] = useState(0);
+    const [InputAge, setInputAge] = useState(null);
 
     const [selectedCareers, setSelectedCareers] = useState([]);  //경력
     const [InputCareer, setInputCareer] = useState(0); 
@@ -151,17 +151,21 @@ const Page3Header = () => {
 
 
 //세부조건 -> 성별
-  const handleGenderClick = (gender) => {
-    let updatedGenders;
-  
-    if (selectedGenders.includes(gender)) {
-      updatedGenders = selectedGenders.filter(item => item !== gender);
-    } else {
-      updatedGenders = [...selectedGenders, gender];
-    }
-  
-    setSelectedGenders(updatedGenders);
-  };
+const handleGenderClick = (gender) => {
+  let updatedGenders;
+
+  if (gender === '남') {
+    updatedGenders = [1, 0];
+  } else if (gender === '여') {
+    updatedGenders = [0, 1];
+  } else if (gender === '무관') {
+    updatedGenders = [1, 1];
+  } else {
+    updatedGenders = selectedGenders.filter(item => item !== gender);
+  }
+
+  setSelectedGenders(updatedGenders);
+};
   
   const removeGender = (genderToRemove) => {
     const updatedGenders = selectedGenders.filter(gender => gender !== genderToRemove);
@@ -169,15 +173,15 @@ const Page3Header = () => {
   };
 
   const getGenderLabel = (genderIndex) => {
-    switch (genderIndex) {
-      case 0:
-        return '남';
-      case 1:
-        return '여';
-      case 2:
-        return '무관';
-      default:
-        return '';
+  
+    if (genderIndex === 0) {
+      return '남';
+    } else if (genderIndex ===1) {
+      return '여';
+    } else if (genderIndex ===2) {
+      return '무관';
+    } else {
+      return '';
     }
   };
   
@@ -190,9 +194,10 @@ const handleInputAge = (event) => {
 
 const handleAgeClick = () => {
   if (InputAge !== '' && !selectedAges.includes(InputAge)) {
-    const ageInt = parseInt(InputAge, 10); // Convert the entered age to an integer
-    if (!isNaN(ageInt)) {
-      setSelectedAges([...selectedAges, ageInt]);
+    const AgeInt = parseInt(InputAge, 10); // Convert the entered age to an integer
+    console.log("ININ: ", AgeInt)
+    if (!isNaN(InputAge)) {
+      setSelectedAges([...selectedAges, InputAge]);
     }
   }
 };
@@ -231,42 +236,41 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
   function onClickFilter() {
     
 
-    console.log("1111: ", InputWorkArea);
-    console.log("2222: ", InputWorkJob);
+    console.log("1111: ", typeof(InputWorkArea));
+    console.log("2222: ", typeof(InputWorkJob));
     console.log('3: ', selectedGenders);
-    console.log('4444: ', InputAge);
-    console.log('5555: ', InputCareer);
-
-    //requestParam
-    // location (String) // 지역 size:3
-    // job (String) // 업직종 size:3
-    // gender (ArrayList<Integer>) //성별 조건 
-    // age (int) // 연령 조건 
-    // careere(int) // 해당없으면 -1
-            axios
-              .get('http://localhost:3000/damnrank/filter', {    //연동 안됨 왜지 ?
-                location: InputWorkArea,
-                job: InputWorkJob,
-                gender: selectedGenders,
-                age: InputAge,
-                career: InputCareer
-              })
-              .then((res) => {
-                  console.log(res.data);
-                  console.log("인재정보 끝 !");
-              })
-              .catch((error) => {
-                if (error.response) {
-                  console.log("1", error.response.data);
-                  console.log("2", error.response.status);
-                  console.log("3", error.response.headers);
-                } else if (error.request) {
-                  console.log("4", error.request);
-                } else {
-                  console.log('Error', error.message);
-                }
-                console.log("5", error.config);
-              });
+    console.log("3131: ", Array.isArray(selectedGenders));
+    console.log('4444: ', typeof(InputAge));
+    const ageparsedInt = parseInt(InputAge);
+    console.log("4545: ", ageparsedInt)
+    console.log('5555: ', typeof(InputCareer));
+    const carrerInt = parseInt(InputCareer);
+    const page = 1;
+    
+      axios
+        .post('http://localhost:3000/damnrank/filter/' + page, {    //연동 안됨 왜지 ?
+          location: InputWorkArea,
+          job: InputWorkJob,
+          gender: selectedGenders,
+          age: ageparsedInt,
+          // career: InputCareer,
+        })
+        .then((res) => {
+            console.log(res.data);
+            console.log("인재정보 끝 !");
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log("1", error.response.data);
+            console.log("2", error.response.status);
+            console.log("3", error.response.headers);
+          } else if (error.request) {
+            console.log("4", error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+          console.log("5", error.config);
+        });
   }
 
   return (
@@ -498,7 +502,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                           <button
                             type="button"
                             className={`gender-style1 ${selectedGenders.includes(0) ? 'gender-select-style' : ''}`}
-                            onClick={() => handleGenderClick(0)}
+                            onClick={() => handleGenderClick('남')}
                           >
                             남
                           </button>
@@ -506,7 +510,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                           <button
                             type="button"
                             className={`gender-style ${selectedGenders.includes(1) ? 'gender-select-style' : ''}`}
-                            onClick={() => handleGenderClick(1)}
+                            onClick={() => handleGenderClick('여')}
                           >
                             여
                           </button>
@@ -514,7 +518,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                           <button
                             type="button"
                             className={`gender-style ${selectedGenders.includes(2) ? 'gender-select-style' : ''}`}
-                            onClick={() => handleGenderClick(2)}
+                            onClick={() => handleGenderClick('무관')}
                           >
                             무관
                           </button>
@@ -585,7 +589,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                     {selectedGenders.map((gender, index) => (
                       <div key={index}
                       className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(gender) ? 'active' : ''}`}>
-                        {getGenderLabel(gender)}
+                        {gender}
                         <button
                           className="close-rank"
                           onClick={() => removeGender(gender)}
@@ -628,4 +632,4 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
   );
 };
 
-export default Page3Header;
+export default Damnrank;
