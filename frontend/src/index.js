@@ -34,7 +34,7 @@ import DamnstoryDetail from "./views/damnstoryDetail";
 import Page1Header from "./views/Page1Header";
 import Page2Header from "./views/Page2Header";
 import damnrank from "./views/damnrank";
-
+import damnrankDetail from "./views/damnrankDetail";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -46,6 +46,7 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/Page1Header" component={Page1Header} />
       <Route exact path="/Page2Header" component={Page2Header} />
       <Route exact path="/damnrank" component={damnrank} />
+      <Route exact path="/damnrank/detail/:userid" component={damnrankDetail} />
       <Route exact path="/" component={MainPage} />
       <Route exact path="/damnlist" component={damnlist} />
       <Route exact path="/MainPageRecommend" component={MainPageRecommend} />

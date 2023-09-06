@@ -43,6 +43,7 @@ const Damnrank = () => {
     const [activeWorkJob, setActiveWorkJob] = useState('');  //색 변경
 
     const [selectedGenders, setSelectedGenders] = useState([]);  // 성별
+    let updatedGenders;
 
     const [selectedAges, setSelectedAges] = useState([]);   //나이
     const [InputAge, setInputAge] = useState(null);
@@ -152,7 +153,6 @@ const Damnrank = () => {
 
 //세부조건 -> 성별
 const handleGenderClick = (gender) => {
-  let updatedGenders;
 
   if (gender === '남') {
     updatedGenders = [1, 0];
@@ -172,18 +172,33 @@ const handleGenderClick = (gender) => {
     setSelectedGenders(updatedGenders);
   };
 
-  const getGenderLabel = (genderIndex) => {
-  
-    if (genderIndex === 0) {
+  function getGenderLabel() {
+
+    if (arraysAreEqual(selectedGenders, [1, 0])) {
       return '남';
-    } else if (genderIndex ===1) {
+    } else if (arraysAreEqual(selectedGenders, [0, 1])) {
       return '여';
-    } else if (genderIndex ===2) {
+    } else if (arraysAreEqual(selectedGenders, [1, 1])) {
       return '무관';
     } else {
       return '';
     }
   };
+
+function arraysAreEqual(arr1, arr2) {
+  
+  if (arr1.length !== arr2.length) {
+    return false; 
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+
+  return true; 
+}
   
 
 //세부조건 -> 나이
@@ -195,7 +210,6 @@ const handleInputAge = (event) => {
 const handleAgeClick = () => {
   if (InputAge !== '' && !selectedAges.includes(InputAge)) {
     const AgeInt = parseInt(InputAge, 10); // Convert the entered age to an integer
-    console.log("ININ: ", AgeInt)
     if (!isNaN(InputAge)) {
       setSelectedAges([...selectedAges, InputAge]);
     }
@@ -234,7 +248,6 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
     }  
 
   function onClickFilter() {
-    
 
     console.log("1111: ", typeof(InputWorkArea));
     console.log("2222: ", typeof(InputWorkJob));
@@ -248,12 +261,11 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
     const page = 1;
     
       axios
-        .post('http://localhost:3000/damnrank/filter/' + page, {    //연동 안됨 왜지 ?
+        .post('http://localhost:3000/damnrank/filter/' + page, {    //연동 완료 ~~
           location: InputWorkArea,
           job: InputWorkJob,
           gender: selectedGenders,
-          age: ageparsedInt,
-          // career: InputCareer,
+          age: ageparsedInt
         })
         .then((res) => {
             console.log(res.data);
@@ -501,7 +513,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                       
                           <button
                             type="button"
-                            className={`gender-style1 ${selectedGenders.includes(0) ? 'gender-select-style' : ''}`}
+                            className={`gender-style1 ${arraysAreEqual(selectedGenders, [1, 0]) ? 'gender-select-style' : ''}`}
                             onClick={() => handleGenderClick('남')}
                           >
                             남
@@ -509,7 +521,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
 
                           <button
                             type="button"
-                            className={`gender-style ${selectedGenders.includes(1) ? 'gender-select-style' : ''}`}
+                            className={`gender-style ${arraysAreEqual(selectedGenders, [0, 1]) ? 'gender-select-style' : ''}`}
                             onClick={() => handleGenderClick('여')}
                           >
                             여
@@ -517,7 +529,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
 
                           <button
                             type="button"
-                            className={`gender-style ${selectedGenders.includes(2) ? 'gender-select-style' : ''}`}
+                            className={`gender-style ${arraysAreEqual(selectedGenders, [1, 1]) ? 'gender-select-style' : ''}`}
                             onClick={() => handleGenderClick('무관')}
                           >
                             무관
@@ -587,17 +599,18 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                   ))}
 
                     {selectedGenders.map((gender, index) => (
-                      <div key={index}
+                      <span key={index}
                       className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(gender) ? 'active' : ''}`}>
-                        {gender}
+                        {getGenderLabel()}
                         <button
                           className="close-rank"
                           onClick={() => removeGender(gender)}
                         >
                           x
                         </button>
-                      </div>
+                      </span>
                     ))}
+
 
                         {selectedAges.map((age, index) => (
                           <span key={index} className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(age) ? 'active' : ''}`}>
