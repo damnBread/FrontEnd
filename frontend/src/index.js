@@ -46,7 +46,7 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/Page1Header" component={Page1Header} />
       <Route exact path="/Page2Header" component={Page2Header} />
       <Route exact path="/damnrank" component={damnrank} />
-      <Route exact path="/damnrank/detail/:userid" component={damnrankDetail} />
+      {/* <Route exact path="/damnrank/:userid/detail" component={damnrankDetail} /> */}
       <Route exact path="/" component={MainPage} />
       <Route exact path="/damnlist" component={damnlist} />
       <Route exact path="/MainPageRecommend" component={MainPageRecommend} />

@@ -7,7 +7,9 @@ import Button from "react-bootstrap/Button";
 
 const DamnrankDetail = () => {
   
-    const userid = useParams();
+    const { userid } = useParams();
+
+    const [userDetails, setUserDetails] = useState({});
 
     const [show, setShow] = useState(false);   //모달창
 
@@ -15,20 +17,41 @@ const DamnrankDetail = () => {
       setShow(false);   //모달창 닫기
   }
 
-  const handleShow = () =>{ setShow(true)};     //모달창 켜기
+  const handleShow = () =>{ 
+    axios
+        .get(`http://localhost:3000/damnrank/${userid}/detail`)
+        .then((response) => {
+            console.log(response.data);
+            setUserDetails(response.data); // Set user details
+            console.log("디테일");
+        })
+        .catch((error)=>{
+          if (error.response) {
+            console.log("1", error.response.data);
+            console.log("2", error.response.status);
+            console.log("3", error.response.headers);
+          } else if (error.request) {
+            console.log("4", error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+          console.log("5", error.config);
+        })
+        setShow(true)
+  };     //모달창 켜기
 
-  useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(`http://localhost:3000/damnrank/${userid}/detail`);
-            console.log(response);
+//   useEffect(() => {
+//     const fetchData = async () => {
+//         try {
+//             const response = await axios.get(`http://localhost:3000/damnrank/${userid}/detail`);
+//             console.log(response);
             
-        } catch (error) {
-            console.error('Error fetching post:', error);
-        }
-    };
-    fetchData();
-}, [userid]);
+//         } catch (error) {
+//             console.error('Error fetching post:', error);
+//         }
+//     };
+//     fetchData();
+// }, [userid]);
   
 
   return (
@@ -36,17 +59,7 @@ const DamnrankDetail = () => {
                       <Modal dialogClassName="modal-whole-rank" show={show} onHide={handleClose}>
                                 <div>
                                   <Modal.Header>
-                                    {/* <div className="scrollable-container">
-                                          {rankBoardData
-                                            .map((item, index) => (
-                                              <div
-                                                  key={index}
-                                                  className={`custom-modal-box`}
-                                              >
-                                                  {item.userid}
-                                              </div>
-                                          ))}
-                                        </div> */}
+                                      <strong>Username:</strong> {userDetails.username}
                                   </Modal.Header>
                                     <Modal.Body>
 

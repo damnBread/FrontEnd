@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import damnrankDetail from "./damnrankDetail";
 import "../assets/css/damnrankBoard.css";
 import rank from "../assets/img/damnRank.png";
 import man from "../assets/img/damnRank-man-icon.png";
@@ -11,40 +10,29 @@ import Button from "react-bootstrap/Button";
 
 const DamnrankBoard = () => {
 
+  const { userid } = useParams();
+
+  const [selectedItem, setSelectedItem] = useState(null);
+
   const [inputData, setInputData] = useState([{
-    id: 0,
+    userid: 0,
+    id: "",
     name: "",
     score: 0,
     gender: "",
     age: 0,
+    career: 0,
     badge: "",
     title: "",
     workJob: "",
     address: ""
   }])
 
+  const [show, setShow] = useState(false);   //모달창
 
-  let id = 0;
-  let name = "";
-  let score = 0;
-  let gender = false;
-  let age = 0;
-  let career = 0;
-  let badge = "";
-  let title = "";
-  let workJob = "";
-  let address = "";
-
-  let itemArray = [];
-  let itemArrayDetail = [];
-
-    const [show, setShow] = useState(false);   //모달창
-
-    const handleClose = () => {
-      setShow(false);   //모달창 닫기
+  const handleClose = () => {
+    setShow(false);   //모달창 닫기
   }
-
-  const handleShow = () =>{ setShow(true)};     //모달창 켜기
 
     function getBadgeBackgroundColor(badgeValue) {
       switch (badgeValue) {
@@ -69,11 +57,11 @@ const DamnrankBoard = () => {
     }
 
     const sessionToken = sessionStorage.getItem('token');
-    fetchDamnRank()
 
-    function token() {
-      console.log("toekeneotken: " + sessionToken);
-    }
+    useEffect(() => {
+      fetchDamnRank();
+  }, []);
+
 
     // const itemsPerPage = 10; // Number of items to display per page
     // const totalPages = Math.ceil(itemArrayDetail.length / itemsPerPage); // Calculate total pages
@@ -92,7 +80,6 @@ const DamnrankBoard = () => {
 
     function fetchDamnRank() {
       const page = 1; 
-      token()
     
       axios
         .get(`http://localhost:3000/damnrank`, { 
@@ -102,11 +89,13 @@ const DamnrankBoard = () => {
             console.log(res.data);
 
             const _inputData = res.data.map((rowData) => ({
-              id: rowData.userId,
+              userid: rowData.userid,
+              id: rowData.id,
               name: rowData.name,
               score: rowData.score,
               gender: rowData.gender,
               age: 20,
+              career: 15,
               badge: "적극 응답",
               title: "적극 응답 @@@",
               workJob: rowData.hopeJob,
@@ -114,9 +103,7 @@ const DamnrankBoard = () => {
             })
             )
             setInputData(_inputData);
-            // console.log("***1: ", inputData);
-
-            console.log("인재정보 데이터 받아오기 끝 !");   //적용해야됨
+            
         })
         .catch((error) => {
           if (error.response) {
@@ -132,8 +119,39 @@ const DamnrankBoard = () => {
         });
   }
 
-  function onClickItem() {
-    document.location.href = `/damnrank/${id}/detail`;
+  const handleShow = (userid) =>{ 
+    console.log("IDID: ", userid)
+    const selectedData = inputData.find((item) => item.id === userid);
+    console.log("SELeCE: ", selectedData)
+    setSelectedItem(selectedData);
+    axios
+        .get(`http://localhost:3000/damnrank/${userid}/detail`, {
+          headers: {
+            Authorization: sessionToken
+          }
+        })
+        .then((response) => {
+            console.log(response.data);
+            console.log("디테일");
+        })
+        .catch((error)=>{
+          if (error.response) {
+            console.log("1", error.response.data);
+            console.log("2", error.response.status);
+            console.log("3", error.response.headers);
+          } else if (error.request) {
+            console.log("4", error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+          console.log("5", error.config);
+        })
+        setShow(true)
+  };     //모달창 켜기
+
+  function replaceWorkJob(workJob) {
+    const replaceWorkJob = workJob.replaceAll("|", ", ");
+    return replaceWorkJob;
   }
 
     
@@ -141,16 +159,18 @@ const DamnrankBoard = () => {
   return (
     <div>
         <div className="custom-modal-content-rank11">
-          <img src={rank} width="35" alt="rank" style={{marginTop: '-10px'}}/>
+          <img src={rank} width="35" alt="rank" style={{marginTop: '-10px'}} />
           <label className="label-margin" style={{zIndex: 1}}><b>인재 랭킹</b></label>
         </div>
 
         {inputData.map(rowData => (
-          <div key={rowData.userId} className="default-filter-rank11">
+          <div key={rowData.userid}
+             onClick={() => handleShow(rowData.id)}
+             className="default-filter-rank11">
             <div>
                 <span className="label-style111" style={{marginLeft: "30px"}}>
                   <label className="label-style111" style={{zIndex: 1}}><b>경력</b></label>
-                  <b>{rowData.career}</b>             
+                  <b>{rowData.career}개월</b>             
                 </span>
                 <span className="badge-style" style={{ backgroundColor: getBadgeBackgroundColor(rowData.badge) }}>
                   {rowData.badge}
@@ -173,7 +193,7 @@ const DamnrankBoard = () => {
                       <span>
                         <b>{rowData.title}</b>
                         <span className="workjob-style">
-                          {rowData.workJob}
+                          {replaceWorkJob(rowData.workJob)}
                         </span>
                       </span>
                       <span className="address-style">
@@ -183,11 +203,76 @@ const DamnrankBoard = () => {
                 
               </span>
               
+              <Modal dialogClassName="modal-whole-rank" show={show} onHide={handleClose}>
+              {selectedItem ? (
+                                <div>
+                                  <Modal.Header>
+                                      {rowData.id}
+                                  </Modal.Header>
+                                    <Modal.Body>
+                                        <div className="scrollable-container">
+                                        {inputData
+                                          .filter((item) => (item.id) === (selectedItem.id))
+                                          .map(rowData => (
+                                            <div key={rowData.userid}>
+                                                <div>
+                                                  <span className="label-style111" style={{marginLeft: "30px"}}>
+                                                    <label className="label-style111" style={{zIndex: 1}}><b>경력</b></label>
+                                                    <b>{rowData.career}개월</b>             
+                                                  </span>
+                                                  <span className="badge-style" style={{ backgroundColor: getBadgeBackgroundColor(rowData.badge) }}>
+                                                    {rowData.badge}
+                                                  </span>
+                                              </div>
+
+                                              <div>
+                                                <span>
+                                                    <img src={getGenderImage(rowData.gender)} className="gender-image" id="성별" width="70" alt="gender"/>
+                                                    
+                                                      <span className="name-style">
+                                                        <b>{rowData.name}</b>
+                                                        
+                                                        <span className="gender-age">
+                                                            {rowData.gender} {"/ "+ rowData.age}
+                                                          </span>
+                                                      </span>
+
+                                                      <span className="title-style">
+                                                        <span>
+                                                          <b>{rowData.title}</b>
+                                                          <span className="workjob-style">
+                                                            {replaceWorkJob(rowData.workJob)}
+                                                          </span>
+                                                        </span>
+                                                        <span className="address-style">
+                                                          <b>{rowData.address}</b>
+                                                        </span>
+                                                      </span>
+                                                  </span>
+                                            </div>
+                                          </div>
+                                        ))}
+                                        </div>
+                                    </Modal.Body>
+
+                                  </div>
+                                ) : (
+                                  <div>Loading...</div> // You can show a loading message here
+                                )}
+                                <Modal.Footer>
+                                    <Button className="footer-style" varient="primary">
+                                        채팅하기
+                                    </Button>
+                                    <Button className="footer-style" varient="primary">
+                                        공고 전달하기
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
             </div>
             
-            
-
           </div>
+
+          
         ))}
     </div>
   );
