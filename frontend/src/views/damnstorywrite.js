@@ -55,13 +55,16 @@ const DamnStoryWrite = () => {
         }
         else {
             try {
-                const cookies = new Cookies();
-                const token = cookies.get('token'); // Get token from cookies
+                
+                // const cookies = new Cookies();
+                // const token = cookies.get('token'); // Get token from cookies
+
+                const sessionToken = sessionStorage.getItem('token');
+                console.log("SSSSS: " + sessionToken);
 
                 console.log("click regist");
                 console.log("title: ", title);
                 console.log("content: ", content);
-                console.log("token: ", token);
                 
     
                 const response = await axios.post(
@@ -73,7 +76,7 @@ const DamnStoryWrite = () => {
                     },
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`,
+                            Authorization: `Bearer ${sessionToken}`,
                         },
                     }
                 );

@@ -76,11 +76,29 @@
 }
 
 .damnlistcalander {
-    margin-left: 150px;
+    margin-left: -50px;
+    margin-bottom: 20px;
+}
+
+.damnlistworktime1 {
+    margin-left: 130px;
     margin-bottom: 20px;
 }
 
 .count-input1 {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 150px;
+    height: 40px;
+    margin-bottom: 20px;
+    margin-left: 150px;
+    margin-right: 10px;
+}
+
+.count-input {
     font-family: 'GmarketSans', sans-bold;
     font-size: 18px;
     padding: 20px;
@@ -134,3 +152,23 @@
 .damnlist-age-controller {
     margin-left: 100px;
 }
+
+
+.start-end-time {
+    display: flex;
+    align-items: center; /* Vertically center items */
+}
+
+.starttime,
+.endtime {
+    margin-right: -40px; /* Add some spacing between the inputs */
+    margin-bottom: 30px;
+}
+
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

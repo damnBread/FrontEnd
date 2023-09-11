@@ -3,17 +3,26 @@ import { Link } from "react-router-dom";
 import { Cookies } from 'react-cookie';
 import axios from "axios";
 import Header from "../components/Headers/Header";
-import Button from "@mui/material/Button";
-import { styled } from '@mui/system';
 import "../assets/css/damnstorywrite.css";
 import "../assets/css/damnlistwrite.css";
 import Footer from "../components/Footers/Footer";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'react-time-picker';
+import Modal from "react-modal";
+import Button from "@mui/material/Button";
+import styled from 'styled-components';
 
+const StyledSelect = styled.select`
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 10px;
+`;
 
-
+const initialGenderLimit = true; // true for 남, false for 여
+const initialAgeLimit = { min: null, max: null }; // Age range
+const initialCareerLimit = -1;
 
 const Damnlistwrite = () => {
 
@@ -33,6 +42,12 @@ const Damnlistwrite = () => {
     const [count, setCount] = useState(""); //모집명수
     const [isChecked, setIsChecked] = useState(false); 
     const [isCancelled, setIsCancelled] = useState(false);
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const [genderLimit, setGenderLimit] = useState(initialGenderLimit);
+    const [ageLimit, setAgeLimit] = useState(initialAgeLimit);
+    const [careerLimit, setCareerLimit] = useState(initialCareerLimit);
 
 
     const handleTitleChange = (event) => {
@@ -70,20 +85,50 @@ const Damnlistwrite = () => {
         console.log(`추가된 업직종: ${title}`);
     };
 
-    const handleCountChange = (event) => {
-        setCount(event.target.value);
+    const handleDeadlineChange = (event) => {
+        setDeadline(event.target.value);
     };
+
+    const handleCountChangeMoney = (event) => {
+        setHourPay(event.target.value);
+    };
+
+    const handleworkPeriod = (event) => {
+        setWorkPeriod(event.target.value);
+    }
 
     const handleCheckboxChange = (event) => {
         setIsChecked(event.target.checked);
     };
 
-    const handleStartDateChange = (date) => {
-        setWorkStart(date);
+    const handleStartDateChange = (event) => {
+        setWorkStart(event.target.value);
+        if (event.target.value > workFinish) {
+            setWorkFinish(event.target.value);
+        }
       };
     
-      const handleEndDateChange = (date) => {
-        setWorkFinish(date);
+    const handleEndDateChange = (event) => {
+        if (event.target.value >= workStart) {
+            setWorkFinish(event.target.value);
+        }
+      };
+
+
+      const handleModalOpen = () => { //경력, 나이, 성별 모달창, 왜 안열리냐
+        console.log('Modal open button clicked');
+        setModalOpen(true);
+      };
+
+      const handleModalClose = () => {
+        setModalOpen(false);
+      };
+    
+      const handleSelection = (gender, age, career) => {
+        setGenderLimit(gender);
+        setAgeLimit(age);
+        setCareerLimit(career);
+        handleModalClose();
       };
 
 
@@ -98,38 +143,62 @@ const Damnlistwrite = () => {
         else if(!content) {
             alert('내용을 입력해주세요');
         }
+
         else {
             try {
-                const cookies = new Cookies();
-                const token = cookies.get('token');
-                
-                if (workStart && workFinish) {
-                    const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초
-                    const startDate = new Date(workStart);
-                    const endDate = new Date(workFinish);
-                    const daysDiff = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
-                    setWorkPeriod(daysDiff);
-                }
+                // const cookies = new Cookies();
+                // const token = cookies.get('token');
 
+                const sessionToken = sessionStorage.getItem('token');
+                console.log("SSSSS: " + sessionToken);
+
+
+                //이런식으로 post 해야함
+                // const newJobData = {
+                //     branchName: branchName,
+                //     location: location,
+                //     hourPay: parseInt(hourPay), // Convert to integer
+                //     payMethod: payMethod, // Should be a Boolean (true/false)
+                //     job: [job], // Convert to an array with a single element
+                //     workStart: new Date(workStart), // 시작, 끝일 같음 / 하루만 일하기 때문
+                //     workFinish: new Date(workFinish), // 
+                //     workPeriod: parseInt(workPeriod), // 
+                //     title: title,
+                //     content: content,
+                //     deadline: new Date(deadline), // Convert to a Date object
+                //     genderLimit: genderLimit, // Should be a Boolean (true/false)
+                //     ageLimit: {
+                //       max: ageLimitMax, // Add age limit max
+                //       min: ageLimitMin, // Add age limit min
+                //     },
+                //     careerLimit: parseInt(careerLimit), // Convert to integer
+                //   };
+                
                 const newJobData = {
-                    branchName: branchName, // Get the value from state
-                    location: location, // Get the value from state
-                    // Add other fields as needed
                     title: title,
                     content: content,
-                    publisher: "gabinTest4", // Replace with actual publisher ID
-                    hourPay: hourPay,
-                    payMethod: payMethod,
-                    workPeriod: workPeriod,
-                    deadline: deadline,
-                    count: count,
+                    job: [job], //배열에 넣어서 보낼것
+                    location: location, //값 넣기
+                    hourPay: parseInt(hourPay),
+                    payMethod: payMethod, //true, false
+                    deadline: new Date(deadline), //값 넣기
+                    workPeriod: workPeriod = 1,
+                    workStart: workStart(Date), //시작, 끝시간을 Date로 보내야함, 바꿔야함
+                    workFinish: workFinish(Date),
+                    genderLimit: genderLimit,
+                    ageLimit: ageLimit  ,
+                    careerLimit: parseInt(careerLimit),
                 };
+
+                //추가해야할것
+                //모집 마감일,
+                //성별, 연령, 경력 형식 바꾸기
 
 
                 console.log("click regist");
                 console.log("title: ", title);
                 console.log("content: ", content);
-                console.log("token: ", token);
+                console.log("token: ", sessionToken);
                 
     
                 const response = await axios.post(
@@ -138,7 +207,7 @@ const Damnlistwrite = () => {
 
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`,
+                            Authorization: `Bearer ${sessionToken}`,
                         },
                     }
                 );
@@ -199,7 +268,7 @@ const Damnlistwrite = () => {
                     <input
                         type="text"
                         className="title-input"
-                        placeholder="업직종을 선택해주세요."
+                        placeholder="업직종을 입력해주세요."
                         value={job}
                         onChange={handleJobChange}
                     />
@@ -222,39 +291,208 @@ const Damnlistwrite = () => {
                 </div>
                 <div className="gray-line1"></div>
 
-                <div className="damnlistworkperiod">
-                    <p>근무기간</p>
-                    <div className="damnlistcalander">
 
-                    </div>
+                <div className="damnlistlocation">
+                    {/* 이 위치에 위치정보 넣기 */}
+                </div>
+                <div className="damnlistworktime">
+                    <p>시간급여</p>
+                    <input
+                            type="text"
+                            className="count-input"
+                            placeholder="숫자만 입력."
+                            value={hourPay}
+                            onChange={handleCountChangeMoney}
+                        />
+                    <p>원</p>
+                    <label>
+                        <input
+                        type="checkbox"
+                        checked={payMethod === true}
+                        onChange={() => setPayMethod(true)}
+                        />
+                        의뢰인 직접 지급
+                    </label>
+                    <label>
+                        <input
+                        type="checkbox"
+                        checked={payMethod === false}
+                        onChange={() => setPayMethod(false)}
+                        />
+                        당일 현장 지급
+                    </label>
+
                 </div>
 
                 <div className="gray-line1"></div>
 
                 <div className="damnlistworktime">
-                    <p>모집인원</p>
-                    <input
-                            type="text"
-                            className="count-input1"
-                            placeholder="숫자만 입력."
-                            value={count}
-                            onChange={handleCountChange}
-                        />
-                    <p>명</p>
-                    <label>
+                    <p>모집마감일</p>
+                    <div className="damnlistworktime1">
                         <input
-                            type="checkbox"
-                            checked={isChecked}
-                            onChange={handleCheckboxChange}
-                        />
-                        친구와 함께 근무 가능
-                    </label>
+                                type="date"
+                                id="deadline"
+                                name="deadline"
+                                value={deadline}
+                                onChange={handleDeadlineChange}
+                                style={{
+                                    width: "130px",
+                                    height: "40px",
+                                    marginTop: "0px",
+                                    borderColor: "#E7E6E6",
+                                    fontSize: "15px",
+                                    borderRadius: "10px",
+                                    padding: ".5em",
+                                }}
+                            />
+                    </div>
                 </div>
+
                 <div className="gray-line1"></div>
+
+                <div className="damnstorytitle">
+                    <p>근무기간(하루)</p>
+                    <div className="damnlistcalander">
+                        <p>날짜</p>
+                        <input
+                            type="date"
+                            id="workPeriod"
+                            name="workPeriod"
+                            value={workPeriod}
+                            onChange={handleworkPeriod}
+                            style={{
+                                width: "130px",
+                                height: "40px",
+                                marginTop: "0px",
+                                borderColor: "#E7E6E6",
+                                fontSize: "15px",
+                                borderRadius: "10px",
+                                padding: ".5em",
+                            }}
+                        />
+                    </div>
+                    <div className="damnlistworkstart">
+                        <div className="start-end-time">
+                            <div className="starttime">
+                                <p>시작시간</p>
+                                <input
+                                    type="time"
+                                    value={workStart}
+                                    onChange={handleStartDateChange}
+                                    style={{
+                                        width: "130px",
+                                        height: "40px",
+                                        marginTop: "0px",
+                                        borderColor: "#E7E6E6",
+                                        fontSize: "15px",
+                                        borderRadius: "10px",
+                                        padding: ".5em",
+                                    }}
+                                />
+                            </div>
+                            <div className="endtime">
+                                <p>끝시간</p>
+                                <input
+                                    type="time"
+                                    value={workFinish}
+                                    onChange={handleEndDateChange}
+                                    style={{
+                                        width: "130px",
+                                        height: "40px",
+                                        marginTop: "0px",
+                                        borderColor: "#E7E6E6",
+                                        fontSize: "15px",
+                                        borderRadius: "10px",
+                                        padding: ".5em",
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="gray-line1"></div>
+
                 <div className="damnlistage">
                     <p>성별, 연령, 학력</p>
-                    <p className="damnlist-age-controller">성별무관, 연령무관, 학력무관</p>
+                    <p className="damnlist-age-controller">
+                        {genderLimit ? '남' : '여'},{' '}
+                        {ageLimit.min !== null && ageLimit.max !== null
+                        ? `min: ${ageLimit.min}, max: ${ageLimit.max}`
+                        : '나이무관'},{' '}
+                        {careerLimit === -1
+                        ? '경력무관'
+                        : careerLimit === 0
+                        ? '신입'
+                        : careerLimit === 1
+                        ? '경력우대'
+                        : ''}
+                    </p>
+                    <Button
+                        variant="outlined"
+                        sx={{
+                            borderColor: "brown",
+                            color: "brown",
+                            '&:hover': {
+                                backgroundColor: "darkbrown",
+                            },
+                            marginLeft:"10px",
+                            marginBottom:"20px"
+                        }}
+                        onClick={handleModalOpen}
+                    >
+                        변경하기
+                    </Button>
                 </div>
+                <Modal
+                isOpen={modalOpen}
+                onRequestClose={() => setModalOpen(false)}
+                contentLabel="Modal"
+                style={{
+                    content: {
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        transform: 'translate(-50%, -50%)',
+                        width: '50%',
+                        maxHeight: '80vh',
+                    },
+                    overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    },
+                }}
+                >
+                    <h6>성별,연령,학력</h6>
+                    <StyledSelect onChange={(e) => setGenderLimit(e.target.value)}>
+                        <option value="성별무관">성별무관</option>
+                        <option value="남성우대">남성우대</option>
+                        <option value="여성우대">여성우대</option>
+                    </StyledSelect>
+                    <StyledSelect onChange={(e) => setAgeLimit(e.target.value)}>
+                        <option value="연령무관">연령무관</option>
+                        <option value="20대">20대</option>
+                        <option value="30대">30대</option>
+                    </StyledSelect>
+                    <StyledSelect onChange={(e) => setCareerLimit(e.target.value)}>
+                        <option value="경력무관">경력무관</option>
+                        <option value="신입">신입</option>
+                        <option value="경력우대">경력우대</option>
+
+                    </StyledSelect>
+                    <Button
+                    variant="outlined"
+                    sx={{
+                        borderColor: "brown",
+                        color: "brown",
+                        '&:hover': {
+                            backgroundColor: "darkbrown",
+                        },
+                        marginLeft:"10px",
+                        marginBottom:"20px"
+                    }} onClick={handleModalClose}>확인</Button>
+                </Modal>
+                
 
                 <div className="gray-line1"></div>
 
