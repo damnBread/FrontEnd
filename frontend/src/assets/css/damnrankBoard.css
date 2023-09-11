@@ -37,11 +37,11 @@
 .label-style111 {
   margin-right: 10px;
   position: relative;
-  color: rgba(192, 9, 9, 0.916);
+  color: rgba(143, 5, 5, 0.916);
 }
 
 .badge-style {
-  margin-left: 70px;
+  margin-left: 58px;
   padding-left: 30px;
   padding-right: 30px;
 }
@@ -84,12 +84,21 @@
 }
 
 .modal-whole-rank {
+  background-color: #ad1111;
   display: flex;
-  width: 35%; /* Adjust the width as per your requirement */
-  max-width: 1200px; /* Optional: Add a max-width to limit the modal's width */
+  width: 100%; /* Adjust the width as per your requirement */
+  max-width: 700px; /* Optional: Add a max-width to limit the modal's width */
   height: 90%;
+  max-height: 1000px;
+  border-radius: 20px;
 }
 
 .footer-style {
   height: 90%;
+}
+
+.selectedItemAddress-style {
+  margin-top: 15px;
+  margin-left: 50px;
+  color: #848484;
 }

@@ -56,6 +56,17 @@ const DamnrankBoard = () => {
       }
     }
 
+    function getGender(gender) {
+      switch(gender) {
+        case false:
+          return "여";
+        case true:
+          return "남";
+        default:
+          
+      }
+    }
+
     const sessionToken = sessionStorage.getItem('token');
 
     useEffect(() => {
@@ -89,7 +100,7 @@ const DamnrankBoard = () => {
             console.log(res.data);
 
             const _inputData = res.data.map((rowData) => ({
-              userid: rowData.userid,
+              userid: rowData.userId,
               id: rowData.id,
               name: rowData.name,
               score: rowData.score,
@@ -119,42 +130,41 @@ const DamnrankBoard = () => {
         });
   }
 
-  const handleShow = (userid) =>{ 
-    console.log("IDID: ", userid)
-    const selectedData = inputData.find((item) => item.id === userid);
-    console.log("SELeCE: ", selectedData)
-    setSelectedItem(selectedData);
-    axios
-        .get(`http://localhost:3000/damnrank/${userid}/detail`, {
-          headers: {
-            Authorization: sessionToken
-          }
-        })
-        .then((response) => {
-            console.log(response.data);
-            console.log("디테일");
-        })
-        .catch((error)=>{
-          if (error.response) {
-            console.log("1", error.response.data);
-            console.log("2", error.response.status);
-            console.log("3", error.response.headers);
-          } else if (error.request) {
-            console.log("4", error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-          console.log("5", error.config);
-        })
+  const handleShow = (userid) =>{
+      if (!show) {
+        const selectedData = inputData.find((item) => item.id === userid);
+        console.log("SELeCE: ", selectedData)
+        setSelectedItem(selectedData);
         setShow(true)
+        axios
+            .get(`http://localhost:3000/damnrank/${userid}/detail`, {
+              headers: {
+                Authorization: "Bearer " + sessionToken
+              }
+            })
+            .then((response) => {
+                // console.log(response.data);
+                console.log("디테일");
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+        }
   };     //모달창 켜기
 
   function replaceWorkJob(workJob) {
     const replaceWorkJob = workJob.replaceAll("|", ", ");
     return replaceWorkJob;
   }
-
-    
 
   return (
     <div>
@@ -169,8 +179,7 @@ const DamnrankBoard = () => {
              className="default-filter-rank11">
             <div>
                 <span className="label-style111" style={{marginLeft: "30px"}}>
-                  <label className="label-style111" style={{zIndex: 1}}><b>경력</b></label>
-                  <b>{rowData.career}개월</b>             
+                  <label className="label-style111" style={{zIndex: 1, marginLeft: "15px"}}><b>땜빵 경력 {rowData.career}회</b></label>         
                 </span>
                 <span className="badge-style" style={{ backgroundColor: getBadgeBackgroundColor(rowData.badge) }}>
                   {rowData.badge}
@@ -185,7 +194,7 @@ const DamnrankBoard = () => {
                       <b>{rowData.name}</b>
                       
                       <span className="gender-age">
-                          {rowData.gender} {"/ "+ rowData.age}
+                          {getGender(rowData.gender)} {"/ "+ rowData.age}
                         </span>
                     </span>
 
@@ -204,51 +213,59 @@ const DamnrankBoard = () => {
               </span>
               
               <Modal dialogClassName="modal-whole-rank" show={show} onHide={handleClose}>
-              {selectedItem ? (
+                {selectedItem ? (
                                 <div>
-                                  <Modal.Header>
-                                      {rowData.id}
-                                  </Modal.Header>
                                     <Modal.Body>
                                         <div className="scrollable-container">
                                         {inputData
                                           .filter((item) => (item.id) === (selectedItem.id))
                                           .map(rowData => (
-                                            <div key={rowData.userid}>
+                                            <div key={selectedItem.id}>
                                                 <div>
                                                   <span className="label-style111" style={{marginLeft: "30px"}}>
-                                                    <label className="label-style111" style={{zIndex: 1}}><b>경력</b></label>
-                                                    <b>{rowData.career}개월</b>             
+                                                    <label className="label-style111" style={{zIndex: 1, fontSize: "22px", marginLeft: "10px", marginTop: "10px", marginBottom: "20px"}}>
+                                                    <b>땜빵 경력 {selectedItem.career}회</b>  </label>           
                                                   </span>
-                                                  <span className="badge-style" style={{ backgroundColor: getBadgeBackgroundColor(rowData.badge) }}>
-                                                    {rowData.badge}
-                                                  </span>
+                                                  {/* <span className="badge-style" style={{ backgroundColor: getBadgeBackgroundColor(selectedItem.badge) }}>
+                                                    {selectedItem.badge}
+                                                  </span> */}
                                               </div>
 
                                               <div>
                                                 <span>
-                                                    <img src={getGenderImage(rowData.gender)} className="gender-image" id="성별" width="70" alt="gender"/>
+                                                    <img src={getGenderImage(selectedItem.gender)} className="gender-image" id="성별" width="120" alt="gender"/>
                                                     
-                                                      <span className="name-style">
-                                                        <b>{rowData.name}</b>
+                                                      <span className="name-style" style={{fontSize: "25px", marginLeft: "50px"}}>
+                                                        <b>{selectedItem.name}</b>
+
+                                                        <span className="title-style" style={{fontSize: "18px", marginTop: "15px", marginLeft: "2px"}}>
+                                                          {selectedItem.title}
+                                                        </span>
                                                         
-                                                        <span className="gender-age">
-                                                            {rowData.gender} {"/ "+ rowData.age}
-                                                          </span>
                                                       </span>
 
-                                                      <span className="title-style">
                                                         <span>
-                                                          <b>{rowData.title}</b>
-                                                          <span className="workjob-style">
-                                                            {replaceWorkJob(rowData.workJob)}
+                                                          <span className="gender-age" style={{fontSize: "17px", marginLeft: "65px"}}>
+                                                            {getGender(selectedItem.gender)} {"/ "+ rowData.age + "세"}
                                                           </span>
+                                                          
+                                                  
                                                         </span>
-                                                        <span className="address-style">
-                                                          <b>{rowData.address}</b>
-                                                        </span>
+                                                          <div style={{marginTop: "30px", marginLeft: "40px"}}>
+                                                            <label><b>거주 지역</b></label>
+                                                          </div>
+                                                          <div>
+                                                            <div className="selectedItemAddress-style">{selectedItem.address}</div>
+
+                                                          </div>
+
+                                                          <div style={{marginTop: "40px", marginLeft: "40px"}}>
+                                                            <label><b>희망 업/직종</b></label>
+                                                          </div>
+                                                          <div>
+                                                            <div className="selectedItemAddress-style">{replaceWorkJob(selectedItem.workJob)}</div>
+                                                          </div>
                                                       </span>
-                                                  </span>
                                             </div>
                                           </div>
                                         ))}
@@ -257,7 +274,7 @@ const DamnrankBoard = () => {
 
                                   </div>
                                 ) : (
-                                  <div>Loading...</div> // You can show a loading message here
+                                  <div> </div>
                                 )}
                                 <Modal.Footer>
                                     <Button className="footer-style" varient="primary">
@@ -268,7 +285,7 @@ const DamnrankBoard = () => {
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
-            </div>
+                </div>
             
           </div>
 
