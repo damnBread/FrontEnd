@@ -7,10 +7,16 @@ import man from "../assets/img/damnRank-man-icon.png";
 import woman from "../assets/img/damnRank-woman-icon.png";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Moment from 'react-moment';
+import {useInterval} from "use-interval";
 
 const DamnrankBoard = () => {
 
-  const { userid } = useParams();
+  const [nowTime,setNowTime]=useState(Date.now())
+
+    useInterval(()=>{
+        setNowTime(Date.now())
+    },1000)
 
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -105,14 +111,15 @@ const DamnrankBoard = () => {
               name: rowData.name,
               score: rowData.score,
               gender: rowData.gender,
-              age: 20,
+              age: rowData.birth,
               career: 15,
               badge: "적극 응답",
-              title: "적극 응답 @@@",
+              title: rowData.introduce,
               workJob: rowData.hopeJob,
               address: rowData.home
             })
             )
+
             setInputData(_inputData);
             
         })
@@ -130,10 +137,27 @@ const DamnrankBoard = () => {
         });
   }
 
+  const birthToAge = (myBirth) => {
+      const mybirth = myBirth.toString().substring(0, 10);
+      const mybirth_year = mybirth.substring(0, 4); //2023
+      const mybirth_month = mybirth.substring(5, 7);  //02
+      const mybirth_day = mybirth.substring(8);  //08
+      const today = new Date();
+      let formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+      let age = today.getFullYear() - mybirth_year;
+      if (today.getMonth() + 1 < 10) {
+        formattedDate = `${today.getFullYear()}-0${today.getMonth() + 1}-${today.getDate()}`;
+        age = today.getFullYear() - mybirth_year;
+      } else {
+        formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+        age = today.getFullYear() - mybirth_year;
+      }
+      return age;
+  }
+
   const handleShow = (userid) =>{
       if (!show) {
         const selectedData = inputData.find((item) => item.id === userid);
-        console.log("SELeCE: ", selectedData)
         setSelectedItem(selectedData);
         setShow(true)
         axios
@@ -144,7 +168,7 @@ const DamnrankBoard = () => {
             })
             .then((response) => {
                 // console.log(response.data);
-                console.log("디테일");
+                console.log("디테일 완료");
             })
             .catch((error)=>{
               if (error.response) {
@@ -189,12 +213,11 @@ const DamnrankBoard = () => {
             <div>
               <span>
                   <img src={getGenderImage(rowData.gender)} className="gender-image" id="성별" width="70" alt="gender"/>
-                  
                     <span className="name-style">
                       <b>{rowData.name}</b>
                       
                       <span className="gender-age">
-                          {getGender(rowData.gender)} {"/ "+ rowData.age}
+                          {getGender(rowData.gender)} {"/ "+ birthToAge(rowData.age) + "세"}
                         </span>
                     </span>
 
@@ -246,7 +269,7 @@ const DamnrankBoard = () => {
 
                                                         <span>
                                                           <span className="gender-age" style={{fontSize: "17px", marginLeft: "65px"}}>
-                                                            {getGender(selectedItem.gender)} {"/ "+ rowData.age + "세"}
+                                                            {getGender(selectedItem.gender)} {"/ "+ birthToAge(rowData.age) + "세"}
                                                           </span>
                                                           
                                                   
