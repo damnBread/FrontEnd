@@ -33,17 +33,13 @@ const Slider = styled.div`
   position: absolute;
   border: 1px solid #84848469;
   transition: transform 0.3s ease-in-out;
-  transform: ${({ isActive }) => (isActive ? 'translateX(20px)' : 'translateX(-1px)')};
+  transform: ${({ isNoShowActive }) => (isNoShowActive ? 'translateX(20px)' : 'translateX(1px)')};
 `;
 
 
 const Damnprofile = () => {
     
     const sessionToken = sessionStorage.getItem('token');
-
-    function token() {
-      console.log("SSSSS: " + sessionToken);
-    }
 
     const history = useHistory();
 
@@ -76,11 +72,42 @@ const Damnprofile = () => {
     const [showDamnApply, setShowDamnApply] = useState(false);  //내가 지원한 땜빵
     const [showDamnRequest, setShowDamnRequest] = useState(false);  //내가 의뢰한 땜빵
 
-    const [isActive, setIsActive] = useState(false);
+    const [isNoShowActive, setNoShowAIsActive] = useState(false);
+    const [isNicknameActive, setNicknameIsActive] = useState(false);
+    const [isEmailActive, setEmailIsActive] = useState(false);
+    const [isPhoneActive, setPhoneIsActive] = useState(false);
+    const [isLocationActive, setLocationIsActive] = useState(false);
+    const [isHopeJobActive, setHopeJobIsActive] = useState(false);
+    const [isHopeLocationActive, setHopeLocationIsActive] = useState(false);
 
-    const toggleButton = () => {
-      setIsActive(!isActive);
-      console.log("ACTIVE: ", isActive);
+    const [isIntroduceActive, setIntroduceIsActive] = useState(false);
+    const [isBadgeActive, setBadgeIsActive] = useState(false);
+
+    
+
+    const toggleButton = (info) => {
+      if (info === "noShow") {
+        setNoShowAIsActive(!isNoShowActive)
+      } else if (info === "nickname") {
+        setNicknameIsActive(!isNicknameActive)
+      } else if (info === "email") {
+        setEmailIsActive(!isEmailActive)
+      } else if (info === "phone") {
+        setPhoneIsActive(!isPhoneActive)
+      } else if (info === "location") {
+        setLocationIsActive(!isLocationActive)
+      } else if (info === "hopeLocation") {
+        setHopeLocationIsActive(!isHopeLocationActive)
+      } else if (info === "hopeJob") {
+        setHopeJobIsActive(!isHopeJobActive)
+      } else if (info === "introduce") {
+        setIntroduceIsActive(!isIntroduceActive)
+      } else if (info === "badge") {
+        setBadgeIsActive(!isBadgeActive)
+      } else {
+        console.log("cannot find info...")
+      }
+      console.log("ACTIVE: ", info);
     };
 
     useEffect(() => {
@@ -110,6 +137,10 @@ const Damnprofile = () => {
                 setMyHopeJob(response.data.hopeJob);
                 setMyHopeLocation(response.data.hopeLocation);
 
+                setMyIntroduce(response.data.introduce);
+                setMyBadge(response.data.badge);
+                //땜빵이력, 스크랩 아직 ... 모르겟엉
+
                 console.log("noshow: ", myNoShow);
                 console.log("id: ", myId);
                 console.log("name: ", myName);
@@ -121,6 +152,10 @@ const Damnprofile = () => {
                 console.log("location: ", myLocation);
                 console.log("job: ", myHopeJob);
                 console.log("hopeLocation: ", myHopeLocation);
+
+                console.log("introduce: ", myIntroduce);
+                console.log("badge: ", myBadge);
+
 
                 console.log("마이페이지 첫 페이지 완료");
             })
@@ -226,7 +261,7 @@ const Damnprofile = () => {
       <div className="damnprofilewhole">
         <Header />
         <div className="damnprofile">
-            <div className="whole-box" onClick={token()}>
+            <div className="whole-box">
 
                 <div>
                     <div>
@@ -264,6 +299,8 @@ const Damnprofile = () => {
                           
                               </span>
                               <span className="content-box">  
+
+                              {/* 내 정보 */}
                                 {showInfo && (
                                   <div>
                                     <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "985px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
@@ -275,9 +312,9 @@ const Damnprofile = () => {
                                       <b>{myNoShow}</b> / 5
                                       <span className="blank">* 노쇼 횟수 5회 이상시, 자동으로 탈퇴처리가 되며, 땜빵 이용이 불가능합니다.</span>
                                       <span>
-                                        <ToggleButtonWrapper onClick={toggleButton} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                        <ToggleButtonWrapper onClick={() => toggleButton("noShow")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
                                           <ToggleButton>
-                                            <Slider isActive={isActive} />
+                                            <Slider isNoShowActive={isNoShowActive} />
                                           </ToggleButton>
                                         </ToggleButtonWrapper>
                                       </span>
@@ -290,9 +327,9 @@ const Damnprofile = () => {
                                       <input type='text' name='nick' placeholder={myNickname} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                                       <span>
-                                        <ToggleButtonWrapper onClick={toggleButton} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                        <ToggleButtonWrapper onClick={() => toggleButton("nickname")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
                                           <ToggleButton>
-                                            <Slider isActive={isActive} />
+                                            <Slider isNicknameActive={isNicknameActive} />
                                           </ToggleButton>
                                         </ToggleButtonWrapper>
                                       </span>
@@ -304,9 +341,9 @@ const Damnprofile = () => {
                                         <input type='text' name='email' placeholder={myEmail} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
                                           borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                                         <span>
-                                          <ToggleButtonWrapper onClick={toggleButton} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                          <ToggleButtonWrapper onClick={() => toggleButton("email")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
                                             <ToggleButton>
-                                              <Slider isActive={isActive} />
+                                              <Slider isEmailActive={isEmailActive} />
                                             </ToggleButton>
                                           </ToggleButtonWrapper>
                                         </span>
@@ -318,9 +355,9 @@ const Damnprofile = () => {
                                       <input type='text' name='phone' placeholder={myPhoneNumber} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "-5px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                                       <span>
-                                        <ToggleButtonWrapper onClick={toggleButton} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                        <ToggleButtonWrapper onClick={() => toggleButton("phone")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
                                           <ToggleButton>
-                                            <Slider isActive={isActive} />
+                                            <Slider isPhoneActive={isPhoneActive} />
                                           </ToggleButton>
                                         </ToggleButtonWrapper>
                                       </span>
@@ -329,12 +366,12 @@ const Damnprofile = () => {
                                     {/* 거주지 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>거주지</label>  
-                                      <button type='button' className="select-button-style">선택하기</button>   
+                                      <button type='button' className="select-button-style">변경하기</button>   
                                       <label style={{marginTop: "10px", marginLeft: "40px", fontSize: "18px", color: "#888888"}}>{myLocation}</label>
                                       <span>
-                                        <ToggleButtonWrapper onClick={toggleButton} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                        <ToggleButtonWrapper onClick={() => toggleButton("location")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
                                           <ToggleButton>
-                                            <Slider isActive={isActive} />
+                                            <Slider isLocationActive={isLocationActive} />
                                           </ToggleButton>
                                         </ToggleButtonWrapper>
                                       </span>
@@ -343,11 +380,11 @@ const Damnprofile = () => {
                                     {/* 희망근무지역 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>희망근무지역</label>  
-                                      <button type='button' className="select-button-style" style={{marginLeft: "-36px"}}>선택하기</button>   
+                                      <button type='button' className="select-button-style" style={{marginLeft: "-36px"}}>변경하기</button>   
                                       <span>
-                                        <ToggleButtonWrapper onClick={toggleButton} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                        <ToggleButtonWrapper onClick={() => toggleButton("hopeLocation")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
                                           <ToggleButton>
-                                            <Slider isActive={isActive} />
+                                            <Slider isHopeLocationActive={isHopeLocationActive} />
                                           </ToggleButton>
                                         </ToggleButtonWrapper>
                                       </span>
@@ -361,11 +398,11 @@ const Damnprofile = () => {
                                     {/* 희망 업직종 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1, marginTop: "30px"}}>희망 업직종</label>  
-                                      <button type='button' className="select-button-style" style={{marginLeft: "-23px"}}>선택하기</button>   
+                                      <button type='button' className="select-button-style" style={{marginLeft: "-23px"}}>변경하기</button>   
                                       <span>
-                                        <ToggleButtonWrapper onClick={toggleButton} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                        <ToggleButtonWrapper onClick={() => toggleButton("hopeJob")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
                                           <ToggleButton>
-                                            <Slider isActive={isActive} />
+                                            <Slider isHopeJobActive={isHopeJobActive} />
                                           </ToggleButton>
                                         </ToggleButtonWrapper>
                                       </span>
@@ -383,7 +420,64 @@ const Damnprofile = () => {
 
                                   </div>
                                 )}
-                              </span> 
+
+                                {/* 내 활동 */}
+                                {showActivity && (
+                                  <div>
+                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "985px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
+                                  
+
+                                  {/* 내 소개글 */}
+                                    <div>
+                                      <label className="content-label-style-profile" style={{zIndex: 1}}>내 소개글</label>
+                                      <input type='text' name='introduce' placeholder={myIntroduce} style={{width:"600px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
+                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
+                                      <span>
+                                        <ToggleButtonWrapper onClick={() => toggleButton("introduce")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                          <ToggleButton>
+                                            <Slider isIntroduceActive={isIntroduceActive} />
+                                          </ToggleButton>
+                                        </ToggleButtonWrapper>
+                                      </span>
+                                      
+                                    </div>
+
+                                    {/* 내 뱃지 */}
+                                    <div>
+                                      <div>
+                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "70px"}}>내 뱃지</label>
+                                          <span>
+                                            <ToggleButtonWrapper onClick={() => toggleButton("badge")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
+                                              <ToggleButton>
+                                                <Slider isBadgeActive={isBadgeActive} />
+                                              </ToggleButton>
+                                            </ToggleButtonWrapper>
+                                          </span>
+                                      </div>
+                                      <button type='button' className="badge1-button-style" disabled style={{marginTop: "30px", border: "4px solid #bfd1fce2", backgroundColor: "#bfd1fce2"}}>슈퍼 칼답러</button>
+
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #f9cdccdb", backgroundColor: "#f9cdccdb"}}>슈퍼 성실러</button>
+
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #fdffa5ef", backgroundColor: "#fdffa5ef"}}>슈퍼 친절러</button>
+
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #caf5c3e2", backgroundColor: "#caf5c3e2"}}>슈퍼 일잘러</button>
+
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #e3bcfea9", backgroundColor: "#e3bcfea9"}}>슈퍼 단정러</button>
+
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #ffc67166", backgroundColor: "#ffc67166"}}>슈퍼 대처러</button>
+
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #8ae0e39d", backgroundColor: "#8ae0e39d"}}>슈퍼 꼼꼼러</button>
+
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #ffa5e49f", backgroundColor: "#ffa5e49f"}}>슈퍼 긍정러</button>
+                                      
+                                    </div>
+                                
+
+                                  </div> 
+                                )}
+
+
+                              </span>
                             </div>
                       </span>
                     </div>
