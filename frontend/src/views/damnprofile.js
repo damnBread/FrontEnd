@@ -5,36 +5,23 @@ import woman from "../assets/img/damnRank-woman-icon.png";
 import Header from "../components/Headers/Header";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
-import Button from "@mui/material/Button";
 import "../assets/css/damnprofile.css";
-import Footer from "../components/Footers/Footer";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import styled from 'styled-components';
-
-const ToggleButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-const ToggleButton = styled.div`
-  width: 45px;
-  height: 26px;
-  border: 1px solid #84848469;
-  background: #ccc;
-  border-radius: 15px;
-  position: relative;
-`;
-
-const Slider = styled.div`
-  width: 26px;
-  height: 26px;
-  background: #fff;
-  border-radius: 50%;
-  position: absolute;
-  border: 1px solid #84848469;
-  transition: transform 0.3s ease-in-out;
-  transform: ${({ isNoShowActive }) => (isNoShowActive ? 'translateX(20px)' : 'translateX(1px)')};
-`;
+import { items, items_city, items_dong } from '../components/CityItem';
+import workstaff from "../assets/img/workicon-staff.png";
+import workcoffeebeans from "../assets/img/workicon-coffeebeans.png";
+import workcustomer from "../assets/img/workicon-customer.png";
+import workdelivery from "../assets/img/workicon-delivery.png";
+import workdesign from "../assets/img/workicon-design.png";
+import workknife from "../assets/img/workicon-knife.png";
+import workeducation from "../assets/img/workicon-education.png";
+import workmedia from "../assets/img/workicon-media.png";
+import workplatter from "../assets/img/workicon-platter.png";
+import worksale from "../assets/img/workicon-sale.png";
+import workbackground from "../assets/img/workicon-background.png";
+import {View, Switch, StyleSheet} from 'react-native';
 
 
 const Damnprofile = () => {
@@ -72,7 +59,7 @@ const Damnprofile = () => {
     const [showDamnApply, setShowDamnApply] = useState(false);  //내가 지원한 땜빵
     const [showDamnRequest, setShowDamnRequest] = useState(false);  //내가 의뢰한 땜빵
 
-    const [isNoShowActive, setNoShowAIsActive] = useState(false);
+    const [isNoShowActive, setNoShowIsActive] = useState(false);
     const [isNicknameActive, setNicknameIsActive] = useState(false);
     const [isEmailActive, setEmailIsActive] = useState(false);
     const [isPhoneActive, setPhoneIsActive] = useState(false);
@@ -83,31 +70,276 @@ const Damnprofile = () => {
     const [isIntroduceActive, setIntroduceIsActive] = useState(false);
     const [isBadgeActive, setBadgeIsActive] = useState(false);
 
-    
+    const [show, setShow] = useState(false);   //모달창
 
-    const toggleButton = (info) => {
-      if (info === "noShow") {
-        setNoShowAIsActive(!isNoShowActive)
-      } else if (info === "nickname") {
-        setNicknameIsActive(!isNicknameActive)
-      } else if (info === "email") {
-        setEmailIsActive(!isEmailActive)
-      } else if (info === "phone") {
-        setPhoneIsActive(!isPhoneActive)
-      } else if (info === "location") {
-        setLocationIsActive(!isLocationActive)
-      } else if (info === "hopeLocation") {
-        setHopeLocationIsActive(!isHopeLocationActive)
-      } else if (info === "hopeJob") {
-        setHopeJobIsActive(!isHopeJobActive)
-      } else if (info === "introduce") {
-        setIntroduceIsActive(!isIntroduceActive)
-      } else if (info === "badge") {
-        setBadgeIsActive(!isBadgeActive)
-      } else {
-        console.log("cannot find info...")
+    const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
+    const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
+
+    const noShowToggleSwitch = () => setNoShowIsActive(previousState => !previousState);
+    const nicknameToggleSwitch = () => setNicknameIsActive(previousState => !previousState);
+    const emailToggleSwitch = () => setEmailIsActive(previousState => !previousState);
+    const phoneToggleSwitch = () => setPhoneIsActive(previousState => !previousState);
+    const locationToggleSwitch = () => setLocationIsActive(previousState => !previousState);
+    const hopeJobToggleSwitch = () => setHopeJobIsActive(previousState => !previousState);
+    const hopeLocationToggleSwitch = () => setHopeLocationIsActive(previousState => !previousState);
+    const introduceToggleSwitch = () => setIntroduceIsActive(previousState => !previousState);
+    const badgeToggleSwitch = () => setBadgeIsActive(previousState => !previousState);
+
+
+    const handleClose = () => {
+        setShow(false);   //모달창 닫기
+    }
+    const handleCloseWorkArea = () => {
+        setShowWorkArea(false);   //모달창 닫기
+    }
+    const handleCloseWorkJob = () => {
+        setShowWorkJob(false);   //모달창 닫기
+    }
+
+    const handleShow = () =>{ setShow(true)};     //모달창 켜기
+    const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
+    const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
+
+    const [showCityItems, setShowCityItems] = useState(true);  //시/군/구
+    const [showDongItems, setShowDongItems] = useState(true);  //동/읍/면
+
+    //거주지
+    const [SelectAddress, setSelectAddress] = useState("");  //시/도 선택
+    const [citySelectAddress, setCitySelectAddress] = useState("");  //시/군/구 선택
+    const [dongSelectAddress, setDongSelectAddress] = useState(""); //동/읍/면 선택
+
+
+    //희망근무지역
+    const [SelectWorkArea, setSelectWorkArea] = useState("");  //시/도 선택
+    const [citySelectWorkArea, setCitySelectWorkArea] = useState("");  //시/군/구 선택
+    const [dongSelectWorkArea, setDongSelectWorkArea] = useState(""); //동/읍/면 선택
+    const [addedWorkAreas, setAddedWorkAreas] = useState([]);
+
+
+    //희망업직종
+    const [SelectWorkJob, setSelectWorkJob] = useState([]);  //희망업직종 선택 
+    const [activeWorkJob, setActiveWorkJob] = useState('');  //색 변경
+
+    const shouldApplyActiveStyle = (clickedElement) => {
+      return clickedElement === true;
+    };
+
+
+    //거주지
+    const handleClick = (itemType) => {
+      setCitySelectAddress(null);
+      setDongSelectAddress(null);
+      setShowCityItems(true);
+      setShowDongItems(true);
+      setSelectAddress(itemType);
+  };
+
+  const CityhandleClick = (cityItem) => {
+      setCitySelectAddress(cityItem);
+      setShowDongItems(true);           
+  }
+
+  const DonghandleClick = (dongItem) => {
+      setDongSelectAddress(dongItem);          
+  }
+
+  //희망 근무 지역
+  const handleClickWorkArea = (itemType) => {
+    setSelectWorkArea(itemType);
+    setCitySelectWorkArea(null);
+    setDongSelectWorkArea(null);
+    setShowCityItems(true);
+    setShowDongItems(true);
+};
+
+const CityhandleClickWorkArea = (cityItem) => {
+    setCitySelectWorkArea(cityItem);
+    setShowDongItems(true);       
+}
+
+const DonghandleClickWorkArea = (dongItem) => {
+    setDongSelectWorkArea(dongItem);         
+}
+
+  const handleSelectAddress = (e) => {   //거주지 적용 버튼 클릭시
+    if(SelectAddress && citySelectAddress && dongSelectAddress) {
+      setMyLocation(SelectAddress + " " + citySelectAddress + " " + dongSelectAddress);
+      
+      //거주지 patch
+      axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              home: myLocation,
+              headers: {
+                Authorization: "Bearer " + sessionToken
+              }
+            })
+            .then((response) => {
+                console.log(response);
+                console.log("거주지 patch 완료")
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+
+          } else {
+            Swal.fire({
+              icon: "warning",
+              title: "경고",
+              text: "거주지가 모두 선택되지 않았습니다. 다시 선택해주세요.",
+              showCancelButton: false,
+              confirmButtonText: "확인",
+              width: 800,
+              height: 100,
+            }).then((res) => {});
+          }
+          setShow(false);
       }
-      console.log("ACTIVE: ", info);
+
+        const handleAddWorkArea = () => {   //희망근무지역 추가 버튼 클릭시
+          if (SelectWorkArea && citySelectWorkArea && dongSelectWorkArea) {
+            const addWorkArea = SelectWorkArea + " " + citySelectWorkArea + " " + dongSelectWorkArea;
+            if (addedWorkAreas.includes(addWorkArea)) {
+              Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "이미 추가된 지역입니다.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+              }).then((res) => {});
+            } else {
+              setAddedWorkAreas(prevWorkAreas => [...prevWorkAreas, addWorkArea]);
+            }
+            console.log(addWorkArea);
+          } else {
+            Swal.fire({
+              icon: "warning",
+              title: "경고",
+              text: "희망근무지역이 모두 선택되지 않았습니다. 다시 선택해주세요.",
+              showCancelButton: false,
+              confirmButtonText: "확인",
+              width: 800,
+              height: 100,
+            }).then((res) => {});
+          }
+        }
+
+        const removeWorkArea = (workAreaToRemove) => {    //희망근무지역 하나씩 삭제
+          setAddedWorkAreas(prevWorkAreas =>
+            prevWorkAreas.filter(workArea => workArea !== workAreaToRemove)
+          );
+        }
+
+        const handleSelectWorkArea = (e) => {   //희망근무지역 완료 버튼 클릭시
+          if(SelectWorkArea && citySelectWorkArea && dongSelectWorkArea) {
+            setMyHopeLocation(addedWorkAreas.join("|"));
+            setShowWorkArea(false);
+            setAddedWorkAreas([]);
+
+
+            //희망근무지역 patch
+            axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              hopeLocation: myHopeLocation,
+              headers: {
+                Authorization: "Bearer " + sessionToken
+              }
+            })
+            .then((response) => {
+                console.log(response);
+                console.log("희망근무지역 patch 완료")
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+          } 
+          else {
+            Swal.fire({
+              icon: "warning",
+              title: "경고",
+              text: "희망근무지역이 없습니다. 다시 선택해주세요.",
+              showCancelButton: false,
+              confirmButtonText: "확인",
+              width: 800,
+              height: 100,
+            }).then((res) => {});
+          }
+        }
+
+        //희망 업직종
+    const handleWorkJobClick = (job) => {
+      if (SelectWorkJob.includes(job)) {
+        setSelectWorkJob((prevSelected) =>
+          prevSelected.filter((selectedJob) => selectedJob !== job)
+        );
+      } else if (SelectWorkJob.length < 3) {
+        if (!SelectWorkJob.includes(job)) {
+          setActiveWorkJob(job);
+          setSelectWorkJob((prevSelected) => [...prevSelected, job]);
+        }
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "경고",
+          text: "최대 3개까지 가능합니다.",
+          showCancelButton: false,
+          confirmButtonText: "확인",
+          width: 800,
+          height: 100,
+        }).then((res) => {});
+      }
+    };
+
+    const handleSelectWorkJob = () => {
+      const workJobsString = SelectWorkJob.join("|");
+      setMyHopeJob(workJobsString);
+
+      //희망업직종 patch
+      axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              hopeJob: myHopeJob,
+              headers: {
+                Authorization: "Bearer " + sessionToken
+              }
+            })
+            .then((response) => {
+                console.log(response);
+                console.log("희망업직종 patch 완료")
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+
+      setShowWorkJob(false);
+      setSelectWorkJob([]); // Reset selected work jobs
     };
 
     useEffect(() => {
@@ -160,17 +392,6 @@ const Damnprofile = () => {
                 console.log("마이페이지 첫 페이지 완료");
             })
             .catch((error)=>{
-              if (error.response) {
-                console.log("1", error.response.data);
-                console.log("2", error.response.status);
-                console.log("3", error.response.headers);
-              } else if (error.request) {
-                console.log("4", error.request);
-              } else {
-                console.log('Error', error.message);
-              }
-              console.log("5", error.config);
-
               if (error.response.status === 400) {
                 Swal.fire({
                   icon: "warning",
@@ -193,19 +414,7 @@ const Damnprofile = () => {
               });
               }
             })
-        }
-
-        function getBadgeBackgroundColor(badgeValue) {
-          switch (badgeValue) {
-            case '적극 응답':
-              return '#FFD0CE';
-            case '따뜻한 인재':
-              return '#FAFC80';
-            default:
-              return '#B5CBFF'; // Set a default background color if needed
-          }
-        }
-          
+          }          
 
         function getGenderImage(genderValue) {
           switch (genderValue) {
@@ -228,35 +437,29 @@ const Damnprofile = () => {
           setShowActivity(false); 
           setShowDamnApply(false);   
           setShowDamnRequest(false);  
-          console.log("내 정보");
         }
 
         const handleClickMyActivity = () => {
           setShowInfo(false); 
           setShowActivity(true); 
           setShowDamnApply(false);   
-          setShowDamnRequest(false);       
-          console.log("내 활동");
+          setShowDamnRequest(false);    
         }
 
         const handleClickDamnApply = () => {
           setShowInfo(false); 
           setShowActivity(false); 
           setShowDamnApply(true);   
-          setShowDamnRequest(false);   
-          console.log("내가 지원한");
+          setShowDamnRequest(false);
         }
 
         const handleClickDamnRequest = () => {
           setShowInfo(false); 
           setShowActivity(false); 
           setShowDamnApply(false);   
-          setShowDamnRequest(true);   
-          console.log("내가 의뢰한");  
+          setShowDamnRequest(true); 
         }
-  
-      
-
+        
     return (
       <div className="damnprofilewhole">
         <Header />
@@ -275,11 +478,8 @@ const Damnprofile = () => {
                                   <label className="label-style-profile" style={{zIndex: 1, marginLeft: "1px", marginTop: "5px"}}>땜빵 경력</label>     
                                   <label className="label-style-profile1" style={{zIndex: 1, marginLeft: "5px", marginTop: "5px"}}><b>{myCareer} </b></label>회    
                                 </span>
-
-
                             </span>
 
-                            
 
                             {/* 버튼 */}
                             <div className="button-and-box-style">
@@ -310,15 +510,17 @@ const Damnprofile = () => {
                                     <div>
                                       <label className="content-label-style-profile" style={{zIndex: 1}}>노쇼 횟수</label>     
                                       <b>{myNoShow}</b> / 5
-                                      <span className="blank">* 노쇼 횟수 5회 이상시, 자동으로 탈퇴처리가 되며, 땜빵 이용이 불가능합니다.</span>
+                                      <span className="blank" style={{color: "#848484"}}>* 노쇼 횟수 5회 이상시, 자동으로 탈퇴처리가 되며, 땜빵 이용이 불가능합니다.</span>
                                       <span>
-                                        <ToggleButtonWrapper onClick={() => toggleButton("noShow")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                          <ToggleButton>
-                                            <Slider isNoShowActive={isNoShowActive} />
-                                          </ToggleButton>
-                                        </ToggleButtonWrapper>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isNoShowActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={noShowToggleSwitch}
+                                          value={isNoShowActive}
+                                          style={{marginTop: "-20px", marginLeft: "1000px"}}
+                                        />
                                       </span>
-                                      
                                     </div>
 
                                   {/* 닉네임 */}
@@ -327,11 +529,14 @@ const Damnprofile = () => {
                                       <input type='text' name='nick' placeholder={myNickname} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                                       <span>
-                                        <ToggleButtonWrapper onClick={() => toggleButton("nickname")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                          <ToggleButton>
-                                            <Slider isNicknameActive={isNicknameActive} />
-                                          </ToggleButton>
-                                        </ToggleButtonWrapper>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isNicknameActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={nicknameToggleSwitch}
+                                          value={isNicknameActive}
+                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                        />
                                       </span>
                                     </div>
 
@@ -341,12 +546,15 @@ const Damnprofile = () => {
                                         <input type='text' name='email' placeholder={myEmail} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
                                           borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                                         <span>
-                                          <ToggleButtonWrapper onClick={() => toggleButton("email")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                            <ToggleButton>
-                                              <Slider isEmailActive={isEmailActive} />
-                                            </ToggleButton>
-                                          </ToggleButtonWrapper>
-                                        </span>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isEmailActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={emailToggleSwitch}
+                                          value={isEmailActive}
+                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                        />
+                                      </span>
                                       </div>
 
                                     {/* 전화번호 */}
@@ -355,61 +563,379 @@ const Damnprofile = () => {
                                       <input type='text' name='phone' placeholder={myPhoneNumber} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "-5px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
                                       <span>
-                                        <ToggleButtonWrapper onClick={() => toggleButton("phone")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                          <ToggleButton>
-                                            <Slider isPhoneActive={isPhoneActive} />
-                                          </ToggleButton>
-                                        </ToggleButtonWrapper>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isPhoneActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={phoneToggleSwitch}
+                                          value={isPhoneActive}
+                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                        />
                                       </span>
                                     </div>
 
                                     {/* 거주지 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>거주지</label>  
-                                      <button type='button' className="select-button-style">변경하기</button>   
-                                      <label style={{marginTop: "10px", marginLeft: "40px", fontSize: "18px", color: "#888888"}}>{myLocation}</label>
+                                      <button type='button' className="select-button-style" onClick={handleShow}>변경하기</button>   
+                                      <label style={{marginTop: "10px", marginLeft: "40px", fontSize: "16px", color: "#888888"}}>{myLocation}</label>
                                       <span>
-                                        <ToggleButtonWrapper onClick={() => toggleButton("location")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                          <ToggleButton>
-                                            <Slider isLocationActive={isLocationActive} />
-                                          </ToggleButton>
-                                        </ToggleButtonWrapper>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isLocationActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={locationToggleSwitch}
+                                          value={isLocationActive}
+                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                        />
                                       </span>
+
+                                      <Modal dialogClassName="custom-modal-content" show={show} onHide={handleClose}>
+                                        <Modal.Header>
+                                            <Modal.Title>거주지 변경</Modal.Title>
+                                        </Modal.Header>
+                                        <div className="custom-modal-box-whole">
+                                            <Modal.Body>
+
+                                                {/* 시/도 */}
+                                                <div className="scrollable-container">
+                                                  {items.map((item, index) => (
+                                                      <div
+                                                          key={index}
+                                                          onClick={() => handleClick(item.type)}
+                                                          className={`custom-modal-box ${SelectAddress === item.type ? 'select' : ''}`}
+                                                      >
+                                                          {item.title}
+                                                      </div>
+                                                  ))}
+                                                </div>
+                                            </Modal.Body>
+
+                                                {/* 시/군/구 */}
+                                            {showCityItems && (
+                                                <div className="city-items-container scrollable-container">
+                                                    {items_city
+                                                        .filter((cityItem) => cityItem.type === SelectAddress)
+                                                        .map((cityItem, index) => (
+                                                            <div
+                                                                key={index}
+                                                                onClick={() => CityhandleClick(cityItem.title)}
+                                                                className={`custom-modal-box ${citySelectAddress === cityItem.title ? 'select' : ''}`}
+                                                            >
+                                                                {cityItem.title}
+                                                
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            )}
+                                                
+
+                                            {/* 동/읍/면 */}
+                                            {showDongItems && (
+                                                    <div className="dong-items-container scrollable-container">
+                                                        {items_dong
+                                                            .filter((dongItem) => dongItem.type === citySelectAddress)
+                                                            .map((dongItem, index) => (
+                                                                <div
+                                                                    key={index}
+                                                                    onClick={() => DonghandleClick(dongItem.title)}
+                                                                    className={`custom-modal-box ${dongSelectAddress === dongItem.title ? 'select' : ''}`}
+                                                                >
+                                                                    {dongItem.title}
+                                                                </div>
+                                                            ))}
+                                                    </div>
+                                                )}
+
+                                        </div>
+                                        <Modal.Footer>
+                                            <Button className="footerButton-style" varient="primary" onClick={handleSelectAddress}>
+                                                선택 완료
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
                                     </div>
 
                                     {/* 희망근무지역 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>희망근무지역</label>  
-                                      <button type='button' className="select-button-style" style={{marginLeft: "-36px"}}>변경하기</button>   
+                                      <button type='button' className="select-button-style" style={{marginLeft: "-36px"}} onClick={handleShowWorkArea}>변경하기</button>   
                                       <span>
-                                        <ToggleButtonWrapper onClick={() => toggleButton("hopeLocation")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                          <ToggleButton>
-                                            <Slider isHopeLocationActive={isHopeLocationActive} />
-                                          </ToggleButton>
-                                        </ToggleButtonWrapper>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isHopeLocationActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={hopeLocationToggleSwitch}
+                                          value={isHopeLocationActive}
+                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                        />
                                       </span>
 
                                       <div>
-                                      <label style={{marginTop: "20px", marginLeft: "240px", fontSize: "18px", color: "#888888"}}>{replaceWorkJob(myHopeLocation)}</label>
+                                      <label style={{marginTop: "20px", marginLeft: "240px", fontSize: "16px", color: "#888888", marginRight: "130px"}}>{replaceWorkJob(myHopeLocation)}</label>
                                       </div>
+
+                                      <Modal dialogClassName="custom-modal-content" show={showWorkArea} onHide={handleCloseWorkArea}>
+                                        <Modal.Header>
+                                            <Modal.Title>
+                                              <h5>희망 근무 지역 변경</h5>
+                                            </Modal.Title>
+                                        </Modal.Header>
+                                        <div className="custom-modal-box-whole">
+                                            <Modal.Body dialogClassName="custom-modal-box">
+
+                                                {/* 시/도 */}
+                                                <div className="scrollable-container">
+                                                  {items.map((item, index) => (
+                                                      <div
+                                                          key={index}
+                                                          onClick={() => handleClickWorkArea(item.type)}
+                                                          className={`custom-modal-box ${SelectWorkArea === item.type ? 'select' : ''}`}
+                                                      >
+                                                          {item.title}
+                                                      </div>
+                                                  ))}
+                                                </div>
+                                            </Modal.Body>
+
+                                                {/* 시/군/구 */}
+                                            {showCityItems && (
+                                                <div className="city-items-container scrollable-container">
+                                                    {items_city
+                                                        .filter((cityItem) => cityItem.type === SelectWorkArea)
+                                                        .map((cityItem, index) => (
+                                                            <div
+                                                                key={index}
+                                                                onClick={() => CityhandleClickWorkArea(cityItem.title)}
+                                                                className={`custom-modal-box ${citySelectWorkArea === cityItem.title ? 'select' : ''}`}
+                                                            >
+                                                                {cityItem.title}
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            )}
+                                                
+
+                                            {/* 동/읍/면 */}
+                                            {showDongItems && (
+                                                    <div className="dong-items-container scrollable-container">
+                                                        {items_dong
+                                                            .filter((dongItem) => dongItem.type === citySelectWorkArea)
+                                                            .map((dongItem, index) => (
+                                                                <div
+                                                                    key={index}
+                                                                    onClick={() => DonghandleClickWorkArea(dongItem.title)}
+                                                                    className={`custom-modal-box ${dongSelectWorkArea === dongItem.title ? 'select' : ''}`}
+                                                                >
+                                                                    {dongItem.title}
+                                                                </div>
+                                                            ))}
+                                                    </div>
+                                                )}
+
+
+                                                
+
+                                        </div>
+                                        <Modal.Footer>
+                                          {/* 희망 근무 지역 여러개 선택 */}
+                                          <div>
+                                            {addedWorkAreas.length > 0 && (     
+                                                  <div className="left-align-footer">
+                                                      {addedWorkAreas.map((workArea, index) => (
+                                                          <div key={index}
+                                                          className={`addedWorkArea-style-rank  ${shouldApplyActiveStyle(workArea) ? 'active' : ''}`}>
+                                                            {workArea}
+                                                            <button className="close" onClick={() => removeWorkArea(workArea)}>   
+                                                                x
+                                                            </button>
+                                                          </div>
+                                                      ))}
+                                                  </div>
+                                              )}
+                                          </div>
+                                            <Button varient="secondary" onClick={handleAddWorkArea}>
+                                                추가
+                                            </Button>
+                                            <Button varient="primary" onClick={handleSelectWorkArea}>
+                                                완료
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
 
                                     </div>
 
                                     {/* 희망 업직종 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1, marginTop: "30px"}}>희망 업직종</label>  
-                                      <button type='button' className="select-button-style" style={{marginLeft: "-23px"}}>변경하기</button>   
+                                      <button type='button' className="select-button-style" style={{marginLeft: "-23px"}} onClick={handleShowWorkJob}>변경하기</button>   
                                       <span>
-                                        <ToggleButtonWrapper onClick={() => toggleButton("hopeJob")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                          <ToggleButton>
-                                            <Slider isHopeJobActive={isHopeJobActive} />
-                                          </ToggleButton>
-                                        </ToggleButtonWrapper>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isHopeJobActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={hopeJobToggleSwitch}
+                                          value={isHopeJobActive}
+                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                        />
                                       </span>
 
                                       <div>
-                                      <label style={{marginTop: "20px", marginLeft: "240px", fontSize: "18px", color: "#888888"}}>{replaceWorkJob(myHopeJob)}</label>
+                                      <label style={{marginTop: "20px", marginLeft: "240px", fontSize: "16px", color: "#888888"}}>{replaceWorkJob(myHopeJob)}</label>
                                       </div>
+
+                                      <Modal dialogClassName="job-box" show={showWorkJob} onHide={handleCloseWorkJob}>
+                                          <Modal.Header>
+                                              <Modal.Title>
+                                                <h5>희망 업직종 선택 (최대 3개)</h5>
+                                              </Modal.Title>
+                                          </Modal.Header>
+                                          <div>
+                                              <Modal.Body dialogClassName="custom-job-box">
+                                                <div className="work-icon">
+                                                  <div className={`icon-style ${SelectWorkJob.includes('카페') ? 'active' : ''}`} style={{position: "relative", left: "60px", top: "50px"}}>
+                                                      <button className="icon-style" onClick={() => handleWorkJobClick('카페')}>
+                                                        <img src={workbackground} width="130" alt="cafeImage1"/>
+                                                          <span style={{position: "absolute", top: "32px", left:"40px"}}>
+                                                            <img src={workcoffeebeans} id="카페" width="65" alt="cafeImage2"/>
+                                                          </span>
+                                                      </button>
+                                                    </div>
+                                                    <span style={{position: "absolute", top: "210px", left:"125px"}}>
+                                                        <b>카페</b>
+                                                    </span>
+                                                  
+                                                  <span>
+                                                    <div className={`icon-style ${SelectWorkJob.includes('서빙') ? 'active' : ''}`} style={{position: "relative", left:"140px", top: "50px"}}>
+                                                      <button className="icon-style" onClick={() => handleWorkJobClick('서빙')}>
+                                                        <img src={workbackground} width="130" alt="platterImage1"/>
+                                                          <span style={{position: "absolute", top: "37px", left:"40px"}}>
+                                                            <img src={workplatter} id="서빙" width="65" alt="platterImage2"/>
+                                                          </span>
+                                                      </button>
+                                                    </div>
+                                                    <span style={{position: "absolute", top: "210px", left:"350px"}}>
+                                                        <b>서빙</b>
+                                                    </span>
+                                                  </span>
+
+                                                  <span>
+                                                    <div className={`icon-style ${SelectWorkJob.includes('판매') ? 'active' : ''}`} style={{position: "relative", left:"220px", top: "50px"}}>
+                                                      <button className="icon-style" onClick={() => handleWorkJobClick('판매')}>
+                                                        <img src={workbackground} width="130" alt="saleImage1"/>
+                                                          <span style={{position: "absolute", top: "37px", left:"40px"}}>
+                                                            <img src={worksale} id="판매" width="65" alt="saleImage2"/>
+                                                          </span>
+                                                      </button>
+                                                    </div>
+                                                    <span style={{position: "absolute", top: "210px", left:"575px"}}>
+                                                        <b>판매</b>
+                                                    </span>
+                                                  </span>
+
+                                                  <span>
+                                                    <div className={`icon-style ${SelectWorkJob.includes('주방 보조') ? 'active' : ''}`} style={{position: "relative", left:"300px", top: "50px"}}>
+                                                      <button className="icon-style" onClick={() => handleWorkJobClick('주방 보조')}>
+                                                        <img src={workbackground} width="130" alt="knifeImage1"/>
+                                                          <span style={{position: "absolute", top: "37px", left:"40px"}}>
+                                                            <img src={workknife} id="주방 보조" width="65" alt="knifeImage2"/>
+                                                          </span>
+                                                      </button>
+                                                    </div>
+                                                    <span style={{position: "absolute", top: "210px", left:"777px"}}>
+                                                        <b>주방 보조</b>
+                                                    </span>
+                                                  </span>
+
+                                                  <div>
+                                                    <div className={`icon-style ${SelectWorkJob.includes('배달') ? 'active' : ''}`} style={{position: "relative", left:"380px", top: "50px"}}>
+                                                      <button className="icon-style" onClick={() => handleWorkJobClick('배달')}>
+                                                        <img src={workbackground} width="130" alt="deliveryImage1"/>
+                                                          <span style={{position: "absolute", top: "37px", left:"40px"}}>
+                                                            <img src={workdelivery} id="배달" width="65" alt="deliveryImage2"/>
+                                                          </span>
+                                                      </button>
+                                                    </div>
+                                                    <span style={{position: "absolute", top: "210px", left:"1020px"}}>
+                                                        <b>배달</b>
+                                                    </span>
+                                                  </div>
+                                                </div>
+
+                                                <div className="work-icon">
+                                                  <div className={`icon-style ${SelectWorkJob.includes('교육') ? 'active' : ''}`} style={{position: "relative", left: "60px", top: "170px"}}>
+                                                        <button className="icon-style" onClick={() => handleWorkJobClick('교육')}>
+                                                          <img src={workbackground} width="130" alt="educationImage1"/>
+                                                            <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                              <img src={workeducation} id="교육" width="65" alt="educationImage2"/>
+                                                            </span>
+                                                        </button>
+                                                      </div>
+                                                      <span style={{position: "absolute", top: "460px", left:"130px"}}>
+                                                          <b>교육</b>
+                                                      </span>
+
+                                                      <div className={`icon-style ${SelectWorkJob.includes('스태프') ? 'active' : ''}`} style={{position: "relative", left: "140px", top: "170px"}}>
+                                                        <button className="icon-style" onClick={() => handleWorkJobClick('스태프')}>
+                                                          <img src={workbackground} width="130" alt="staffImage1"/>
+                                                            <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                              <img src={workstaff} id="스태프"width="65" alt="staffImage2"/>
+                                                            </span>
+                                                        </button>
+                                                      </div>
+                                                      <span style={{position: "absolute", top: "460px", left:"340px"}}>
+                                                          <b>스태프</b>
+                                                      </span>
+
+                                                      <div className={`icon-style ${SelectWorkJob.includes('생산') ? 'active' : ''}`} style={{position: "relative", left: "220px", top: "170px"}}>
+                                                        <button className="icon-style" onClick={() => handleWorkJobClick('생산')}>
+                                                          <img src={workbackground} width="130" alt="designImage1"/>
+                                                            <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                              <img src={workdesign} id="생산" width="65" alt="designImage2"/>
+                                                            </span>
+                                                        </button>
+                                                      </div>
+                                                      <span style={{position: "absolute", top: "460px", left:"570px"}}>
+                                                          <b>생산</b>
+                                                      </span>
+
+                                                      <div className={`icon-style ${SelectWorkJob.includes('미디어') ? 'active' : ''}`} style={{position: "relative", left: "300px", top: "170px"}}>
+                                                        <button className="icon-style" onClick={() => handleWorkJobClick('미디어')}>
+                                                          <img src={workbackground} width="130" alt="mediaImage1"/>
+                                                            <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                              <img src={workmedia} id="미디어" width="65" alt="mediaImage2"/>
+                                                            </span>
+                                                        </button>
+                                                      </div>
+                                                      <span style={{position: "absolute", top: "460px", left:"790px"}}>
+                                                          <b>미디어</b>
+                                                      </span>
+
+                                                      <div className={`icon-style ${SelectWorkJob.includes('고객 상담') ? 'active' : ''}`} style={{position: "relative", left: "380px", top: "170px"}}>
+                                                        <button className="icon-style" onClick={() => handleWorkJobClick('고객 상담')}>
+                                                          <img src={workbackground} width="130" alt="customerImage1"/>
+                                                            <span style={{position: "absolute", top: "35px", left:"38px"}}>
+                                                              <img src={workcustomer} id="고객 상담" width="65" alt="customerImage2"/>
+                                                            </span>
+                                                        </button>
+                                                      </div>
+                                                      <span style={{position: "absolute", top: "460px", left:"1000px"}}>
+                                                          <b>고객 상담</b>
+                                                      </span>
+
+                                                      
+                                                  </div>
+
+                                                  <div className="margin"/>
+                                              </Modal.Body>
+                                          </div>
+                                          <Modal.Footer>
+                                              <Button varient="primary" onClick={handleSelectWorkJob}>
+                                                  선택 완료
+                                              </Button>
+                                          </Modal.Footer>
+                                      </Modal>
+
 
                                     </div>
 
@@ -426,33 +952,20 @@ const Damnprofile = () => {
                                   <div>
                                     <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "985px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
                                   
-
-                                  {/* 내 소개글 */}
-                                    <div>
-                                      <label className="content-label-style-profile" style={{zIndex: 1}}>내 소개글</label>
-                                      <input type='text' name='introduce' placeholder={myIntroduce} style={{width:"600px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
-                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
-                                      <span>
-                                        <ToggleButtonWrapper onClick={() => toggleButton("introduce")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                          <ToggleButton>
-                                            <Slider isIntroduceActive={isIntroduceActive} />
-                                          </ToggleButton>
-                                        </ToggleButtonWrapper>
-                                      </span>
-                                      
-                                    </div>
-
                                     {/* 내 뱃지 */}
                                     <div>
                                       <div>
-                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "70px"}}>내 뱃지</label>
+                                          <label className="content-label-style-profile" style={{zIndex: 1}}>내 뱃지</label>
                                           <span>
-                                            <ToggleButtonWrapper onClick={() => toggleButton("badge")} style={{marginLeft: "1000px", marginTop: "-30px"}}>
-                                              <ToggleButton>
-                                                <Slider isBadgeActive={isBadgeActive} />
-                                              </ToggleButton>
-                                            </ToggleButtonWrapper>
-                                          </span>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isBadgeActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={badgeToggleSwitch}
+                                          value={isBadgeActive}
+                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                        />
+                                      </span>
                                       </div>
                                       <button type='button' className="badge1-button-style" disabled style={{marginTop: "30px", border: "4px solid #bfd1fce2", backgroundColor: "#bfd1fce2"}}>슈퍼 칼답러</button>
 
@@ -470,6 +983,37 @@ const Damnprofile = () => {
 
                                       <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #ffa5e49f", backgroundColor: "#ffa5e49f"}}>슈퍼 긍정러</button>
                                       
+                                    </div>
+
+                                    {/* 내 소개글 */}
+                                    <div>
+                                      <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 소개글</label>
+                                      <input type='text' name='introduce' placeholder={myIntroduce} style={{width:"600px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
+                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
+                                      <span>
+                                        <Switch
+                                          trackColor={{false: '#767577', true: '#81b0ff'}}
+                                          thumbColor={isIntroduceActive ? '#f5dd4b' : '#f4f3f4'}
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={introduceToggleSwitch}
+                                          value={isIntroduceActive}
+                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                        />
+                                      </span>
+                                      
+                                    </div>
+
+                                    {/* 내 스크랩 */}
+                                    <div>
+                                      <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 스크랩</label>
+                                        <button type='button' className="select-button-style" style={{marginLeft: "-10px"}}>보러가기</button>
+                                    </div>
+
+
+                                    {/* 내 땜빵이력 */}
+                                    <div>
+                                      <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 땜빵이력</label>
+                                        <button type='button' className="select-button-style" style={{marginLeft: "-25px"}}>보러가기</button>
                                     </div>
                                 
 
