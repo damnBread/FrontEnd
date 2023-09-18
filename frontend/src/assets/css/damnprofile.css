@@ -1,0 +1,132 @@
+.whole-box {
+    margin-left: 250px;
+    margin-right: 500px;
+    margin-top: 50px;
+    width: 100%;
+    max-width: 1500px;
+    height: 750px;
+    border: 2px solid D9AA89;
+    border-radius: 15px;
+    background-color: #F2E0D5;
+}
+
+.gender-image-profile {
+    margin-left: 70px;
+    margin-top: 30px;
+  }
+
+.name-style-profile {
+display: inline-flex;
+flex-direction: column;
+margin-left: 30px;
+font-size: 27px;
+}
+
+.label-style-profile {
+    margin-right: 10px;
+    position: relative;
+  }
+
+  .label-style-profile1 {
+    margin-right: 10px;
+    position: relative;
+    color: rgba(143, 5, 5, 0.916);
+  }
+
+  .button-style-profile {
+    margin-top: 90px;
+    margin-left: 160px;
+    width: 250px;
+    padding: 11px;
+    background-color: #D9AA89;
+    border: 4px solid #D9AA89;
+    border-radius: 15px;
+  }
+
+  .button-style-profile.clicked {
+    background-color: #FFFFFF;
+  }
+  
+  .button-style-profile1 {
+    margin-top: 70px;
+    margin-left: 160px;
+    width: 250px;
+    padding: 11px;
+    background-color: #D9AA89;
+    border: 4px solid #D9AA89;
+    border-radius: 15px;
+  }
+
+  .button-style-profile1.clicked {
+    background-color: #FFFFFF;
+  }
+  
+  .content-box {
+    margin-top: -130px;
+    margin-left: -35px;
+    width: 100%;
+    max-width: 1500px;
+    height: 750px;
+    border: 4px solid #D9AA89;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+}
+
+.button-and-box-style {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.content-label-style-profile {
+  margin-top: 30px;
+  margin-left: 80px;
+  margin-right: 90px;
+  font-size: 17px;
+  position: relative;
+}
+
+.content-label-style-profile-s {
+  margin-top: 30px;
+  margin-left: 80px;
+  font-size: 17px;
+  position: relative;
+}
+
+.content-label-style-profile1 {
+  margin-top: 60px;
+  margin-left: 80px;
+  margin-right: 90px;
+  font-size: 17px;
+  position: relative;
+}
+
+.blank {
+  margin-left: 50px;
+  font-size: 15px;
+}
+
+.select-button-style {
+  margin-left: 15px;
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #FFFFFF;
+}
+
+.badge1-button-style {
+  margin-left: 80px;
+  margin-top: 20px;
+  width: 180px;
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 16px;
+}
+
+
+  
