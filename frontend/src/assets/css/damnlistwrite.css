@@ -9,6 +9,17 @@
     margin-bottom: 20px;
 }
 
+.location-input {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 550px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
 
 .content-input {
     font-family: 'GmarketSans', sans-bold;
@@ -50,6 +61,26 @@
 .damnlistjobbrand p span {
     color: brown;
 }
+
+.damnlistlocation p {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 170px; /* Add spacing between 제목 and input */
+}
+
+.damnlistlocation {
+    display: flex; /* Use flexbox to arrange items in a row */
+    align-items: center; /* Align items vertically in the center */
+    margin-top: 40px;
+    margin-left: 200px;
+}
+
+.damnlistlocation button {
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
 
 .damnlistworktime p { 
     font-family: 'GmarketSans', sans-bold;

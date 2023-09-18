@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Cookies } from 'react-cookie';
 import axios from "axios";
@@ -9,9 +9,11 @@ import Footer from "../components/Footers/Footer";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'react-time-picker';
-import Modal from "react-modal";
 import Button from "@mui/material/Button";
 import styled from 'styled-components';
+import DaumPostcode from 'react-daum-postcode';
+import Modal from "react-modal";
+
 
 const StyledSelect = styled.select`
     border: 1px solid #ccc;
@@ -20,12 +22,12 @@ const StyledSelect = styled.select`
     margin: 10px;
 `;
 
-const initialGenderLimit = true; // true for 남, false for 여
-const initialAgeLimit = { min: null, max: null }; // Age range
-const initialCareerLimit = -1;
+const initialGenderLimit = "성별무관"; 
+const initialAgeLimit = "연령무관"; 
+const initialCareerLimit = "경력무관";
 
 const Damnlistwrite = () => {
-
+    
     const [title, setTitle] = useState(""); //공고제목
     const [content, setContent] = useState(""); //공고 내용
     const [job, setJob] = useState(""); //업직종
@@ -33,22 +35,22 @@ const Damnlistwrite = () => {
     const [location, setLocation] = useState(""); //근무지 주소(지번)
     const [hourPay, setHourPay] = useState(""); //시급
     const [payMethod, setPayMethod] = useState("") //임금 지급 방법
-    const [workStart, setWorkStart] = useState("");
-    const [workFinish, setWorkFinish] = useState("");
-    const [workPeriod, setWorkPeriod] = useState(""); //근무 기간(Date)
+    const [workStart, setWorkStart] = useState(new Date());
+    const [workFinish, setWorkFinish] = useState(new Date());
+    const [workPeriod, setWorkPeriod] = useState(1); //근무 기간(Date)
     const [deadline, setDeadline] = useState("");
 
-    //추천 추가하기
-    const [count, setCount] = useState(""); //모집명수
+
     const [isChecked, setIsChecked] = useState(false); 
     const [isCancelled, setIsCancelled] = useState(false);
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [isDaumPostcodeOpen, setIsDaumPostcodeOpen] = useState(false); // Daum 주소 검색 모달 열림 여부
+
 
     const [genderLimit, setGenderLimit] = useState(initialGenderLimit);
     const [ageLimit, setAgeLimit] = useState(initialAgeLimit);
     const [careerLimit, setCareerLimit] = useState(initialCareerLimit);
-
 
     const handleTitleChange = (event) => {
         const maxLength = 30;
@@ -132,6 +134,20 @@ const Damnlistwrite = () => {
       };
 
 
+      const handleAddressChange = (e) => {
+        setLocation(e.target.value);
+      };
+    
+      const handleOpenDaumPostcode = () => {
+        setIsDaumPostcodeOpen(true);
+      };
+    
+      const handleComplete = (data) => {
+        setLocation(data.address); // 선택한 주소를 상태에 저장
+        setIsDaumPostcodeOpen(false); // 모달 닫기
+      };
+
+
     const handleRegisterClick = async () => {
 
         if (!title || !content) {
@@ -174,7 +190,7 @@ const Damnlistwrite = () => {
                 //     careerLimit: parseInt(careerLimit), // Convert to integer
                 //   };
                 
-                const newJobData = {
+                let newJobData = {
                     title: title,
                     content: content,
                     job: [job], //배열에 넣어서 보낼것
@@ -182,12 +198,15 @@ const Damnlistwrite = () => {
                     hourPay: parseInt(hourPay),
                     payMethod: payMethod, //true, false
                     deadline: new Date(deadline), //값 넣기
-                    workPeriod: workPeriod = 1,
-                    workStart: workStart(Date), //시작, 끝시간을 Date로 보내야함, 바꿔야함
-                    workFinish: workFinish(Date),
+                    workPeriod: workPeriod,
+                    workStart: workStart, //시작, 끝시간을 Date로 보내야함, 바꿔야함
+                    workFinish: workFinish,
                     genderLimit: genderLimit,
-                    ageLimit: ageLimit  ,
-                    careerLimit: parseInt(careerLimit),
+                    ageLimit: {
+                        min: 20, // Set the selected minimum age
+                        max: 30, // Set the selected maximum age
+                    },
+                    careerLimit: 0,
                 };
 
                 //추가해야할것
@@ -293,8 +312,60 @@ const Damnlistwrite = () => {
 
 
                 <div className="damnlistlocation">
-                    {/* 이 위치에 위치정보 넣기 */}
+                    <p>위치정보</p>
+                    <input
+                        type="text"
+                        className="location-input"
+                        value={location}
+                        onChange={handleAddressChange}
+                    />
+                    
+                    <Button
+                        variant="outlined"
+                        sx={{
+                            borderColor: "brown",
+                            color: "brown",
+                            '&:hover': {
+                                backgroundColor: "darkbrown",
+                            },
+                            marginLeft:"10px",
+                            marginBottom:"20px"
+                        }}
+                        onClick={handleOpenDaumPostcode}
+                    >
+                        주소입력
+                    </Button>
+                    <Modal isOpen={isDaumPostcodeOpen} 
+                        onRequestClose={() => setIsDaumPostcodeOpen(false)}
+                        style={{
+                            content: {
+                              width: '50%', // 원하는 가로 크기로 설정
+                              height: '50%', // 원하는 세로 크기로 설정
+                              margin: 'auto', // 가운데 정렬
+                            },
+                          }}
+                        >
+                                    <button
+                                        onClick={handleComplete}
+                                        style={{
+                                            position: 'absolute',
+                                            top: '10px',
+                                            right: '10px',
+                                            cursor: 'pointer',
+                                        }}
+                                        >
+                                        X
+                                        </button>
+                        <DaumPostcode
+                            onComplete={handleComplete}
+                            autoClose
+                        />
+                    </Modal>
                 </div>
+
+
+                <div className="gray-line1"></div>
+
                 <div className="damnlistworktime">
                     <p>시간급여</p>
                     <input
