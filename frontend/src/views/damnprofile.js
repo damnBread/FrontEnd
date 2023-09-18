@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import "../assets/css/damnprofile.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import styled from 'styled-components';
 import { items, items_city, items_dong } from '../components/CityItem';
 import workstaff from "../assets/img/workicon-staff.png";
 import workcoffeebeans from "../assets/img/workicon-coffeebeans.png";
@@ -23,7 +22,6 @@ import worksale from "../assets/img/workicon-sale.png";
 import workbackground from "../assets/img/workicon-background.png";
 import {View, Switch, StyleSheet} from 'react-native';
 
-
 const Damnprofile = () => {
     
     const sessionToken = sessionStorage.getItem('token');
@@ -32,6 +30,8 @@ const Damnprofile = () => {
 
     //고정
     const [myCareer, setMyCareer] = useState("");                 //땜빵 경력
+
+    const [myPublic, setMyPublic] = useState("");
 
     //내 정보
     const [myNoShow, setMyNoShow] = useState("");                 //노쇼 횟수
@@ -43,8 +43,8 @@ const Damnprofile = () => {
     const [myEmail, setMyEmail] = useState("");                   //이메일
     const [myPhoneNumber, setMyPhoneNumber] = useState("");       //전화번호
     const [myLocation, setMyLocation] = useState("");             //현재 거주 지역
-    const [myHopeJob, setMyHopeJob] = useState("");               //희망 업직종
     const [myHopeLocation, setMyHopeLocation] = useState("");     //희망 근무 지역
+    const [myHopeJob, setMyHopeJob] = useState("");               //희망 업직종
 
 
     //내 활동
@@ -75,25 +75,85 @@ const Damnprofile = () => {
     const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
     const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
 
-    const noShowToggleSwitch = () => setNoShowIsActive(previousState => !previousState);
-    const nicknameToggleSwitch = () => setNicknameIsActive(previousState => !previousState);
-    const emailToggleSwitch = () => setEmailIsActive(previousState => !previousState);
-    const phoneToggleSwitch = () => setPhoneIsActive(previousState => !previousState);
-    const locationToggleSwitch = () => setLocationIsActive(previousState => !previousState);
-    const hopeJobToggleSwitch = () => setHopeJobIsActive(previousState => !previousState);
-    const hopeLocationToggleSwitch = () => setHopeLocationIsActive(previousState => !previousState);
-    const introduceToggleSwitch = () => setIntroduceIsActive(previousState => !previousState);
-    const badgeToggleSwitch = () => setBadgeIsActive(previousState => !previousState);
+    const noShowToggleSwitch = () => {
+      setNoShowIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
+    const nicknameToggleSwitch = () =>  {
+      setNicknameIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
+    const emailToggleSwitch = () => {
+      setEmailIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
+    const phoneToggleSwitch = () =>  {
+      setPhoneIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
+    const locationToggleSwitch = () => {
+      setLocationIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
+    const hopeJobToggleSwitch = () => {
+      setHopeJobIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
+    const hopeLocationToggleSwitch = () => {
+      setHopeLocationIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
+    const introduceToggleSwitch = () => {
+      setIntroduceIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
+    const badgeToggleSwitch = () => {
+      setBadgeIsActive(previousState => !previousState);
+      toggleButtonValue()
+    }
 
+    const toggleButtonValue = () => {
+      const toggleIsPublic = isNoShowActive + "|" + isNicknameActive + "|" + isEmailActive + "|" + isPhoneActive + "|" + 
+        isLocationActive + "|" + isHopeLocationActive + "|" + isHopeJobActive + "|" + isBadgeActive + "|" + isIntroduceActive;
+
+        //공개여부 patch
+        axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              isPublic: toggleIsPublic
+            },
+              { headers: {
+                Authorization: "Bearer " + sessionToken
+              }
+            })
+            .then((response) => {
+                console.log(response);
+                console.log("공개 여부 patch 완료")
+                console.log("Toggle: ", toggleIsPublic)
+                setMyPublic(toggleIsPublic);
+            })
+            .catch((error)=>{
+              console.log("session: ", sessionToken)
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+    }
 
     const handleClose = () => {
-        setShow(false);   //모달창 닫기
+        setShow(false);           //모달창 닫기
     }
     const handleCloseWorkArea = () => {
         setShowWorkArea(false);   //모달창 닫기
     }
     const handleCloseWorkJob = () => {
-        setShowWorkJob(false);   //모달창 닫기
+        setShowWorkJob(false);    //모달창 닫기
     }
 
     const handleShow = () =>{ setShow(true)};     //모달창 켜기
@@ -161,21 +221,31 @@ const DonghandleClickWorkArea = (dongItem) => {
     setDongSelectWorkArea(dongItem);         
 }
 
+useEffect(() => {
+  firstPage();
+  toggleButtonValue();
+
+}, [isNoShowActive, isNicknameActive, isEmailActive, isPhoneActive, isLocationActive, 
+  isHopeLocationActive, isHopeJobActive, isBadgeActive, isIntroduceActive]);
+
+
   const handleSelectAddress = (e) => {   //거주지 적용 버튼 클릭시
     if(SelectAddress && citySelectAddress && dongSelectAddress) {
-      setMyLocation(SelectAddress + " " + citySelectAddress + " " + dongSelectAddress);
-      
+      let allAddress = SelectAddress + " " + citySelectAddress + " " + dongSelectAddress;
+      setMyLocation(allAddress);
+
       //거주지 patch
       axios
             .patch(`http://localhost:3000/mypage/setting`, {
-              home: myLocation,
-              headers: {
-                Authorization: "Bearer " + sessionToken
-              }
-            })
+              home: allAddress
+            },
+            {headers: {
+              Authorization: "Bearer " + sessionToken
+            }})
             .then((response) => {
                 console.log(response);
                 console.log("거주지 patch 완료")
+              
             })
             .catch((error)=>{
               if (error.response) {
@@ -245,16 +315,15 @@ const DonghandleClickWorkArea = (dongItem) => {
             setMyHopeLocation(addedWorkAreas.join("|"));
             setShowWorkArea(false);
             setAddedWorkAreas([]);
-
-
+            
             //희망근무지역 patch
             axios
             .patch(`http://localhost:3000/mypage/setting`, {
-              hopeLocation: myHopeLocation,
-              headers: {
-                Authorization: "Bearer " + sessionToken
-              }
-            })
+              hopeLocation: addedWorkAreas.join("|"),
+            },
+            {headers: {
+              Authorization: "Bearer " + sessionToken
+            }})
             .then((response) => {
                 console.log(response);
                 console.log("희망근무지역 patch 완료")
@@ -316,11 +385,11 @@ const DonghandleClickWorkArea = (dongItem) => {
       //희망업직종 patch
       axios
             .patch(`http://localhost:3000/mypage/setting`, {
-              hopeJob: myHopeJob,
-              headers: {
-                Authorization: "Bearer " + sessionToken
-              }
-            })
+              hopeJob: workJobsString
+            },
+            {headers: {
+              Authorization: "Bearer " + sessionToken
+            }})
             .then((response) => {
                 console.log(response);
                 console.log("희망업직종 patch 완료")
@@ -340,12 +409,7 @@ const DonghandleClickWorkArea = (dongItem) => {
 
       setShowWorkJob(false);
       setSelectWorkJob([]); // Reset selected work jobs
-    };
-
-    useEffect(() => {
-      firstPage();
-    }, []);
-    
+    };    
 
     const firstPage = () => {
       axios
@@ -355,7 +419,7 @@ const DonghandleClickWorkArea = (dongItem) => {
               }
             })
             .then((response) => {
-                console.log(response.data);
+                console.log("eww: ", response.data);
 
                 setMyNoShow(response.data.noShow);
                 setMyId(response.data.id);
@@ -368,28 +432,37 @@ const DonghandleClickWorkArea = (dongItem) => {
                 setMyLocation(response.data.home);
                 setMyHopeJob(response.data.hopeJob);
                 setMyHopeLocation(response.data.hopeLocation);
+                setMyPublic(response.data.isPublic);
 
                 setMyIntroduce(response.data.introduce);
                 setMyBadge(response.data.badge);
+                
                 //땜빵이력, 스크랩 아직 ... 모르겟엉
 
-                console.log("noshow: ", myNoShow);
-                console.log("id: ", myId);
-                console.log("name: ", myName);
-                console.log("gender: ", myGender);
-                console.log("nickname: ", myNickname);
-                console.log("pw: ", myPassword);
-                console.log("email: ", myEmail);
-                console.log("phone: ", myPhoneNumber);
-                console.log("location: ", myLocation);
-                console.log("job: ", myHopeJob);
-                console.log("hopeLocation: ", myHopeLocation);
-
-                console.log("introduce: ", myIntroduce);
-                console.log("badge: ", myBadge);
-
-
                 console.log("마이페이지 첫 페이지 완료");
+
+                const isPublicData = response.data.isPublic.split("|");
+                if (isPublicData[0] === "true") {
+                  setNoShowIsActive(true);
+                  console.log("SS: ", isNoShowActive)
+                } if (isPublicData[1] === "true") {
+                  setNicknameIsActive(true);
+                } if (isPublicData[2] === "true") {
+                  setEmailIsActive(true);
+                } if (isPublicData[3] === "true") {
+                  setPhoneIsActive(true);
+                } if (isPublicData[4] === "true") {
+                  setLocationIsActive(true);
+                } if (isPublicData[5] === "true") {
+                  setHopeLocationIsActive(true);
+                } if (isPublicData[6] === "true") {
+                  setHopeJobIsActive(true);
+                } if (isPublicData[7] === "true") {
+                  setBadgeIsActive(true);
+                } if (isPublicData[8] === "true") {
+                  setIntroduceIsActive(true);
+                }
+                
             })
             .catch((error)=>{
               if (error.response.status === 400) {
@@ -407,9 +480,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                        //삭제 요청 처리
                       history.push('/Login'); // SignUP으로 url 이동
                       window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
-                  }
-                  else{
-                      //취소
                   }
               });
               }
@@ -515,7 +585,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isNoShowActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={noShowToggleSwitch}
                                           value={isNoShowActive}
                                           style={{marginTop: "-20px", marginLeft: "1000px"}}
@@ -532,7 +601,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isNicknameActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={nicknameToggleSwitch}
                                           value={isNicknameActive}
                                           style={{marginTop: "-25px", marginLeft: "1000px"}}
@@ -549,7 +617,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isEmailActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={emailToggleSwitch}
                                           value={isEmailActive}
                                           style={{marginTop: "-25px", marginLeft: "1000px"}}
@@ -566,7 +633,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isPhoneActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={phoneToggleSwitch}
                                           value={isPhoneActive}
                                           style={{marginTop: "-25px", marginLeft: "1000px"}}
@@ -583,7 +649,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isLocationActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={locationToggleSwitch}
                                           value={isLocationActive}
                                           style={{marginTop: "-25px", marginLeft: "1000px"}}
@@ -664,7 +729,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isHopeLocationActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={hopeLocationToggleSwitch}
                                           value={isHopeLocationActive}
                                           style={{marginTop: "-25px", marginLeft: "1000px"}}
@@ -773,7 +837,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isHopeJobActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={hopeJobToggleSwitch}
                                           value={isHopeJobActive}
                                           style={{marginTop: "-25px", marginLeft: "1000px"}}
@@ -960,7 +1023,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isBadgeActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={badgeToggleSwitch}
                                           value={isBadgeActive}
                                           style={{marginTop: "-25px", marginLeft: "1000px"}}
@@ -994,7 +1056,6 @@ const DonghandleClickWorkArea = (dongItem) => {
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
                                           thumbColor={isIntroduceActive ? '#f5dd4b' : '#f4f3f4'}
-                                          ios_backgroundColor="#3e3e3e"
                                           onValueChange={introduceToggleSwitch}
                                           value={isIntroduceActive}
                                           style={{marginTop: "-25px", marginLeft: "1000px"}}
