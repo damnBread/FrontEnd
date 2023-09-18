@@ -20,7 +20,7 @@ import workmedia from "../assets/img/workicon-media.png";
 import workplatter from "../assets/img/workicon-platter.png";
 import worksale from "../assets/img/workicon-sale.png";
 import workbackground from "../assets/img/workicon-background.png";
-import {View, Switch, StyleSheet} from 'react-native';
+import { Switch } from 'react-native';
 
 const Damnprofile = () => {
     
@@ -45,6 +45,23 @@ const Damnprofile = () => {
     const [myLocation, setMyLocation] = useState("");             //현재 거주 지역
     const [myHopeLocation, setMyHopeLocation] = useState("");     //희망 근무 지역
     const [myHopeJob, setMyHopeJob] = useState("");               //희망 업직종
+
+    const [inputNicknameProfile, setInputNicknameProfile] = useState(null)
+    const handleInputNickName = (e) => {
+      setInputNicknameProfile(e.target.value);
+    };
+    const [inputEmailProfile, setInputEmailProfile] = useState(null)
+    const handleInputEmail = (e) => {
+      setInputEmailProfile(e.target.value);
+    };
+    const [inputPhoneProfile, setInputPhoneProfile] = useState(null)
+    const handleInputPhone = (e) => {
+      setInputPhoneProfile(e.target.value);
+    };
+    const [inputIntroduceProfile, setInputIntroduceProfile] = useState(null)
+    const handleInputIntroduce = (e) => {
+      setInputIntroduceProfile(e.target.value);
+    };
 
 
     //내 활동
@@ -126,13 +143,9 @@ const Damnprofile = () => {
               }
             })
             .then((response) => {
-                console.log(response);
-                console.log("공개 여부 patch 완료")
-                console.log("Toggle: ", toggleIsPublic)
                 setMyPublic(toggleIsPublic);
             })
             .catch((error)=>{
-              console.log("session: ", sessionToken)
               if (error.response) {
                 console.log("1", error.response.data);
                 console.log("2", error.response.status);
@@ -243,9 +256,7 @@ useEffect(() => {
               Authorization: "Bearer " + sessionToken
             }})
             .then((response) => {
-                console.log(response);
-                console.log("거주지 patch 완료")
-              
+                console.log("거주지 patch 완료");
             })
             .catch((error)=>{
               if (error.response) {
@@ -325,7 +336,6 @@ useEffect(() => {
               Authorization: "Bearer " + sessionToken
             }})
             .then((response) => {
-                console.log(response);
                 console.log("희망근무지역 patch 완료")
             })
             .catch((error)=>{
@@ -391,7 +401,6 @@ useEffect(() => {
               Authorization: "Bearer " + sessionToken
             }})
             .then((response) => {
-                console.log(response);
                 console.log("희망업직종 patch 완료")
             })
             .catch((error)=>{
@@ -408,7 +417,7 @@ useEffect(() => {
             })
 
       setShowWorkJob(false);
-      setSelectWorkJob([]); // Reset selected work jobs
+      setSelectWorkJob([]);
     };    
 
     const firstPage = () => {
@@ -419,8 +428,6 @@ useEffect(() => {
               }
             })
             .then((response) => {
-                console.log("eww: ", response.data);
-
                 setMyNoShow(response.data.noShow);
                 setMyId(response.data.id);
                 setMyName(response.data.name); 
@@ -436,15 +443,16 @@ useEffect(() => {
 
                 setMyIntroduce(response.data.introduce);
                 setMyBadge(response.data.badge);
+                setMyCareer(response.data.career);
+
+                console.log("career: ", myCareer);
                 
                 //땜빵이력, 스크랩 아직 ... 모르겟엉
 
-                console.log("마이페이지 첫 페이지 완료");
-
+                //공개여부 fetch
                 const isPublicData = response.data.isPublic.split("|");
                 if (isPublicData[0] === "true") {
                   setNoShowIsActive(true);
-                  console.log("SS: ", isNoShowActive)
                 } if (isPublicData[1] === "true") {
                   setNicknameIsActive(true);
                 } if (isPublicData[2] === "true") {
@@ -529,6 +537,212 @@ useEffect(() => {
           setShowDamnApply(false);   
           setShowDamnRequest(true); 
         }
+
+        const handleClickNickname = () => {
+          Swal.fire({
+            icon: "warning",
+            title: "경고",
+            text: "닉네임을 변경하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+            width: 800,
+            height: 100,
+          }).then((res) => {
+              if (res.isConfirmed) {
+              }
+          });
+        }
+
+        const handleClickNicknameSave = (nickname) => {
+          axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              nickname: nickname
+            },
+            {headers: {
+              Authorization: "Bearer " + sessionToken
+            }})
+            .then((response) => {
+                console.log("닉네임 변경 patch 완료")
+                setMyNickname(nickname)
+                Swal.fire({
+                  icon: "success",
+                  title: "성공",
+                  text: "닉네임이 변경되었습니다.",
+                  showCancelButton: false,
+                  confirmButtonText: "확인",
+                  width: 800,
+                  height: 100,
+                }).then((res) => {});
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+        }
+
+        const handleClickEmail = () => {
+          console.log("emem")
+          Swal.fire({
+            icon: "warning",
+            title: "경고",
+            text: "이메일을 변경하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+            width: 800,
+            height: 100,
+        }).then((res) => {
+            if (res.isConfirmed) {
+            }
+        });
+        }
+
+        const handleClickEmailSave = (email) => {
+          axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              email: email
+            },
+            {headers: {
+              Authorization: "Bearer " + sessionToken
+            }})
+            .then((response) => {
+                console.log("이메일 변경 patch 완료")
+                setMyEmail(email)
+                Swal.fire({
+                  icon: "success",
+                  title: "성공",
+                  text: "이메일이 변경되었습니다.",
+                  showCancelButton: false,
+                  confirmButtonText: "확인",
+                  width: 800,
+                  height: 100,
+                }).then((res) => {});
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+        }
+
+        const handleClickPhone = () => {
+          Swal.fire({
+            icon: "warning",
+            title: "경고",
+            text: "전화번호을 변경하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+            width: 800,
+            height: 100,
+        }).then((res) => {
+            if (res.isConfirmed) {
+            }
+        });
+        }
+        
+        const handleClickPhoneSave = (phone) => {
+          axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              phone: phone
+            },
+            {headers: {
+              Authorization: "Bearer " + sessionToken
+            }})
+            .then((response) => {
+                console.log("전화번호 변경 patch 완료")
+                setMyPhoneNumber(phone)
+                Swal.fire({
+                  icon: "success",
+                  title: "성공",
+                  text: "전화번호가 변경되었습니다.",
+                  showCancelButton: false,
+                  confirmButtonText: "확인",
+                  width: 800,
+                  height: 100,
+                }).then((res) => {});
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+        }
+
+        const handleClickIntroduce = () => {
+          console.log("tinr")
+          Swal.fire({
+            icon: "warning",
+            title: "경고",
+            text: "소개글을 변경하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+            width: 800,
+            height: 100,
+        }).then((res) => {
+            if (res.isConfirmed) {
+            }
+        });
+        }
+
+        const handleClickIntroduceSave = (introduce) => {
+          axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              introduce: introduce
+            },
+            {headers: {
+              Authorization: "Bearer " + sessionToken
+            }})
+            .then((response) => {
+                console.log("내 소개글 변경 patch 완료")
+                setMyIntroduce(introduce)
+                Swal.fire({
+                  icon: "success",
+                  title: "성공",
+                  text: "소개글이 변경되었습니다.",
+                  showCancelButton: false,
+                  confirmButtonText: "확인",
+                  width: 800,
+                  height: 100,
+                }).then((res) => {});
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+        }
         
     return (
       <div className="damnprofilewhole">
@@ -595,8 +809,9 @@ useEffect(() => {
                                   {/* 닉네임 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>닉네임</label>     
-                                      <input type='text' name='nick' placeholder={myNickname} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
+                                      <input type='text' name='nick' placeholder={myNickname} value={inputNicknameProfile} onClick={ handleClickNickname } onChange={handleInputNickName} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
+                                      <button type='button' className="select-button-style" onClick={handleClickNicknameSave(inputNicknameProfile)} style={{marginLeft: "25px"}}>저장</button>
                                       <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -611,8 +826,9 @@ useEffect(() => {
                                   {/* 이메일 */}
                                     <div>
                                         <label className="content-label-style-profile1" style={{zIndex: 1}}>이메일</label>     
-                                        <input type='text' name='email' placeholder={myEmail} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
+                                        <input type='text' name='email' placeholder={myEmail} value={inputEmailProfile} onClick={handleClickEmail} onChange={handleInputEmail} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
                                           borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
+                                        <button type='button' className="select-button-style" onClick={handleClickEmailSave(inputEmailProfile)} style={{marginLeft: "25px"}}>저장</button>
                                         <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -627,8 +843,9 @@ useEffect(() => {
                                     {/* 전화번호 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>전화번호</label>     
-                                      <input type='text' name='phone' placeholder={myPhoneNumber} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "-5px", fontSize: "18px", 
+                                      <input type='text' name='phone' placeholder={myPhoneNumber} onClick={handleClickPhone} value={inputPhoneProfile} onChange={handleInputPhone} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "-5px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
+                                        <button type='button' className="select-button-style" onClick={handleClickPhoneSave(inputPhoneProfile)} style={{marginLeft: "25px"}}>저장</button>
                                       <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -1050,8 +1267,10 @@ useEffect(() => {
                                     {/* 내 소개글 */}
                                     <div>
                                       <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 소개글</label>
-                                      <input type='text' name='introduce' placeholder={myIntroduce} style={{width:"600px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
+                                      <input type='text' name='introduce' placeholder={myIntroduce} value={inputIntroduceProfile} onChange={handleInputIntroduce} onClick={handleClickIntroduce} style={{width:"600px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
+                                      <button type='button' className="select-button-style" onClick={ handleClickIntroduceSave(inputIntroduceProfile) } style={{marginLeft: "25px"}}>저장</button>
+                                      
                                       <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
