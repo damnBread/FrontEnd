@@ -37,23 +37,40 @@ const Damnstory = () => {
 
     useEffect(() => {
         // Fetch data when the component mounts
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:3000/damnstory', {
-                    params: {
-                      page: 1 // Change this value to the appropriate page number
-                    }
-                  }) // Replace with the actual endpoint for fetching posts
-                console.log(response);
-                setPosts(response.data); // Assuming the response contains an array of posts
-                console.log(setPosts);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-
         fetchData();
     }, []);
+
+    function fetchData() {
+        axios.get('http://localhost:3000/damnstory', {
+                params: {
+                  page: 1 // Change this value to the appropriate page number
+                }
+              }) // Replace with the actual endpoint for fetching posts
+              .then((response) => {
+                console.log(response);
+                if (response.status === 204) {
+                    console.log("S: ", posts)
+                    
+                }
+                setPosts(response.data); // Assuming the response contains an array of posts
+                console.log(setPosts);
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+            
+        
+    };
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const [clickCount, setClickCount] = useState(0);

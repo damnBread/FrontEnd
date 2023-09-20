@@ -201,7 +201,7 @@ function SignUP() {
         Swal.fire({
           icon: "warning",
           title: "경고",
-          text: "거주지가 모두 선택되지 않았습니다. 다시 선택해주세요.",
+          text: "희망근무지역이 모두 선택되지 않았습니다. 다시 선택해주세요.",
           showCancelButton: false,
           confirmButtonText: "확인",
           width: 800,

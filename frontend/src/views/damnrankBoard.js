@@ -73,6 +73,11 @@ const DamnrankBoard = () => {
       }
     }
 
+    function getName(name) {
+      const changedName = name.replaceAll(name[1], "O");
+      return changedName;
+    }
+
     const sessionToken = sessionStorage.getItem('token');
 
     useEffect(() => {
@@ -214,7 +219,7 @@ const DamnrankBoard = () => {
               <span>
                   <img src={getGenderImage(rowData.gender)} className="gender-image" id="성별" width="70" alt="gender"/>
                     <span className="name-style">
-                      <b>{rowData.name}</b>
+                      <b>{getName(rowData.name)}</b>
                       
                       <span className="gender-age">
                           {getGender(rowData.gender)} {"/ "+ birthToAge(rowData.age) + "세"}
@@ -259,7 +264,7 @@ const DamnrankBoard = () => {
                                                     <img src={getGenderImage(selectedItem.gender)} className="gender-image" id="성별" width="120" alt="gender"/>
                                                     
                                                       <span className="name-style" style={{fontSize: "25px", marginLeft: "50px"}}>
-                                                        <b>{selectedItem.name}</b>
+                                                        <b>{getName(selectedItem.name)}</b>
 
                                                         <span className="title-style" style={{fontSize: "18px", marginTop: "15px", marginLeft: "2px"}}>
                                                           {selectedItem.title}
