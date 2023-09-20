@@ -46,6 +46,11 @@ const Damnprofile = () => {
     const [myHopeLocation, setMyHopeLocation] = useState("");     //희망 근무 지역
     const [myHopeJob, setMyHopeJob] = useState("");               //희망 업직종
 
+    const [nicknameDisabled, setNicknameDisabled] = useState(false);
+    const [emailDisabled, setEmailDisabled] = useState(false);
+    const [phoneDisabled, setPhoneDisabled] = useState(false);
+    const [introduceDisabled, setIntroduceDisabled] = useState(false);
+
     const [inputNicknameProfile, setInputNicknameProfile] = useState(null)
     const handleInputNickName = (e) => {
       setInputNicknameProfile(e.target.value);
@@ -128,37 +133,7 @@ const Damnprofile = () => {
       setBadgeIsActive(previousState => !previousState);
       toggleButtonValue()
     }
-
-    const toggleButtonValue = () => {
-      const toggleIsPublic = isNoShowActive + "|" + isNicknameActive + "|" + isEmailActive + "|" + isPhoneActive + "|" + 
-        isLocationActive + "|" + isHopeLocationActive + "|" + isHopeJobActive + "|" + isBadgeActive + "|" + isIntroduceActive;
-
-        //공개여부 patch
-        axios
-            .patch(`http://localhost:3000/mypage/setting`, {
-              isPublic: toggleIsPublic
-            },
-              { headers: {
-                Authorization: "Bearer " + sessionToken
-              }
-            })
-            .then((response) => {
-                setMyPublic(toggleIsPublic);
-            })
-            .catch((error)=>{
-              if (error.response) {
-                console.log("1", error.response.data);
-                console.log("2", error.response.status);
-                console.log("3", error.response.headers);
-              } else if (error.request) {
-                console.log("4", error.request);
-              } else {
-                console.log('Error', error.message);
-              }
-              console.log("5", error.config);
-            })
-    }
-
+   
     const handleClose = () => {
         setShow(false);           //모달창 닫기
     }
@@ -237,7 +212,6 @@ const DonghandleClickWorkArea = (dongItem) => {
 useEffect(() => {
   firstPage();
   toggleButtonValue();
-
 }, [isNoShowActive, isNicknameActive, isEmailActive, isPhoneActive, isLocationActive, 
   isHopeLocationActive, isHopeJobActive, isBadgeActive, isIntroduceActive]);
 
@@ -420,6 +394,37 @@ useEffect(() => {
       setSelectWorkJob([]);
     };    
 
+    const toggleButtonValue = () => {
+      const toggleIsPublic = isNoShowActive + "|" + isNicknameActive + "|" + isEmailActive + "|" + isPhoneActive + "|" + 
+        isLocationActive + "|" + isHopeLocationActive + "|" + isHopeJobActive + "|" + isBadgeActive + "|" + isIntroduceActive;
+
+        //공개여부 patch
+        axios
+            .patch(`http://localhost:3000/mypage/setting`, {
+              isPublic: toggleIsPublic
+            },
+              { headers: {
+                Authorization: "Bearer " + sessionToken
+              }
+            })
+            .then((response) => {
+                setMyPublic(toggleIsPublic);
+            })
+            .catch((error)=>{
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+            })
+    }
+
+
     const firstPage = () => {
       axios
             .get(`http://localhost:3000/mypage/setting`, {
@@ -538,6 +543,16 @@ useEffect(() => {
           setShowDamnRequest(true); 
         }
 
+        function onClickMyScrab() {
+          document.location.href = "/myScrab";
+        }
+
+        function onClickMyHistory() {
+          document.location.href = "/myHistory";
+        }
+
+
+        //변경 함수
         const handleClickNickname = () => {
           Swal.fire({
             icon: "warning",
@@ -550,11 +565,12 @@ useEffect(() => {
             height: 100,
           }).then((res) => {
               if (res.isConfirmed) {
+                setNicknameDisabled(true);
               }
           });
         }
 
-        const handleClickNicknameSave = (nickname) => {
+        function handleClickNicknameSave(nickname) {
           axios
             .patch(`http://localhost:3000/mypage/setting`, {
               nickname: nickname
@@ -602,11 +618,13 @@ useEffect(() => {
             height: 100,
         }).then((res) => {
             if (res.isConfirmed) {
+              setEmailDisabled(true);
+              
             }
         });
         }
 
-        const handleClickEmailSave = (email) => {
+        function handleClickEmailSave(email) {
           axios
             .patch(`http://localhost:3000/mypage/setting`, {
               email: email
@@ -653,11 +671,12 @@ useEffect(() => {
             height: 100,
         }).then((res) => {
             if (res.isConfirmed) {
+              setPhoneDisabled(true);
             }
         });
         }
         
-        const handleClickPhoneSave = (phone) => {
+        function handleClickPhoneSave(phone) {
           axios
             .patch(`http://localhost:3000/mypage/setting`, {
               phone: phone
@@ -705,11 +724,12 @@ useEffect(() => {
             height: 100,
         }).then((res) => {
             if (res.isConfirmed) {
+              setIntroduceDisabled(true);
             }
         });
         }
 
-        const handleClickIntroduceSave = (introduce) => {
+        function handleClickIntroduceSave(introduce) {
           axios
             .patch(`http://localhost:3000/mypage/setting`, {
               introduce: introduce
@@ -809,9 +829,10 @@ useEffect(() => {
                                   {/* 닉네임 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>닉네임</label>     
-                                      <input type='text' name='nick' placeholder={myNickname} value={inputNicknameProfile} onClick={ handleClickNickname } onChange={handleInputNickName} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
-                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
-                                      <button type='button' className="select-button-style" onClick={handleClickNicknameSave(inputNicknameProfile)} style={{marginLeft: "25px"}}>저장</button>
+                                      <input type='text' name='nick' placeholder={myNickname} value={inputNicknameProfile} onChange={handleInputNickName} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
+                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} disabled={nicknameDisabled ? false:true }/>
+                                      <button type='button' className="select-button-style" onClick={ () => handleClickNickname() } style={{marginLeft: "30px"}}>변경</button>
+                                      <button type='button' className="select-button-style" onClick={() => handleClickNicknameSave(inputNicknameProfile)} style={{marginLeft: "25px"}}>저장</button>
                                       <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -826,9 +847,10 @@ useEffect(() => {
                                   {/* 이메일 */}
                                     <div>
                                         <label className="content-label-style-profile1" style={{zIndex: 1}}>이메일</label>     
-                                        <input type='text' name='email' placeholder={myEmail} value={inputEmailProfile} onClick={handleClickEmail} onChange={handleInputEmail} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
-                                          borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
-                                        <button type='button' className="select-button-style" onClick={handleClickEmailSave(inputEmailProfile)} style={{marginLeft: "25px"}}>저장</button>
+                                        <input type='text' name='email' placeholder={myEmail} value={inputEmailProfile} onChange={handleInputEmail} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "15px", fontSize: "18px", 
+                                          borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} disabled={emailDisabled ? false:true }/>
+                                        <button type='button' className="select-button-style" onClick={() => handleClickEmail()} style={{marginLeft: "30px"}}>변경</button>
+                                        <button type='button' className="select-button-style" onClick={() => handleClickEmailSave(inputEmailProfile)} style={{marginLeft: "25px"}}>저장</button>
                                         <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -843,9 +865,10 @@ useEffect(() => {
                                     {/* 전화번호 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>전화번호</label>     
-                                      <input type='text' name='phone' placeholder={myPhoneNumber} onClick={handleClickPhone} value={inputPhoneProfile} onChange={handleInputPhone} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "-5px", fontSize: "18px", 
-                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
-                                        <button type='button' className="select-button-style" onClick={handleClickPhoneSave(inputPhoneProfile)} style={{marginLeft: "25px"}}>저장</button>
+                                      <input type='text' name='phone' placeholder={myPhoneNumber} value={inputPhoneProfile} onChange={handleInputPhone} style={{width:"350px", height: "40px", marginTop: "10px", marginLeft: "-5px", fontSize: "18px", 
+                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} disabled={phoneDisabled ? false:true }/>
+                                      <button type='button' className="select-button-style" onClick={() => handleClickPhone()} style={{marginLeft: "30px"}}>변경</button>
+                                      <button type='button' className="select-button-style" onClick={() => handleClickPhoneSave(inputPhoneProfile)} style={{marginLeft: "25px"}}>저장</button>
                                       <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -860,8 +883,8 @@ useEffect(() => {
                                     {/* 거주지 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>거주지</label>  
-                                      <button type='button' className="select-button-style" onClick={handleShow}>변경하기</button>   
-                                      <label style={{marginTop: "10px", marginLeft: "40px", fontSize: "16px", color: "#888888"}}>{myLocation}</label>
+                                      <label style={{marginTop: "10px", marginLeft: "20px", fontSize: "16px", color: "#888888"}}>{myLocation}</label>
+                                      <button type='button' className="select-button-style" onClick={handleShow} style={{marginLeft: "30px"}}>변경</button>   
                                       <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -872,9 +895,9 @@ useEffect(() => {
                                         />
                                       </span>
 
-                                      <Modal dialogClassName="custom-modal-content" show={show} onHide={handleClose}>
+                                      <Modal dialogClassName="custom-modal-content" style={{marginTop: "80px"}} show={show} onHide={handleClose}>
                                         <Modal.Header>
-                                            <Modal.Title>거주지 변경</Modal.Title>
+                                            <Modal.Title><h5>거주지 변경</h5></Modal.Title>
                                         </Modal.Header>
                                         <div className="custom-modal-box-whole">
                                             <Modal.Body>
@@ -941,7 +964,7 @@ useEffect(() => {
                                     {/* 희망근무지역 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1}}>희망근무지역</label>  
-                                      <button type='button' className="select-button-style" style={{marginLeft: "-36px"}} onClick={handleShowWorkArea}>변경하기</button>   
+                                      <button type='button' className="select-button-style" style={{marginLeft: "-36px"}} onClick={handleShowWorkArea}>변경</button>   
                                       <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -956,7 +979,7 @@ useEffect(() => {
                                       <label style={{marginTop: "20px", marginLeft: "240px", fontSize: "16px", color: "#888888", marginRight: "130px"}}>{replaceWorkJob(myHopeLocation)}</label>
                                       </div>
 
-                                      <Modal dialogClassName="custom-modal-content" show={showWorkArea} onHide={handleCloseWorkArea}>
+                                      <Modal dialogClassName="custom-modal-content" style={{marginTop: "80px"}} show={showWorkArea} onHide={handleCloseWorkArea}>
                                         <Modal.Header>
                                             <Modal.Title>
                                               <h5>희망 근무 지역 변경</h5>
@@ -1049,7 +1072,7 @@ useEffect(() => {
                                     {/* 희망 업직종 */}
                                     <div>
                                       <label className="content-label-style-profile1" style={{zIndex: 1, marginTop: "30px"}}>희망 업직종</label>  
-                                      <button type='button' className="select-button-style" style={{marginLeft: "-23px"}} onClick={handleShowWorkJob}>변경하기</button>   
+                                      <button type='button' className="select-button-style" style={{marginLeft: "-23px"}} onClick={handleShowWorkJob}>변경</button>   
                                       <span>
                                         <Switch
                                           trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -1064,7 +1087,7 @@ useEffect(() => {
                                       <label style={{marginTop: "20px", marginLeft: "240px", fontSize: "16px", color: "#888888"}}>{replaceWorkJob(myHopeJob)}</label>
                                       </div>
 
-                                      <Modal dialogClassName="job-box" show={showWorkJob} onHide={handleCloseWorkJob}>
+                                      <Modal dialogClassName="job-box" style={{marginTop: "80px"}} show={showWorkJob} onHide={handleCloseWorkJob}>
                                           <Modal.Header>
                                               <Modal.Title>
                                                 <h5>희망 업직종 선택 (최대 3개)</h5>
@@ -1267,9 +1290,10 @@ useEffect(() => {
                                     {/* 내 소개글 */}
                                     <div>
                                       <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 소개글</label>
-                                      <input type='text' name='introduce' placeholder={myIntroduce} value={inputIntroduceProfile} onChange={handleInputIntroduce} onClick={handleClickIntroduce} style={{width:"600px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
-                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} />
-                                      <button type='button' className="select-button-style" onClick={ handleClickIntroduceSave(inputIntroduceProfile) } style={{marginLeft: "25px"}}>저장</button>
+                                      <input type='text' name='introduce' placeholder={myIntroduce} value={inputIntroduceProfile} onChange={handleInputIntroduce} style={{width:"500px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
+                                        borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} disabled={introduceDisabled ? false:true } />
+                                      <button type='button' className="select-button-style" onClick={() => handleClickIntroduce()} style={{marginLeft: "30px"}}>변경</button> 
+                                      <button type='button' className="select-button-style" onClick={() => handleClickIntroduceSave(inputIntroduceProfile) } style={{marginLeft: "25px"}}>저장</button>
                                       
                                       <span>
                                         <Switch
@@ -1286,14 +1310,14 @@ useEffect(() => {
                                     {/* 내 스크랩 */}
                                     <div>
                                       <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 스크랩</label>
-                                        <button type='button' className="select-button-style" style={{marginLeft: "-10px"}}>보러가기</button>
+                                        <button type='button' className="select-button-style" onClick={onClickMyScrab} style={{marginLeft: "-10px"}}>보기</button>
                                     </div>
 
 
                                     {/* 내 땜빵이력 */}
                                     <div>
                                       <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 땜빵이력</label>
-                                        <button type='button' className="select-button-style" style={{marginLeft: "-25px"}}>보러가기</button>
+                                        <button type='button' className="select-button-style" onClick={onClickMyHistory} style={{marginLeft: "-25px"}}>보기</button>
                                     </div>
                                 
 

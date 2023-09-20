@@ -552,7 +552,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
 
                       <input type='text' className="inputAge-style" id='career' name='career' placeholder="0" value={InputCareer}
                              onChange={handleInputCarrer} style={{width: "150px", marginLeft: "100px"}} />
-                             <label className="inputAge-label-style" style={{marginLeft: "10px", marginRight: "30px"}}>개월 이상</label>
+                             <label className="inputAge-label-style" style={{marginLeft: "10px", marginRight: "30px"}}>회 이상</label>
                         <button type='button' onClick={handleCareerClick} className="inputAge-btn-style" disabled={!InputCareer}>확인</button>   
                       </label>
 

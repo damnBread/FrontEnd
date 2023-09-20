@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 const Header = () => {
 
   const [activeLink, setActiveLink] = useState(''); 
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies] = useCookies();
 
   let sessionId = sessionStorage.getItem('id');
   const sessionToken = sessionStorage.getItem('token');
@@ -95,6 +95,7 @@ const Header = () => {
     }).then((res) => {
       if (res.isConfirmed) {
         sessionId = sessionStorage.clear();
+        document.location.href = "/";
       }
       else{
           //취소
