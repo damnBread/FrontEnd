@@ -7,12 +7,14 @@ import "../assets/css/damnstorywrite.css";
 import "../assets/css/damnlistwrite.css";
 import Footer from "../components/Footers/Footer";
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'react-time-picker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Button from "@mui/material/Button";
 import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from "react-modal";
+
+
 
 
 const StyledSelect = styled.select`
@@ -22,9 +24,14 @@ const StyledSelect = styled.select`
     margin: 10px;
 `;
 
-const initialGenderLimit = "성별무관"; 
-const initialAgeLimit = "연령무관"; 
-const initialCareerLimit = "경력무관";
+const initialGenderLimit = null;
+const initialAgeLimit = [
+    {
+        min: 0,
+        max: 100,
+    }
+] 
+const initialCareerLimit = 0;
 
 const Damnlistwrite = () => {
     
@@ -36,9 +43,12 @@ const Damnlistwrite = () => {
     const [hourPay, setHourPay] = useState(""); //시급
     const [payMethod, setPayMethod] = useState("") //임금 지급 방법
     const [workStart, setWorkStart] = useState(new Date());
-    const [workFinish, setWorkFinish] = useState(new Date());
-    const [workPeriod, setWorkPeriod] = useState(1); //근무 기간(Date)
+    const [workEnd, setWorkEnd] = useState(new Date());
+    const [workDate, setWorkDate] = useState(new Date()); //근무 기간
+    const [workPeriod, setWorkPeriod] = useState(1);
     const [deadline, setDeadline] = useState("");
+    const [recruitNumber, setRecruitNumber] = useState(1); //모집인원(숫자)
+    const [additionalLimit, setAdditionalLimit] = useState(""); //우대사항
 
 
     const [isChecked, setIsChecked] = useState(false); 
@@ -70,6 +80,10 @@ const Damnlistwrite = () => {
         }
     };
 
+    const handleBranchChange = (event) => {
+        setBranchName(event.target.value);
+    }
+
     const handleJobChange = (event) => {
         setJob(event.target.value);
     };
@@ -95,26 +109,49 @@ const Damnlistwrite = () => {
         setHourPay(event.target.value);
     };
 
-    const handleworkPeriod = (event) => {
-        setWorkPeriod(event.target.value);
-    }
-
     const handleCheckboxChange = (event) => {
         setIsChecked(event.target.checked);
     };
 
+    const handleworkPeriod = (event) => {
+        setWorkDate(event.target.value);
+    }
+
     const handleStartDateChange = (event) => {
-        setWorkStart(event.target.value);
-        if (event.target.value > workFinish) {
-            setWorkFinish(event.target.value);
+        const selectedTime = event.target.value;
+        console.log("Selected Time:", selectedTime);
+    
+        const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+        if (timeRegex.test(selectedTime)) {
+            console.log("select time: ", selectedTime);
+            const [hour, minute] = selectedTime.split(":");
+            const combinedStartDate = new Date(workDate);
+            combinedStartDate.setHours(parseInt(hour, 10));
+            combinedStartDate.setMinutes(parseInt(minute, 10));
+            setWorkStart(combinedStartDate);
+        } else {
+            console.error("Invalid time format: " + selectedTime);
         }
-      };
+    };
     
     const handleEndDateChange = (event) => {
-        if (event.target.value >= workStart) {
-            setWorkFinish(event.target.value);
+        const selectedTime = event.target.value;
+    
+        const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+        if (timeRegex.test(selectedTime)) {
+            const [hour, minute] = selectedTime.split(":");
+            const combinedEndDate = new Date(workDate);
+            combinedEndDate.setHours(parseInt(hour, 10));
+            combinedEndDate.setMinutes(parseInt(minute, 10));
+            setWorkEnd(combinedEndDate);
+        } else {
+            console.error("Invalid time format: " + selectedTime);
         }
-      };
+    };
+    
+    
+    
+    
 
 
       const handleModalOpen = () => { //경력, 나이, 성별 모달창, 왜 안열리냐
@@ -147,6 +184,14 @@ const Damnlistwrite = () => {
         setIsDaumPostcodeOpen(false); // 모달 닫기
       };
 
+      const handlerecruitNumber = (event) => {
+        setRecruitNumber(event.target.value);
+      }
+
+      const handleadditionealLimit = (event) => {
+        setAdditionalLimit(event.target.value);
+      }
+
 
     const handleRegisterClick = async () => {
 
@@ -169,60 +214,77 @@ const Damnlistwrite = () => {
                 console.log("SSSSS: " + sessionToken);
 
 
-                //이런식으로 post 해야함
-                // const newJobData = {
-                //     branchName: branchName,
-                //     location: location,
-                //     hourPay: parseInt(hourPay), // Convert to integer
-                //     payMethod: payMethod, // Should be a Boolean (true/false)
-                //     job: [job], // Convert to an array with a single element
-                //     workStart: new Date(workStart), // 시작, 끝일 같음 / 하루만 일하기 때문
-                //     workFinish: new Date(workFinish), // 
-                //     workPeriod: parseInt(workPeriod), // 
+                
+                // let newJobData = {
                 //     title: title,
                 //     content: content,
-                //     deadline: new Date(deadline), // Convert to a Date object
-                //     genderLimit: genderLimit, // Should be a Boolean (true/false)
+                //     job: [job], //배열에 넣어서 보낼것
+                //     branchName: branchName,
+                //     location: location, //값 넣기
+                //     hourPay: parseInt(hourPay),
+                //     payMethod: payMethod, //true, false
+                //     deadline: new Date(deadline), //값 넣기
+                //     workPeriod: workPeriod, //근무기간
+                //     workStart: workStart, //시작, 끝시간을 Date로 보내야함, 바꿔야함
+                //     workEnd: workEnd,
+                //     genderLimit: genderLimit,
                 //     ageLimit: {
-                //       max: ageLimitMax, // Add age limit max
-                //       min: ageLimitMin, // Add age limit min
+                //         min: 20, // Set the selected minimum age
+                //         max: 30, // Set the selected maximum age
                 //     },
-                //     careerLimit: parseInt(careerLimit), // Convert to integer
-                //   };
-                
-                let newJobData = {
-                    title: title,
-                    content: content,
-                    job: [job], //배열에 넣어서 보낼것
-                    location: location, //값 넣기
-                    hourPay: parseInt(hourPay),
-                    payMethod: payMethod, //true, false
-                    deadline: new Date(deadline), //값 넣기
-                    workPeriod: workPeriod,
-                    workStart: workStart, //시작, 끝시간을 Date로 보내야함, 바꿔야함
-                    workFinish: workFinish,
-                    genderLimit: genderLimit,
-                    ageLimit: {
-                        min: 20, // Set the selected minimum age
-                        max: 30, // Set the selected maximum age
-                    },
-                    careerLimit: 0,
-                };
+                //     careerLimit: 0,
+                // };
 
                 //추가해야할것
                 //모집 마감일,
-                //성별, 연령, 경력 형식 바꾸기
+                //성별, 연령, 경력 형식 바꾸기  
 
 
+                console.log("token: ", sessionToken);
                 console.log("click regist");
                 console.log("title: ", title);
                 console.log("content: ", content);
-                console.log("token: ", sessionToken);
+                console.log("job: ", job);
+                console.log("branchName: ", branchName);
+                console.log("location: ", location);
+                console.log("hourPay: ", hourPay);
+                console.log("payMethod: ", payMethod);
+                console.log("deadline: ", deadline);
+                console.log("workDate: ", workDate);
+                console.log("workStart: ", workStart);
+                console.log("workEnd: ", workEnd);
+                console.log("workPeriod: ", workPeriod);
+                console.log("genderLimit: ", genderLimit);
+                console.log("ageLimit: ", ageLimit);
+                console.log("careerLimit: ", careerLimit);
                 
     
                 const response = await axios.post(
                     'http://localhost:3000/damnlist/new',
-                    newJobData, //배열에 넣어서 보냄
+                    {
+                        title: title,
+                        content: content,
+                        job: job, //배열에 넣어서 보낼것
+                        branchName: branchName,
+                        location: location, //값 넣기
+                        hourPay: parseInt(hourPay),
+                        payMethod: payMethod, //true, false
+                        deadline: new Date(deadline), //값 넣기
+                        // workDate: new Date(workDate), //근무기간
+                        workStart: new Date(workStart), //시작, 끝시간을 Date로 보내야함, 바꿔야함
+                        workEnd: new Date(workEnd),
+                        workPeriod: workPeriod,
+                        genderLimit: genderLimit,
+                        ageLimit: {
+                            min: 20,
+                            max: 30,
+                        },
+                        careerLimit: 0,
+                        recruitNumber: recruitNumber,
+                        additionalLimit: additionalLimit,
+
+
+                    },
 
                     {
                         headers: {
@@ -282,6 +344,19 @@ const Damnlistwrite = () => {
                     />
                 </div>
                 <div className="gray-line1"></div>
+
+                <div className="damnlistbranch">
+                    <p>점포명</p>
+                    <input
+                        type="text"
+                        className="branch-input"
+                        placeholder="점포명을 입력하세요."
+                        value={branchName}
+                        onChange={handleBranchChange}
+                    />
+                </div>
+                <div className="gray-line1"></div>
+
                 <div className="damnlistrecommend">
                     <p>업직종</p>
                     <input
@@ -339,9 +414,9 @@ const Damnlistwrite = () => {
                         onRequestClose={() => setIsDaumPostcodeOpen(false)}
                         style={{
                             content: {
-                              width: '50%', // 원하는 가로 크기로 설정
-                              height: '50%', // 원하는 세로 크기로 설정
-                              margin: 'auto', // 가운데 정렬
+                              width: '50%', 
+                              height: '50%', 
+                              margin: 'auto', 
                             },
                           }}
                         >
@@ -371,7 +446,7 @@ const Damnlistwrite = () => {
                     <input
                             type="text"
                             className="count-input"
-                            placeholder="숫자만 입력."
+                            placeholder="숫자만 입력"
                             value={hourPay}
                             onChange={handleCountChangeMoney}
                         />
@@ -427,9 +502,9 @@ const Damnlistwrite = () => {
                         <p>날짜</p>
                         <input
                             type="date"
-                            id="workPeriod"
-                            name="workPeriod"
-                            value={workPeriod}
+                            id="workDate"
+                            name="workDate"
+                            value={workDate}
                             onChange={handleworkPeriod}
                             style={{
                                 width: "130px",
@@ -448,7 +523,7 @@ const Damnlistwrite = () => {
                                 <p>시작시간</p>
                                 <input
                                     type="time"
-                                    value={workStart}
+                                    value={workStart.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                                     onChange={handleStartDateChange}
                                     style={{
                                         width: "130px",
@@ -460,12 +535,13 @@ const Damnlistwrite = () => {
                                         padding: ".5em",
                                     }}
                                 />
+
                             </div>
                             <div className="endtime">
                                 <p>끝시간</p>
                                 <input
                                     type="time"
-                                    value={workFinish}
+                                    value={workEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                                     onChange={handleEndDateChange}
                                     style={{
                                         width: "130px",
@@ -567,6 +643,34 @@ const Damnlistwrite = () => {
 
                 <div className="gray-line1"></div>
 
+                <div className="damnlistrecruitNumber">
+                    <p>모집인원</p>
+                    <input
+                            type="text"
+                            className="count-input"
+                            placeholder="숫자만 입력"
+                            value={recruitNumber}
+                            onChange={handlerecruitNumber}
+                        />
+                    <p>명</p>
+
+                </div>
+
+                <div className="gray-line1"></div>
+
+                <div className="damnlistadditionalLimit">
+                    <p>우대사항</p>
+                    <input
+                        type="text"
+                        className="branch-input"
+                        placeholder="우대사항을 입력하세요."
+                        value={additionalLimit}
+                        onChange={handleadditionealLimit}
+                    />
+                </div>
+
+                <div className="gray-line1"></div>
+
                 <div className="cancel-regist">
                     <Button
                         variant="outlined"
@@ -598,6 +702,8 @@ const Damnlistwrite = () => {
                         등록
                     </Button>
                 </div>
+
+
             </div>
             <Footer/>
             
