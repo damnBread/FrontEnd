@@ -273,7 +273,6 @@ const Damnlistwrite = () => {
                         // workDate: new Date(workDate), //근무기간
                         workStart: new Date(workStart), //시작, 끝시간을 Date로 보내야함, 바꿔야함
                         workEnd: new Date(workEnd),
-                        workPeriod: workPeriod,
                         genderLimit: genderLimit,
                         ageLimit: {
                             min: 20,
@@ -296,8 +295,8 @@ const Damnlistwrite = () => {
                 console.log(response);
                 console.log("title: ", response.data.title);
     
-                if (response.status === 201) {
-                    const newJobId = response.data; // This should be the new post's ID
+                if (response.status === 200) {
+                    // const newJobId = response.data; // This should be the new post's ID
                     sessionStorage.setItem("title", title);
                     sessionStorage.setItem("content", content);
                     alert('글이 작성되었습니다.');

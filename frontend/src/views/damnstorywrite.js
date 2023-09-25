@@ -72,7 +72,6 @@ const DamnStoryWrite = () => {
                     {
                         title: title,
                         content: content,
-                        // writerId: writerId,
                     },
                     {
                         headers: {
