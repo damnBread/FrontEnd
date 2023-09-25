@@ -1,6 +1,6 @@
 .custom-modal-content-rank11 {
-    width: 15000%; /* Adjust the width as per your requirement */
-    max-width: 1300px; /* Optional: Add a max-width to limit the modal's width */
+    width: 100%; /* Adjust the width as per your requirement */
+    max-width: 500px; /* Optional: Add a max-width to limit the modal's width */
     height: 100%;
     margin-top: 40px;
     margin-left: 370px;
@@ -18,8 +18,8 @@
 .default-filter-rank11 {
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 370px;
-    margin-right: 370px;
+    margin-left: 500px;
+    margin-right: 500px;
     padding-top: 10px;
     padding-bottom: 15px;
     border: 1px solid #D9D9D9;
@@ -79,7 +79,7 @@
 
 .address-style {
   position: absolute;
-  right: 430px;
+  right: 550px;
   float: right;
 }
 
@@ -87,7 +87,7 @@
   background-color: #ad1111;
   display: flex;
   width: 100%; /* Adjust the width as per your requirement */
-  max-width: 700px; /* Optional: Add a max-width to limit the modal's width */
+  max-width: 600px; /* Optional: Add a max-width to limit the modal's width */
   height: 90%;
   max-height: 1000px;
 }

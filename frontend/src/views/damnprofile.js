@@ -919,7 +919,7 @@ useEffect(() => {
                               {/* 내 정보 */}
                                 {showInfo && (
                                   <div>
-                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "985px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
+                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "905px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
                                   
 
                                   {/* 노쇼 */}
@@ -933,7 +933,7 @@ useEffect(() => {
                                           thumbColor={isNoShowActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={noShowToggleSwitch}
                                           value={isNoShowActive}
-                                          style={{marginTop: "-20px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-20px", marginLeft: "920px", marginRight: "50px"}}
                                         />
                                       </span>
                                     </div>
@@ -951,7 +951,7 @@ useEffect(() => {
                                           thumbColor={isNicknameActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={nicknameToggleSwitch}
                                           value={isNicknameActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
                                     </div>
@@ -969,7 +969,7 @@ useEffect(() => {
                                           thumbColor={isEmailActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={emailToggleSwitch}
                                           value={isEmailActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
                                       </div>
@@ -987,7 +987,7 @@ useEffect(() => {
                                           thumbColor={isPhoneActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={phoneToggleSwitch}
                                           value={isPhoneActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
                                     </div>
@@ -1003,7 +1003,7 @@ useEffect(() => {
                                           thumbColor={isLocationActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={locationToggleSwitch}
                                           value={isLocationActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
 
@@ -1083,7 +1083,7 @@ useEffect(() => {
                                           thumbColor={isHopeLocationActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={hopeLocationToggleSwitch}
                                           value={isHopeLocationActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
 
@@ -1191,7 +1191,7 @@ useEffect(() => {
                                           thumbColor={isHopeJobActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={hopeJobToggleSwitch}
                                           value={isHopeJobActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
 
@@ -1357,7 +1357,7 @@ useEffect(() => {
                                 {/* 내 활동 */}
                                 {showActivity && (
                                   <div>
-                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "985px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
+                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "905px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
                                   
                                     {/* 내 뱃지 */}
                                     <div>
@@ -1369,32 +1369,32 @@ useEffect(() => {
                                           thumbColor={isBadgeActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={badgeToggleSwitch}
                                           value={isBadgeActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
                                       </div>
-                                      <button type='button' className="badge1-button-style" disabled style={{marginTop: "30px", border: "4px solid #bfd1fce2", backgroundColor: "#bfd1fce2"}}>슈퍼 칼답러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{marginTop: "30px", border: "4px solid #FED4C8", backgroundColor: "#FED4C8"}}>슈퍼 칼답러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #f9cdccdb", backgroundColor: "#f9cdccdb"}}>슈퍼 성실러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #FAEDC0", backgroundColor: "#FAEDC0"}}>슈퍼 성실러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #fdffa5ef", backgroundColor: "#fdffa5ef"}}>슈퍼 친절러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #C8EBFA", backgroundColor: "#C8EBFA"}}>슈퍼 친절러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #caf5c3e2", backgroundColor: "#caf5c3e2"}}>슈퍼 일잘러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #D4B8E6", backgroundColor: "#D4B8E6"}}>슈퍼 일잘러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #e3bcfea9", backgroundColor: "#e3bcfea9"}}>슈퍼 단정러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #FFD6A3", backgroundColor: "#FFD6A3"}}>슈퍼 단정러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #ffc67166", backgroundColor: "#ffc67166"}}>슈퍼 대처러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #C2E8BE", backgroundColor: "#C2E8BE"}}>슈퍼 대처러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #8ae0e39d", backgroundColor: "#8ae0e39d"}}>슈퍼 꼼꼼러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #B4B6DB", backgroundColor: "#B4B6DB"}}>슈퍼 꼼꼼러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #ffa5e49f", backgroundColor: "#ffa5e49f"}}>슈퍼 긍정러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #F0C8F5", backgroundColor: "#F0C8F5"}}>슈퍼 긍정러</button>
                                       
                                     </div>
 
                                     {/* 내 소개글 */}
                                     <div>
                                       <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 소개글</label>
-                                      <input type='text' name='introduce' placeholder={myIntroduce} value={inputIntroduceProfile} onChange={handleInputIntroduce} style={{width:"500px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
+                                      <input type='text' name='introduce' placeholder={myIntroduce} value={inputIntroduceProfile} onChange={handleInputIntroduce} style={{width:"430px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} disabled={introduceDisabled ? false:true } />
                                       <button type='button' className="select-button-style" onClick={() => handleClickIntroduce()} style={{marginLeft: "30px"}}>변경</button> 
                                       <button type='button' className="select-button-style" onClick={() => handleClickIntroduceSave(inputIntroduceProfile) } style={{marginLeft: "25px"}}>저장</button>
@@ -1405,7 +1405,7 @@ useEffect(() => {
                                           thumbColor={isIntroduceActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={introduceToggleSwitch}
                                           value={isIntroduceActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px", marginRight: "50px"}}
                                         />
                                       </span>
                                       
@@ -1437,7 +1437,7 @@ useEffect(() => {
 
                                 {/* 내가 의뢰한 땜빵 */}
                                 {showDamnRequest && (
-                                  <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1300px"}}>
+                                  <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1500px", marginRight: "10px"}}>
                                     {requestDamn.map(rowData => (
                                       <div key={rowData.damnPublisher}
                                       className="requestdamn-box">
@@ -1465,8 +1465,8 @@ useEffect(() => {
 
                                         <div>
                                           <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
-                                          <button type='button' className="requestdamn-button">수정하기</button>
-                                          <button type='button' className="requestdamn-button">삭제하기</button>
+                                          <button type='button' className="requestdamn-button">리뷰 남기기</button>
+                                          <button type='button' className="requestdamn-button">수정/삭제하기</button>
                                         </div>
                                       </div>
                                     ))}

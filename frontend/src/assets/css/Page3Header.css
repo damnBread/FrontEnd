@@ -1,8 +1,8 @@
 .items-align-rank {
     display: flex;
     justify-content: center;
-    margin-left: 370px;
-    margin-right: 370px;
+    margin-left: 500px;
+    margin-right: 500px;
 }
 
 .default-filter-rank {
@@ -39,7 +39,7 @@
 
 .filter-select-rank  {
     margin-top: 50px;
-    margin-left: 775px;
+    margin-left: 500px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 15px;
@@ -56,16 +56,16 @@
 .custom-modal-box-whole-rank {
     display: flex;
     margin-top: 20px;
-    margin-left: 370px;
-    margin-right: 370px;
+    margin-left: 500px;
+    margin-right: 500px;
   }
 
 .custom-modal-content-rank {
     display: flex;
     border: 1px solid #E7E6E6;
-    width: 14000%; /* Adjust the width as per your requirement */
-    max-width: 1275px; /* Optional: Add a max-width to limit the modal's width */
-    height: 100%;
+    width: 1000%; /* Adjust the width as per your requirement */
+    max-width: 1000px; /* Optional: Add a max-width to limit the modal's width */
+    height: 90%;
 }
 
 .jobicon-margin {
@@ -74,13 +74,13 @@
 
 .custom-modal-content-rank1 {
   border: 1px solid #E7E6E6;
-  width: 15000%; /* Adjust the width as per your requirement */
-  max-width: 1275px; /* Optional: Add a max-width to limit the modal's width */
+  width: 1000%; /* Adjust the width as per your requirement */
+  max-width: 1000px; /* Optional: Add a max-width to limit the modal's width */
   height: 100%;
   max-height: 332px;
   margin-top: 20px;
-  margin-left: 370px;
-  margin-right: 370px;
+  margin-left: 500px;
+  margin-right: 500px;
 }
 
 .custom-modal-box-rank {
@@ -115,7 +115,7 @@
     margin-top: 15px;
     margin-bottom: 15px;
     width: 330%; 
-    max-width: 1500px;
+    max-width: 1000px;
 }
 
 .dong-items-container-rank {
@@ -129,7 +129,7 @@
 
 .scrollable-container-rank {
   max-height: 300px;
-  max-width: 1500px;
+  max-width: 1000px;
   overflow-y: auto;
 }
 
@@ -143,9 +143,9 @@
   }
 
 .added-work-areas-rank {
-  width: 1275px;
-  margin-left: 370px;
-  margin-right: 370px;
+  width: 1000px;
+  margin-left: 500px;
+  margin-right: 500px;
 }
 
 .work-icon1 {

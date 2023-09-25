@@ -291,7 +291,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
       <div className="items-align-rank">
         <div>
           <div>
-              <button type="button" onClick={handleToggleArea} className="filter-rank">
+              <button type="button" onClick={handleToggleArea} className="filter-rank" style={{marginLeft: "-15px"}}>
                 지역
                 <img src={selecticon} alt="selecticon" className="select-icon" width="15" style={{marginLeft: "30px", transform: `rotate(${imageRotationArea}deg)`}}/>
               </button> 
@@ -370,7 +370,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
               {showJob && (
                 <div className="custom-modal-content-rank1">
                                 <div className="work-icon1">
-                                    <div className={`icon-style ${SelectWorkJob.includes('카페') ? 'active' : ''}`} style={{position: "relative", left: "170px", top: "20px"}}>
+                                    <div className={`icon-style ${SelectWorkJob.includes('카페') ? 'active' : ''}`} style={{position: "relative", left: "40px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('카페')}>
                                           <img src={workbackground} width="105" alt="cafeImage1"/>
                                             <span style={{position: "absolute", top: "32px", left:"40px"}}>
@@ -383,7 +383,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                       </span>
                                     
                                     <span>
-                                      <div className={`icon-style ${SelectWorkJob.includes('서빙') ? 'active' : ''}`} style={{position: "relative", left:"250px", top: "20px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('서빙') ? 'active' : ''}`} style={{position: "relative", left:"120px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('서빙')}>
                                           <img src={workbackground} width="105" alt="platterImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
@@ -397,7 +397,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                     </span>
 
                                     <span>
-                                      <div className={`icon-style ${SelectWorkJob.includes('판매') ? 'active' : ''}`} style={{position: "relative", left:"330px", top: "20px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('판매') ? 'active' : ''}`} style={{position: "relative", left:"200px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('판매')}>
                                           <img src={workbackground} width="105" alt="saleImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
@@ -411,7 +411,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                     </span>
 
                                     <span>
-                                      <div className={`icon-style ${SelectWorkJob.includes('주방 보조') ? 'active' : ''}`} style={{position: "relative", left:"410px", top: "20px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('주방 보조') ? 'active' : ''}`} style={{position: "relative", left:"280px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('주방 보조')}>
                                           <img src={workbackground} width="105" alt="knifeImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
@@ -425,7 +425,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                     </span>
 
                                     <div>
-                                      <div className={`icon-style ${SelectWorkJob.includes('배달') ? 'active' : ''}`} style={{position: "relative", left:"490px", top: "20px"}}>
+                                      <div className={`icon-style ${SelectWorkJob.includes('배달') ? 'active' : ''}`} style={{position: "relative", left:"360px", top: "20px"}}>
                                         <button className="icon-style" onClick={() => handleWorkJobClick('배달')}>
                                           <img src={workbackground} width="105" alt="deliveryImage1"/>
                                             <span style={{position: "absolute", top: "37px", left:"40px"}}>
@@ -440,7 +440,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                   </div>
 
                                   <div className="work-icon">
-                                    <div className={`icon-style ${SelectWorkJob.includes('교육') ? 'active' : ''}`} style={{position: "relative", left: "170px", top: "70px"}}>
+                                    <div className={`icon-style ${SelectWorkJob.includes('교육') ? 'active' : ''}`} style={{position: "relative", left: "40px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('교육')}>
                                             <img src={workbackground} width="105" alt="educationImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
@@ -452,7 +452,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                             <b>교육</b>
                                         </span>
 
-                                        <div className={`icon-style ${SelectWorkJob.includes('스태프') ? 'active' : ''}`} style={{position: "relative", left: "250px", top: "70px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('스태프') ? 'active' : ''}`} style={{position: "relative", left: "120px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('스태프')}>
                                             <img src={workbackground} width="105" alt="staffImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
@@ -464,7 +464,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                             <b>스태프</b>
                                         </span>
 
-                                        <div className={`icon-style ${SelectWorkJob.includes('생산') ? 'active' : ''}`} style={{position: "relative", left: "330px", top: "70px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('생산') ? 'active' : ''}`} style={{position: "relative", left: "200px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('생산')}>
                                             <img src={workbackground} width="105" alt="designImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
@@ -476,7 +476,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                             <b>생산</b>
                                         </span>
 
-                                        <div className={`icon-style ${SelectWorkJob.includes('미디어') ? 'active' : ''}`} style={{position: "relative", left: "410px", top: "70px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('미디어') ? 'active' : ''}`} style={{position: "relative", left: "280px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('미디어')}>
                                             <img src={workbackground} width="105" alt="mediaImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
@@ -488,7 +488,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                                             <b>미디어</b>
                                         </span>
 
-                                        <div className={`icon-style ${SelectWorkJob.includes('고객 상담') ? 'active' : ''}`} style={{position: "relative", left: "490px", top: "70px"}}>
+                                        <div className={`icon-style ${SelectWorkJob.includes('고객 상담') ? 'active' : ''}`} style={{position: "relative", left: "370px", top: "70px"}}>
                                           <button className="icon-style" onClick={() => handleWorkJobClick('고객 상담')}>
                                             <img src={workbackground} width="105" alt="customerImage1"/>
                                               <span style={{position: "absolute", top: "35px", left:"38px"}}>
