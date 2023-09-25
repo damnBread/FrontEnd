@@ -94,8 +94,22 @@ const Damnprofile = () => {
 
     const [show, setShow] = useState(false);   //모달창
 
+    const [showApply, setShowApply] = useState(false); //모달창
+
     const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
     const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
+
+    // 내가 의뢰한 땜빵
+    const [requestDamn, setRequestDamn] = useState([{
+      damnpostId: "",
+      damnPublisher: "",
+      damnTitle: "",
+      damnCreated: "",
+      damnStart: "",
+      damnEnd: "",
+      damnBranch: "",
+      damnPay: ""
+    }])
 
     const noShowToggleSwitch = () => {
       setNoShowIsActive(previousState => !previousState);
@@ -137,6 +151,9 @@ const Damnprofile = () => {
     const handleClose = () => {
         setShow(false);           //모달창 닫기
     }
+    const handleCloseApply = () => {
+        setShowApply(false);
+    }
     const handleCloseWorkArea = () => {
         setShowWorkArea(false);   //모달창 닫기
     }
@@ -145,6 +162,7 @@ const Damnprofile = () => {
     }
 
     const handleShow = () =>{ setShow(true)};     //모달창 켜기
+    const handleShowApply = () => {setShowApply(true)};  //모달창 켜기
     const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
     const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
 
@@ -212,6 +230,7 @@ const DonghandleClickWorkArea = (dongItem) => {
 useEffect(() => {
   firstPage();
   toggleButtonValue();
+  requestDamnbread();
 }, [isNoShowActive, isNicknameActive, isEmailActive, isPhoneActive, isLocationActive, 
   isHopeLocationActive, isHopeJobActive, isBadgeActive, isIntroduceActive]);
 
@@ -433,6 +452,7 @@ useEffect(() => {
               }
             })
             .then((response) => {
+              console.log("reps: ", response.data);
                 setMyNoShow(response.data.noShow);
                 setMyId(response.data.id);
                 setMyName(response.data.name); 
@@ -448,9 +468,7 @@ useEffect(() => {
 
                 setMyIntroduce(response.data.introduce);
                 setMyBadge(response.data.badge);
-                setMyCareer(response.data.career);
-
-                console.log("career: ", myCareer);
+                setMyCareer(response.data.careerCnt);
                 
                 //땜빵이력, 스크랩 아직 ... 모르겟엉
 
@@ -763,6 +781,100 @@ useEffect(() => {
               console.log("5", error.config);
             })
         }
+
+
+
+
+        //내가 의뢰한 땜빵 GET
+        const requestDamnbread = () => {
+          axios
+                .get(`http://localhost:3000/mypage/requestlist`, {
+                  headers: {
+                    Authorization: "Bearer " + sessionToken
+                  }
+                })
+                .then((response) => {
+                  console.log("requestDamn: ", response.data);
+                  const _inputData = response.data.map((rowData) => ({
+                    damnpostId: rowData.postId,
+                    damnPublisher: rowData.publisher,
+                    damnTitle: rowData.title,
+                    damnCreated: rowData.createdDate,
+                    damnStart: rowData.workStart,
+                    damnEnd: rowData.workEnd,
+                    damnBranch: rowData.branchName,
+                    damnPay: rowData.hourPay
+                  })
+                  )
+                  setRequestDamn(_inputData);
+                    
+                })
+                .catch((error)=>{
+                  if (error.response.status === 400) {
+                    Swal.fire({
+                      icon: "warning",
+                      title: "경고",
+                      text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
+                      showCancelButton: true,
+                      confirmButtonText: "확인",
+                      cancelButtonText: "취소",
+                      width: 800,
+                      height: 100,
+                  }).then((res) => {
+                      if (res.isConfirmed) {
+                           //삭제 요청 처리
+                          history.push('/Login'); // SignUP으로 url 이동
+                          window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                      }
+                  });
+                  }
+                })
+              }       
+              
+              function timeConversion(time) {
+                const timecv = time.split('T');
+                const timecv1 = timecv[1].split('.');
+                const timecv2 = timecv1[0].split(":");
+                const time1 = timecv[0] + " " + timecv2[0] + ":" + timecv2[1];
+                return time1;
+              }
+
+              //지원자 보기 눌렀을 때
+              function profileApplyFirst(postid) {
+                axios
+                    .get(`http://localhost:3000/mypage/requestlist/${postid}/appliance`, {
+                      headers: {
+                        Authorization: "Bearer " + sessionToken
+                      }
+                    })
+                .then(async response => {
+                    console.log(response);
+                    console.log("지원자 보기 끝 !")
+                    setShowApply(true);
+                    
+                })
+                .catch((error) => {
+                    if (error.response.status === 400) {
+                        Swal.fire({
+                          icon: "warning",
+                          title: "경고",
+                          text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
+                          showCancelButton: true,
+                          confirmButtonText: "확인",
+                          cancelButtonText: "취소",
+                          width: 800,
+                          height: 100,
+                      }).then((res) => {
+                          if (res.isConfirmed) {
+                               //삭제 요청 처리
+                              history.push('/Login'); // SignUP으로 url 이동
+                              window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                          }
+                      });
+                    }
+                });
+            };
+        
         
     return (
       <div className="damnprofilewhole">
@@ -1238,15 +1350,7 @@ useEffect(() => {
                                               </Button>
                                           </Modal.Footer>
                                       </Modal>
-
-
                                     </div>
-
-
-
-
-
-
                                   </div>
                                 )}
 
@@ -1322,6 +1426,91 @@ useEffect(() => {
                                 
 
                                   </div> 
+                                )}
+                                
+                                {/* 내가 지원한 땜빵 */}
+                                {showDamnApply && (
+                                    <div>
+                                    </div>
+                                )}
+
+
+                                {/* 내가 의뢰한 땜빵 */}
+                                {showDamnRequest && (
+                                  <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1300px"}}>
+                                    {requestDamn.map(rowData => (
+                                      <div key={rowData.damnPublisher}
+                                      className="requestdamn-box">
+                                        <div style={{marginLeft: "25px", marginTop: "20px"}}>
+                                          <b>{rowData.damnTitle}</b>
+                                          <span style={{float: "right", marginRight: "15px"}}>
+                                          {timeConversion(rowData.damnCreated)}
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
+                                          {timeConversion(rowData.damnStart)} ~ {timeConversion(rowData.damnEnd)}
+                                        </div>
+                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
+                                            {rowData.damnBranch}
+                                        <div>
+                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
+                                              {rowData.damnPay}
+                                        </div>
+                                        
+
+                                        {/* 진행중, 매칭완료, 근무중, 근무완료, 일당미지급, 매칭종료 */}
+
+
+                                        <div>
+                                          <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
+                                          <button type='button' className="requestdamn-button">수정하기</button>
+                                          <button type='button' className="requestdamn-button">삭제하기</button>
+                                        </div>
+                                      </div>
+                                    ))}
+
+                                    {/* 지원자 보기 모달창 */}
+                                      <Modal dialogClassName="modal-whole-rank" show={showApply} onHide={handleCloseApply}>
+                                          {(
+                                              <div>
+                                                  <Modal.Body>
+                                                      {/* <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
+                                                      {requestDamn.map(rowData => (
+                                                    <div key={rowData.damnPublisher}
+                                                      // onClick={() => selectDamn(rowData.damnpostId)}
+                                                      // className={`requestdamn-box ${selectedDamn === rowData.damnpostId ? 'selected' : ''}`}
+                                                      style={{width: "550px", height: "200px", marginTop: "10px", marginBottom: "25px"}}>
+                                                          <div style={{marginLeft: "25px", marginTop: "20px"}}>
+                                                            <b>{erowData.damnTitl}</b>
+                                                          </div>
+
+                                                          <div>
+                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "20px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
+                                                            {timeConversion(rowData.damnStart)} ~ {timeConversion(rowData.damnEnd)}
+                                                          </div>
+                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
+                                                              {rowData.damnBranch}
+                                                          <div>
+                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
+                                                                {rowData.damnPay}
+                                                          </div>
+                                                        </div>
+                                                      ))}
+                                                      </div> */}
+                                                  </Modal.Body>
+
+                                                </div>
+                                              )}
+                                              <Modal.Footer>
+                                                  <Button className="footer-style" varient="primary">
+                                                      전달하기
+                                                  </Button>
+                                              </Modal.Footer>
+                                          </Modal>
+
+                                  </div>
                                 )}
 
 

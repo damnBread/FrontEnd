@@ -84,6 +84,18 @@ function Login() {
             });
         });
     };
+
+    function onClickFindId() {
+        console.log("IDID");
+        document.location.href = "/findID";
+        window.scrollTo(0, 0);
+    }
+
+    function onClickFindPW() {
+        console.log("PWPW");
+        document.location.href = "/findPW";
+        window.scrollTo(0, 0);
+    }
     
     return(
         <div>
@@ -117,9 +129,9 @@ function Login() {
                          style={{width: "11px", height: "11px", marginTop: "9px", color: "#BF5E49"}} checked={infoSave}
                          onChange={handleInfoSaveChange}/><b> 아이디 저장</b></label>
                         
-                    <label style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "153px"}}>아이디 찾기</label>
+                    <label onClick={onClickFindId} style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "153px"}}>아이디 찾기</label>
                     <label style={{fontSize: "7px", color: "#7F7F7F", marginLeft: "8px", marginRight: "8px"}}>|</label>
-                    <label style={{fontSize: "7px", color: "#7F7F7F"}}>비밀번호 찾기</label>
+                    <label onClick={onClickFindPW} style={{fontSize: "7px", color: "#7F7F7F"}}>비밀번호 찾기</label>
 
                     <div>
                         <Link to={'/Agreement'}>

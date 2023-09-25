@@ -172,5 +172,27 @@ font-size: 27px;
   right: 0px;
 }
 
+.requestdamn-box {
+  margin-left: 55px;
+  margin-top: 35px;
+  margin-bottom: 50px;
+  width: 100%;
+  max-width: 1000px;
+  height: 300px;
+  max-height: 500px;
+  border: 1px solid #797979;
+  border-radius: 5px;
+}
 
+.requestdamn-button {
+  margin-top: 88px;
+  height: 50px;
+  width: 33.33%;
+  max-width: 500px;
+  color: #797979;
+  border: 1px solid #797979;
+  border-radius: 5px;
+  background-color: white;
+  margin-bottom: 5px;
+}
   
