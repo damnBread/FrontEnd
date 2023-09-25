@@ -11,8 +11,8 @@
   }
   
   .content-wrapper {
-    display: flex; /* Use flexbox layout for the content */
-    align-items: center; /* Align items vertically in the center */
+    display: flex; 
+    align-items: center; 
     margin-top: 60px;
     margin-left: 120px;
   }
@@ -23,6 +23,8 @@
   
   .content-wrapper button {
     margin-left: 20px; /* Added margin to the button */
+    margin-top: 50px;
+    
   }
 
   .filtering {
@@ -55,4 +57,21 @@
   .listcount {
     margin-top: 60px;
     margin-left: 150px;
+  }
+
+  .damnlistcount {
+    display: flex; 
+    align-items: center; 
+  }
+
+  .damnlistcount p {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    margin-top: 60px;
+    margin-left: 200px;
+  }
+
+  .damnlistwrite {
+    margin-left: 1500px;
+    margin-top: 50px;
   }
