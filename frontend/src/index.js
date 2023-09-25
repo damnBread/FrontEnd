@@ -36,11 +36,15 @@ import damnlistwrite from "./views/damnlistwrite";
 import Page1Header from "./views/Page1Header";
 import Page2Header from "./views/Page2Header";
 import damnrank from "./views/damnrank";
+import Findid from "./views/findid";
+import Findpw from "./views/findpw";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Switch>
       <Route exact path="/Login" component={Login} />
+      <Route exact path="/findID" component={Findid}/>
+      <Route exact path="/findPW" component={Findpw}/>
       <Route exact path="/SignUP" component={SignUP} />
       <Route exact path="/Agreement" component={Agreement} />
       <Route exact path="/Header" component={Header} />
