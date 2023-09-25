@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Footer from "../components/Footers/Footer";
 import { Link } from 'react-router-dom';
 import '../assets/css/damnlistBoard.css';
@@ -6,6 +7,22 @@ import '@fontsource/inter';
 import ReactPaginate from 'react-paginate'; 
 
 const DamnlistBoard = () => {
+
+  useEffect(() => {
+    fetchDamnList();
+}, []);
+
+const [damnData, setDamnData] = useState([{
+  damnpostId: "",
+  damnPublisher: "",
+  damnTitle: "",
+  damnCreated: "",
+  damnStart: "",
+  damnEnd: "",
+  damnBranch: "",
+  damnPay: ""
+}])
+
   // 더미
   const boardData = [
     { id: 1, title: '컴포즈커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/07/15 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: '컴포즈 공릉점', price: 10000 },
@@ -15,6 +32,46 @@ const DamnlistBoard = () => {
     { id: 5, title: '이디아커피 평일마감 하루 경력자 구합니다. ', createdAt: '2023/08/11 16:00 ~ 2023/08/11 23:00', time: '2023/07/15 18:00', workplace: 'ABC마트 홍대점', price: 12000 },
     { id: 6, title: 'ABC마트 홍대점 하루 땜빵 구해요. ', createdAt: '2023/07/16 18:00 ~ 2023/07/16 22:00', time: '2023/07/15 18:00', workplace: 'Workplace 2', price: 12000 },
   ];
+
+  function fetchDamnList() {
+    const page = 1; 
+  
+    axios
+      .get(`http://localhost:3000/damnlist`, { 
+        params: { page }
+      })
+      .then((response) => {
+          console.log("list: ", response.data);
+
+          const _inputData = response.data.map((rowData) => ({
+            damnpostId: rowData.postId,
+            damnPublisher: rowData.publisher,
+            damnTitle: rowData.title,
+            damnCreated: rowData.createdDate,
+            damnStart: rowData.workStart,
+            damnEnd: rowData.workEnd,
+            damnBranch: rowData.branchName,
+            damnPay: rowData.hourPay
+          })
+          )
+
+          setDamnData(_inputData);
+          console.log("damn: ", damnData)
+          
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log("1", error.response.data);
+          console.log("2", error.response.status);
+          console.log("3", error.response.headers);
+        } else if (error.request) {
+          console.log("4", error.request);
+        } else {
+          console.log('Error: ', error.message);
+        }
+        console.log("5", error.config);
+      });
+}
 
   const itemsPerPage = 10; // Number of items to display per page
   const totalPages = Math.ceil(boardData.length / itemsPerPage); // Calculate total pages
@@ -29,41 +86,55 @@ const DamnlistBoard = () => {
     return boardData.slice(startIndex, startIndex + itemsPerPage);
   };
 
+  const timeConversion = (time) => {
+    if (typeof time !== 'string') {
+      return 'Invalid input';
+    }
+  
+    const timecv = time.split('T');
+    if (timecv.length !== 2) {
+      return 'Invalid input';
+    }
+  
+    const timecv1 = timecv[1].split('.');
+    if (timecv1.length !== 2) {
+      return 'Invalid input';
+    }
+
+    const timecv2 = timecv1[0].split(':');
+  
+    const time1 = timecv[0] + ' ' +  timecv2[0] + ":" + timecv2[1];
+    return time1;
+  };
+
   return (
     <div className="boardlist">
 
-      {getCurrentPageItems().map((item) => (
-        <div
-          key={item.id}
-          className={`rectangle rounded-rectangle rounded-rectangle${item.id}`}
-          style={{ marginTop: '40px' }}
-        > 
+      <div>
+            {damnData.map(rowData => (
+              <div key={rowData.damnPublisher}
+              className="damnitem-box">
+                <div style={{marginLeft: "25px", marginTop: "20px"}}>
+                  <b>{rowData.damnTitle}</b>
+                  <span style={{float: "right", marginRight: "50px"}}>
+                  {timeConversion(rowData.damnCreated)}
+                    </span>
+                </div>
 
-          <Link to={`/damnlistdetails/${item.id}`} className="link-no-underline">
-            <p className="title" style={{ fontFamily: 'Inter', fontWeight: 'bold'}}>
-              {item.title}
-            </p>
-          </Link>
-
-          <p className="time" style={{ fontFamily: 'Inter', fontWeight: 'bold', float: 'right'}}>
-              {item.time}
-            </p>
-
-          <p className="worktime" style={{ fontFamily: 'Inter', fontWeight: 'bold' }}>
-            근무시간&nbsp;
-            <span style={{ marginLeft: '60px' }}>{item.createdAt}</span>
-          </p>
-
-          <p className="workplace" style={{ fontFamily: 'Inter', fontWeight: 'bold' }}>
-            근무장소&nbsp;
-            <span style={{ marginLeft: '60px' }}>{item.workplace}</span>
-          </p>
-          <p className="workprice" style={{ fontFamily: 'Inter', fontWeight: 'bold' }}>
-            시급&nbsp;
-            <span style={{ marginLeft: '60px' }}>{item.price}</span>
-          </p>
-        </div>
-      ))}
+                <div>
+                  <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "40px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
+                  {timeConversion(rowData.damnStart)} ~ {timeConversion(rowData.damnEnd)}
+                </div>
+                  <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
+                    {rowData.damnBranch}
+                <div>
+                  <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
+                      {rowData.damnPay}
+                </div>
+                
+              </div>
+            ))}
+            </div>
 
 
       {/* Pagination */}
