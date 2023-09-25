@@ -36,6 +36,7 @@ import damnlistwrite from "./views/damnlistwrite";
 import Page1Header from "./views/Page1Header";
 import Page2Header from "./views/Page2Header";
 import damnrank from "./views/damnrank";
+import damnprofileApply from "./views/damnprofileApply";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -57,6 +58,7 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/damnlist/new" component={damnlistwrite} />
       <Route exact path="/damnlist/:listid" component={damnlistDetail} />
       <Route exact path="/damnprofile" component={damnprofile}/>
+      <Route exact path="/damnprofile/apply" component={damnprofileApply} />
     </Switch>
   </BrowserRouter>
 );

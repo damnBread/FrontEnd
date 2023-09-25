@@ -296,7 +296,7 @@ const Damnlistwrite = () => {
                 console.log(response);
                 console.log("title: ", response.data.title);
     
-                if (response.status === 201) {
+                if (response.status === 200) {
                     const newJobId = response.data; // This should be the new post's ID
                     sessionStorage.setItem("title", title);
                     sessionStorage.setItem("content", content);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../assets/css/damnrankBoard.css";
 import rank from "../assets/img/damnRank.png";
 import man from "../assets/img/damnRank-man-icon.png";
@@ -18,7 +19,11 @@ const DamnrankBoard = () => {
         setNowTime(Date.now())
     },1000)
 
+  const history = useHistory();
+
   const [selectedItem, setSelectedItem] = useState(null);
+  
+  const [selectedDamn, setSelectedDamn] = useState(null);
 
   const [inputData, setInputData] = useState([{
     userid: 0,
@@ -34,10 +39,28 @@ const DamnrankBoard = () => {
     address: ""
   }])
 
+  // 내가 의뢰한 땜빵
+  const [requestDamn, setRequestDamn] = useState([{
+    damnpostId: "",
+    damnPublisher: "",
+    damnTitle: "",
+    damnCreated: "",
+    damnStart: "",
+    damnEnd: "",
+    damnBranch: "",
+    damnPay: ""
+  }])
+
   const [show, setShow] = useState(false);   //모달창
+
+  const [showShare, setShowShare] = useState(false); //공고 전달하기 모달창
 
   const handleClose = () => {
     setShow(false);   //모달창 닫기
+  }
+
+  const handleShareClose = () => {
+    setShowShare(false);   //공고 전달하기 모달창 닫기
   }
 
     function getBadgeBackgroundColor(badgeValue) {
@@ -108,7 +131,7 @@ const DamnrankBoard = () => {
           params: { page }
         })
         .then((res) => {
-            console.log(res.data);
+            console.log("Res: ", res.data);
 
             const _inputData = res.data.map((rowData) => ({
               userid: rowData.userId,
@@ -117,8 +140,8 @@ const DamnrankBoard = () => {
               score: rowData.score,
               gender: rowData.gender,
               age: rowData.birth,
-              career: 15,
-              badge: "적극 응답",
+              career: rowData.careerCnt,
+              badge: rowData.badge,
               title: rowData.introduce,
               workJob: rowData.hopeJob,
               address: rowData.home
@@ -194,6 +217,83 @@ const DamnrankBoard = () => {
     const replaceWorkJob = workJob.replaceAll("|", ", ");
     return replaceWorkJob;
   }
+
+   //내가 의뢰한 땜빵 GET
+   function requestDamnbread() {
+    if (!showShare) {
+      setShowShare(true);
+      axios
+          .get(`http://localhost:3000/mypage/requestlist`, {
+            headers: {
+              Authorization: "Bearer " + sessionToken
+            }
+          })
+          .then((response) => {
+            console.log("requestDamn: ", response.data);
+            const _inputData = response.data.map((rowData) => ({
+              damnpostId: rowData.postId,
+              damnPublisher: rowData.publisher,
+              damnTitle: rowData.title,
+              damnCreated: rowData.createdDate,
+              damnStart: rowData.workStart,
+              damnEnd: rowData.workEnd,
+              damnBranch: rowData.branchName,
+              damnPay: rowData.hourPay
+            })
+            )
+            setRequestDamn(_inputData);
+              
+          })
+          .catch((error)=>{
+            if (error.response.status === 400) {
+              Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
+                showCancelButton: true,
+                confirmButtonText: "확인",
+                cancelButtonText: "취소",
+                width: 800,
+                height: 100,
+            }).then((res) => {
+                if (res.isConfirmed) {
+                     //삭제 요청 처리
+                    history.push('/Login'); // SignUP으로 url 이동
+                    window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                }
+            });
+            }
+          })
+        }
+        }       
+
+        
+        const timeConversion = (time) => {
+          if (typeof time !== 'string') {
+            return 'Invalid input';
+          }
+        
+          const timecv = time.split('T');
+          if (timecv.length !== 2) {
+            return 'Invalid input';
+          }
+        
+          const timecv1 = timecv[1].split('.');
+          if (timecv1.length !== 2) {
+            return 'Invalid input';
+          }
+
+          const timecv2 = timecv1[0].split(':');
+        
+          const time1 = timecv[0] + ' ' +  timecv2[0] + ":" + timecv2[1];
+          return time1;
+        };
+        
+
+        function selectDamn(post_id) {
+           setSelectedDamn(post_id);
+           console.log("DD: ", selectedDamn);
+        }
 
   return (
     <div>
@@ -308,8 +408,47 @@ const DamnrankBoard = () => {
                                     <Button className="footer-style" varient="primary">
                                         채팅하기
                                     </Button>
-                                    <Button className="footer-style" varient="primary">
+                                    <Button className="footer-style" varient="primary" onClick={() => requestDamnbread()}>
                                         공고 전달하기
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
+
+
+                            <Modal dialogClassName="modal-whole-rank" show={showShare} onHide={handleShareClose}>
+                            {(
+                                <div>
+                                    <Modal.Body>
+                                        <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
+                                        {requestDamn.map(rowData => (
+                                      <div key={rowData.damnPublisher}
+                                        onClick={() => selectDamn(rowData.damnpostId)}
+                                        className={`requestdamn-box ${selectedDamn === rowData.damnpostId ? 'selected' : ''}`}
+                                        style={{width: "550px", height: "200px", marginTop: "10px", marginBottom: "25px"}}>
+                                            <div style={{marginLeft: "25px", marginTop: "20px"}}>
+                                              <b>{rowData.damnTitle}</b>
+                                            </div>
+
+                                            <div>
+                                              <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "20px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
+                                              {timeConversion(rowData.damnStart)} ~ {timeConversion(rowData.damnEnd)}
+                                            </div>
+                                              <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
+                                                {rowData.damnBranch}
+                                            <div>
+                                              <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
+                                                  {rowData.damnPay}
+                                            </div>
+                                          </div>
+                                        ))}
+                                        </div>
+                                    </Modal.Body>
+
+                                  </div>
+                                )}
+                                <Modal.Footer>
+                                    <Button className="footer-style" varient="primary">
+                                        전달하기
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
