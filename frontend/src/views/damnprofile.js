@@ -94,6 +94,8 @@ const Damnprofile = () => {
 
     const [show, setShow] = useState(false);   //모달창
 
+    const [showApply, setShowApply] = useState(false); //모달창
+
     const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
     const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
 
@@ -149,6 +151,9 @@ const Damnprofile = () => {
     const handleClose = () => {
         setShow(false);           //모달창 닫기
     }
+    const handleCloseApply = () => {
+        setShowApply(false);
+    }
     const handleCloseWorkArea = () => {
         setShowWorkArea(false);   //모달창 닫기
     }
@@ -157,6 +162,7 @@ const Damnprofile = () => {
     }
 
     const handleShow = () =>{ setShow(true)};     //모달창 켜기
+    const handleShowApply = () => {setShowApply(true)};  //모달창 켜기
     const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
     const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
 
@@ -833,11 +839,41 @@ useEffect(() => {
                 return time1;
               }
 
-              function onClickDamnApply(postid) {
-                history.push({pathname: '/damnprofile/apply', state: {postid}});
-                console.log("oist: ", postid);
-                window.scrollTo(0, 0); 
-              }
+              //지원자 보기 눌렀을 때
+              function profileApplyFirst(postid) {
+                axios
+                    .get(`http://localhost:3000/mypage/requestlist/${postid}/appliance`, {
+                      headers: {
+                        Authorization: "Bearer " + sessionToken
+                      }
+                    })
+                .then(async response => {
+                    console.log(response);
+                    console.log("지원자 보기 끝 !")
+                    setShowApply(true);
+                    
+                })
+                .catch((error) => {
+                    if (error.response.status === 400) {
+                        Swal.fire({
+                          icon: "warning",
+                          title: "경고",
+                          text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
+                          showCancelButton: true,
+                          confirmButtonText: "확인",
+                          cancelButtonText: "취소",
+                          width: 800,
+                          height: 100,
+                      }).then((res) => {
+                          if (res.isConfirmed) {
+                               //삭제 요청 처리
+                              history.push('/Login'); // SignUP으로 url 이동
+                              window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                          }
+                      });
+                    }
+                });
+            };
         
         
     return (
@@ -1428,12 +1464,51 @@ useEffect(() => {
 
 
                                         <div>
-                                          <button type='button' onClick={() => onClickDamnApply(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
+                                          <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
                                           <button type='button' className="requestdamn-button">수정하기</button>
                                           <button type='button' className="requestdamn-button">삭제하기</button>
                                         </div>
                                       </div>
                                     ))}
+
+                                    {/* 지원자 보기 모달창 */}
+                                      <Modal dialogClassName="modal-whole-rank" show={showApply} onHide={handleCloseApply}>
+                                          {(
+                                              <div>
+                                                  <Modal.Body>
+                                                      {/* <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
+                                                      {requestDamn.map(rowData => (
+                                                    <div key={rowData.damnPublisher}
+                                                      // onClick={() => selectDamn(rowData.damnpostId)}
+                                                      // className={`requestdamn-box ${selectedDamn === rowData.damnpostId ? 'selected' : ''}`}
+                                                      style={{width: "550px", height: "200px", marginTop: "10px", marginBottom: "25px"}}>
+                                                          <div style={{marginLeft: "25px", marginTop: "20px"}}>
+                                                            <b>{erowData.damnTitl}</b>
+                                                          </div>
+
+                                                          <div>
+                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "20px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
+                                                            {timeConversion(rowData.damnStart)} ~ {timeConversion(rowData.damnEnd)}
+                                                          </div>
+                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
+                                                              {rowData.damnBranch}
+                                                          <div>
+                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
+                                                                {rowData.damnPay}
+                                                          </div>
+                                                        </div>
+                                                      ))}
+                                                      </div> */}
+                                                  </Modal.Body>
+
+                                                </div>
+                                              )}
+                                              <Modal.Footer>
+                                                  <Button className="footer-style" varient="primary">
+                                                      전달하기
+                                                  </Button>
+                                              </Modal.Footer>
+                                          </Modal>
 
                                   </div>
                                 )}
