@@ -94,7 +94,8 @@ const Damnprofile = () => {
 
     const [show, setShow] = useState(false);   //모달창
 
-    const [showApply, setShowApply] = useState(false); //모달창
+    const [showApply, setShowApply] = useState(false); //지원자 보기 모달창
+    const [showReview, setShowReview] = useState(false); //리뷰 남기기 모달창
 
     const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
     const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
@@ -151,8 +152,11 @@ const Damnprofile = () => {
     const handleClose = () => {
         setShow(false);           //모달창 닫기
     }
-    const handleCloseApply = () => {
+    const handleCloseApply = () => {  //지원자 보기 모달창
         setShowApply(false);
+    }
+    const handleCloseReview = () => {   //리뷰 남기기 모달창
+        setShowReview(false);
     }
     const handleCloseWorkArea = () => {
         setShowWorkArea(false);   //모달창 닫기
@@ -162,7 +166,8 @@ const Damnprofile = () => {
     }
 
     const handleShow = () =>{ setShow(true)};     //모달창 켜기
-    const handleShowApply = () => {setShowApply(true)};  //모달창 켜기
+    const handleShowApply = () => {setShowApply(true)};  //지원자 보기 모달창 켜기
+    const handleShowReview = () => {setShowReview(true)};  //리뷰 남기기 모달창 켜기
     const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
     const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
 
@@ -508,9 +513,8 @@ useEffect(() => {
                   height: 100,
               }).then((res) => {
                   if (res.isConfirmed) {
-                       //삭제 요청 처리
-                      history.push('/Login'); // SignUP으로 url 이동
-                      window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                      history.push('/Login'); 
+                      window.scrollTo(0, 0);  
                   }
               });
               }
@@ -822,9 +826,8 @@ useEffect(() => {
                       height: 100,
                   }).then((res) => {
                       if (res.isConfirmed) {
-                           //삭제 요청 처리
-                          history.push('/Login'); // SignUP으로 url 이동
-                          window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                          history.push('/Login'); 
+                          window.scrollTo(0, 0);  
                       }
                   });
                   }
@@ -839,7 +842,7 @@ useEffect(() => {
                 return time1;
               }
 
-              //지원자 보기 눌렀을 때
+              //지원자 보기 이벤트 발생 시
               function profileApplyFirst(postid) {
                 axios
                     .get(`http://localhost:3000/mypage/requestlist/${postid}/appliance`, {
@@ -866,14 +869,50 @@ useEffect(() => {
                           height: 100,
                       }).then((res) => {
                           if (res.isConfirmed) {
-                               //삭제 요청 처리
-                              history.push('/Login'); // SignUP으로 url 이동
-                              window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                              history.push('/Login'); 
+                              window.scrollTo(0, 0);  
                           }
                       });
                     }
                 });
             };
+
+            //리뷰 남기기 이벤트 발생 시
+            //리뷰 남기기 test 필요
+            function profileReview(postid) {
+              axios
+                  .post(`http://localhost:3000/mypage/requestlist/${postid}/review`, {
+                    headers: {
+                      Authorization: "Bearer " + sessionToken
+                    }
+                  })
+              .then(async response => {
+                  console.log(response);
+                  console.log("리뷰 남기기 끝 !")
+                  setShowReview(true);
+                  
+              })
+              .catch((error) => {
+                console.log("ERROR: ", error);
+                  if (error.response.status === 400) {
+                      Swal.fire({
+                        icon: "warning",
+                        title: "경고",
+                        text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
+                        showCancelButton: true,
+                        confirmButtonText: "확인",
+                        cancelButtonText: "취소",
+                        width: 800,
+                        height: 100,
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            history.push('/Login'); 
+                            window.scrollTo(0, 0);  
+                        }
+                    });
+                  }
+              });
+          };
         
         
     return (
@@ -1460,12 +1499,12 @@ useEffect(() => {
                                         </div>
                                         
 
-                                        {/* 진행중, 매칭완료, 근무중, 근무완료, 일당미지급, 매칭종료 */}
+                                        {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}
 
 
                                         <div>
                                           <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
-                                          <button type='button' className="requestdamn-button">리뷰 남기기</button>
+                                          <button type='button' onClick={() => profileReview(rowData.damnpostId)} className="requestdamn-button">리뷰 남기기</button>
                                           <button type='button' className="requestdamn-button">수정/삭제하기</button>
                                         </div>
                                       </div>
@@ -1510,10 +1549,47 @@ useEffect(() => {
                                               </Modal.Footer>
                                           </Modal>
 
+
+
+                                          {/* 리뷰 남기기 모달창 */}
+                                      <Modal dialogClassName="modal-whole-review" style={{marginTop: "90px"}} show={showReview} onHide={handleShowReview}>
+                                          {(
+                                              <div>
+                                                  <Modal.Body>
+                                                      <div>
+                                                        <button type='button' className="badge2-button-style" disabled style={{marginTop: "30px", border: "4px solid #FED4C8", backgroundColor: "#FED4C8"}}>슈퍼 칼답러</button>
+
+                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #FAEDC0", backgroundColor: "#FAEDC0"}}>슈퍼 성실러</button>
+
+                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #C8EBFA", backgroundColor: "#C8EBFA"}}>슈퍼 친절러</button>
+
+                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #D4B8E6", backgroundColor: "#D4B8E6"}}>슈퍼 일잘러</button>
+
+                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #FFD6A3", backgroundColor: "#FFD6A3"}}>슈퍼 단정러</button>
+
+                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #C2E8BE", backgroundColor: "#C2E8BE"}}>슈퍼 대처러</button>
+
+                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #B4B6DB", backgroundColor: "#B4B6DB"}}>슈퍼 꼼꼼러</button>
+
+                                                        <button type='button' className="badge2-button-style" disabled style={{marginBottom: "50px", border: "4px solid #F0C8F5", backgroundColor: "#F0C8F5"}}>슈퍼 긍정러</button>
+
+                                                      </div>
+                                                  </Modal.Body>
+
+                                                </div>
+                                              )}
+                                              <Modal.Footer>
+                                                  <button className="footer-style footer-button-save">
+                                                      저장하기
+                                                  </button>
+                                                  <button className="footer-style footer-button-report">
+                                                      신고하기
+                                                  </button>
+                                              </Modal.Footer>
+                                          </Modal>
+
                                   </div>
                                 )}
-
-
                               </span>
                             </div>
                       </span>

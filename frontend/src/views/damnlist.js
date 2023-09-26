@@ -6,6 +6,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Button from "@mui/material/Button";
 import "../assets/css/damnlist.css";
+import Chatting from "../components/chatting";
 
 
 const options = [
@@ -47,6 +48,8 @@ const damnlist = () => {
         <div className="brown-line1"></div>
     
         <DamnlistBoard/>
+
+        <Chatting />
       </div>
     </div>
   );

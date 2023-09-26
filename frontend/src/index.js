@@ -39,6 +39,8 @@ import damnrank from "./views/damnrank";
 import Findid from "./views/findid";
 import Findpw from "./views/findpw";
 
+import Chatting from "./components/chatting";
+
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Switch>
@@ -48,6 +50,7 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/SignUP" component={SignUP} />
       <Route exact path="/Agreement" component={Agreement} />
       <Route exact path="/Header" component={Header} />
+      <Route exact path="/Chatting" component={Chatting} />
       <Route exact path="/Page1Header" component={Page1Header} />
       <Route exact path="/Page2Header" component={Page2Header} />
       <Route exact path="/damnrank" component={damnrank} />

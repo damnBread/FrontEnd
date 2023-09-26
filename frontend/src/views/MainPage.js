@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../components/Headers/Header";
+import Chatting from "../components/chatting";
 import "../assets/css/MainPage.css";
 import Footer from "../components/Footers/Footer";
 import { CookiesProvider } from 'react-cookie';
@@ -17,6 +18,7 @@ const MainPage = () => {
         <MainPageRecommend/>
         <Page1Header/>
         <Footer/>
+        <Chatting/>
       </CookiesProvider>
     </div>
   );
