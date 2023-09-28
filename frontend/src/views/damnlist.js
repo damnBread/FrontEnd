@@ -45,12 +45,6 @@ const Damnlist = () => {
         console.log("5", error.config);
       });
 
-    // const sampleJobPostings = [
-    //   { id: 1, title: "Job Posting 1", content: "Content for Job Posting 1" },
-    //   { id: 2, title: "Job Posting 2", content: "Content for Job Posting 2" },
-    // ];
-
-    // setJobPostings(sampleJobPostings);
   }, []);
 
   return (
@@ -81,19 +75,7 @@ const Damnlist = () => {
         </div>
 
         <div className="brown-line1"></div>
-
-        <div className="damnlist-content">
-          {jobPostings.map((jobPosting) => (
-            <a
-              key={jobPosting.id}
-              href={`/damnlist/${jobPosting.id}`}
-              style={sectionStyle}
-            >
-              <div className="damnlistboardtitle">{jobPosting.title}</div>
-              <div className="damnlistboardcontent">{jobPosting.content}</div>
-            </a>
-          ))}
-        </div>
+        <DamnlistBoard/>
       </div>
     </div>
   );

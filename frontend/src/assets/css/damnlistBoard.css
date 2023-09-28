@@ -78,3 +78,11 @@
     border-radius: 10px;
   }
 
+  /* In your CSS file (e.g., damnlistBoard.css) */
+.custom-link {
+    color: #000; /* Set the desired text color */
+    text-decoration: none; /* Remove the underline */
+  }
+  
+
+

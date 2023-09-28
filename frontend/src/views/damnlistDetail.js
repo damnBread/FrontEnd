@@ -1,22 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Headers/Header";
 import "../assets/css/damnlistDetail.css";
 import "../components/Footers/Footer";
-import damnstorycomment2 from "../assets/img/damnstorycomment2.png";
-import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";  
-import Button from "@mui/material/Button";
+import { useParams } from "react-router-dom";
 
+const DamnlistDetail = () => {
+  const { postNum } = useParams();
 
+  useEffect(() => {}, []);
 
-const damnlistDetail = () => {
+  const [damnlistDetailData, setDamnlistDetailData] = useState({
+    damnpostId: "",
+    damnPublisher: "",
+    damnTitle: "",
+    damnCreated: "",
+    damnStart: "",
+    damnEnd: "",
+    damnBranch: "",
+  });
 
-    return (
-        <div className="">
+  function fetchDamnListDetail() {
+    const page = 1;
 
-        </div>
-    );
+    axios
+      .get(`http://localhost:3000/damnlist`)  //detail id 추가하기
+  }
+
+  return (
+    <div className="damnlistdetailwhole">
+      <Header />
+      <div className="damnlistdetail">
+        <h1>Post Details</h1>
+        <p>Post Number: {postNum}</p>
+      </div>
+    </div>
+  );
 };
 
-export default damnlistDetail;
+export default DamnlistDetail;
