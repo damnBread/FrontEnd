@@ -97,6 +97,8 @@ const Damnprofile = () => {
     const [showApply, setShowApply] = useState(false); //지원자 보기 모달창
     const [showReview, setShowReview] = useState(false); //리뷰 남기기 모달창
 
+    const [badgeStates, setBadgeStates] = useState("00000000");
+
     const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
     const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
 
@@ -111,6 +113,8 @@ const Damnprofile = () => {
       damnBranch: "",
       damnPay: ""
     }])
+
+    const [postId, setPostId] = useState(null);
 
     const noShowToggleSwitch = () => {
       setNoShowIsActive(previousState => !previousState);
@@ -167,7 +171,11 @@ const Damnprofile = () => {
 
     const handleShow = () =>{ setShow(true)};     //모달창 켜기
     const handleShowApply = () => {setShowApply(true)};  //지원자 보기 모달창 켜기
-    const handleShowReview = () => {setShowReview(true)};  //리뷰 남기기 모달창 켜기
+    const handleShowReview = (postID) => {
+      setShowReview(true)
+      setPostId(postID);
+      console.log("DSD: ", postID);
+    };  //리뷰 남기기 모달창 켜기
     const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
     const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
 
@@ -756,7 +764,7 @@ useEffect(() => {
             .patch(`http://localhost:3000/mypage/setting`, {
               introduce: introduce
             },
-            {headers: {
+            { headers: {
               Authorization: "Bearer " + sessionToken
             }})
             .then((response) => {
@@ -879,26 +887,33 @@ useEffect(() => {
 
             //리뷰 남기기 이벤트 발생 시
             //리뷰 남기기 test 필요
-            function profileReview(postid) {
+            function profileReview() {
               axios
-                  .post(`http://localhost:3000/mypage/requestlist/${postid}/review`, {
-                    headers: {
+                  .post(`http://localhost:3000/mypage/requestlist/${postId}/review`, {
+                     badge: badgeStates },
+                    { headers: {
                       Authorization: "Bearer " + sessionToken
-                    }
-                  })
+                    }})
               .then(async response => {
                   console.log(response);
                   console.log("리뷰 남기기 끝 !")
-                  setShowReview(true);
-                  
               })
               .catch((error) => {
-                console.log("ERROR: ", error);
-                  if (error.response.status === 400) {
+                if (error.response) {
+                  console.log("1", error.response.data);
+                  console.log("2", error.response.status);
+                  console.log("3", error.response.headers);
+                } else if (error.request) {
+                  console.log("4", error.request);
+                } else {
+                  console.log('Error', error.message);
+                }
+                console.log("5", error.config);
+                  if (error.response.status === 500) {
                       Swal.fire({
                         icon: "warning",
                         title: "경고",
-                        text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
+                        text: "지원자를 먼저 선택해주세요.",
                         showCancelButton: true,
                         confirmButtonText: "확인",
                         cancelButtonText: "취소",
@@ -906,15 +921,24 @@ useEffect(() => {
                         height: 100,
                     }).then((res) => {
                         if (res.isConfirmed) {
-                            history.push('/Login'); 
-                            window.scrollTo(0, 0);  
+                            
                         }
                     });
                   }
               });
           };
         
-        
+          function handleClickBadge(badgeNum) {
+            if (badgeNum >= 1 && badgeNum <= 8) {
+              setBadgeStates((prevStates) => {
+                const newState = prevStates.split('');
+                newState[badgeNum - 1] = newState[badgeNum - 1] === "0" ? "1" : "0";
+                return newState.join('');
+              });
+              console.log(badgeStates);
+            }
+          }
+
     return (
       <div className="damnprofilewhole">
         <Header />
@@ -1504,7 +1528,7 @@ useEffect(() => {
 
                                         <div>
                                           <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
-                                          <button type='button' onClick={() => profileReview(rowData.damnpostId)} className="requestdamn-button">리뷰 남기기</button>
+                                          <button type='button' onClick={() => handleShowReview(rowData.damnpostId)} className="requestdamn-button">리뷰 남기기</button>
                                           <button type='button' className="requestdamn-button">수정/삭제하기</button>
                                         </div>
                                       </div>
@@ -1552,26 +1576,42 @@ useEffect(() => {
 
 
                                           {/* 리뷰 남기기 모달창 */}
-                                      <Modal dialogClassName="modal-whole-review" style={{marginTop: "90px"}} show={showReview} onHide={handleShowReview}>
+                                      <Modal dialogClassName="modal-whole-review" style={{marginTop: "90px"}} show={showReview} onHide={handleCloseReview}>
                                           {(
                                               <div>
                                                   <Modal.Body>
                                                       <div>
-                                                        <button type='button' className="badge2-button-style" disabled style={{marginTop: "30px", border: "4px solid #FED4C8", backgroundColor: "#FED4C8"}}>슈퍼 칼답러</button>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(1)} style={{marginTop: "30px", 
+                                                        border: `4px solid ${badgeStates[0] === "1" ? "#FED4C8" : "#FED4C880"}`, color: `${badgeStates[0] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[0] === "1" ? "#FED4C8" : "#FED4C880"}`}}>슈퍼 칼답러</button>
 
-                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #FAEDC0", backgroundColor: "#FAEDC0"}}>슈퍼 성실러</button>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(2)} 
+                                                        style={{border: `4px solid ${badgeStates[1] === "1" ? "#FAEDC0" : "#FAEDC080"}`, color: `${badgeStates[1] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[1] === "1" ? "#FAEDC0" : "#FAEDC080"}`}}>슈퍼 성실러</button>
 
-                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #C8EBFA", backgroundColor: "#C8EBFA"}}>슈퍼 친절러</button>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(3)}
+                                                        style={{border: `4px solid ${badgeStates[2] === "1" ? "#C8EBFA" : "#C8EBFA80"}`, color: `${badgeStates[2] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[2] === "1" ? "#C8EBFA" : "#C8EBFA80"}`}}>슈퍼 친절러</button>
 
-                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #D4B8E6", backgroundColor: "#D4B8E6"}}>슈퍼 일잘러</button>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(4)}
+                                                        style={{border: `4px solid ${badgeStates[3] === "1" ? "#D4B8E6" : "#D4B8E680"}`, color: `${badgeStates[3] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[3] === "1" ? "#D4B8E6" : "#D4B8E680"}`}}>슈퍼 일잘러</button>
 
-                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #FFD6A3", backgroundColor: "#FFD6A3"}}>슈퍼 단정러</button>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(5)}
+                                                        style={{border: `4px solid ${badgeStates[4] === "1" ? "#FFD6A3" : "#FFD6A380"}`, color: `${badgeStates[4] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[4] === "1" ? "#FFD6A3" : "#FFD6A380"}`}}>슈퍼 단정러</button>
 
-                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #C2E8BE", backgroundColor: "#C2E8BE"}}>슈퍼 대처러</button>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(6)}
+                                                        style={{border: `4px solid ${badgeStates[5] === "1" ? "#C2E8BE" : "#C2E8BE80"}`, color: `${badgeStates[5] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[5] === "1" ? "#C2E8BE" : "#C2E8BE80"}`}}>슈퍼 대처러</button>
 
-                                                        <button type='button' className="badge2-button-style" disabled style={{border: "4px solid #B4B6DB", backgroundColor: "#B4B6DB"}}>슈퍼 꼼꼼러</button>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(7)}
+                                                        style={{border: `4px solid ${badgeStates[6] === "1" ? "#B4B6DB" : "#B4B6DB80"}`, color: `${badgeStates[6] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[6] === "1" ? "#B4B6DB" : "#B4B6DB80"}`}}>슈퍼 꼼꼼러</button>
 
-                                                        <button type='button' className="badge2-button-style" disabled style={{marginBottom: "50px", border: "4px solid #F0C8F5", backgroundColor: "#F0C8F5"}}>슈퍼 긍정러</button>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(8)}
+                                                        style={{marginBottom: "40px", border: `4px solid ${badgeStates[7] === "1" ? "#F0C8F5" : "#F0C8F580"}`, color: `${badgeStates[7] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[7] === "1" ? "#F0C8F5" : "#F0C8F580"}`}}>슈퍼 긍정러</button>
 
                                                       </div>
                                                   </Modal.Body>
@@ -1579,7 +1619,7 @@ useEffect(() => {
                                                 </div>
                                               )}
                                               <Modal.Footer>
-                                                  <button className="footer-style footer-button-save">
+                                                  <button className="footer-style footer-button-save" onClick={() => profileReview()}>
                                                       저장하기
                                                   </button>
                                                   <button className="footer-style footer-button-report">
