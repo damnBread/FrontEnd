@@ -160,6 +160,7 @@ const Damnprofile = () => {
         setShowApply(false);
     }
     const handleCloseReview = () => {   //리뷰 남기기 모달창
+        setBadgeStates('00000000');
         setShowReview(false);
     }
     const handleCloseWorkArea = () => {
@@ -926,6 +927,8 @@ useEffect(() => {
                     });
                   }
               });
+
+              setBadgeStates('00000000');
           };
         
           function handleClickBadge(badgeNum) {
@@ -1614,18 +1617,21 @@ useEffect(() => {
                                                         backgroundColor: `${badgeStates[7] === "1" ? "#F0C8F5" : "#F0C8F580"}`}}>슈퍼 긍정러</button>
 
                                                       </div>
+
+                                                      <div className="footer-button1">
+                                                        <button className="footer-style footer-button-save" onClick={() => profileReview()}>
+                                                          저장하기
+                                                        </button>
+                                                        <button className="footer-style footer-button-report">
+                                                          신고하기
+                                                        </button>
+                                                      </div>
+                                                      
                                                   </Modal.Body>
 
                                                 </div>
                                               )}
-                                              <Modal.Footer>
-                                                  <button className="footer-style footer-button-save" onClick={() => profileReview()}>
-                                                      저장하기
-                                                  </button>
-                                                  <button className="footer-style footer-button-report">
-                                                      신고하기
-                                                  </button>
-                                              </Modal.Footer>
+                                                  
                                           </Modal>
 
                                   </div>

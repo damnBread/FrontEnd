@@ -84,12 +84,25 @@
 }
 
 .modal-whole-rank {
-  background-color: #ad1111;
   display: flex;
   width: 100%; /* Adjust the width as per your requirement */
   max-width: 600px; /* Optional: Add a max-width to limit the modal's width */
   height: 90%;
   max-height: 1000px;
+}
+
+.modal-whole-rank1 {
+  display: flex;
+  width: 100%; /* Adjust the width as per your requirement */
+  max-width: 700px; /* Optional: Add a max-width to limit the modal's width */
+  height: 90%;
+  max-height: 1000px;
+}
+
+.custom-rank-content {
+  border-radius: 7px;
+  background-color: #F8F0EA;
+  border: 4px solid #D9AA89;
 }
 
 .footer-style {
@@ -103,5 +116,55 @@
 }
 
 .selected {
-  border: 4px solid rgb(74, 74, 74); /* Change the border style as needed */
+  border: 4px solid #bf5f49a8;
+}
+
+.footer-button {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-button-chatting {
+  margin-left: 70px;
+  width: 100px;
+  color: #843C0C;
+  background-color: #FFFFFF;
+  border: 2px solid #BF5E49;
+  border-radius: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+
+.footer-button-share {
+  margin-left: 20px;
+  width: 300px;
+  color: #843C0C;
+  background-color: #bf5f49a2;
+  border: 2px solid #BF5E49;
+  border-radius: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 70px;
+  margin-bottom: 10px;
+}
+
+.footer-button-share1 {
+  margin-top: 25px;
+  margin-left: 180px;
+  width: 300px;
+  color: #843C0C;
+  background-color: #FFFFFF;
+  border: 2px solid #BF5E49;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 70px;
+  margin-bottom: 10px;
 }

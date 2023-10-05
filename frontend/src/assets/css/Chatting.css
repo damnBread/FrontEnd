@@ -19,6 +19,7 @@
 }
 
 .custom-chatting-content {
+    border-radius: 7px;
     background-color: #F8F0EA;
     border: 4px solid #D9AA89;
 }

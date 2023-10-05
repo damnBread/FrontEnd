@@ -220,6 +220,11 @@ font-size: 27px;
   font-size: 17px;
 }
   
+.footer-button1 {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
 
 .footer-button-save {
   width: 300px;
@@ -227,19 +232,20 @@ font-size: 27px;
   background-color: #FFFFFF;
   border: 2px solid #BF5E49;
   border-radius: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 10px;
 }
 
 .footer-button-report {
+  margin-left: 20px;
   width: 100px;
   color: #843C0C;
   background-color: #bf5f49a2;
   border: 2px solid #BF5E49;
   border-radius: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   padding-left: 10px;
   padding-right: 10px;
-  margin-right: 70px;
-  margin-bottom: 10px;
 }
