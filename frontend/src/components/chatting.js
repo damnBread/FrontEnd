@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import "../assets/css/chatting.css";
+import "../assets/css/Chatting.css";
 import { Fab } from '@mui/material';
 import FABicon from '../assets/img/chatting-icon.png';
 import Modal from "react-bootstrap/Modal";
