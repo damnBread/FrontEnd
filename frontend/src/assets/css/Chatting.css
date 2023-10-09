@@ -4,6 +4,9 @@
     float: right;
     margin-right: 300px;
 }
+.chat {
+    margin: 50px;
+}
 
 .modal-chatting-style {
     margin-bottom: 0px;

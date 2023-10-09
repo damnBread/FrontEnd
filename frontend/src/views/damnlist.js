@@ -1,52 +1,81 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Header from "../components/Headers/Header";
 import DamnlistBoard from "./damnlistBoard";
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
+import makeAnimated from "react-select/animated";
 import Button from "@mui/material/Button";
 import "../assets/css/damnlist.css";
 import Chatting from "../components/chatting";
 
+const sectionStyle = {
+  textDecoration: "none",
+  color: "black",
+};
 
-const options = [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-  { value: 'option3', label: 'Option 3' },
-  { value: 'option4', label: 'Option 4' },
-];
+const Damnlist = () => {
+  const [jobPostings, setJobPostings] = useState([]);
 
-const damnlist = () => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/damnlist", {
+        params: {
+          page: 1,
+        },
+      })
+      .then((response) => {
+        console.log("response: ", response);
+        if (response.status === 204) {
+          console.log("S: ", jobPostings);
+        }
+
+        // setJobPostings(response.data);
+        // console.log(response);
+        // console.log(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log("1", error.response.data);
+          console.log("2", error.response.status);
+          console.log("3", error.response.headers);
+        } else if (error.request) {
+          console.log("4", error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log("5", error.config);
+      });
+
+  }, []);
 
   return (
     <div className="damnlistwhole">
-      <Header/>
+      <Header />
       <div className="damnlist-container">
-
-              <div className="damnlist">
-                <div className="content-wrapper">
-                  <p>땜빵구해요</p>
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      borderColor: "brown",
-                      color: "brown",
-                    }}
-                    component={Link}
-                    to="/damnlist/new"
-                  >
-                    구직구하기
-                  </Button>
-                </div>
-              </div>
-
-
-          <div>
-            <p className="listcount" style={{ fontFamily: 'Inter', fontWeight: 'bold'}}>총 6건</p>   
+        <div className="damnlist">
+          <div className="content-wrapper">
+            <p>땜빵구해요</p>
           </div>
-        
+        </div>
+
+        <div className="damnlistcount">
+          <p>총 6건</p>
+          <div className="damnlistwrite">
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: "brown",
+                color: "brown",
+              }}
+              component={Link}
+              to="/damnlist/new"
+            >
+              구직구하기
+            </Button>
+          </div>
+        </div>
+
         <div className="brown-line1"></div>
-    
         <DamnlistBoard/>
 
         <Chatting />
@@ -55,4 +84,4 @@ const damnlist = () => {
   );
 };
 
-export default damnlist;
+export default Damnlist;

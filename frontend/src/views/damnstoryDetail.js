@@ -14,15 +14,15 @@ const sectionStyle = {
 };
 
 const DamnstoryDetail = () => {
-    const { storyid } = useParams(); // Change 'id' to 'storyid'
-    const [post, setPost] = useState(null); // Change 'posts' to 'post'
+    const { storyid } = useParams();
+    const [post, setPost] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/damnstory/${storyid}`);
                 console.log(response);
-                setPost(response.data); // Change 'setPosts' to 'setPost'
+                setPost(response.data);
             } catch (error) {
                 console.error('Error fetching post:', error);
             }
