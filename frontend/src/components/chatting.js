@@ -3,7 +3,6 @@ import { useState } from "react";
 import "../assets/css/chatting.css";
 import { Fab } from '@mui/material';
 import FABicon from '../assets/img/chatting-icon.png';
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 function Chatting() {
