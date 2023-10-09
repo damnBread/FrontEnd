@@ -2,18 +2,23 @@
     font-family: 'GmarketSans', sans-bold;
     font-size: 18px;
     font-weight: bold;
-    margin-left: 420px;
-    margin-top: 50px;
+    margin-left: 510px;
+    align-items: center;
     width: 100%;
     max-width: 1000px;
-    height: 260px;
-    max-height: 500px;
+    height: 300px;
+    max-height: 1000px;
     border: 1px solid #000000;
     border-radius: 10px;
   }
 
+  .damndetailwork {
+    margin-left: 30px;
+  }
+
   .damndetailcreate {
-    
+    margin-left: 1400px;
+    margin-top: 70px;
   }
 
   .damnitem-box1 p {
@@ -26,6 +31,7 @@
     margin-left: 40px;
     margin-top: 20px;
     font-size: 16px;
+    color:brown;
   }
 
   .damndetailtitle {
@@ -37,5 +43,192 @@
   .damndetailbranch {
     margin-left: 40px;
     margin-top: 10px;
+
   }
 
+  .damndetailworkdate {
+    margin-top: 30px;
+    margin-left: 120px;
+  }
+
+  .damndetailworkdate .workdate {
+    margin-top: 0px;
+    margin-left: -3px;
+  }
+
+  .damndetailworkdate .workdate1 {
+    margin-left: -25px; 
+    margin-top: -15px;
+  }
+
+  .damndetailworkperiod {
+    margin-top: 30px;
+    margin-left: 120px;
+  }
+
+  .damndetailworkperiod .workperiod {
+    margin-top: 0px;
+    margin-left: -10px;
+  }
+
+  .damndetailworkperiod .workperiod1 {
+    margin-top: -12px;
+    margin-left: 3px;
+  }
+
+
+  .damndetailwork {
+    display: flex;
+    align-items: center;
+  }
+
+
+  .damndetailworktime {
+    margin-left: 140px;
+    margin-top: 25px;
+  }
+
+  .damndetailworktime .worktime1 {
+    margin-left: -10px;
+    margin-top: 10px;
+  }
+
+  .damndetailworktime .worktime2 {
+    margin-left: -50px;
+    margin-top: -15px;
+  }
+
+  .damndetailworkmoney {
+    margin-left: 110px;
+    margin-top: 25px;
+  }
+
+  .damndetailworkmoney .workmoney1 {
+    margin-left: 5px;
+    margin-top: 3px;
+  }
+
+  .damndetailworkmoney .workmoney2 {
+    margin-top: -10px;
+    margin-left: 3px;
+  }
+
+
+  .damnitem-box2 {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 70px;
+    margin-left: 510px;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    height: 300px;
+    max-height: 1000px;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+  }
+
+  .damndetailcondition1 {
+    display: flex;
+    align-items: center;
+  }
+
+  .damndetailcondition .workcondition {
+    font-family: 'GmarketSans', sans-bold;
+    margin-left: 0px    ;
+    margin-top: 20px;
+    font-size: 22px;
+    color:brown;
+  }
+
+  .damndetailcondition1 .damndetaildeadline {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    margin-right: 40px;
+    margin-top: 20px;
+    color: black;
+  }
+
+  .damndetailcondition1 .damndetailstudent {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 20px;
+    margin-left: 500px;
+    margin-top: 20px;
+    color: black;
+  }
+
+
+  .damndetailcondition2 {
+    display: flex;
+    align-items: center;
+  }
+
+  .damndetailcondition2 .damndetaildeadline {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    margin-right: 40px;
+    margin-top: 20px;
+    color: black;
+  }
+
+  .damndetailcondition2 .damndetailstudent {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 20px;
+    margin-left: 600px;
+    margin-top: 20px;
+    color: black;
+  }
+
+  .damndetailcondition3 {
+    display: flex;
+    align-items: center;
+  }
+
+  .damndetailcondition3 .damndetaildeadline {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    margin-right: 40px;
+    margin-top: 20px;
+    color: black;
+  }
+
+  .damndetailcondition3 .damndetailstudent {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 20px;
+    margin-left: 580px;
+    margin-top: 20px;
+    color: black;
+  }
+
+
+
+  .damnitem-box3 {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-left: 510px;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    height: 600px;
+    max-height: 1000px;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+  }
+
+  .damndetaillocation .worklocation {
+    font-family: 'GmarketSans', sans-bold;
+    margin-left: 0px;
+    margin-top: -10px;
+    font-size: 22px;
+    color:brown;
+  }
+
+
+  .damndetaillocation1 .worklocation1 {
+    font-family: 'GmarketSans', sans-bold;
+    margin-left: 40px;
+    font-size: 18px;
+  }

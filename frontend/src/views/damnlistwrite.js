@@ -264,25 +264,24 @@ const Damnlistwrite = () => {
                     {
                         title: title,
                         content: content,
-                        job: job, //배열에 넣어서 보낼것
+                        job: [job], // 업직종을 배열에 넣어서 보내기
                         branchName: branchName,
-                        location: location, //값 넣기
+                        location: location,
                         hourPay: parseInt(hourPay),
-                        payMethod: payMethod, //true, false
-                        deadline: new Date(deadline), //값 넣기
-                        // workDate: new Date(workDate), //근무기간
-                        workStart: new Date(workStart), //시작, 끝시간을 Date로 보내야함, 바꿔야함
-                        workEnd: new Date(workEnd),
+                        payMethod: payMethod,
+                        deadline: deadline, // 마감일
+                        workPeriod: workPeriod, // 근무 기간
+                        workStart: workStart.toISOString(), // 근무 시작 일시를 ISO 문자열로 변환
+                        workFinish: workEnd.toISOString(), // 근무 종료 일시를 ISO 문자열로 변환
                         genderLimit: genderLimit,
                         ageLimit: {
-                            min: 20,
+                            min: 20, // 나이 범위 설정
                             max: 30,
                         },
-                        careerLimit: 0,
-                        recruitNumber: recruitNumber,
-                        additionalLimit: additionalLimit,
-
-
+                        careerLimit: careerLimit,
+                        bookmark: null,
+                        viewCount: 0, 
+                        applicantCount: 0,
                     },
 
                     {
@@ -562,7 +561,7 @@ const Damnlistwrite = () => {
                 <div className="damnlistage">
                     <p>성별, 연령, 학력</p>
                     <p className="damnlist-age-controller">
-                        {genderLimit ? '남' : '여'},{' '}
+                        {genderLimit ? '남성우대' : '여성우대'},{' '}
                         {ageLimit.min !== null && ageLimit.max !== null
                         ? `min: ${ageLimit.min}, max: ${ageLimit.max}`
                         : '나이무관'},{' '}
