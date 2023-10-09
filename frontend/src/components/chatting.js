@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import "../assets/css/chatting.css";
+import "../assets/css/Chatting.css";
 import { Fab } from '@mui/material';
 import FABicon from '../assets/img/chatting-icon.png';
 import Modal from "react-bootstrap/Modal";
@@ -12,11 +12,6 @@ function Chatting() {
     const handleShow = () =>{ setShowChat(true) };
 
     const handleClose = () => { setShowChat(false) }
-
-    function onClickChatting() {
-        console.log("CLICK FAB");
-        
-    }
 
     return (
         <div className="chatting-style">
