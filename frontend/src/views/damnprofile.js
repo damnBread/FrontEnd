@@ -102,6 +102,17 @@ const Damnprofile = () => {
     const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
     const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
 
+    // 지원자 보기
+    const [inputData, setInputData] = useState([{
+      userid: 0,
+      id: "",
+      name: "",
+      gender: "",
+      age: 0,
+      career: 0,
+      address: ""
+    }])
+
     // 내가 의뢰한 땜빵
     const [requestDamn, setRequestDamn] = useState([{
       damnpostId: "",
@@ -860,9 +871,22 @@ useEffect(() => {
                       }
                     })
                 .then(async response => {
-                    console.log(response);
+                    console.log(response.data);
                     console.log("지원자 보기 끝 !")
                     setShowApply(true);
+
+                    const _inputData = response.data.map((applyData) => ({
+                      userid: applyData.userId,
+                      id: applyData.id,
+                      name: applyData.name,
+                      gender: applyData.gender,
+                      age: applyData.birth,
+                      career: applyData.careerCnt,
+                      address: applyData.home
+                    }))
+        
+                    setInputData(_inputData);
+                    console.log(inputData)
                     
                 })
                 .catch((error) => {
@@ -1510,13 +1534,13 @@ useEffect(() => {
                                         <div style={{marginLeft: "25px", marginTop: "20px"}}>
                                           <b>{rowData.damnTitle}</b>
                                           <span style={{float: "right", marginRight: "15px"}}>
-                                          {timeConversion(rowData.damnCreated)}
+                                          {(rowData.damnCreated)}
                                             </span>
                                         </div>
 
                                         <div>
                                           <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
-                                          {timeConversion(rowData.damnStart)} ~ {timeConversion(rowData.damnEnd)}
+                                          {(rowData.damnStart)} ~ {(rowData.damnEnd)}
                                         </div>
                                           <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
                                             {rowData.damnBranch}
