@@ -1,0 +1,41 @@
+.damnitem-box1 {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 420px;
+    margin-top: 50px;
+    width: 100%;
+    max-width: 1000px;
+    height: 260px;
+    max-height: 500px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+  }
+
+  .damndetailcreate {
+    
+  }
+
+  .damnitem-box1 p {
+    font-family: 'GmarketSans', sans-bold;
+    font-weight: bold;
+    color: #000000;
+  }
+
+  .damndetaildeadline {
+    margin-left: 40px;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .damndetailtitle {
+    margin-top: 15px;
+    margin-left: 40px;
+    font-size: 30px;
+  }
+
+  .damndetailbranch {
+    margin-left: 40px;
+    margin-top: 10px;
+  }
+

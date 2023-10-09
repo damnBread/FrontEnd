@@ -59,7 +59,7 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/damnlistBoard" component={damnlistBoard} />
       <Route exact path="/damnlist" component={damnlist} />
       <Route exact path="/damnlist/new" component={damnlistwrite} />
-      <Route exact path="/damnlist/:listid" component={damnlistDetail} />
+      <Route exact path="/damnlist/:postid" component={damnlistDetail} />
       <Route exact path="/damnprofile" component={damnprofile}/>
     </Switch>
   </BrowserRouter>

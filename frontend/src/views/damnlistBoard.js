@@ -5,6 +5,11 @@ import "../assets/css/damnlistBoard.css";
 import "@fontsource/inter";
 import ReactPaginate from "react-paginate";
 
+const sectionStyle = {
+  textDecoration: "none",
+  color: "black",
+};
+
 const DamnlistBoard = () => {
   const history = useHistory(); // Create history object for navigation
 
