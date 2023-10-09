@@ -13,11 +13,6 @@ function Chatting() {
 
     const handleClose = () => { setShowChat(false) }
 
-    function onClickChatting() {
-        console.log("CLICK FAB");
-        
-    }
-
     return (
         <div className="chatting-style">
             <Fab onClick={handleShow} size="large" color="warning">
