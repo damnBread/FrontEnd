@@ -298,7 +298,7 @@ const DamnrankBoard = () => {
   return (
     <div>
         <div className="custom-modal-content-rank11">
-          <img src={rank} width="35" alt="rank" style={{marginTop: '-10px'}} />
+          <img src={rank} width="35" alt="rank" style={{marginTop: '-10px', marginLeft: "140px"}} />
           <label className="label-margin" style={{zIndex: 1}}><b>인재 랭킹</b></label>
         </div>
 
@@ -342,7 +342,7 @@ const DamnrankBoard = () => {
               
               <Modal dialogClassName="modal-whole-rank" show={show} onHide={handleClose}>
                 {selectedItem ? (
-                                <div>
+                                <div className="custom-rank-content">
                                     <Modal.Body>
                                         <div className="scrollable-container">
                                         {inputData
@@ -394,37 +394,45 @@ const DamnrankBoard = () => {
                                                             <div className="selectedItemAddress-style">{replaceWorkJob(selectedItem.workJob)}</div>
                                                           </div>
                                                       </span>
+
+                                                      <div>
+                                                        {/* 땜빵 이력 자리 */}
+                                                      </div>
                                             </div>
                                           </div>
                                         ))}
                                         </div>
+
+                                        <div className="footer-button">
+                                          <button className="footer-style footer-button-chatting" varient="primary">
+                                              채팅하기
+                                          </button>
+                                          <button className="footer-style footer-button-share" varient="primary" onClick={() => requestDamnbread()}>
+                                              공고 전달하기
+                                          </button>
+                                        </div>
+                                        
                                     </Modal.Body>
 
                                   </div>
                                 ) : (
                                   <div> </div>
                                 )}
-                                <Modal.Footer>
-                                    <Button className="footer-style" varient="primary">
-                                        채팅하기
-                                    </Button>
-                                    <Button className="footer-style" varient="primary" onClick={() => requestDamnbread()}>
-                                        공고 전달하기
-                                    </Button>
-                                </Modal.Footer>
+
+                                
                             </Modal>
 
 
-                            <Modal dialogClassName="modal-whole-rank" show={showShare} onHide={handleShareClose}>
+                            <Modal dialogClassName="modal-whole-rank1" show={showShare} onHide={handleShareClose}>
                             {(
-                                <div>
+                                <div className="custom-rank-content">
                                     <Modal.Body>
                                         <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
                                         {requestDamn.map(rowData => (
                                       <div key={rowData.damnPublisher}
                                         onClick={() => selectDamn(rowData.damnpostId)}
                                         className={`requestdamn-box ${selectedDamn === rowData.damnpostId ? 'selected' : ''}`}
-                                        style={{width: "550px", height: "200px", marginTop: "10px", marginBottom: "25px"}}>
+                                        style={{width: "550px", height: "200px", marginTop: "10px", marginBottom: "25px", backgroundColor: "#FFFFFF"}}>
                                             <div style={{marginLeft: "25px", marginTop: "20px"}}>
                                               <b>{rowData.damnTitle}</b>
                                             </div>
@@ -442,15 +450,15 @@ const DamnrankBoard = () => {
                                           </div>
                                         ))}
                                         </div>
+
+                                        <button className="footer-style footer-button-share1" varient="primary">
+                                          공고 전달하기
+                                        </button>
                                     </Modal.Body>
 
                                   </div>
                                 )}
-                                <Modal.Footer>
-                                    <Button className="footer-style" varient="primary">
-                                        전달하기
-                                    </Button>
-                                </Modal.Footer>
+                                    
                             </Modal>
                 </div>
             

@@ -1,9 +1,9 @@
 .whole-box {
-    margin-left: 250px;
+    margin-left: 350px;
     margin-right: 500px;
     margin-top: 25px;
     width: 100%;
-    max-width: 1500px;
+    max-width: 1000px;
     height: 750px;
     border: 2px solid D9AA89;
     border-radius: 15px;
@@ -108,6 +108,7 @@ font-size: 27px;
 
 .select-button-style {
   margin-left: 15px;
+  border: 2px solid #D9D9D9;
   border-radius: 5px;
   padding-left: 20px;
   padding-right: 20px;
@@ -117,10 +118,11 @@ font-size: 27px;
 }
 
 .badge1-button-style {
-  margin-left: 80px;
+  margin-left: 60px;
   margin-top: 20px;
   width: 180px;
-  border-radius: 5px;
+  height: 50px;
+  border-radius: 15px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 5px;
@@ -173,11 +175,11 @@ font-size: 27px;
 }
 
 .requestdamn-box {
-  margin-left: 55px;
+  margin-left: 40px;
   margin-top: 35px;
   margin-bottom: 50px;
-  width: 100%;
-  max-width: 1000px;
+  width: 900px;
+  margin-right: 22px;
   height: 300px;
   max-height: 500px;
   border: 1px solid #797979;
@@ -195,4 +197,55 @@ font-size: 27px;
   background-color: white;
   margin-bottom: 5px;
 }
+
+
+.modal-whole-review {
+  display: flex;
+  width: 100%; /* Adjust the width as per your requirement */
+  max-width: 600px; /* Optional: Add a max-width to limit the modal's width */
+  height: 100%;
+  max-height: 630px;
+}
+
+.badge2-button-style {
+  margin-left: 70px;
+  margin-top: 70px;
+  width: 180px;
+  height: 50px;
+  border-radius: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 17px;
+}
   
+.footer-button1 {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-button-save {
+  width: 300px;
+  color: #843C0C;
+  background-color: #FFFFFF;
+  border: 2px solid #BF5E49;
+  border-radius: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+}
+
+.footer-button-report {
+  margin-left: 20px;
+  width: 100px;
+  color: #843C0C;
+  background-color: #bf5f49a2;
+  border: 2px solid #BF5E49;
+  border-radius: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+}

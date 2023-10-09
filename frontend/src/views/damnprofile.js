@@ -94,7 +94,10 @@ const Damnprofile = () => {
 
     const [show, setShow] = useState(false);   //모달창
 
-    const [showApply, setShowApply] = useState(false); //모달창
+    const [showApply, setShowApply] = useState(false); //지원자 보기 모달창
+    const [showReview, setShowReview] = useState(false); //리뷰 남기기 모달창
+
+    const [badgeStates, setBadgeStates] = useState("00000000");
 
     const [showWorkArea, setShowWorkArea] = useState(false);   //모달창
     const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
@@ -110,6 +113,8 @@ const Damnprofile = () => {
       damnBranch: "",
       damnPay: ""
     }])
+
+    const [postId, setPostId] = useState(null);
 
     const noShowToggleSwitch = () => {
       setNoShowIsActive(previousState => !previousState);
@@ -151,8 +156,12 @@ const Damnprofile = () => {
     const handleClose = () => {
         setShow(false);           //모달창 닫기
     }
-    const handleCloseApply = () => {
+    const handleCloseApply = () => {  //지원자 보기 모달창
         setShowApply(false);
+    }
+    const handleCloseReview = () => {   //리뷰 남기기 모달창
+        setBadgeStates('00000000');
+        setShowReview(false);
     }
     const handleCloseWorkArea = () => {
         setShowWorkArea(false);   //모달창 닫기
@@ -162,7 +171,12 @@ const Damnprofile = () => {
     }
 
     const handleShow = () =>{ setShow(true)};     //모달창 켜기
-    const handleShowApply = () => {setShowApply(true)};  //모달창 켜기
+    const handleShowApply = () => {setShowApply(true)};  //지원자 보기 모달창 켜기
+    const handleShowReview = (postID) => {
+      setShowReview(true)
+      setPostId(postID);
+      console.log("DSD: ", postID);
+    };  //리뷰 남기기 모달창 켜기
     const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
     const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
 
@@ -508,9 +522,8 @@ useEffect(() => {
                   height: 100,
               }).then((res) => {
                   if (res.isConfirmed) {
-                       //삭제 요청 처리
-                      history.push('/Login'); // SignUP으로 url 이동
-                      window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                      history.push('/Login'); 
+                      window.scrollTo(0, 0);  
                   }
               });
               }
@@ -752,7 +765,7 @@ useEffect(() => {
             .patch(`http://localhost:3000/mypage/setting`, {
               introduce: introduce
             },
-            {headers: {
+            { headers: {
               Authorization: "Bearer " + sessionToken
             }})
             .then((response) => {
@@ -822,9 +835,8 @@ useEffect(() => {
                       height: 100,
                   }).then((res) => {
                       if (res.isConfirmed) {
-                           //삭제 요청 처리
-                          history.push('/Login'); // SignUP으로 url 이동
-                          window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                          history.push('/Login'); 
+                          window.scrollTo(0, 0);  
                       }
                   });
                   }
@@ -839,7 +851,7 @@ useEffect(() => {
                 return time1;
               }
 
-              //지원자 보기 눌렀을 때
+              //지원자 보기 이벤트 발생 시
               function profileApplyFirst(postid) {
                 axios
                     .get(`http://localhost:3000/mypage/requestlist/${postid}/appliance`, {
@@ -866,16 +878,70 @@ useEffect(() => {
                           height: 100,
                       }).then((res) => {
                           if (res.isConfirmed) {
-                               //삭제 요청 처리
-                              history.push('/Login'); // SignUP으로 url 이동
-                              window.scrollTo(0, 0);   //새 페이지로 이동한 후 화면이 맨 위로 스크롤
+                              history.push('/Login'); 
+                              window.scrollTo(0, 0);  
                           }
                       });
                     }
                 });
             };
+
+            //리뷰 남기기 이벤트 발생 시
+            //리뷰 남기기 test 필요
+            function profileReview() {
+              axios
+                  .post(`http://localhost:3000/mypage/requestlist/${postId}/review`, {
+                     badge: badgeStates },
+                    { headers: {
+                      Authorization: "Bearer " + sessionToken
+                    }})
+              .then(async response => {
+                  console.log(response);
+                  console.log("리뷰 남기기 끝 !")
+              })
+              .catch((error) => {
+                if (error.response) {
+                  console.log("1", error.response.data);
+                  console.log("2", error.response.status);
+                  console.log("3", error.response.headers);
+                } else if (error.request) {
+                  console.log("4", error.request);
+                } else {
+                  console.log('Error', error.message);
+                }
+                console.log("5", error.config);
+                  if (error.response.status === 500) {
+                      Swal.fire({
+                        icon: "warning",
+                        title: "경고",
+                        text: "지원자를 먼저 선택해주세요.",
+                        showCancelButton: true,
+                        confirmButtonText: "확인",
+                        cancelButtonText: "취소",
+                        width: 800,
+                        height: 100,
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            
+                        }
+                    });
+                  }
+              });
+
+              setBadgeStates('00000000');
+          };
         
-        
+          function handleClickBadge(badgeNum) {
+            if (badgeNum >= 1 && badgeNum <= 8) {
+              setBadgeStates((prevStates) => {
+                const newState = prevStates.split('');
+                newState[badgeNum - 1] = newState[badgeNum - 1] === "0" ? "1" : "0";
+                return newState.join('');
+              });
+              console.log(badgeStates);
+            }
+          }
+
     return (
       <div className="damnprofilewhole">
         <Header />
@@ -919,7 +985,7 @@ useEffect(() => {
                               {/* 내 정보 */}
                                 {showInfo && (
                                   <div>
-                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "985px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
+                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "905px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
                                   
 
                                   {/* 노쇼 */}
@@ -933,7 +999,7 @@ useEffect(() => {
                                           thumbColor={isNoShowActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={noShowToggleSwitch}
                                           value={isNoShowActive}
-                                          style={{marginTop: "-20px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-20px", marginLeft: "920px", marginRight: "50px"}}
                                         />
                                       </span>
                                     </div>
@@ -951,7 +1017,7 @@ useEffect(() => {
                                           thumbColor={isNicknameActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={nicknameToggleSwitch}
                                           value={isNicknameActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
                                     </div>
@@ -969,7 +1035,7 @@ useEffect(() => {
                                           thumbColor={isEmailActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={emailToggleSwitch}
                                           value={isEmailActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
                                       </div>
@@ -987,7 +1053,7 @@ useEffect(() => {
                                           thumbColor={isPhoneActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={phoneToggleSwitch}
                                           value={isPhoneActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
                                     </div>
@@ -1003,7 +1069,7 @@ useEffect(() => {
                                           thumbColor={isLocationActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={locationToggleSwitch}
                                           value={isLocationActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
 
@@ -1083,7 +1149,7 @@ useEffect(() => {
                                           thumbColor={isHopeLocationActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={hopeLocationToggleSwitch}
                                           value={isHopeLocationActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
 
@@ -1191,7 +1257,7 @@ useEffect(() => {
                                           thumbColor={isHopeJobActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={hopeJobToggleSwitch}
                                           value={isHopeJobActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
 
@@ -1357,7 +1423,7 @@ useEffect(() => {
                                 {/* 내 활동 */}
                                 {showActivity && (
                                   <div>
-                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "985px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
+                                    <label className="content-label-style-profile-s" style={{zIndex: 1, marginLeft: "905px", marginTop: "30px", fontSize: "15px"}}>공개 유무</label>
                                   
                                     {/* 내 뱃지 */}
                                     <div>
@@ -1369,32 +1435,32 @@ useEffect(() => {
                                           thumbColor={isBadgeActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={badgeToggleSwitch}
                                           value={isBadgeActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px"}}
                                         />
                                       </span>
                                       </div>
-                                      <button type='button' className="badge1-button-style" disabled style={{marginTop: "30px", border: "4px solid #bfd1fce2", backgroundColor: "#bfd1fce2"}}>슈퍼 칼답러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{marginTop: "30px", border: "4px solid #FED4C8", backgroundColor: "#FED4C8"}}>슈퍼 칼답러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #f9cdccdb", backgroundColor: "#f9cdccdb"}}>슈퍼 성실러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #FAEDC0", backgroundColor: "#FAEDC0"}}>슈퍼 성실러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #fdffa5ef", backgroundColor: "#fdffa5ef"}}>슈퍼 친절러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #C8EBFA", backgroundColor: "#C8EBFA"}}>슈퍼 친절러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #caf5c3e2", backgroundColor: "#caf5c3e2"}}>슈퍼 일잘러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #D4B8E6", backgroundColor: "#D4B8E6"}}>슈퍼 일잘러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #e3bcfea9", backgroundColor: "#e3bcfea9"}}>슈퍼 단정러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #FFD6A3", backgroundColor: "#FFD6A3"}}>슈퍼 단정러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #ffc67166", backgroundColor: "#ffc67166"}}>슈퍼 대처러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #C2E8BE", backgroundColor: "#C2E8BE"}}>슈퍼 대처러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #8ae0e39d", backgroundColor: "#8ae0e39d"}}>슈퍼 꼼꼼러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #B4B6DB", backgroundColor: "#B4B6DB"}}>슈퍼 꼼꼼러</button>
 
-                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #ffa5e49f", backgroundColor: "#ffa5e49f"}}>슈퍼 긍정러</button>
+                                      <button type='button' className="badge1-button-style" disabled style={{border: "4px solid #F0C8F5", backgroundColor: "#F0C8F5"}}>슈퍼 긍정러</button>
                                       
                                     </div>
 
                                     {/* 내 소개글 */}
                                     <div>
                                       <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "80px"}}>내 소개글</label>
-                                      <input type='text' name='introduce' placeholder={myIntroduce} value={inputIntroduceProfile} onChange={handleInputIntroduce} style={{width:"500px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
+                                      <input type='text' name='introduce' placeholder={myIntroduce} value={inputIntroduceProfile} onChange={handleInputIntroduce} style={{width:"430px", height: "40px", marginTop: "10px", marginLeft: "-8px", fontSize: "18px", 
                                         borderColor: "#b0acac", borderRadius: "10px", padding: ".5em"}} disabled={introduceDisabled ? false:true } />
                                       <button type='button' className="select-button-style" onClick={() => handleClickIntroduce()} style={{marginLeft: "30px"}}>변경</button> 
                                       <button type='button' className="select-button-style" onClick={() => handleClickIntroduceSave(inputIntroduceProfile) } style={{marginLeft: "25px"}}>저장</button>
@@ -1405,7 +1471,7 @@ useEffect(() => {
                                           thumbColor={isIntroduceActive ? '#f5dd4b' : '#f4f3f4'}
                                           onValueChange={introduceToggleSwitch}
                                           value={isIntroduceActive}
-                                          style={{marginTop: "-25px", marginLeft: "1000px"}}
+                                          style={{marginTop: "-25px", marginLeft: "920px", marginRight: "50px"}}
                                         />
                                       </span>
                                       
@@ -1437,7 +1503,7 @@ useEffect(() => {
 
                                 {/* 내가 의뢰한 땜빵 */}
                                 {showDamnRequest && (
-                                  <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1300px"}}>
+                                  <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1500px", marginRight: "10px"}}>
                                     {requestDamn.map(rowData => (
                                       <div key={rowData.damnPublisher}
                                       className="requestdamn-box">
@@ -1460,13 +1526,13 @@ useEffect(() => {
                                         </div>
                                         
 
-                                        {/* 진행중, 매칭완료, 근무중, 근무완료, 일당미지급, 매칭종료 */}
+                                        {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}
 
 
                                         <div>
                                           <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
-                                          <button type='button' className="requestdamn-button">수정하기</button>
-                                          <button type='button' className="requestdamn-button">삭제하기</button>
+                                          <button type='button' onClick={() => handleShowReview(rowData.damnpostId)} className="requestdamn-button">리뷰 남기기</button>
+                                          <button type='button' className="requestdamn-button">수정/삭제하기</button>
                                         </div>
                                       </div>
                                     ))}
@@ -1510,10 +1576,66 @@ useEffect(() => {
                                               </Modal.Footer>
                                           </Modal>
 
+
+
+                                          {/* 리뷰 남기기 모달창 */}
+                                      <Modal dialogClassName="modal-whole-review" style={{marginTop: "90px"}} show={showReview} onHide={handleCloseReview}>
+                                          {(
+                                              <div>
+                                                  <Modal.Body>
+                                                      <div>
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(1)} style={{marginTop: "30px", 
+                                                        border: `4px solid ${badgeStates[0] === "1" ? "#FED4C8" : "#FED4C880"}`, color: `${badgeStates[0] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[0] === "1" ? "#FED4C8" : "#FED4C880"}`}}>슈퍼 칼답러</button>
+
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(2)} 
+                                                        style={{border: `4px solid ${badgeStates[1] === "1" ? "#FAEDC0" : "#FAEDC080"}`, color: `${badgeStates[1] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[1] === "1" ? "#FAEDC0" : "#FAEDC080"}`}}>슈퍼 성실러</button>
+
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(3)}
+                                                        style={{border: `4px solid ${badgeStates[2] === "1" ? "#C8EBFA" : "#C8EBFA80"}`, color: `${badgeStates[2] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[2] === "1" ? "#C8EBFA" : "#C8EBFA80"}`}}>슈퍼 친절러</button>
+
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(4)}
+                                                        style={{border: `4px solid ${badgeStates[3] === "1" ? "#D4B8E6" : "#D4B8E680"}`, color: `${badgeStates[3] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[3] === "1" ? "#D4B8E6" : "#D4B8E680"}`}}>슈퍼 일잘러</button>
+
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(5)}
+                                                        style={{border: `4px solid ${badgeStates[4] === "1" ? "#FFD6A3" : "#FFD6A380"}`, color: `${badgeStates[4] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[4] === "1" ? "#FFD6A3" : "#FFD6A380"}`}}>슈퍼 단정러</button>
+
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(6)}
+                                                        style={{border: `4px solid ${badgeStates[5] === "1" ? "#C2E8BE" : "#C2E8BE80"}`, color: `${badgeStates[5] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[5] === "1" ? "#C2E8BE" : "#C2E8BE80"}`}}>슈퍼 대처러</button>
+
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(7)}
+                                                        style={{border: `4px solid ${badgeStates[6] === "1" ? "#B4B6DB" : "#B4B6DB80"}`, color: `${badgeStates[6] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[6] === "1" ? "#B4B6DB" : "#B4B6DB80"}`}}>슈퍼 꼼꼼러</button>
+
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(8)}
+                                                        style={{marginBottom: "40px", border: `4px solid ${badgeStates[7] === "1" ? "#F0C8F5" : "#F0C8F580"}`, color: `${badgeStates[7] === "1" ? "black" : "#9D9D9D"}`,
+                                                        backgroundColor: `${badgeStates[7] === "1" ? "#F0C8F5" : "#F0C8F580"}`}}>슈퍼 긍정러</button>
+
+                                                      </div>
+
+                                                      <div className="footer-button1">
+                                                        <button className="footer-style footer-button-save" onClick={() => profileReview()}>
+                                                          저장하기
+                                                        </button>
+                                                        <button className="footer-style footer-button-report">
+                                                          신고하기
+                                                        </button>
+                                                      </div>
+                                                      
+                                                  </Modal.Body>
+
+                                                </div>
+                                              )}
+                                                  
+                                          </Modal>
+
                                   </div>
                                 )}
-
-
                               </span>
                             </div>
                       </span>
