@@ -12,8 +12,6 @@ function Login() {
     const [InputPW, setInputPW] = useState("");         //비밀번호 입력창
     const [infoSave, setInfoSave] = useState(false);    //아이디 저장 체크박스
 
-    const [userInfo, setUserInfo] = useState(null);
-
     const [cookies, setCookie, removeCookie] = useCookies();
 
     const handleInputID = (e) => {
@@ -48,9 +46,8 @@ function Login() {
         .then(async response => {
             console.log(response);
             console.log("token", response.data); //회원의 고유 토큰
-            setUserInfo(response.data);
             sessionStorage.setItem("id", InputID);
-            for (const [key, value] of Object.entries(userInfo)) {
+            for (const [key, value] of Object.entries(response.data)) {
                 console.log(`Key: ${key}`);
                 console.log(`Value: ${value}`);
                 console.log("****로그인 성공*****");
@@ -65,9 +62,9 @@ function Login() {
                 localStorage.setItem('token', cookies.token);       //웹브라우저에 localStroge에 저장
                 
                 console.log('token1', cookies.token);
-              }
 
-            document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
+                document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
+              }
         })
         .catch((error) => {
             console.log(error);

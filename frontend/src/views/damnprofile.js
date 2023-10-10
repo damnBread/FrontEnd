@@ -103,7 +103,7 @@ const Damnprofile = () => {
     const [showWorkJob, setShowWorkJob] = useState(false);   //모달창
 
     // 지원자 보기
-    const [inputData, setInputData] = useState([{
+    const [applyData, setApplyData] = useState([{
       userid: 0,
       id: "",
       name: "",
@@ -126,6 +126,8 @@ const Damnprofile = () => {
     }])
 
     const [postId, setPostId] = useState(null);
+
+    const [selectedApply, setSelectedApply] = useState(null);
 
     const noShowToggleSwitch = () => {
       setNoShowIsActive(previousState => !previousState);
@@ -871,7 +873,7 @@ useEffect(() => {
                       }
                     })
                 .then(async response => {
-                    console.log(response.data);
+                    console.log("RR: ", response.data);
                     console.log("지원자 보기 끝 !")
                     setShowApply(true);
 
@@ -885,8 +887,7 @@ useEffect(() => {
                       address: applyData.home
                     }))
         
-                    setInputData(_inputData);
-                    console.log(inputData)
+                    setApplyData(_inputData);
                     
                 })
                 .catch((error) => {
@@ -909,6 +910,55 @@ useEffect(() => {
                     }
                 });
             };
+
+            function getGender(gender) {
+              switch(gender) {
+                case false:
+                  return "여";
+                case true:
+                  return "남";
+                default:
+              }
+            }
+
+            function getName(name) {
+              const changedName = name.replaceAll(name[1], "O");
+              return changedName;
+            }
+
+            const birthToAge = (myBirth) => {
+              const mybirth = myBirth.toString().substring(0, 10);
+              const mybirth_year = mybirth.substring(0, 4); //2023
+              const mybirth_month = mybirth.substring(5, 7);  //02
+              const mybirth_day = mybirth.substring(8);  //08
+              const today = new Date();
+              let formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+              let age = today.getFullYear() - mybirth_year;
+              if (today.getMonth() + 1 < 10) {
+                formattedDate = `${today.getFullYear()}-0${today.getMonth() + 1}-${today.getDate()}`;
+                age = today.getFullYear() - mybirth_year;
+              } else {
+                formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+                age = today.getFullYear() - mybirth_year;
+              }
+              return age;
+          }
+
+          function selectApply(user_id) {
+            setSelectedApply(user_id);
+            console.log("USER: ", user_id)
+         }
+
+         //지원자 프로필 보기
+         function applyProfile() {
+
+         }
+
+         //지원자 매칭 확정하기
+         function applyMatching() {
+
+         }
+        
 
             //리뷰 남기기 이벤트 발생 시
             //리뷰 남기기 test 필요
@@ -1564,51 +1614,62 @@ useEffect(() => {
                                     {/* 지원자 보기 모달창 */}
                                       <Modal dialogClassName="modal-whole-rank" show={showApply} onHide={handleCloseApply}>
                                           {(
-                                              <div>
+                                              <div className="apply-whole-box">
                                                   <Modal.Body>
-                                                      {/* <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
-                                                      {requestDamn.map(rowData => (
-                                                    <div key={rowData.damnPublisher}
-                                                      // onClick={() => selectDamn(rowData.damnpostId)}
-                                                      // className={`requestdamn-box ${selectedDamn === rowData.damnpostId ? 'selected' : ''}`}
-                                                      style={{width: "550px", height: "200px", marginTop: "10px", marginBottom: "25px"}}>
-                                                          <div style={{marginLeft: "25px", marginTop: "20px"}}>
-                                                            <b>{erowData.damnTitl}</b>
+                                                      <div className="scrollable-item">
+                                                      {applyData.map(rowData => (
+                                                    <div key={rowData.userid}
+                                                      onClick={() => selectApply(rowData.userid)}
+                                                      className={`apply-item-box ${selectedApply === rowData.userid ? 'selected' : ''}`}
+                                                      >
+                                                          <div className="apply-item-carrer">
+                                                            <b>경력 {rowData.career}회</b>
                                                           </div>
 
                                                           <div>
-                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "20px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
-                                                            {timeConversion(rowData.damnStart)} ~ {timeConversion(rowData.damnEnd)}
-                                                          </div>
-                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
-                                                              {rowData.damnBranch}
-                                                          <div>
-                                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
-                                                                {rowData.damnPay}
-                                                          </div>
+                                                            <span>
+                                                              <img src={getGenderImage(rowData.gender)} className="apply-item-gender" id="성별" width="70" alt="gender"/>
+                                                                <span className="apply-item-name">
+                                                                <b>{getName(rowData.name)}</b>
+                                                                  
+                                                                  <span className="apply-item-age">
+                                                                    {getGender(rowData.gender)} {"/ "+ birthToAge(rowData.age) + "세"}
+                                                                  </span>
+                                                                </span>
+
+                                                                <span className="apply-item-address">
+                                                                  {rowData.address}
+                                                                </span>
+                                                              </span>
+                                                            </div>
                                                         </div>
                                                       ))}
-                                                      </div> */}
+                                                      </div>
+
+                                                      <div className="footer-button1">
+                                                        <button onClick={() => applyProfile()} className="footer-style footer-button-profile">
+                                                          프로필 보기
+                                                        </button>
+                                                        <button onClick={() => applyMatching()} className="footer-style footer-button-matching">
+                                                          매칭 확정하기
+                                                        </button>
+                                                      </div>
+                                                      
                                                   </Modal.Body>
 
                                                 </div>
                                               )}
-                                              <Modal.Footer>
-                                                  <Button className="footer-style" varient="primary">
-                                                      전달하기
-                                                  </Button>
-                                              </Modal.Footer>
                                           </Modal>
 
 
 
                                           {/* 리뷰 남기기 모달창 */}
-                                      <Modal dialogClassName="modal-whole-review" style={{marginTop: "90px"}} show={showReview} onHide={handleCloseReview}>
+                                      <Modal dialogClassName="modal-whole-review" style={{marginTop: "70px"}} show={showReview} onHide={handleCloseReview}>
                                           {(
-                                              <div>
+                                              <div className="apply-whole-box">
                                                   <Modal.Body>
                                                       <div>
-                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(1)} style={{marginTop: "30px", 
+                                                        <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(1)} style={{marginTop: "10px", 
                                                         border: `4px solid ${badgeStates[0] === "1" ? "#FED4C8" : "#FED4C880"}`, color: `${badgeStates[0] === "1" ? "black" : "#9D9D9D"}`,
                                                         backgroundColor: `${badgeStates[0] === "1" ? "#FED4C8" : "#FED4C880"}`}}>슈퍼 칼답러</button>
 

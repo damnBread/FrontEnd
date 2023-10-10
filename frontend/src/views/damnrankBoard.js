@@ -429,7 +429,7 @@ const DamnrankBoard = () => {
                                     <Modal.Body>
                                         <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
                                         {requestDamn.map(rowData => (
-                                      <div key={rowData.damnPublisher}
+                                      <div key={rowData.damnpostId}
                                         onClick={() => selectDamn(rowData.damnpostId)}
                                         className={`requestdamn-box ${selectedDamn === rowData.damnpostId ? 'selected' : ''}`}
                                         style={{width: "550px", height: "200px", marginTop: "10px", marginBottom: "25px", backgroundColor: "#FFFFFF"}}>
