@@ -95,6 +95,7 @@ const Damnprofile = () => {
     const [show, setShow] = useState(false);   //모달창
 
     const [showApply, setShowApply] = useState(false); //지원자 보기 모달창
+    const [showApplyDetail, setShowApplyDetail] = useState(false); //지원자 보기 세부 모달창
     const [showReview, setShowReview] = useState(false); //리뷰 남기기 모달창
 
     const [badgeStates, setBadgeStates] = useState("00000000");
@@ -110,7 +111,21 @@ const Damnprofile = () => {
       gender: "",
       age: 0,
       career: 0,
-      address: ""
+      address: "",
+      introduce: "",
+      hopeJob: ""
+    }])
+
+    //내가 지원한 땜빵
+    const [applyDamn, setApplyDamn] = useState([{
+      damnpostId: "",
+      damnPublisher: "",
+      damnTitle: "",
+      damnCreated: "",
+      damnStart: "",
+      damnEnd: "",
+      damnBranch: "",
+      damnPay: ""
     }])
 
     // 내가 의뢰한 땜빵
@@ -172,6 +187,9 @@ const Damnprofile = () => {
     const handleCloseApply = () => {  //지원자 보기 모달창
         setShowApply(false);
     }
+    const handleCloseApplyDetail = () => {  //지원자 보기 세부 모달창
+      setShowApplyDetail(false);
+    }
     const handleCloseReview = () => {   //리뷰 남기기 모달창
         setBadgeStates('00000000');
         setShowReview(false);
@@ -185,11 +203,11 @@ const Damnprofile = () => {
 
     const handleShow = () =>{ setShow(true)};     //모달창 켜기
     const handleShowApply = () => {setShowApply(true)};  //지원자 보기 모달창 켜기
-    const handleShowReview = (postID) => {
+    const handleShowApplyDetail = () => {setShowApplyDetail(true)};  //지원자 보기 세부 모달창 켜기
+    const handleShowReview = (postID) => {    //리뷰 남기기 모달창 켜기
       setShowReview(true)
       setPostId(postID);
-      console.log("DSD: ", postID);
-    };  //리뷰 남기기 모달창 켜기
+    };  
     const handleShowWorkArea = () => setShowWorkArea(true);     //모달창 켜기
     const handleShowWorkJob = () => setShowWorkJob(true);     //모달창 켜기
 
@@ -257,6 +275,7 @@ const DonghandleClickWorkArea = (dongItem) => {
 useEffect(() => {
   firstPage();
   toggleButtonValue();
+  applyDamnbread();
   requestDamnbread();
 }, [isNoShowActive, isNicknameActive, isEmailActive, isPhoneActive, isLocationActive, 
   isHopeLocationActive, isHopeJobActive, isBadgeActive, isIntroduceActive]);
@@ -809,6 +828,50 @@ useEffect(() => {
         }
 
 
+        //내가 지원한 땜빵 GET
+        const applyDamnbread = () => {
+          axios
+            .get(`http://localhost:3000/mypage/applylist`, {
+              headers: {
+                Authorization: "Bearer " + sessionToken
+              }
+            })
+            .then((response) => {
+              console.log("applyDamn: ", response.data);
+              const _inputData = response.data.map((rowData) => ({
+                damnpostId: rowData.postId,
+                damnPublisher: rowData.publisher,
+                damnTitle: rowData.title,
+                damnCreated: rowData.createdDate,
+                damnStart: rowData.workStart,
+                damnEnd: rowData.workEnd,
+                damnBranch: rowData.branchName,
+                damnPay: rowData.hourPay
+              })
+              )
+              setApplyDamn(_inputData);
+                
+            })
+            .catch((error)=>{
+              if (error.response.status === 400) {
+                Swal.fire({
+                  icon: "warning",
+                  title: "경고",
+                  text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
+                  showCancelButton: true,
+                  confirmButtonText: "확인",
+                  cancelButtonText: "취소",
+                  width: 800,
+                  height: 100,
+              }).then((res) => {
+                  if (res.isConfirmed) {
+                      history.push('/Login'); 
+                      window.scrollTo(0, 0);  
+                  }
+              });
+              }
+            })
+          }       
 
 
         //내가 의뢰한 땜빵 GET
@@ -875,7 +938,7 @@ useEffect(() => {
                 .then(async response => {
                     console.log("RR: ", response.data);
                     console.log("지원자 보기 끝 !")
-                    setShowApply(true);
+                    handleShowApply();
 
                     const _inputData = response.data.map((applyData) => ({
                       userid: applyData.userId,
@@ -884,7 +947,10 @@ useEffect(() => {
                       gender: applyData.gender,
                       age: applyData.birth,
                       career: applyData.careerCnt,
-                      address: applyData.home
+                      address: applyData.home,
+                      introduce: applyData.introduce,
+                      hopeJob: applyData.hopeJob
+                      //땜빵 이력 추가해야됨
                     }))
         
                     setApplyData(_inputData);
@@ -949,13 +1015,20 @@ useEffect(() => {
             console.log("USER: ", user_id)
          }
 
-         //지원자 프로필 보기
-         function applyProfile() {
-
-         }
+         //지원자 보기 세부
+         function applyProfile(user_id) {
+            setShowApplyDetail(true);
+            applyData.map((value, index) => {
+              if (selectedApply === value.userid) {
+                console.log("value: ", value);
+                return value;
+              }
+            })
+        }
+         
 
          //지원자 매칭 확정하기
-         function applyMatching() {
+         function applyMatching(user_id) {
 
          }
         
@@ -1570,8 +1643,35 @@ useEffect(() => {
                                 
                                 {/* 내가 지원한 땜빵 */}
                                 {showDamnApply && (
-                                    <div>
-                                    </div>
+                                    <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1500px", marginRight: "10px"}}>
+                                    {applyDamn.map(rowData => (
+                                      <div key={rowData.damnPublisher}
+                                      className="requestdamn-box">
+                                        <div style={{marginLeft: "25px", marginTop: "20px"}}>
+                                          <b>{rowData.damnTitle}</b>
+                                          <span style={{float: "right", marginRight: "15px"}}>
+                                          {(rowData.damnCreated)}
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
+                                          {(rowData.damnStart)} ~ {(rowData.damnEnd)}
+                                        </div>
+                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
+                                            {rowData.damnBranch}
+                                        <div>
+                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
+                                              {rowData.damnPay}
+                                        </div>
+                                        
+
+                                        {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}
+
+                                      </div>
+                                      
+                                    ))}
+                                  </div>
                                 )}
 
 
@@ -1647,10 +1747,10 @@ useEffect(() => {
                                                       </div>
 
                                                       <div className="footer-button1">
-                                                        <button onClick={() => applyProfile()} className="footer-style footer-button-profile">
+                                                        <button onClick={() => handleShowApplyDetail()} className="footer-style footer-button-profile">
                                                           프로필 보기
                                                         </button>
-                                                        <button onClick={() => applyMatching()} className="footer-style footer-button-matching">
+                                                        <button onClick={() => applyMatching(selectedApply)} className="footer-style footer-button-matching">
                                                           매칭 확정하기
                                                         </button>
                                                       </div>
@@ -1658,6 +1758,74 @@ useEffect(() => {
                                                   </Modal.Body>
 
                                                 </div>
+                                              )}
+                                          </Modal>
+
+                                          {/* 지원자보기 세부 */}
+                                          <Modal dialogClassName="modal-whole-rank" show={showApplyDetail} onHide={handleCloseApplyDetail}>
+                                            {selectedApply ? (
+                                              <div className="custom-rank-content">
+                                                  <Modal.Body>
+                                                      <div className="scrollable-container">
+                                                      {applyData
+                                                        .filter((item) => (item.userid) === (selectedApply))
+                                                        .map(rowData => (
+                                                          <div key={rowData.id}>
+                                                              <div>
+                                                                <span className="label-style111" style={{marginLeft: "30px"}}>
+                                                                  <label className="label-style111" style={{zIndex: 1, fontSize: "22px", marginLeft: "10px", marginTop: "10px", marginBottom: "20px"}}>
+                                                                  <b>땜빵 경력 {rowData.career}회</b>  </label>           
+                                                                </span>
+                                                            </div>
+
+                                                            <div>
+                                                              <span>
+                                                                  <img src={getGenderImage(rowData.gender)} className="gender-image" id="성별" width="120" alt="gender"/>
+                                                                  
+                                                                    <span className="name-style" style={{fontSize: "25px", marginLeft: "50px"}}>
+                                                                      <b>{getName(rowData.name)}</b>
+
+                                                                      <span className="title-style" style={{fontSize: "18px", marginTop: "15px", marginLeft: "2px"}}>
+                                                                        {rowData.title}
+                                                                      </span>
+                                                                      
+                                                                    </span>
+
+                                                                      <span>
+                                                                        <span className="gender-age" style={{fontSize: "17px", marginLeft: "65px"}}>
+                                                                          {getGender(rowData.gender)} {"/ "+ birthToAge(rowData.age) + "세"}
+                                                                        </span>
+                                                                        
+                                                                
+                                                                      </span>
+                                                                        <div style={{marginTop: "30px", marginLeft: "40px"}}>
+                                                                          <label><b>거주 지역</b></label>
+                                                                        </div>
+                                                                        <div>
+                                                                          <div className="selectedItemAddress-style">{rowData.address}</div>
+
+                                                                        </div>
+
+                                                                        <div style={{marginTop: "40px", marginLeft: "40px"}}>
+                                                                          <label><b>희망 업/직종</b></label>
+                                                                        </div>
+                                                                        <div>
+                                                                          <div className="selectedItemAddress-style">{replaceWorkJob(rowData.hopeJob)}</div>
+                                                                        </div>
+                                                                    </span>
+
+                                                                    <div>
+                                                                        {/* 땜빵 이력 */}
+
+                                                                    </div>
+                                                          </div>
+                                                        </div>
+                                                      ))}
+                                                      </div>
+                                                  </Modal.Body>
+                                                </div>
+                                              ) : (
+                                                <div> </div>
                                               )}
                                           </Modal>
 
