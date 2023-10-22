@@ -10,19 +10,37 @@ import damnlistworkdate from "../assets/img/damnlistworkdate.png";
 import damnlistworkmoney from "../assets/img/damnlistworkmoney.png";
 import damnlistworkperiod from "../assets/img/damnlistworkperiod.png";
 import damnlistworktime from "../assets/img/damnlistworktime.png";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 const sectionStyle = {
   textDecoration: "none",
   color: "black",
 };
 
+// const formatDate = (dateString) => {
+//   const dateObject = new Date(dateString);
+//   const formattedDate = dateObject.toString().split("T")[0];
+//   const formattedTime = dateObject.toString("en-US", {
+//     hour: "2-digit",
+//     minute: "2-digit",
+//   });
+
+//   return {
+//     date: formattedDate,
+//     time: formattedTime,
+//   };
+// };
+
 const formatDate = (dateString) => {
   const dateObject = new Date(dateString);
-  const formattedDate = dateObject.toISOString().split("T")[0];
-  const formattedTime = dateObject.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+
+  // 원하는 날짜 형식 설정
+  const dateOptions = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = dateObject.toLocaleDateString("ko-KR", dateOptions);
+
+  // 원하는 시간 형식 설정
+  const timeOptions = { hour: "numeric", minute: "numeric" };
+  const formattedTime = dateObject.toLocaleTimeString("ko-KR", timeOptions);
 
   return {
     date: formattedDate,
@@ -46,26 +64,6 @@ const DamnlistDetail = () => {
     axios
       .get(`http://localhost:3000/damnlist/${postid}`)
       .then((response) => {
-        // // Initialize KakaoMap
-        // const initKakaoMap = () => {
-        //   window.kakao.maps.load(() => {
-        //     const container = document.getElementById("worklocationkakaomap");
-        //     container.style.width = "1000px";
-        //     container.style.height = "400px";
-        //     const options = {
-        //       center: new window.kakao.maps.LatLng(post.location),
-        //       level: 3,
-        //     };
-        //     const map = new window.kakao.maps.Map(container, options);
-        //     const markerPosition = new window.kakao.maps.LatLng(post.location);
-        //     const marker = new window.kakao.maps.Marker({
-        //       position: markerPosition,
-        //     });
-        //     marker.setMap(map);
-        //   });
-        // };
-
-        // initKakaoMap();
         if (response.data) {
           const formattedDeadline = formatDate(response.data.deadline);
           response.data.deadline = formattedDeadline;
@@ -192,7 +190,22 @@ const DamnlistDetail = () => {
                   <div
                     className="worklocationkakaomap"
                     id="worklocationkakaomap"
-                  ></div>
+                  >
+                    {/* kakaomap */}
+                    <Map
+                      center={{ lat: 33.5563, lng: 126.79581 }}
+                      style={{
+                        width: "1000px",
+                        height: "500px",
+                        borderRadius: "10px",
+                      }}
+                      level={3}
+                    >
+                      <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
+                        {post.location}
+                      </MapMarker>
+                    </Map>
+                  </div>
                 </div>
               </div>
             </div>
