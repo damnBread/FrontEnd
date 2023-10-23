@@ -31,7 +31,7 @@
     "react-native-web": "^0.19.8",
     "react-paginate": "^8.2.0",
     "react-router-dom": "^5.3.4",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^4.0.3",
     "react-select": "^5.7.4",
     "react-time-picker": "^6.5.0",
     "reactstrap": "^9.2.0",
