@@ -15,15 +15,31 @@ import damnlistscrap from "../assets/img/damnlistscrap.png";
 import damnlistscrapclick from "../assets/img/damnlistscrapclick.png";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
+const getCoordinatesFromAddress = async (address) => {
+  const apiKey = "AIzaSyBSAd6eYUYY8l9LV9eY8FXiJXAPU6zPDCk";
+  const response = await axios.get(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      address
+    )}&key=${apiKey}`
+  );
+
+  if (response.data.results.length > 0) {
+    const location = response.data.results[0].geometry.location;
+    return location;
+  } else {
+    return null;
+  }
+};
+
 const formatDate = (dateString) => {
   const dateObject = new Date(dateString);
-  const formattedDate = dateObject.toISOString().split("T")[0];
+  const formattedDate = dateObject.toLocaleDateString().split("T")[0];
   return formattedDate;
 };
 
 const DamnlistDetail = () => {
-  const sessionToken = sessionStorage.getItem('token');
-  const userId = sessionStorage.getItem('idNum');
+  const sessionToken = sessionStorage.getItem("token");
+  const userId = sessionStorage.getItem("idNum");
 
   const [activeApplyBtn, setActiveApplyBtn] = useState(true);
   const [activeChattingBtn, setActiveChattingBtn] = useState(true);
@@ -64,28 +80,35 @@ const DamnlistDetail = () => {
       width: 800,
       height: 100,
     }).then((res) => {
-        if (res.isConfirmed) {  //확인을 클릭할 경우 -> axios
-          axios
-          .post(`http://localhost:3000/damnlist/${postid}/apply`, {
-            postNum : postid
-          },
-          {headers: {
-            Authorization: "Bearer " + sessionToken
-          }})
+      if (res.isConfirmed) {
+        //확인을 클릭할 경우 -> axios
+        axios
+          .post(
+            `http://localhost:3000/damnlist/${postid}/apply`,
+            {
+              postNum: postid,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + sessionToken,
+              },
+            }
+          )
           .then((response) => {
-              console.log("지원하기 완료");
-              Swal.fire({
-                icon: "success",
-                title: "땜빵 지원",
-                text: "지원이 완료되었습니다. 마이페이지에서 확인할 수 있습니다.",
-                showCancelButton: false,
-                confirmButtonText: "확인",
-                width: 800,
-                height: 100,
-              }).then((res) => {});
+            console.log("지원하기 완료");
+            Swal.fire({
+              icon: "success",
+              title: "땜빵 지원",
+              text: "지원이 완료되었습니다. 마이페이지에서 확인할 수 있습니다.",
+              showCancelButton: false,
+              confirmButtonText: "확인",
+              width: 800,
+              height: 100,
+            }).then((res) => {});
           })
-          .catch((error)=>{
-            if(error.response.status === 400) {  //올바르지 않은 게시물 정보
+          .catch((error) => {
+            if (error.response.status === 400) {
+              //올바르지 않은 게시물 정보
               Swal.fire({
                 icon: "warning",
                 title: "경고",
@@ -96,7 +119,8 @@ const DamnlistDetail = () => {
                 height: 100,
               }).then((res) => {});
             }
-            if(error.response.status === 401) {  //헤더 인증 
+            if (error.response.status === 401) {
+              //헤더 인증
               Swal.fire({
                 icon: "warning",
                 title: "경고",
@@ -107,7 +131,8 @@ const DamnlistDetail = () => {
                 height: 100,
               }).then((res) => {});
             }
-            if(error.response.status === 409) {  //이미 지원한 경우
+            if (error.response.status === 409) {
+              //이미 지원한 경우
               Swal.fire({
                 icon: "warning",
                 title: "경고",
@@ -118,17 +143,17 @@ const DamnlistDetail = () => {
                 height: 100,
               }).then((res) => {});
             }
-          })
+          });
       }
     });
-  }
-
+  };
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/damnlist/${postid}`)
       .then((response) => {
         if (response.data) {
+          console.log("1111", response.data);
           const formattedDeadline = formatDate(response.data.deadline);
           response.data.deadline = formattedDeadline;
 
