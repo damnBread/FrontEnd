@@ -33,8 +33,19 @@ const getCoordinatesFromAddress = async (address) => {
 
 const formatDate = (dateString) => {
   const dateObject = new Date(dateString);
-  const formattedDate = dateObject.toLocaleDateString().split("T")[0];
-  return formattedDate;
+
+  // 원하는 날짜 형식 설정
+  const dateOptions = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = dateObject.toLocaleDateString("ko-KR", dateOptions);
+
+  // 원하는 시간 형식 설정
+  const timeOptions = { hour: "numeric", minute: "numeric" };
+  const formattedTime = dateObject.toLocaleTimeString("ko-KR", timeOptions);
+
+  return {
+    date: formattedDate,
+    time: formattedTime,
+  };
 };
 
 const DamnlistDetail = () => {
