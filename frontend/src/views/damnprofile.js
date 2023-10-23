@@ -21,6 +21,7 @@ import workplatter from "../assets/img/workicon-platter.png";
 import worksale from "../assets/img/workicon-sale.png";
 import workbackground from "../assets/img/workicon-background.png";
 import { Switch } from 'react-native';
+import { post } from "jquery";
 
 const Damnprofile = () => {
     
@@ -137,10 +138,15 @@ const Damnprofile = () => {
       damnStart: "",
       damnEnd: "",
       damnBranch: "",
-      damnPay: ""
+      damnPay: "",
+      damnMatchedUser: ""
     }])
 
     const [postId, setPostId] = useState(null);
+    const [damnPostId, setDamnPostId] = useState(null);
+
+    let [matchUser, setMatchUser] = useState("");
+    const [matchActive, setMatchActive] = useState(false);
 
     const [selectedApply, setSelectedApply] = useState(null);
 
@@ -853,23 +859,27 @@ useEffect(() => {
                 
             })
             .catch((error)=>{
-              if (error.response.status === 400) {
-                Swal.fire({
-                  icon: "warning",
-                  title: "경고",
-                  text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
-                  showCancelButton: true,
-                  confirmButtonText: "확인",
-                  cancelButtonText: "취소",
-                  width: 800,
-                  height: 100,
-              }).then((res) => {
-                  if (res.isConfirmed) {
-                      history.push('/Login'); 
-                      window.scrollTo(0, 0);  
-                  }
-              });
-              }
+
+              //내가 지원한 땜빵이 없으면 400 에러남
+              //세션이 없는경우, 지원한 땜빵이 없는 경우 나누면 될 듯
+
+              // if (error.response.status === 400) {
+              //   Swal.fire({
+              //     icon: "warning",
+              //     title: "경고",
+              //     text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
+              //     showCancelButton: true,
+              //     confirmButtonText: "확인",
+              //     cancelButtonText: "취소",
+              //     width: 800,
+              //     height: 100,
+              // }).then((res) => {
+              //     if (res.isConfirmed) {
+              //         history.push('/Login'); 
+              //         window.scrollTo(0, 0);  
+              //     }
+              // });
+              // }
             })
           }       
 
@@ -892,11 +902,11 @@ useEffect(() => {
                     damnStart: rowData.workStart,
                     damnEnd: rowData.workEnd,
                     damnBranch: rowData.branchName,
-                    damnPay: rowData.hourPay
+                    damnPay: rowData.hourPay,
+                    damnMatchedUser: rowData.matched_user
                   })
                   )
                   setRequestDamn(_inputData);
-                    
                 })
                 .catch((error)=>{
                   if (error.response.status === 400) {
@@ -939,7 +949,13 @@ useEffect(() => {
                     console.log("RR: ", response.data);
                     console.log("지원자 보기 끝 !")
                     handleShowApply();
+                    setDamnPostId(postid);
 
+                    console.log("ididid: ", matchUser, ", ", selectedApply)
+
+                    if(matchUser === selectedApply) {
+                      console.log("MATHCMAD: ", matchUser, ", ", selectedApply)
+                    }
                     const _inputData = response.data.map((applyData) => ({
                       userid: applyData.userId,
                       id: applyData.id,
@@ -1029,6 +1045,68 @@ useEffect(() => {
 
          //지원자 매칭 확정하기
          function applyMatching(user_id) {
+          console.log("POST: ", damnPostId)
+          axios
+          .post(`http://localhost:3000/mypage/requestlist/${damnPostId}/${user_id}/match`, {},
+          {
+            headers: {
+              Authorization: "Bearer " + sessionToken
+            },
+          })
+            .then(async response => {
+                console.log(response);
+                console.log("매칭 확정하기 끝 !");
+                console.log("MATCH: ", damnPostId, " , ",user_id);
+                if (response.status === 201) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "매칭 성공",
+                    text: "지원자 매칭이 확정되었습니다.",
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    width: 800,
+                    height: 100,
+                    }).then((res) => {
+                  });
+                } else if (response.status === 202) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "매칭 변경 성공",
+                    text: "매칭된 지원자가 변경되었습니다.",
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    width: 800,
+                    height: 100,
+                    }).then((res) => {
+                  });
+                }
+                setMatchUser(user_id);
+            })
+            .catch((error) => {
+              if (error.response) {
+                console.log("1", error.response.data);
+                console.log("2", error.response.status);
+                console.log("3", error.response.headers);
+              } else if (error.request) {
+                console.log("4", error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log("5", error.config);
+
+              if (error.response.status === 400) {
+                Swal.fire({
+                  icon: "warning",
+                  title: "경고",
+                  text: "지원자를 매칭할 수 없습니다.",
+                  showCancelButton: false,
+                  confirmButtonText: "확인",
+                  width: 800,
+                  height: 100,
+              }).then((res) => {
+              });
+              }
+            });
 
          }
         
@@ -1036,46 +1114,59 @@ useEffect(() => {
             //리뷰 남기기 이벤트 발생 시
             //리뷰 남기기 test 필요
             function profileReview() {
-              axios
-                  .post(`http://localhost:3000/mypage/requestlist/${postId}/review`, {
-                     badge: badgeStates },
-                    { headers: {
-                      Authorization: "Bearer " + sessionToken
-                    }})
-              .then(async response => {
-                  console.log(response);
-                  console.log("리뷰 남기기 끝 !")
-              })
-              .catch((error) => {
-                if (error.response) {
-                  console.log("1", error.response.data);
-                  console.log("2", error.response.status);
-                  console.log("3", error.response.headers);
-                } else if (error.request) {
-                  console.log("4", error.request);
-                } else {
-                  console.log('Error', error.message);
-                }
-                console.log("5", error.config);
-                  if (error.response.status === 500) {
-                      Swal.fire({
-                        icon: "warning",
-                        title: "경고",
-                        text: "지원자를 먼저 선택해주세요.",
-                        showCancelButton: true,
-                        confirmButtonText: "확인",
-                        cancelButtonText: "취소",
-                        width: 800,
-                        height: 100,
-                    }).then((res) => {
-                        if (res.isConfirmed) {
-                            
-                        }
-                    });
-                  }
-              });
+              if (matchUser.length === 0) {
+                Swal.fire({
+                  icon: "warning",
+                  title: "매칭된 지원자 없음",
+                  text: "지원자를 먼저 확정해주세요.",
+                  showCancelButton: false,
+                  confirmButtonText: "확인",
+                  width: 800,
+                  height: 100,
+                  }).then((res) => {
+                });
+              } else {
+                  axios
+                      .post(`http://localhost:3000/mypage/requestlist/${postId}/review`, {
+                        badge: badgeStates },
+                        { headers: {
+                          Authorization: "Bearer " + sessionToken
+                        }})
+                  .then(async response => {
+                      console.log(response);
+                      console.log("리뷰 남기기 끝 !")
+                  })
+                  .catch((error) => {
+                    if (error.response) {
+                      console.log("1", error.response.data);
+                      console.log("2", error.response.status);
+                      console.log("3", error.response.headers);
+                    } else if (error.request) {
+                      console.log("4", error.request);
+                    } else {
+                      console.log('Error', error.message);
+                    }
+                    console.log("5", error.config);
+                      if (error.response.status === 500) {
+                          Swal.fire({
+                            icon: "warning",
+                            title: "경고",
+                            text: "지원자를 먼저 선택해주세요.",
+                            showCancelButton: true,
+                            confirmButtonText: "확인",
+                            cancelButtonText: "취소",
+                            width: 800,
+                            height: 100,
+                        }).then((res) => {
+                            if (res.isConfirmed) {
+                                
+                            }
+                        });
+                      }
+                  });
 
-              setBadgeStates('00000000');
+                  setBadgeStates('00000000');
+            }
           };
         
           function handleClickBadge(badgeNum) {
@@ -1087,6 +1178,12 @@ useEffect(() => {
               });
               console.log(badgeStates);
             }
+          }
+
+          function onClickDamnList(post_id) {
+            console.log("DFS:: ", post_id)
+            document.location.href = `/damnlist/${post_id}`;
+            window.scrollTo(0, 0);
           }
 
     return (
@@ -1645,7 +1742,7 @@ useEffect(() => {
                                 {showDamnApply && (
                                     <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1500px", marginRight: "10px"}}>
                                     {applyDamn.map(rowData => (
-                                      <div key={rowData.damnPublisher}
+                                      <div  onClick={() => onClickDamnList(rowData.damnpostId)} key={rowData.damnPublisher}
                                       className="requestdamn-box">
                                         <div style={{marginLeft: "25px", marginTop: "20px"}}>
                                           <b>{rowData.damnTitle}</b>
@@ -1669,9 +1766,9 @@ useEffect(() => {
                                         {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}
 
                                       </div>
-                                      
                                     ))}
                                   </div>
+                                  
                                 )}
 
 
@@ -1679,35 +1776,32 @@ useEffect(() => {
                                 {showDamnRequest && (
                                   <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1500px", marginRight: "10px"}}>
                                     {requestDamn.map(rowData => (
-                                      <div key={rowData.damnPublisher}
-                                      className="requestdamn-box">
-                                        <div style={{marginLeft: "25px", marginTop: "20px"}}>
-                                          <b>{rowData.damnTitle}</b>
-                                          <span style={{float: "right", marginRight: "15px"}}>
-                                          {(rowData.damnCreated)}
-                                            </span>
-                                        </div>
+                                        <div key={rowData.damnPublisher} className="requestdamn-box">
+                                          <div onClick={() => onClickDamnList(rowData.damnpostId)} style={{marginLeft: "25px", marginTop: "20px"}}>
+                                            <b>{rowData.damnTitle}</b>
+                                            <span style={{float: "right", marginRight: "15px"}}>
+                                            {(rowData.damnCreated)}
+                                              </span>
+                                          </div>
 
-                                        <div>
-                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
-                                          {(rowData.damnStart)} ~ {(rowData.damnEnd)}
-                                        </div>
-                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
-                                            {rowData.damnBranch}
-                                        <div>
-                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
-                                              {rowData.damnPay}
-                                        </div>
-                                        
+                                          <div onClick={() => onClickDamnList(rowData.damnpostId)}>
+                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
+                                            {(rowData.damnStart)} ~ {(rowData.damnEnd)}
+                                          </div>
+                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
+                                              {rowData.damnBranch}
+                                          <div onClick={() => onClickDamnList(rowData.damnpostId)}>
+                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
+                                                {rowData.damnPay}
+                                          </div>
+                                          
 
-                                        {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}
-
-
-                                        <div>
-                                          <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
-                                          <button type='button' onClick={() => handleShowReview(rowData.damnpostId)} className="requestdamn-button">리뷰 남기기</button>
-                                          <button type='button' className="requestdamn-button">수정/삭제하기</button>
-                                        </div>
+                                          {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}
+                                          <div>
+                                            <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId)} className="requestdamn-button">지원자 보기</button>
+                                            <button type='button' onClick={() => handleShowReview(rowData.damnpostId)} className="requestdamn-button">리뷰 남기기</button>
+                                            <button type='button' className="requestdamn-button">수정/삭제하기</button>
+                                          </div>
                                       </div>
                                     ))}
 
@@ -1720,8 +1814,7 @@ useEffect(() => {
                                                       {applyData.map(rowData => (
                                                     <div key={rowData.userid}
                                                       onClick={() => selectApply(rowData.userid)}
-                                                      className={`apply-item-box ${selectedApply === rowData.userid ? 'selected' : ''}`}
-                                                      >
+                                                      className={`apply-item-box ${selectedApply === rowData.userid ? 'selected' : ''}`}>
                                                           <div className="apply-item-carrer">
                                                             <b>경력 {rowData.career}회</b>
                                                           </div>
@@ -1836,6 +1929,7 @@ useEffect(() => {
                                           {(
                                               <div className="apply-whole-box">
                                                   <Modal.Body>
+                                                    
                                                       <div>
                                                         <button type='button' className="badge2-button-style" onClick={() => handleClickBadge(1)} style={{marginTop: "10px", 
                                                         border: `4px solid ${badgeStates[0] === "1" ? "#FED4C8" : "#FED4C880"}`, color: `${badgeStates[0] === "1" ? "black" : "#9D9D9D"}`,
