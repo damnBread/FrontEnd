@@ -83,7 +83,7 @@ const DamnstoryDetail = () => {
                             <div className="comment-section">
                                 <input
                                     type="text"
-                                    placeholder="제목을 입력해 주세요."
+                                    placeholder="댓글을 입력해 주세요."
                                     value={comment}
                                     onChange={handleCommentChange}
                                     className="comment-input"
