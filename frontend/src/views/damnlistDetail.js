@@ -10,37 +10,17 @@ import damnlistworkdate from "../assets/img/damnlistworkdate.png";
 import damnlistworkmoney from "../assets/img/damnlistworkmoney.png";
 import damnlistworkperiod from "../assets/img/damnlistworkperiod.png";
 import damnlistworktime from "../assets/img/damnlistworktime.png";
+import damnlistscrap from "../assets/img/damnlistscrap.png";
+import damnlistscrapclick from "../assets/img/damnlistscrapclick.png";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-
-const sectionStyle = {
-  textDecoration: "none",
-  color: "black",
-};
-
-// const formatDate = (dateString) => {
-//   const dateObject = new Date(dateString);
-//   const formattedDate = dateObject.toString().split("T")[0];
-//   const formattedTime = dateObject.toString("en-US", {
-//     hour: "2-digit",
-//     minute: "2-digit",
-//   });
-
-//   return {
-//     date: formattedDate,
-//     time: formattedTime,
-//   };
-// };
 
 const formatDate = (dateString) => {
   const dateObject = new Date(dateString);
 
-  // 원하는 날짜 형식 설정
   const dateOptions = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = dateObject.toLocaleDateString("ko-KR", dateOptions);
-
-  // 원하는 시간 형식 설정
+  const formattedDate = dateObject.toLocaleDateString("ko-KR", dateOptions); //날짜
   const timeOptions = { hour: "numeric", minute: "numeric" };
-  const formattedTime = dateObject.toLocaleTimeString("ko-KR", timeOptions);
+  const formattedTime = dateObject.toLocaleTimeString("ko-KR", timeOptions); //시간
 
   return {
     date: formattedDate,
@@ -48,9 +28,43 @@ const formatDate = (dateString) => {
   };
 };
 
+const getCoordinatesFromAddress = async (address) => {
+  const apiKey = "AIzaSyBSAd6eYUYY8l9LV9eY8FXiJXAPU6zPDCk";
+  const response = await axios.get(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      address
+    )}&key=${apiKey}`
+  );
+
+  if (response.data.results.length > 0) {
+    const location = response.data.results[0].geometry.location;
+    return location;
+  } else {
+    return null;
+  }
+};
+
 const DamnlistDetail = () => {
   const { postid } = useParams();
   const [post, setPost] = useState(null);
+
+  const [scrapimageSrc, scrapsetImageSrc] = useState(damnlistscrap);
+  const [scrapisClicked, scrapsetIsClicked] = useState(false); // 클릭 여부를 state로 관리
+
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
+
+  const scarphandleClick = () => {
+    if (scrapisClicked) {
+      scrapsetImageSrc(damnlistscrap);
+      scrapsetIsClicked(false);
+      console.log("false");
+    } else {
+      scrapsetImageSrc(damnlistscrapclick);
+      scrapsetIsClicked(true);
+      console.log("true");
+    }
+    scrapsetIsClicked(!scrapisClicked); // Toggle the clicked state
+  };
 
   const handleChatClick = () => {
     console.log("chat");
@@ -76,6 +90,18 @@ const DamnlistDetail = () => {
           response.data.workStart = formattedWorkStart.date;
           response.data.workEnd = `${formattedWorkStart.time}~${formattedWorkEnd.time}`;
 
+          getCoordinatesFromAddress(response.data.location)
+            .then((coordinates) => {
+              if (coordinates) {
+                setLocation(coordinates);
+              } else {
+                console.error("Error geocoding the address");
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching coordinates:", error);
+            });
+
           setPost(response.data);
         }
       })
@@ -100,7 +126,16 @@ const DamnlistDetail = () => {
 
               <div className="damnitem-box1">
                 <div className="damndetaildeadline">
-                  마감일: {post.deadline.date}
+                  <span>마감일: {post.deadline.date}</span>
+                  <div className="damndeatailscrap">
+                    <img
+                      src={scrapimageSrc}
+                      width="47"
+                      height="47"
+                      alt="Work Scrap"
+                      onClick={scarphandleClick}
+                    />
+                  </div>
                 </div>
                 <div className="damndetailtitle">{post.title}</div>
                 <div className="damndetailbranch">{post.branchName}</div>
@@ -193,7 +228,7 @@ const DamnlistDetail = () => {
                   >
                     {/* kakaomap */}
                     <Map
-                      center={{ lat: 33.5563, lng: 126.79581 }}
+                      center={location}
                       style={{
                         width: "1000px",
                         height: "500px",
@@ -201,9 +236,7 @@ const DamnlistDetail = () => {
                       }}
                       level={3}
                     >
-                      <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
-                        {post.location}
-                      </MapMarker>
+                      <MapMarker position={location}>{post.location}</MapMarker>
                     </Map>
                   </div>
                 </div>

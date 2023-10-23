@@ -32,10 +32,16 @@
     margin-top: 20px;
     font-size: 16px;
     color:brown;
+    display: flex;
+    align-items: center;
+  }
+
+  .damndeatailscrap {
+    margin-left: 710px;
   }
 
   .damndetailtitle {
-    margin-top: 15px;
+    margin-top: 0px;
     margin-left: 40px;
     font-size: 30px;
   }
@@ -146,7 +152,7 @@
     font-family: 'GmarketSans', sans-bold;
     font-size: 18px;
     margin-right: 40px;
-    margin-top: 20px;
+    margin-top: 10px;
     color: black;
   }
 
@@ -237,3 +243,19 @@
     max-width: 1200px;
     height: 200px;
   }
+
+  .damndetailbutton {
+    display: flex;
+    align-items: center;
+    margin-left: 1320px;
+    margin-bottom: 50px;
+  }
+  
+  .damndetailbuttonsuply, .damndetailbuttonchat {
+    margin: 5px;
+  }
+  
+  .damndetailbuttonchat .MuiButton-root:hover {
+    background-color: rgb(229, 42, 42);
+  }
+  
