@@ -23,7 +23,7 @@ import workbackground from "../assets/img/workicon-background.png";
 import { Switch } from 'react-native';
 
 const Damnprofile = () => {
-    
+
     const sessionToken = sessionStorage.getItem('token');
 
     const history = useHistory();
@@ -886,17 +886,17 @@ useEffect(() => {
                 })
                 .catch((error)=>{
                   if (error.response.status === 400) {
-                  //   Swal.fire({
-                  //     icon: "warning",
-                  //     title: "경고",
-                  //     text: "내가 지원한 땜빵이 없습니다.",
-                  //     showCancelButton: true,
-                  //     confirmButtonText: "확인",
-                  //     cancelButtonText: "취소",
-                  //     width: 800,
-                  //     height: 100,
-                  // }).then((res) => {
-                  // });
+                    Swal.fire({
+                      icon: "warning",
+                      title: "경고",
+                      text: "내가 지원한 땜빵이 없습니다.",
+                      showCancelButton: true,
+                      confirmButtonText: "확인",
+                      cancelButtonText: "취소",
+                      width: 800,
+                      height: 100,
+                  }).then((res) => {
+                  });
                   }
                 })
           }       
@@ -928,17 +928,17 @@ useEffect(() => {
                 })
                 .catch((error)=>{
                   if (error.response.status === 400) {
-                  //   Swal.fire({
-                  //     icon: "warning",
-                  //     title: "경고",
-                  //     text: "내가 의뢰한 땜빵이 없습니다.",
-                  //     showCancelButton: true,
-                  //     confirmButtonText: "확인",
-                  //     cancelButtonText: "취소",
-                  //     width: 800,
-                  //     height: 100,
-                  // }).then((res) => {
-                  // });
+                    Swal.fire({
+                      icon: "warning",
+                      title: "경고",
+                      text: "내가 의뢰한 땜빵이 없습니다.",
+                      showCancelButton: true,
+                      confirmButtonText: "확인",
+                      cancelButtonText: "취소",
+                      width: 800,
+                      height: 100,
+                  }).then((res) => {
+                  });
                   }
                 })
               }       
@@ -1744,12 +1744,14 @@ useEffect(() => {
 
                                   </div> 
                                 )}
-                                
+
+
+                                {/* onClick={() => onClickDamnList(rowData.damnpostId)} */}
                                 {/* 내가 지원한 땜빵 */}
                                 {showDamnApply && (
                                     <div style={{overflowY: "auto", maxHeight: "750px", maxWidth: "1500px", marginRight: "10px"}}>
                                     {applyDamn.map(rowData => (
-                                      <div onClick={() => onClickDamnList(rowData.damnpostId)} key={rowData.damnPublisher}
+                                      <div  key={rowData.damnPublisher}
                                       className="requestdamn-box">
                                         <div style={{marginLeft: "25px", marginTop: "20px"}}>
                                           <b>{rowData.damnTitle}</b>
@@ -1771,7 +1773,9 @@ useEffect(() => {
                                         
 
                                         {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}
-
+                                        <div>
+                                          
+                                        </div>
                                       </div>
                                     ))}
                                   </div>
@@ -1804,6 +1808,7 @@ useEffect(() => {
                                           
 
                                           {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}
+                                          
                                           <div>
                                             <button type='button' onClick={() => profileApplyFirst(rowData.damnpostId, rowData.damnMatchedUser)} className="requestdamn-button">지원자 보기</button>
                                             <button type='button' onClick={() => handleShowReview(rowData.damnpostId, rowData.damnMatchedUser)} className="requestdamn-button">리뷰 남기기</button>
