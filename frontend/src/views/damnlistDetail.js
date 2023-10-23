@@ -6,6 +6,7 @@ import "../components/Footers/Footer";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Swal from "sweetalert2";
 import damnlistworkdate from "../assets/img/damnlistworkdate.png";
 import damnlistworkmoney from "../assets/img/damnlistworkmoney.png";
 import damnlistworkperiod from "../assets/img/damnlistworkperiod.png";
@@ -16,35 +17,17 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 const formatDate = (dateString) => {
   const dateObject = new Date(dateString);
-
-  const dateOptions = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = dateObject.toLocaleDateString("ko-KR", dateOptions); //날짜
-  const timeOptions = { hour: "numeric", minute: "numeric" };
-  const formattedTime = dateObject.toLocaleTimeString("ko-KR", timeOptions); //시간
-
-  return {
-    date: formattedDate,
-    time: formattedTime,
-  };
-};
-
-const getCoordinatesFromAddress = async (address) => {
-  const apiKey = "AIzaSyBSAd6eYUYY8l9LV9eY8FXiJXAPU6zPDCk";
-  const response = await axios.get(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      address
-    )}&key=${apiKey}`
-  );
-
-  if (response.data.results.length > 0) {
-    const location = response.data.results[0].geometry.location;
-    return location;
-  } else {
-    return null;
-  }
+  const formattedDate = dateObject.toISOString().split("T")[0];
+  return formattedDate;
 };
 
 const DamnlistDetail = () => {
+  const sessionToken = sessionStorage.getItem('token');
+  const userId = sessionStorage.getItem('idNum');
+
+  const [activeApplyBtn, setActiveApplyBtn] = useState(true);
+  const [activeChattingBtn, setActiveChattingBtn] = useState(true);
+
   const { postid } = useParams();
   const [post, setPost] = useState(null);
 
@@ -71,8 +54,75 @@ const DamnlistDetail = () => {
   };
 
   const handleSupplyClick = () => {
-    console.log("지원하기!");
-  };
+    //지원하기 클릭시
+    Swal.fire({
+      icon: "warning",
+      title: "땜빵 지원",
+      text: "지원하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "확인",
+      width: 800,
+      height: 100,
+    }).then((res) => {
+        if (res.isConfirmed) {  //확인을 클릭할 경우 -> axios
+          axios
+          .post(`http://localhost:3000/damnlist/${postid}/apply`, {
+            postNum : postid
+          },
+          {headers: {
+            Authorization: "Bearer " + sessionToken
+          }})
+          .then((response) => {
+              console.log("지원하기 완료");
+              Swal.fire({
+                icon: "success",
+                title: "땜빵 지원",
+                text: "지원이 완료되었습니다. 마이페이지에서 확인할 수 있습니다.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+              }).then((res) => {});
+          })
+          .catch((error)=>{
+            if(error.response.status === 400) {  //올바르지 않은 게시물 정보
+              Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "올바르지 않은 게시물입니다. 다시 확인해주세요.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+              }).then((res) => {});
+            }
+            if(error.response.status === 401) {  //헤더 인증 
+              Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "로그인이 필요한 서비스입니다. 로그인 해주세요.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+              }).then((res) => {});
+            }
+            if(error.response.status === 409) {  //이미 지원한 경우
+              Swal.fire({
+                icon: "warning",
+                title: "경고",
+                text: "이미 지원한 공고입니다. 마이페이지에서 확인해보세요.",
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                width: 800,
+                height: 100,
+              }).then((res) => {});
+            }
+          })
+      }
+    });
+  }
+
 
   useEffect(() => {
     axios
@@ -248,6 +298,7 @@ const DamnlistDetail = () => {
                   variant="outlined"
                   sx={{ borderColor: "brown", color: "brown" }}
                   onClick={handleSupplyClick}
+                  disabled={activeApplyBtn ? false : true}
                 >
                   지원하기
                 </Button>
@@ -263,6 +314,7 @@ const DamnlistDetail = () => {
                     },
                   }}
                   onClick={handleChatClick}
+                  disabled={activeChattingBtn ? false : true}
                 >
                   채팅하기
                 </Button>

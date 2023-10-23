@@ -46,12 +46,14 @@ function Login() {
         .then(async response => {
             console.log(response);
             console.log("token", response.data); //회원의 고유 토큰
-
-            if(response.status === 200) {
-                //id, pw 일치 -> 로그인 성공
+            sessionStorage.setItem("id", InputID);
+            for (const [key, value] of Object.entries(response.data)) {
+                console.log(`Key: ${key}`);
+                console.log(`Value: ${value}`);
                 console.log("****로그인 성공*****");
-                sessionStorage.setItem("token", response.data);     //웹브라우저에 SessionStorage에 저장 -> 찾아보니 이게 베스트인 거 같아요
-                sessionStorage.setItem("id", InputID);
+                sessionStorage.setItem("token", value);     //웹브라우저에 SessionStorage에 저장 -> 찾아보니 이게 베스트인 거 같아요
+                sessionStorage.setItem("idNum", key);
+                
                 setCookie('token', response.data, {                 //웹브라우저에 쿠키에 저장
                     path: '/',             
                     // maxAge: 20000
@@ -60,28 +62,25 @@ function Login() {
                 localStorage.setItem('token', cookies.token);       //웹브라우저에 localStroge에 저장
                 
                 console.log('token1', cookies.token);
-            }
-            document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
+
+                document.location.href = "/";  //로그인 되면 페이지 이동(새로고침)
+              }
         })
         .catch((error) => {
             console.log(error);
             console.log(error.data);
-            Swal.fire({
-                icon: "warning",
-                title: "경고",
-                text: "입력하신 ID는 회원가입하지 않은 ID이거나 비밀번호가 올바르지 않습니다.",
-                showCancelButton: false,
-                confirmButtonText: "확인",
-                width: 800,
-                height: 100,
-            }).then((res) => {
-                if (res.isConfirmed) {
-                     //삭제 요청 처리
-                }
-                else{
-                    //취소
-                }
-            });
+            if(error.message.status === 400) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "경고",
+                    text: "입력하신 ID나 비밀번호가 올바르지 않습니다. 다시 입력해주세요.",
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    width: 800,
+                    height: 100,
+                }).then((res) => {
+                });
+            }             
         });
     };
 

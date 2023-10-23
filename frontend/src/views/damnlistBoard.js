@@ -12,6 +12,7 @@ const sectionStyle = {
 
 const DamnlistBoard = () => {
   const history = useHistory(); // Create history object for navigation
+  const sessionToken = sessionStorage.getItem('token');
 
   useEffect(() => {
     fetchDamnList();
@@ -36,7 +37,10 @@ const DamnlistBoard = () => {
     axios
       .get(`http://localhost:3000/damnlist`, {
         params: { page },
-      })
+        headers: {
+          Authorization: "Bearer " + sessionToken
+        }}
+      )
       .then((response) => {
         console.log("list: ", response.data);
 

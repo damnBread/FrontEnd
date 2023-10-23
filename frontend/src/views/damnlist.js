@@ -16,13 +16,17 @@ const sectionStyle = {
 const Damnlist = () => {
   const [jobPostings, setJobPostings] = useState([]);
 
+  const page = 1;
+  const sessionToken = sessionStorage.getItem('token');
+
   useEffect(() => {
     axios
-      .get("http://localhost:3000/damnlist", {
-        params: {
-          page: 1,
-        },
-      })
+      .get(`http://localhost:3000/damnlist`, {
+        params: { page },
+        headers: {
+          Authorization: "Bearer " + sessionToken
+        }}
+      )
       .then((response) => {
         console.log("response: ", response);
         if (response.status === 204) {
