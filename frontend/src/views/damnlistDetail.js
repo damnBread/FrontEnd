@@ -88,7 +88,7 @@ const DamnlistDetail = () => {
       text: "지원하시겠습니까?",
       showCancelButton: true,
       confirmButtonText: "확인",
-      width: 800, 
+      width: 800,
       height: 100,
     }).then((res) => {
       if (res.isConfirmed) {
