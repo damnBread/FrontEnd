@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Header from "../components/Headers/Header";
 import "../assets/css/damnlistDetail.css";
@@ -74,10 +74,6 @@ const DamnlistDetail = () => {
       console.log("true");
     }
     scrapsetIsClicked(!scrapisClicked); // Toggle the clicked state
-  };
-
-  const handleChatClick = () => {
-    console.log("chat");
   };
 
   const handleSupplyClick = () => {
@@ -158,6 +154,108 @@ const DamnlistDetail = () => {
       }
     });
   };
+
+  const [appliance_id, setAppliance_id] = useState(0);
+
+  const [publisher_id, setPublisher_id] = useState(0);
+
+  const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
+  const [chat, setChat] = useState(''); // 입력되는 채팅
+  const client = useRef({});
+
+  const connect = () => {
+    client.current = new StompJs.Client({
+      brokerURL: 'ws://localhost:8080/ws',
+      onConnect: () => {
+        console.log('success');
+        subscribe();
+      },
+    //   connectHeaders: { // 이 부분 새로 추가
+    //     Authorization: "Bearer " + sessionToken,
+    //   },
+    });
+    client.current.activate();
+  };
+
+  const publish = (chat) => {
+    if (!client.current.connected) return;
+
+    client.current.publish({
+      destination: '/pub/chat/' + appliance_id + "/" + publisher_id,
+      body: JSON.stringify({
+        chat: chat,
+        publisher_id: publisher_id,
+        appliance_id: appliance_id
+      }),
+    });
+
+    setChat('');
+  };
+
+  const subscribe = () => {
+    client.current.subscribe('/sub/chat/' + appliance_id + "/" + publisher_id, (body) => {
+      const json_body = JSON.parse(body.body);
+      setChatList((_chat_list) => [
+        ..._chat_list, json_body
+      ]);
+    });
+  };
+
+  const disconnect = () => {
+    client.current.deactivate();
+  };
+
+  const handleChange = (event) => { // 채팅 입력 시 state에 값 설정
+    setChat(event.target.value);
+  };
+
+  const handleSubmit = (event, chat) => { // 보내기 버튼 눌렀을 때 publish
+    event.preventDefault();
+
+    publish(chat);
+
+    axios
+    .post(`http://localhost:3000/damnlist/${damnPostId}/chat`, {},
+    {
+      headers: {
+        Authorization: "Bearer " + sessionToken
+      },
+    })
+      .then(async response => {
+          console.log(response);
+          console.log("채팅 보내기 끝 !");
+          
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log("1", error.response.data);
+          console.log("2", error.response.status);
+          console.log("3", error.response.headers);
+        } else if (error.request) {
+          console.log("4", error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log("5", error.config);
+      })
+  };
+  
+  useEffect(() => {
+    connect();
+
+    return () => disconnect();
+  }, []);
+
+  function startChat(publisher_id, appliance_id) {
+    console.log("StartChat");
+    console.log("publisher: ", publisher_id);
+    console.log("appliance: ", appliance_id);
+
+    setPublisher_id(publisher_id);
+    setAppliance_id(appliance_id);
+
+    setShowChat(true);
+  }
 
   useEffect(() => {
     axios
@@ -349,13 +447,47 @@ const DamnlistDetail = () => {
                       backgroundColor: "darkbrown",
                     },
                   }}
-                  onClick={handleChatClick}
+                  onClick={() => startChat(myid, selectedItem.userid)}
                   disabled={activeChattingBtn ? false : true}
                 >
                   채팅하기
                 </Button>
               </div>
             </div>
+
+            {/* 채팅 시작 모달창 */}
+            <Modal dialogClassName="modal-whole-rank1" show={showChat} onHide={handleChatClose}>
+              {(
+                  <div className="custom-rank-content">
+                      <Modal.Body>
+                          <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
+                            <b>{appliance_id}</b>
+                          </div>
+                          <hr />
+
+
+                          {/* 채팅 메세지 */}
+                          <div>
+
+                          </div>
+
+
+                          {/* 채팅 메세지 textField */}
+                          <div>
+                            <TextField label="채팅" multiline rows={1} variant="outlined" style = {{width: 570}} onChange={handleChange}/>
+
+                            <button onClick={handleSubmit} className="footer-style footer-button-chatting" varient="primary">
+                                <img src={send} id="send" width="30" alt="send"/>
+                            </button>
+                          </div>
+                          
+                      </Modal.Body>
+
+                    </div>
+                  )}
+                      
+              </Modal>
+
           </div>
         )}
       </div>
