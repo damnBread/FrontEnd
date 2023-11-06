@@ -264,7 +264,7 @@ const Damnlistwrite = () => {
                     {
                         title: title,
                         content: content,
-                        job: [job], // 업직종을 배열에 넣어서 보내기
+                        job: job, // 업직종을 배열에 넣어서 보내기
                         branchName: branchName,
                         location: location,
                         hourPay: parseInt(hourPay),
