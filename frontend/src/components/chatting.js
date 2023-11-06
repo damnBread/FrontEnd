@@ -1,103 +1,174 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import "../assets/css/Chatting.css";
 import { Fab } from '@mui/material';
 import FABicon from '../assets/img/chatting-icon.png';
 import Modal from "react-bootstrap/Modal";
+import * as StompJs from '@stomp/stompjs';
+import Swal from "sweetalert2";
+
 
 function Chatting() {
 
     const [showChat, setShowChat] = useState(false);
-    const handleShow = () =>{setShowChat(true)};
-    const handleClose = () => {setShowChat(false)};
+    const handleShowChat = () =>{setShowChat(true)};
+    const handleCloseChat = () => {setShowChat(false)};
 
-    // const { createProxyMiddleware } = require("http-proxy-middleware");
 
-    // const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
-    // const { apply_id } = useParams(); // 채널을 구분하는 식별자를 URL 파라미터로 받는다.
-    // const [chat, setChat] = useState(''); // 입력되는 채팅
-    // const client = useRef({});
+    const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
+    const [chat, setChat] = useState(''); // 입력되는 채팅
+    const client = useRef({});
 
-    // module.exports = (app) => {
-    //     app.use(
-    //         "/ws",
-    //         createProxyMiddleware({ target: "http://localhost:8787", ws: true })
-    //     ); //
-    // };
+    const [appliance_id, setAppliance_id] = useState(0);  // 지원자 id
+    const [publisher_id, setPublisher_id] = useState(0);  // 의뢰인 id
 
-    //     const connect = () => { // 연결할 때
-    //       client.current = new StompJs.Client({
-    //         brokerURL: 'ws://localhost:8787/ws',
-    //         onConnect: () => {
-    //           subscribe(); // 연결 성공 시 구독하는 로직 실행
-    //         },
-    //     });
-    //       client.current.activate(); // 클라이언트 활성화
-    //     };
-        
-    //     const disconnect = () => { // 연결이 끊겼을 때 
-    //       client.current.deactivate();
-    //     };
+    const sessionToken = sessionStorage.getItem('token');
 
-    //      const handleChange = (event) => { // 채팅 입력 시 state에 값 설정
-    //         setChat(event.target.value);
-    //     };
+    const [chatData, setChatData] = useState([{         // 채팅방 리스트
+            room_id: 0,
+            post: 0,
+            user_appliance: 0,
+            user_publisher: 0
+      }])
 
-    //     const handleSubmit = (event, chat) => { // 보내기 버튼 눌렀을 때 publish
-    //         event.preventDefault();
+    const connect = () => {
+        client.current = new StompJs.Client({
+          brokerURL: 'ws://localhost:8080/ws',
+          onConnect: () => {
+            console.log('success');
+            subscribe();
+          },
+        //   connectHeaders: { // 이 부분 새로 추가
+        //     Authorization: "Bearer " + sessionToken,
+        //   },
+        });
+        client.current.activate();
+      };
 
-    //         publish(chat);
-    //     };    
-        
-    //     useEffect(() => {
-    //       connect();
+      const publish = (chat) => {
+        if (!client.current.connected) return;
+    
+        client.current.publish({
+          destination: '/pub/chat/' + appliance_id + "/" + publisher_id,
+          body: JSON.stringify({
+            chat: chat,
+            publisher_id: publisher_id,
+            appliance_id: appliance_id
+          }),
+        });
+    
+        setChat('');
+      };
+    
+      const subscribe = () => {
+        client.current.subscribe('/sub/chat/' + appliance_id + "/" + publisher_id, (body) => {
+          const json_body = JSON.parse(body.body);
+          setChatList((_chat_list) => [
+            ..._chat_list, json_body
+          ]);
+        });
+      };
+    
+      const disconnect = () => {
+        client.current.deactivate();
+      };
+    
+      const handleChange = (event) => { // 채팅 입력 시 state에 값 설정
+        setChat(event.target.value);
+      };
+    
+      const handleSubmit = (event, chat) => { // 보내기 버튼 눌렀을 때 publish
+        event.preventDefault();
+    
+        publish(chat);
+      };
+      
+      useEffect(() => {
+        connect();
+        getChatList();
+    
+        return () => disconnect();
+      }, []);
+
+      function getChatList() {
+        axios
+            .get(`http://localhost:3000/chatlist`, {
+              headers: {
+                Authorization: "Bearer " + sessionToken
+              }
+            })
+            .then((response) => {
+                console.log("re: ", response.data);
+                if (response.data.size === 0) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "경고",
+                        text: "아직 채팅방이 없습니다. 채팅을 시작해주세요.",
+                        showCancelButton: true,
+                        confirmButtonText: "확인",
+                        cancelButtonText: "취소",
+                        width: 800,
+                        height: 100,
+                    }).then((res) => {
+                    });
+                } else {
+                    console.log("rere: ", response.data);
+                    const _inputData = response.data.map((setData) => ({
+                        room_id: 0,
+                        post: 0,
+                        user_appliance: 0,
+                        user_publisher: 0
+                      }))
           
-    //       return () => disconnect();
-    //     }, []);
-
-
-
-    //     const subscribe = () => {
-    //         client.current.subscribe('/sub/chat/' + apply_id, (body) => {
-    //           const json_body = JSON.parse(body.body);
-    //           setChatList((_chat_list) => [
-    //             ..._chat_list, json_body
-    //           ]);
-    //         });
-    //       };
-
-    //       const publish = (chat) => {
-    //         if (!client.current.connected) return; // 연결되지 않았으면 메시지를 보내지 않는다. 
-        
-    //         client.current.publish({
-    //           destination: '/pub/chat',
-    //           body: JSON.stringify({
-    //             applyId: apply_id,
-    //             chat: chat,
-    //           }), // 형식에 맞게 수정해서 보내야 함.
-    //         });
-        
-    //         setChat('');
-    //       };
-
+                      setChatData(_inputData);
+                }
+            })
+            .catch((error) => {
+                console.log("er: ", error);
+            })
+      }
         
 
     return (
         <div className="chatting-style">
-            <Fab onClick={handleShow} size="large" color="warning">
+            <Fab onClick={handleShowChat} size="large" color="warning">
                 <img src={FABicon} width="30px"/>
             </Fab>
 
-            <Modal dialogClassName="modal-chatting-style" show={showChat} onHide={handleClose}>
+            <Modal dialogClassName="modal-chatting-style" show={showChat} onHide={handleCloseChat}>
                 {(
                     <div className="custom-chatting-content">
                         <Modal.Body>
                             <div>
-                                {/* <label className="chatting-label-style"><b>메세지</b></label>
-                                <label className="chatting-label-style1" onClick={handleClose}><b>닫기</b></label>
+                                <label className="chatting-label-style"><b>메세지</b></label>
+                                
+                                <label className="chatting-label-style1" onClick={handleCloseChat}><b>닫기</b></label>
+
+                                <label className="chatting-label-style1" style={{marginRight: "20px"}} onClick={handleCloseChat}><b>새 채팅</b></label> 
 
                                 {/* 채팅 목록 */}
+                                {(
+                                    <div style={{overflowY: "auto", marginRight: "10px"}}>
+                                    {chatData.map(rowData => (
+                                      <div  key={rowData.room_id}
+                                      className="chatting-content-box">
+                                        <div style={{marginLeft: "25px", marginTop: "20px"}}>
+                                          <b>{rowData.post}</b>
+                                          
+                                        </div>
+
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  
+                                  
+                                )}
+
+
+                                {/* 채팅 메세지 보내는 창 */}
                                 {/* <div>
                                     <div>{chatList}</div>
                                         <form onSubmit={(event) => handleSubmit(event, chat)}>
@@ -106,32 +177,9 @@ function Chatting() {
                                             </div>
                                             <input type={'submit'} value={'의견 보내기'} />
                                         </form>
-                                    </div> */}
+                                    </div>*/}
 
                                 </div>
-                            {/* <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
-                            {requestDamn.map(rowData => (
-                        <div key={rowData.damnPublisher}
-                            // onClick={() => selectDamn(rowData.damnpostId)}
-                            // className={`requestdamn-box ${selectedDamn === rowData.damnpostId ? 'selected' : ''}`}
-                            style={{width: "550px", height: "200px", marginTop: "10px", marginBottom: "25px"}}>
-                                <div style={{marginLeft: "25px", marginTop: "20px"}}>
-                                <b>{erowData.damnTitl}</b>
-                                </div>
-
-                                <div>
-                                <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "20px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
-                                {timeConversion(rowData.damnStart)} ~ {timeConversion(rowData.damnEnd)}
-                                </div>
-                                <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
-                                    {rowData.damnBranch}
-                                <div>
-                                <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "10px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
-                                    {rowData.damnPay}
-                                </div>
-                            </div>
-                            ))}
-                            </div> */}
                         </Modal.Body>
 
                     </div>
@@ -146,7 +194,6 @@ function Chatting() {
         </div>
 
     );
-
 }
 
 export default Chatting;

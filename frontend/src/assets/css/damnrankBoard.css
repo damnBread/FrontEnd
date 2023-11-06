@@ -1,6 +1,6 @@
 .custom-modal-content-rank11 {
-    width: 100%; /* Adjust the width as per your requirement */
-    max-width: 500px; /* Optional: Add a max-width to limit the modal's width */
+    width: 100%;
+    max-width: 500px; 
     height: 100%;
     margin-top: 40px;
     margin-left: 370px;
@@ -167,5 +167,21 @@
   padding-left: 10px;
   padding-right: 10px;
   margin-right: 70px;
+  margin-bottom: 10px;
+}
+
+/* 채팅 */
+.footer-button-chatting {
+  margin-top: 5px;
+  margin-left: 15px;
+  width: 50px;
+  color: #843C0C;
+  background-color: #FFFFFF;
+  border: 2px solid #BF5E49;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin-bottom: 10px;
 }
