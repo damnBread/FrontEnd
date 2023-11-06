@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -6,10 +6,12 @@ import "../assets/css/damnrankBoard.css";
 import rank from "../assets/img/damnRank.png";
 import man from "../assets/img/damnRank-man-icon.png";
 import woman from "../assets/img/damnRank-woman-icon.png";
+import send from "../assets/img/send.png"
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Moment from 'react-moment';
 import {useInterval} from "use-interval";
+import Chatting from "../components/chatting.js";
+import { TextField } from "@material-ui/core";
+import * as StompJs from '@stomp/stompjs';
 
 const DamnrankBoard = () => {
 
@@ -55,12 +57,18 @@ const DamnrankBoard = () => {
 
   const [showShare, setShowShare] = useState(false); //공고 전달하기 모달창
 
+  const [showChat, setShowChat] = useState(false);  //채팅 시작 모달창
+
   const handleClose = () => {
     setShow(false);   //모달창 닫기
   }
 
   const handleShareClose = () => {
     setShowShare(false);   //공고 전달하기 모달창 닫기
+  }
+
+  const handleChatClose = () => {
+    setShowChat(false);   //채팅 시작 모달창 닫기
   }
 
     function getBadgeBackgroundColor(badgeValue) {
@@ -102,11 +110,11 @@ const DamnrankBoard = () => {
     }
 
     const sessionToken = sessionStorage.getItem('token');
+    const myid = sessionStorage.getItem('idNum');
 
     useEffect(() => {
       fetchDamnRank();
   }, []);
-
 
     // const itemsPerPage = 10; // Number of items to display per page
     // const totalPages = Math.ceil(itemArrayDetail.length / itemsPerPage); // Calculate total pages
@@ -295,6 +303,11 @@ const DamnrankBoard = () => {
            console.log("DD: ", selectedDamn);
         }
 
+
+      
+
+        
+
   return (
     <div>
         <div className="custom-modal-content-rank11">
@@ -421,6 +434,7 @@ const DamnrankBoard = () => {
 
                                 
                             </Modal>
+                          
 
 
                             <Modal dialogClassName="modal-whole-rank1" show={showShare} onHide={handleShareClose}>
@@ -466,7 +480,9 @@ const DamnrankBoard = () => {
 
           
         ))}
+        <Chatting/>
     </div>
+  
   );
 };
 

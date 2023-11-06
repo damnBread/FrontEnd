@@ -14,6 +14,10 @@ import damnlistworktime from "../assets/img/damnlistworktime.png";
 import damnlistscrap from "../assets/img/damnlistscrap.png";
 import damnlistscrapclick from "../assets/img/damnlistscrapclick.png";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import * as StompJs from '@stomp/stompjs';
+import Modal from "react-bootstrap/Modal";
+import { TextField } from "@material-ui/core";
+import send from "../assets/img/send.png"
 
 const getCoordinatesFromAddress = async (address) => {
   const apiKey = "AIzaSyBSAd6eYUYY8l9LV9eY8FXiJXAPU6zPDCk";
@@ -62,6 +66,8 @@ const DamnlistDetail = () => {
   const [scrapisClicked, scrapsetIsClicked] = useState(false); // 클릭 여부를 state로 관리
 
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
+
+  const [showChat, setShowChat] = useState(false);  //채팅 시작 모달창
 
   const scarphandleClick = () => {
     if (scrapisClicked) {
@@ -163,6 +169,10 @@ const DamnlistDetail = () => {
   const [chat, setChat] = useState(''); // 입력되는 채팅
   const client = useRef({});
 
+  const handleChatClose = () => {
+    setShowChat(false);   //채팅 시작 모달창 닫기
+  }
+
   const connect = () => {
     client.current = new StompJs.Client({
       brokerURL: 'ws://localhost:8080/ws',
@@ -215,7 +225,7 @@ const DamnlistDetail = () => {
     publish(chat);
 
     axios
-    .post(`http://localhost:3000/damnlist/${damnPostId}/chat`, {},
+    .post(`http://localhost:3000/damnlist/${1}/chat`, {},
     {
       headers: {
         Authorization: "Bearer " + sessionToken
@@ -447,7 +457,7 @@ const DamnlistDetail = () => {
                       backgroundColor: "darkbrown",
                     },
                   }}
-                  onClick={() => startChat(myid, selectedItem.userid)}
+                  onClick={() => startChat()}
                   disabled={activeChattingBtn ? false : true}
                 >
                   채팅하기
