@@ -65,22 +65,21 @@ const DamnstoryDetail = ({ user }) => {
     try {
       const commentData = {
         content: comment,
-        Date: new Date().toISOString(),
+        createdAt: new Date().toISOString(), // 필드명 변경
       };
 
       const currentURL = window.location.href; //현재의 url을 의미
       const commentEndpoint = `${currentURL}/comment`;
 
-      console.log("1124", commentData);
-
       const response = await axios.post(commentEndpoint, commentData, {
         headers: {
-          Authorization: `Bearer ${sessionToken}`,
+          Authorization: "Bearer " + sessionToken,
         },
       });
 
       alert("댓글이 등록되었습니다.");
       console.log("Comment submitted:", response.data);
+      console.log("commentData", commentData);
       setComment("");
     } catch (error) {
       console.error("Error submitting comment:", error);
@@ -136,7 +135,7 @@ const DamnstoryDetail = ({ user }) => {
                     comment.map((comment, index) => (
                       <div key={index} className="comment-item">
                         <p>{comment.content}</p>
-                        <p>{comment.Date}</p>
+                        <p>{comment.createdAt}</p>
                       </div>
                     ))}
                   <div className="gray-line2"></div>
