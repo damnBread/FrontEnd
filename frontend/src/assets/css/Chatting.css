@@ -54,8 +54,8 @@
 }
 
 .message-box {
-    display: inline-flex;
-    flex-direction: column;
+    /* display: inline-flex; */
+    /* flex-direction: column; */
 }
 
 .left-message {
@@ -71,6 +71,9 @@
     width: auto;
     max-width: 300px;
     height: auto;
+    flex-direction: column;
+    display: inline-flex;
+    word-break: break-all;
 }
 
 .right-message {
@@ -88,4 +91,13 @@
     width: auto;
     max-width: 300px;
     height: auto;
+    flex-direction: column;
+    display: inline-flex;
+    justify-content: flex-end;
+    word-break: break-all;
+}
+
+.chatting-date-style {
+    font-size: 14px;
+    margin-left: 10px;
 }

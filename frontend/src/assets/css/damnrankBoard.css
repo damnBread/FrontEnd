@@ -140,18 +140,19 @@
 }
 
 .footer-button-share {
+  margin-top: 5px;
   margin-left: 20px;
   width: 300px;
   color: #843C0C;
   background-color: #bf5f49a2;
   border: 2px solid #BF5E49;
   border-radius: 10px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  margin-right: 70px;
   margin-bottom: 10px;
+  margin-right: 12px;
 }
 
 .footer-button-share1 {
@@ -174,6 +175,21 @@
 .footer-button-chatting {
   margin-top: 5px;
   margin-left: 15px;
+  width: 300px;
+  color: #843C0C;
+  background-color: #FFFFFF;
+  border: 2px solid #BF5E49;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+
+.footer-button-chatting1 {
+  margin-top: 5px;
+  margin-left: 20px;
   width: 50px;
   color: #843C0C;
   background-color: #FFFFFF;

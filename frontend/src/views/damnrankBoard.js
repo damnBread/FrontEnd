@@ -110,7 +110,7 @@ const DamnrankBoard = () => {
     }
 
     const sessionToken = sessionStorage.getItem('token');
-    const myid = sessionStorage.getItem('idNum');
+    const userId = sessionStorage.getItem('idNum');
 
     useEffect(() => {
       fetchDamnRank();
@@ -296,7 +296,6 @@ const DamnrankBoard = () => {
           const time1 = timecv[0] + ' ' +  timecv2[0] + ":" + timecv2[1];
           return time1;
         };
-        
 
         function selectDamn(post_id) {
            setSelectedDamn(post_id);
@@ -304,6 +303,85 @@ const DamnrankBoard = () => {
         }
 
 
+        // 채팅
+        function chatting() {
+          setShowChat(true);
+        }
+
+        const [appliance_id, setAppliance_id] = useState(0);
+
+        const [publisher_id, setPublisher_id] = useState(0);
+      
+        const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
+        let [chat, setChat] = useState('');         // 입력되는 채팅
+        const client = useRef({});
+      
+        const connect = () => {
+          client.current = new StompJs.Client({
+            brokerURL: 'ws://localhost:8080/ws',
+            onConnect: () => {
+              console.log('success');  // 얘는 맨 처음에만 연결
+              subscribe();  // 구독 ..
+            },
+            // connectHeaders: { // 이 부분 새로 추가
+            //   Authorization: "Bearer " + sessionToken,
+            // },
+          });
+          client.current.activate();
+        };
+      
+        const publish = (chat) => {
+          if (!client.current.connected) return;
+      
+          client.current.publish({
+            destination: '/pub/chat',
+            body: JSON.stringify({
+              chat: chat,
+              sender: appliance_id,
+              receiver: publisher_id
+            }),
+          });
+      
+          setChat('');
+        };
+      
+        const subscribe = () => {
+          console.log("my id is, for subscribe" , userId)
+          client.current.subscribe('/sub/chat/' + userId, (body) => {
+            const json_body = JSON.parse(body.body);
+            console.log("messgae recieved :: " + json_body["chat"] + " - from :: "+ json_body["sender"]);
+            setChatList((_chat_list) => [
+              ..._chat_list, json_body
+            ]);
+          });
+        };
+      
+        const disconnect = () => {
+          client.current.deactivate();
+        };
+      
+        const handleChange = (event) => { // 채팅 입력 시 state에 값 설정
+          setChat(event.target.value);
+        };
+      
+        const handleSubmit = (event) => { // 보내기 버튼 눌렀을 때 publish
+          event.preventDefault();
+      
+          publish(chat);  // 채팅 보내기 누르면 실행
+      
+          console.log("chta:: ", chat);
+      
+          console.log("app:: ", appliance_id);
+          console.log("pub:: ", publisher_id);
+
+        };
+        
+        useEffect(() => {
+          connect();
+      
+          return () => disconnect();
+        }, []);
+      
       
 
         
@@ -417,7 +495,7 @@ const DamnrankBoard = () => {
                                         </div>
 
                                         <div className="footer-button">
-                                          <button className="footer-style footer-button-chatting" varient="primary">
+                                          <button className="footer-style footer-button-chatting" varient="primary" onClick={() => chatting()}>
                                               채팅하기
                                           </button>
                                           <button className="footer-style footer-button-share" varient="primary" onClick={() => requestDamnbread()}>
@@ -434,9 +512,43 @@ const DamnrankBoard = () => {
 
                                 
                             </Modal>
-                          
+
+                            {/* 채팅하기 */}
+                            <Modal dialogClassName="modal-whole-rank1" show={showChat} onHide={handleChatClose}>
+                              {(
+                                  <div className="custom-rank-content" style={{overflowY: "auto"}}>
+                                      <Modal.Body>
+                                          <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
+                                            <b>{appliance_id}</b>
+                                          </div>
+                                          <hr />
 
 
+                                          {/* 채팅 메세지 */}
+                                          <div className="chatting-message">
+
+
+                                          </div>
+
+
+                                          {/* 채팅 메세지 textField */}
+                                          <div className="chatting-textField">
+                                            <TextField label="채팅" value={chat} multiline rows={1} variant="outlined" style = {{width: 570}} onChange={handleChange}/>
+
+                                            <button onClick={handleSubmit} className="footer-style footer-button-chatting1" varient="primary">
+                                                <img src={send} id="send" width="30" alt="send"/>
+                                            </button>
+                                          </div>
+                                          
+                                      </Modal.Body>
+
+                                    </div>
+                                  )}
+                                      
+                            </Modal>
+                            
+
+                            {/* 공고 전달하기 */}
                             <Modal dialogClassName="modal-whole-rank1" show={showShare} onHide={handleShareClose}>
                             {(
                                 <div className="custom-rank-content">

@@ -51,6 +51,8 @@ function Chatting() {
         sender: 0
     }])
 
+    let [date, setDate] = useState("");
+
     const connect = () => {
         client.current = new StompJs.Client({
           brokerURL: 'ws://localhost:8080/ws',
@@ -77,7 +79,7 @@ function Chatting() {
           }),
         });
     
-        // setChat('');
+        setChat('');
       };
     
       const subscribe = () => {
@@ -190,7 +192,6 @@ function Chatting() {
             }))
 
             setMessageData(_inputData);
-            
         })
         .catch((error) => {
             console.log("message error: ", error);
@@ -198,14 +199,23 @@ function Chatting() {
       }
 
       function getMessage(receiver) {
-        console.log("usreID:: ", (userId));
-        console.log("message Re:: ", (receiver));
+        // console.log("usreID:: ", (userId));
+        // console.log("message Re:: ", (receiver));
         if (receiver.toString() === userId) {
           return true;
         } else {
           return false;
         }
 
+      }
+
+       function dateToSimpleDate(date) {
+          console.log(typeof(date));
+          const simpleDate = (date||'').split("T");
+          const simple1 = simpleDate[0];
+          const simple2 = simpleDate[1].split(".")[0];
+          const result = simple1 + " " + simple2;
+          return result;
       }
 
 
@@ -225,7 +235,7 @@ function Chatting() {
                                 
                                 <label className="chatting-label-style1" onClick={handleCloseChat}><b>닫기</b></label>
 
-                                <label className="chatting-label-style1" style={{marginRight: "20px"}}><b>새 채팅</b></label> 
+                                {/* <label className="chatting-label-style1" style={{marginRight: "20px"}}><b>새 채팅</b></label>  */}
 
                                 <div>
                                 
@@ -267,15 +277,21 @@ function Chatting() {
                                         
                                             {/* 채팅 메세지 */}
                                             {(
-                                                <div style={{overflowY: "auto", marginRight: "10px"}}>
+                                                <div className="chatting-message">
                                                 {messageData.map(rowData => (
-                                                  <div key={rowData.chatId}
-                                                 className={`message-box ${getMessage(rowData.receiver) === true ? "left-message" : "right-message"}`}>
-                                                    <div>
-                                                        {rowData.content}
-                                                    </div>
+                                                  <div key={rowData.chatId}>
+                                                      <div className={`message-box ${getMessage(rowData.receiver) === true ? "left-message" : "right-message"}`}>
+                                                          <b>{rowData.content}</b>
+                                                          
+                                                      </div>
+                                                      <span className="chatting-date-style">
+                                                          {dateToSimpleDate(rowData.date)}
+                                                          
+                                                        </span>
 
+                                                        
                                                     </div>
+                                                    
                                                     ))}
                                                 </div>
 
@@ -288,7 +304,7 @@ function Chatting() {
                                             <div className="chatting-textField">
                                                 <TextField label="채팅" value={chat} multiline rows={1} variant="outlined" style = {{width: 570}} onChange={handleChange}/>
 
-                                                <button onClick={handleSubmit} className="footer-style footer-button-chatting" varient="primary">
+                                                <button onClick={handleSubmit} className="footer-style footer-button-chatting1" varient="primary">
                                                     <img src={send} id="send" width="30" alt="send"/>
                                                 </button>
                                             </div>

@@ -200,7 +200,7 @@ const DamnlistDetail = () => {
       }),
     });
 
-    // setChat('');
+    setChat('');
   };
 
   const subscribe = () => {
@@ -472,7 +472,7 @@ const DamnlistDetail = () => {
               </div>
             </div>
 
-            {/* 채팅 시작 모달창 */}
+            {/* 채팅 모달창 */}
             <Modal dialogClassName="modal-whole-rank1" show={showChat} onHide={handleChatClose}>
               {(
                   <div className="custom-rank-content" style={{overflowY: "auto"}}>
@@ -494,7 +494,7 @@ const DamnlistDetail = () => {
                           <div className="chatting-textField">
                             <TextField label="채팅" value={chat} multiline rows={1} variant="outlined" style = {{width: 570}} onChange={handleChange}/>
 
-                            <button onClick={handleSubmit} className="footer-style footer-button-chatting" varient="primary">
+                            <button onClick={handleSubmit} className="footer-style footer-button-chatting1" varient="primary">
                                 <img src={send} id="send" width="30" alt="send"/>
                             </button>
                           </div>
