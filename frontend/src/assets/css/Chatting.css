@@ -52,3 +52,40 @@
     border: 1px solid #797979;
     border-radius: 5px;
 }
+
+.message-box {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.left-message {
+    background-color: #D9AA89;
+    border: 1px solid #D9AA89;
+    border-radius: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    float: left;
+    margin: auto;
+    width: auto;
+    max-width: 300px;
+    height: auto;
+}
+
+.right-message {
+    background-color: #F2E0D5;
+    border: 1px solid #F2E0D5;
+    margin-top: 5px;
+    margin-right: 15px;
+    border-radius: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    float: right;
+    margin: auto;
+    width: auto;
+    max-width: 300px;
+    height: auto;
+}

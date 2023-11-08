@@ -21,6 +21,7 @@ import workplatter from "../assets/img/workicon-platter.png";
 import worksale from "../assets/img/workicon-sale.png";
 import workbackground from "../assets/img/workicon-background.png";
 import { Switch } from 'react-native';
+import Chatting from "../components/chatting";
 
 const Damnprofile = () => {
 
@@ -2002,6 +2003,7 @@ useEffect(() => {
               </div>
             </div>
           </div>
+          <Chatting />
         </div>
     );
     };

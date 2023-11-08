@@ -16,8 +16,9 @@ import damnlistscrapclick from "../assets/img/damnlistscrapclick.png";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import * as StompJs from '@stomp/stompjs';
 import Modal from "react-bootstrap/Modal";
-import { TextField } from "@material-ui/core";
+import TextField from "@mui/material/TextField";
 import send from "../assets/img/send.png"
+import Chatting from "../components/chatting";
 
 const getCoordinatesFromAddress = async (address) => {
   const apiKey = "AIzaSyBSAd6eYUYY8l9LV9eY8FXiJXAPU6zPDCk";
@@ -191,11 +192,11 @@ const DamnlistDetail = () => {
     if (!client.current.connected) return;
 
     client.current.publish({
-      destination: '/pub/chat/' + appliance_id + "/" + publisher_id,
+      destination: '/pub/chat',
       body: JSON.stringify({
         chat: chat,
-        publisher_id: publisher_id,
-        appliance_id: appliance_id
+        sender: appliance_id,
+        receiver: publisher_id
       }),
     });
 
@@ -203,8 +204,10 @@ const DamnlistDetail = () => {
   };
 
   const subscribe = () => {
-    client.current.subscribe('/sub/chat/' + appliance_id + "/" + publisher_id, (body) => {
+    console.log("my id is, for subscribe" , userId)
+    client.current.subscribe('/sub/chat/' + userId, (body) => {
       const json_body = JSON.parse(body.body);
+      console.log("messgae recieved :: " + json_body["chat"] + " - from :: "+ json_body["sender"]);
       setChatList((_chat_list) => [
         ..._chat_list, json_body
       ]);
@@ -229,33 +232,33 @@ const DamnlistDetail = () => {
     console.log("app:: ", appliance_id);
     console.log("pub:: ", publisher_id);
 
-    axios
-    .post(`http://localhost:3000/damnlist/chat`, {
-      user_appliance: appliance_id,
-      user_publisher: publisher_id
-    },
-    {
-      headers: {
-        Authorization: "Bearer " + sessionToken
-      },
-    })
-      .then(async response => {
-          console.log(response);
-          console.log("채팅 보내기 끝 !");
+    // axios
+    // .post(`http://localhost:3000/damnlist/chat`, {
+    //   user_appliance: appliance_id,
+    //   user_publisher: publisher_id
+    // },
+    // {
+    //   headers: {
+    //     Authorization: "Bearer " + sessionToken
+    //   },
+    // })
+    //   .then(async response => {
+    //       console.log(response);
+    //       console.log("채팅 보내기 끝 !");
           
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log("1", error.response.data);
-          console.log("2", error.response.status);
-          console.log("3", error.response.headers);
-        } else if (error.request) {
-          console.log("4", error.request);
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log("5", error.config);
-      })
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log("1", error.response.data);
+    //       console.log("2", error.response.status);
+    //       console.log("3", error.response.headers);
+    //     } else if (error.request) {
+    //       console.log("4", error.request);
+    //     } else {
+    //       console.log('Error', error.message);
+    //     }
+    //     console.log("5", error.config);
+    //   })
   };
   
   useEffect(() => {
@@ -505,6 +508,7 @@ const DamnlistDetail = () => {
 
           </div>
         )}
+        <Chatting />
       </div>
     </div>
   );

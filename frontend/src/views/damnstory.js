@@ -9,6 +9,7 @@ import "../components/Footers/Footer";
 import Footer from "../components/Footers/Footer";
 import damnstorycomment2 from "../assets/img/damnstorycomment2.png";
 import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";
+import Chatting from "../components/chatting";
 
 const SectionData = [
   //공지사항 더미
@@ -187,6 +188,7 @@ const Damnstory = () => {
         </div>
       </div>
 
+      <Chatting />
       <Footer />
     </div>
   );
