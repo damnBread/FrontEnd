@@ -6,6 +6,7 @@ import "../assets/css/damnstoryDetail.css";
 import damnstorycomment2 from "../assets/img/damnstorycomment2.png";
 import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";
 import Button from "@mui/material/Button";
+import Chatting from "../components/chatting";
 
 const sectionStyle = {
   textDecoration: "none",

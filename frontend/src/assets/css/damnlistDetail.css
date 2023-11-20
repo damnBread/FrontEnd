@@ -258,4 +258,20 @@
   .damndetailbuttonchat .MuiButton-root:hover {
     background-color: rgb(229, 42, 42);
   }
+
+  .chatting-message {
+    overflow-x: auto;
+    overflow-y: auto;
+    width: 650px;
+    max-width: 700px;
+    height: 680px;
+    max-height: 1000px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .chatting-textField {
+    position: fixed;
+    margin-bottom: 0px;
+  }
   

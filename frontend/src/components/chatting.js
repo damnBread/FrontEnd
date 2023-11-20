@@ -8,6 +8,8 @@ import FABicon from '../assets/img/chatting-icon.png';
 import Modal from "react-bootstrap/Modal";
 import * as StompJs from '@stomp/stompjs';
 import Swal from "sweetalert2";
+import TextField from "@mui/material/TextField";
+import send from "../assets/img/send.png"
 
 
 function Chatting() {
@@ -15,6 +17,12 @@ function Chatting() {
     const [showChat, setShowChat] = useState(false);
     const handleShowChat = () =>{setShowChat(true)};
     const handleCloseChat = () => {setShowChat(false)};
+
+    const [showChatRoom, setShowChatRoom] = useState(false);
+    const handleShowChatRoom = () => {setShowChatRoom(true); getChatMessage();};
+    const handleCloseChatRoom = () => {setShowChatRoom(false)};
+
+    const [roomId, setRoomId] = useState(0);
 
 
     const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
@@ -25,13 +33,25 @@ function Chatting() {
     const [publisher_id, setPublisher_id] = useState(0);  // 의뢰인 id
 
     const sessionToken = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem("idNum");
 
     const [chatData, setChatData] = useState([{         // 채팅방 리스트
-            room_id: 0,
-            post: 0,
-            user_appliance: 0,
-            user_publisher: 0
+            id: 0,
+            user_appliance_id: 0,
+            user_publisher_id: 0
       }])
+
+    const [messageData, setMessageData] = useState([{
+        chatId: 0,
+        chatRoomId: 0,
+        content: "",
+        date: "",
+        read: false,
+        receiver: 0,
+        sender: 0
+    }])
+
+    let [date, setDate] = useState("");
 
     const connect = () => {
         client.current = new StompJs.Client({
@@ -51,11 +71,11 @@ function Chatting() {
         if (!client.current.connected) return;
     
         client.current.publish({
-          destination: '/pub/chat/' + appliance_id + "/" + publisher_id,
+          destination: '/pub/chat',
           body: JSON.stringify({
             chat: chat,
-            publisher_id: publisher_id,
-            appliance_id: appliance_id
+            sender: publisher_id,
+            receiver: appliance_id
           }),
         });
     
@@ -63,7 +83,7 @@ function Chatting() {
       };
     
       const subscribe = () => {
-        client.current.subscribe('/sub/chat/' + appliance_id + "/" + publisher_id, (body) => {
+        client.current.subscribe('/sub/chat/' + userId, (body) => {
           const json_body = JSON.parse(body.body);
           setChatList((_chat_list) => [
             ..._chat_list, json_body
@@ -100,7 +120,6 @@ function Chatting() {
               }
             })
             .then((response) => {
-                console.log("re: ", response.data);
                 if (response.data.size === 0) {
                     Swal.fire({
                         icon: "warning",
@@ -116,10 +135,9 @@ function Chatting() {
                 } else {
                     console.log("rere: ", response.data);
                     const _inputData = response.data.map((setData) => ({
-                        room_id: 0,
-                        post: 0,
-                        user_appliance: 0,
-                        user_publisher: 0
+                        id: setData.id,
+                        user_appliance_id: setData.user_appliance_id,
+                        user_publisher_id: setData.user_publisher_id
                       }))
           
                       setChatData(_inputData);
@@ -130,6 +148,76 @@ function Chatting() {
             })
       }
         
+      function selectId(user_publisher_id) {
+        // console.log("userID:: ", typeof(userId))  // -> String
+        // console.log("userPub:: ", typeof(user_publisher_id))  // -> number
+        if (user_publisher_id.toString() === userId) {  // 나 -> 게시자
+            return true;
+        } else {                             // 나 -> 지원자
+            return false;
+        }
+      }
+
+      function selectRoomId(room_id, publisher_id, appliance_id) {
+        console.log("room_id:: ", room_id);
+        console.log("pub:: ", publisher_id);
+        console.log("appl:: ", appliance_id);
+        setRoomId(room_id);
+        setPublisher_id(publisher_id);
+        setAppliance_id(appliance_id);
+      }
+
+
+      function getChatMessage() {
+        axios
+        .get(`http://localhost:3000/chatlist/enter`,{
+          params: {
+            roomId: roomId
+          }
+        } ,{
+          headers: {
+            Authorization: "Bearer " + sessionToken
+          }
+        })
+        .then((response) => {
+            console.log("message: ", response.data);
+            const _inputData = response.data.map((mdata) => ({
+                chatId: mdata.chatId,
+                chatRoomId: mdata.chatRoomId,
+                content: mdata.content,
+                date: mdata.date,
+                read: mdata.read,
+                receiver: mdata.receiver,
+                sender: mdata.sender
+            }))
+
+            setMessageData(_inputData);
+        })
+        .catch((error) => {
+            console.log("message error: ", error);
+        })
+      }
+
+      function getMessage(receiver) {
+        // console.log("usreID:: ", (userId));
+        // console.log("message Re:: ", (receiver));
+        if (receiver.toString() === userId) {
+          return true;
+        } else {
+          return false;
+        }
+
+      }
+
+      //  function dateToSimpleDate(date) {
+      //     console.log(typeof(date));
+      //     const simpleDate = (date||'').split("T");
+      //     const simple1 = simpleDate[0];
+      //     const simple2 = simpleDate[1].split(".")[0];
+      //     const result = simple1 + " " + simple2;
+      //     return result;
+      // }
+
 
     return (
         <div className="chatting-style">
@@ -137,6 +225,7 @@ function Chatting() {
                 <img src={FABicon} width="30px"/>
             </Fab>
 
+            {/* 채팅 목록 모달창 */}
             <Modal dialogClassName="modal-chatting-style" show={showChat} onHide={handleCloseChat}>
                 {(
                     <div className="custom-chatting-content">
@@ -146,50 +235,86 @@ function Chatting() {
                                 
                                 <label className="chatting-label-style1" onClick={handleCloseChat}><b>닫기</b></label>
 
-                                <label className="chatting-label-style1" style={{marginRight: "20px"}} onClick={handleCloseChat}><b>새 채팅</b></label> 
+                                {/* <label className="chatting-label-style1" style={{marginRight: "20px"}}><b>새 채팅</b></label>  */}
 
-                                {/* 채팅 목록 */}
+                                <div>
+                                
                                 {(
-                                    <div style={{overflowY: "auto", marginRight: "10px"}}>
-                                    {chatData.map(rowData => (
-                                      <div  key={rowData.room_id}
-                                      className="chatting-content-box">
-                                        <div style={{marginLeft: "25px", marginTop: "20px"}}>
-                                          <b>{rowData.post}</b>
-                                          
+                                        <div style={{overflowY: "auto", marginRight: "10px"}}>
+                                        {chatData.map(rowData => (
+                                        <div key={rowData.id}
+                                            onClick={() => {
+                                              handleShowChatRoom();
+                                              selectRoomId(rowData.id, rowData.user_publisher_id, rowData.user_appliance_id);
+                                            }}
+                                            className="chatting-content-box">
+                                              <div style={{marginLeft: "25px", marginTop: "20px"}}>
+                                                  <b>{selectId(rowData.user_publisher_id) === true ? rowData.user_appliance_id : rowData.user_publisher_id}</b>
+                                              
+                                              </div>
+
+                                            </div>
+                                            ))}
                                         </div>
 
-                                      </div>
-                                    ))}
-                                  </div>
-
-                                  
-                                  
-                                )}
-
-
-                                {/* 채팅 메세지 보내는 창 */}
-                                {/* <div>
-                                    <div>{chatList}</div>
-                                        <form onSubmit={(event) => handleSubmit(event, chat)}>
-                                            <div>
-                                            <input type={'text'} name={'chatInput'} onChange={handleChange} value={chat} />
-                                            </div>
-                                            <input type={'submit'} value={'의견 보내기'} />
-                                        </form>
-                                    </div>*/}
-
+                                        )}
+                                    </div>
                                 </div>
                         </Modal.Body>
-
                     </div>
                     )}
-                    {/* <Modal.Footer>
-                        <Button className="footer-style" varient="primary">
-                            전달하기
-                        </Button>
-                    </Modal.Footer> */}
                 </Modal>
+
+                {/* 채팅방 모달창 */}
+                <Modal dialogClassName="modal-whole-rank1" show={showChatRoom} onHide={handleCloseChatRoom}>
+                                            {(
+                                    <div className="custom-rank-content" style={{overflowY: "auto"}}>
+                                        <Modal.Body>
+                                             <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
+                                                  {/* <b>{selectMessageId(rowData.receiver) === true ? rowData.sender : rowData.sender}</b> */}
+                                              </div>
+                                              <hr />
+                                        
+                                            {/* 채팅 메세지 */}
+                                            {(
+                                                <div className="chatting-message">
+                                                {messageData.map(rowData => (
+                                                  <div key={rowData.chatId}>
+                                                      <div className={`message-box ${getMessage(rowData.receiver) === true ? "left-message" : "right-message"}`}>
+                                                          <b>{rowData.content}</b>
+                                                          
+                                                      </div>
+                                                      <span className="chatting-date-style">
+                                                          {(rowData.date)}
+                                                          
+                                                        </span>
+
+                                                        
+                                                    </div>
+                                                    
+                                                    ))}
+                                                </div>
+
+                                                
+                                                
+                                          )}
+
+
+                                            {/* 채팅 메세지 textField */}
+                                            <div className="chatting-textField">
+                                                <TextField label="채팅" value={chat} multiline rows={1} variant="outlined" style = {{width: 570}} onChange={handleChange}/>
+
+                                                <button onClick={handleSubmit} className="footer-style footer-button-chatting1" varient="primary">
+                                                    <img src={send} id="send" width="30" alt="send"/>
+                                                </button>
+                                            </div>
+                                            
+                                        </Modal.Body>
+
+                                        </div>
+                                    )}
+                                        
+                                </Modal>
 
         </div>
 

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import "../assets/css/damnstory.css";
 import damnstorycomment2 from "../assets/img/damnstorycomment2.png";
 import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";
+import Chatting from "../components/chatting";
 import Footer from "../components/Footers/Footer";
 
 const sectionStyle = {
@@ -207,6 +208,8 @@ const Damnstory = () => {
           </ul>
         </div>
       </div>
+
+      <Chatting />
       <Footer />
     </div>
   );
