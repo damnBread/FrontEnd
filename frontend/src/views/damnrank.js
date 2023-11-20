@@ -247,6 +247,8 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
       );
     }  
 
+    const sessionToken = sessionStorage.getItem('token');
+
   function onClickFilter() {
 
     console.log("1111: ", typeof(InputWorkArea));
@@ -266,6 +268,10 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
           job: InputWorkJob,
           gender: selectedGenders,
           age: ageparsedInt
+        } ,{
+          headers: {
+            Authorization: "Bearer " + sessionToken
+          }
         })
         .then((res) => {
             console.log(res.data);
