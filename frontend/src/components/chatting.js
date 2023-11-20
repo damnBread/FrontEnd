@@ -209,14 +209,14 @@ function Chatting() {
 
       }
 
-       function dateToSimpleDate(date) {
-          console.log(typeof(date));
-          const simpleDate = (date||'').split("T");
-          const simple1 = simpleDate[0];
-          const simple2 = simpleDate[1].split(".")[0];
-          const result = simple1 + " " + simple2;
-          return result;
-      }
+      //  function dateToSimpleDate(date) {
+      //     console.log(typeof(date));
+      //     const simpleDate = (date||'').split("T");
+      //     const simple1 = simpleDate[0];
+      //     const simple2 = simpleDate[1].split(".")[0];
+      //     const result = simple1 + " " + simple2;
+      //     return result;
+      // }
 
 
     return (
@@ -285,7 +285,7 @@ function Chatting() {
                                                           
                                                       </div>
                                                       <span className="chatting-date-style">
-                                                          {dateToSimpleDate(rowData.date)}
+                                                          {(rowData.date)}
                                                           
                                                         </span>
 

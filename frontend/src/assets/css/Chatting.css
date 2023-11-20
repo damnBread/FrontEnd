@@ -53,9 +53,10 @@
     border-radius: 5px;
 }
 
-.message-box {
-    /* display: inline-flex; */
-    /* flex-direction: column; */
+.chatting-message {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
 }
 
 .left-message {
