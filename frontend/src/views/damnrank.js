@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Headers/Header";
 import "../assets/css/Page3Header.css";
 import DamnrankBoard from "./damnrankBoard";
@@ -43,13 +43,12 @@ const Damnrank = () => {
     const [activeWorkJob, setActiveWorkJob] = useState('');  //색 변경
 
     const [selectedGenders, setSelectedGenders] = useState([]);  // 성별
-    let updatedGenders;
 
     const [selectedAges, setSelectedAges] = useState([]);   //나이
     const [InputAge, setInputAge] = useState(null);
 
     const [selectedCareers, setSelectedCareers] = useState([]);  //경력
-    const [InputCareer, setInputCareer] = useState(0); 
+    const [InputCareer, setInputCareer] = useState(null); 
 
     const handleToggleArea = () => {
       setShowArea(prevState => !prevState);
@@ -149,10 +148,10 @@ const Damnrank = () => {
       setInputWorkJob(SelectWorkJob.filter(job => job !== removedJob).join("|"));
     };
 
-
-
 //세부조건 -> 성별
 const handleGenderClick = (gender) => {
+
+  let updatedGenders;
 
   if (gender === '남') {
     updatedGenders = [1, 0];
@@ -161,28 +160,21 @@ const handleGenderClick = (gender) => {
   } else if (gender === '무관') {
     updatedGenders = [1, 1];
   } else {
-    updatedGenders = selectedGenders.filter(item => item !== gender);
+    // updatedGenders = selectedGenders.filter(item => item !== gender);
   }
 
   setSelectedGenders(updatedGenders);
 };
-  
-  const removeGender = (genderToRemove) => {
-    const updatedGenders = selectedGenders.filter(gender => gender !== genderToRemove);
-    setSelectedGenders(updatedGenders);
-  };
 
-  function getGenderLabel() {
+  function getGenderLabel(gender) {
 
-    if (arraysAreEqual(selectedGenders, [1, 0])) {
-      return '남';
-    } else if (arraysAreEqual(selectedGenders, [0, 1])) {
-      return '여';
-    } else if (arraysAreEqual(selectedGenders, [1, 1])) {
-      return '무관';
-    } else {
-      return '';
-    }
+      if (arraysAreEqual(gender, [1, 0])) {
+        return '남';
+      } else if (arraysAreEqual(gender, [0, 1])) {
+        return '여';
+      } else if (arraysAreEqual(gender, [1, 1])) {
+        return '무관';
+      }
   };
 
 function arraysAreEqual(arr1, arr2) {
@@ -199,7 +191,7 @@ function arraysAreEqual(arr1, arr2) {
 
   return true; 
 }
-  
+
 
 //세부조건 -> 나이
 const handleInputAge = (event) => {
@@ -259,15 +251,16 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
     const ageparsedInt = parseInt(InputAge);
     console.log("4545: ", ageparsedInt)
     console.log('5555: ', typeof(InputCareer));
-    const carrerInt = parseInt(InputCareer);
+    const careerInt = parseInt(InputCareer);
     const page = 1;
-    
+    const changedGenders = selectedGenders.length === 0 ? [0, 0] : selectedGenders;
       axios
-        .post('http://localhost:3000/damnrank/filter/' + page, {    //연동 완료 ~~
+        .post('http://localhost:3000/damnrank/filter/' + page, { 
           location: InputWorkArea,
           job: InputWorkJob,
-          gender: selectedGenders,
-          age: ageparsedInt
+          gender: changedGenders,
+          age: ageparsedInt,
+          career: careerInt
         } ,{
           headers: {
             Authorization: "Bearer " + sessionToken
@@ -554,13 +547,13 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                     </div>
 
                     <div>
-                      <label className="label-style1" style={{zIndex: 1}}><b>경력</b>
+                      <label className="label-style1" style={{zIndex: 1}}><b>경력</b></label>
 
                       <input type='text' className="inputAge-style" id='career' name='career' placeholder="0" value={InputCareer}
                              onChange={handleInputCarrer} style={{width: "150px", marginLeft: "100px"}} />
                              <label className="inputAge-label-style" style={{marginLeft: "10px", marginRight: "30px"}}>회 이상</label>
                         <button type='button' onClick={handleCareerClick} className="inputAge-btn-style" disabled={!InputCareer}>확인</button>   
-                      </label>
+                      
 
                     </div>
 
@@ -604,18 +597,25 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
                     </div>
                   ))}
 
-                    {selectedGenders.map((gender, index) => (
-                      <span key={index}
-                      className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(gender) ? 'active' : ''}`}>
-                        {getGenderLabel()}
+
+                      <span
+                      className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(selectedGenders) ? 'active' : ''}`}>
+                        {getGenderLabel(selectedGenders)}
                         <button
-                          className="close-rank"
-                          onClick={() => removeGender(gender)}
+                          className="close-rank-gender"
                         >
                           x
                         </button>
                       </span>
-                    ))}
+
+                      {/* {selectedGenders.map((gender, index) => (
+                        <span key={index} className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(gender) ? 'active' : ''}`}>
+                          {getGenderLabel(gender)}
+                          <button className="close-rank" onClick={() => removeGender(gender)}>
+                            x
+                          </button>
+                        </span>
+                      ))} */}
 
 
                         {selectedAges.map((age, index) => (
@@ -632,7 +632,7 @@ const removeAge = (AgeToRemove) => {    //나이 하나씩 삭제
 
                         {selectedCareers.map((career, index) => (
                           <span key={index} className={`addedWorkArea-style-rank ${shouldApplyActiveStyle(career) ? 'active' : ''}`}>
-                            {career}개월 이상
+                            {career}회 이상
                             <button
                               className="close-rank"
                               onClick={() => removeCareer(career)}

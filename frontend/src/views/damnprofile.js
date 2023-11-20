@@ -118,7 +118,7 @@ const Damnprofile = () => {
       userid: 0,
       id: "",
       name: "",
-      gender: "",
+      gender: "남",
       age: 0,
       career: 0,
       address: "",
@@ -575,14 +575,13 @@ useEffect(() => {
                 }
             })
             .catch((error)=>{
-              if (error.response?.status === 400) {
+              if (error.response.status === 400) {
                 Swal.fire({
                   icon: "warning",
                   title: "경고",
                   text: "로그인 또는 회원가입이 필요한 서비스입니다. 로그인 또는 회원가입을 해주세요.",
-                  showCancelButton: true,
+                  showCancelButton: false,
                   confirmButtonText: "확인",
-                  cancelButtonText: "취소",
                   width: 800,
                   height: 100,
               }).then((res) => {
@@ -886,19 +885,19 @@ useEffect(() => {
                     
                 })
                 .catch((error)=>{
-                  if (error.response.status === 400) {
-                    Swal.fire({
-                      icon: "warning",
-                      title: "경고",
-                      text: "내가 지원한 땜빵이 없습니다.",
-                      showCancelButton: true,
-                      confirmButtonText: "확인",
-                      cancelButtonText: "취소",
-                      width: 800,
-                      height: 100,
-                  }).then((res) => {
-                  });
-                  }
+                  // if (error.response.status === 400) {
+                  //   Swal.fire({
+                  //     icon: "warning",
+                  //     title: "경고",
+                  //     text: "내가 지원한 땜빵이 없습니다.",
+                  //     showCancelButton: true,
+                  //     confirmButtonText: "확인",
+                  //     cancelButtonText: "취소",
+                  //     width: 800,
+                  //     height: 100,
+                  // }).then((res) => {
+                  // });
+                  // }
                 })
           }       
 
@@ -928,19 +927,19 @@ useEffect(() => {
                   setRequestDamn(_inputData);
                 })
                 .catch((error)=>{
-                  if (error.response.status === 400) {
-                    Swal.fire({
-                      icon: "warning",
-                      title: "경고",
-                      text: "내가 의뢰한 땜빵이 없습니다.",
-                      showCancelButton: true,
-                      confirmButtonText: "확인",
-                      cancelButtonText: "취소",
-                      width: 800,
-                      height: 100,
-                  }).then((res) => {
-                  });
-                  }
+                  // if (error.response.status === 400) {
+                  //   Swal.fire({
+                  //     icon: "warning",
+                  //     title: "경고",
+                  //     text: "내가 의뢰한 땜빵이 없습니다.",
+                  //     showCancelButton: true,
+                  //     confirmButtonText: "확인",
+                  //     cancelButtonText: "취소",
+                  //     width: 800,
+                  //     height: 100,
+                  // }).then((res) => {
+                  // });
+                  // }
                 })
               }       
               
@@ -1011,6 +1010,7 @@ useEffect(() => {
                 case true:
                   return "남";
                 default:
+                  return "남";
               }
             }
 
