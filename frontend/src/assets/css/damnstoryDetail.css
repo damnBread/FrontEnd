@@ -17,7 +17,7 @@
 .damnstorydetailtitle {
     font-family: 'GmarketSans', sans-bold;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 30px;
     margin-left: 250px;
     margin-top: 80px;
 }
@@ -45,7 +45,7 @@
 .right-content1 {
     display: flex;
     align-items: center;
-    margin-left: 500px;
+    margin-left: 750px;
 }
 
 .right-content-item {
@@ -68,6 +68,7 @@
 
 .damnstorydetailcontent {
     color: gray;
+    font-size: 25px;
     margin-top: 30px;
     margin-left: 250px;
 }
@@ -120,4 +121,21 @@
 
 .comment-item {
     margin-left: 100px; /*  댓글 안뜸.. */
+}
+
+
+.comment-recycler {
+    margin-left: 150px;
+    margin-top: 30px;
+}
+
+.comment-recycler .comment-item {
+    display: flex;
+    align-items: center;
+}
+
+.comment-recycler .comment-item p {
+    font-family: 'GmarketSans', sans-bold;
+    font-size: 18px; /* 수정한 폰트 크기 */
+    margin-right: 200px; /* content와 createdAt 간격 조절 */
 }

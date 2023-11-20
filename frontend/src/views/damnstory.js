@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Cookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import Header from "../components/Headers/Header";
 import Button from "@mui/material/Button";
 import "../assets/css/damnstory.css";
-import "../components/Footers/Footer";
-import Footer from "../components/Footers/Footer";
 import damnstorycomment2 from "../assets/img/damnstorycomment2.png";
 import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";
+import Footer from "../components/Footers/Footer";
+
+const sectionStyle = {
+  textDecoration: "none",
+  color: "black",
+};
 
 const SectionData = [
-  //공지사항 더미
+  // Dummy data for announcements
   {
     title: "공지사항",
     postTitle: "비속어 사용을 금지합니다.",
@@ -26,16 +29,10 @@ const SectionData = [
   },
 ];
 
-const sectionStyle = {
-  textDecoration: "none",
-  color: "black",
-};
-
 const Damnstory = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    // Fetch data when the component mounts
     fetchData();
   }, []);
 
@@ -43,16 +40,16 @@ const Damnstory = () => {
     axios
       .get("http://localhost:3000/damnstory", {
         params: {
-          page: 1, // Change this value to the appropriate page number
+          page: 1,
         },
-      }) // Replace with the actual endpoint for fetching posts
+      })
       .then((response) => {
         console.log(response);
         if (response.status === 204) {
           console.log("S: ", posts);
         }
-        setPosts(response.data); // Assuming the response contains an array of posts
-        console.log(setPosts);
+        setPosts(response.data);
+        console.log("0", setPosts);
       })
       .catch((error) => {
         if (error.response) {
@@ -69,16 +66,38 @@ const Damnstory = () => {
   }
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [clickCount, setClickCount] = useState(0);
   const postsPerPage = 4;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const incrementCommentCount = (postId) => {
+    // Find the post by postId and update the comment count
+    const updatedPosts = posts.map((post) => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          comments: post.comments + 1,
+        };
+      }
+      return post;
+    });
 
-  const incrementClickCount = () => {
-    setClickCount((prevClickCount) => prevClickCount + 1);
+    setPosts(updatedPosts);
+  };
+
+  const incrementViewCount = (postId) => {
+    // Find the post by postId and update the view count
+    const updatedPosts = posts.map((post) => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          viewCount: post.viewCount + 1,
+        };
+      }
+      return post;
+    });
+
+    setPosts(updatedPosts);
   };
 
   return (
@@ -90,7 +109,7 @@ const Damnstory = () => {
           <Button
             variant="outlined"
             sx={{ borderColor: "brown", color: "brown" }}
-            component={Link} //Use Link from react-router-dom
+            component={Link}
             to="/damnstory/new"
           >
             글쓰기
@@ -139,7 +158,7 @@ const Damnstory = () => {
                     </p>
                   </div>
                   <div className="rightdamnstoryanno">
-                    <p className="annotext">{section.createdDate}</p>
+                    <p className="annotext">{section.date}</p>
                   </div>
                 </div>
                 <div className="gray-line1"></div>
@@ -154,21 +173,23 @@ const Damnstory = () => {
               key={post.id}
               href={`/damnstory/${post.id}`}
               style={sectionStyle}
+              onClick={() => {
+                incrementViewCount(post.id);
+              }}
             >
               <div className="damnstoryboardtitle">{post.title}</div>
               <div className="damnstoryboardcontent">{post.content}</div>
               <div className="damnstoryboardnickname">
                 <div className="left-content">
-                  {post.nickname} | {post.createdDate}
+                  {post.writer} | {post.createdDate}
                 </div>
                 <div className="right-content">
                   <img className="img1" src={damnstorycomment2} />
-                  <p>{post.comments}</p>
-                  <img className="imag2" src={damnstorysearchcount2} />
+                  <p>{post.comments ? post.comments : 0}</p>
+                  <img className="img2" src={damnstorysearchcount2} />
                   <p>{post.viewCount}</p>
                 </div>
               </div>
-
               <div className="gray-line1"></div>
             </a>
           ))}
@@ -186,7 +207,6 @@ const Damnstory = () => {
           </ul>
         </div>
       </div>
-
       <Footer />
     </div>
   );

@@ -1804,7 +1804,7 @@ useEffect(() => {
                                           <div onClick={() => onClickDamnList(rowData.damnpostId)}>
                                             <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "120px"}}>시급</label>
                                                 {rowData.damnPay}
-                                          </div>
+                                          </div>ㄴ
                                           
 
                                           {/* 진행중, 매칭완료, 근무완료, 매칭종료 */}

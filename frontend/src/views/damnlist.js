@@ -7,6 +7,7 @@ import makeAnimated from "react-select/animated";
 import Button from "@mui/material/Button";
 import "../assets/css/damnlist.css";
 import Chatting from "../components/chatting";
+import Filter from "./damnrank1.js";
 
 const sectionStyle = {
   textDecoration: "none",
@@ -17,16 +18,16 @@ const Damnlist = () => {
   const [jobPostings, setJobPostings] = useState([]);
 
   const page = 1;
-  const sessionToken = sessionStorage.getItem('token');
+  const sessionToken = sessionStorage.getItem("token");
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/damnlist`, {
         params: { page },
         headers: {
-          Authorization: "Bearer " + sessionToken
-        }}
-      )
+          Authorization: "Bearer " + sessionToken,
+        },
+      })
       .then((response) => {
         console.log("response: ", response);
         if (response.status === 204) {
@@ -49,7 +50,6 @@ const Damnlist = () => {
         }
         console.log("5", error.config);
       });
-
   }, []);
 
   return (
@@ -60,6 +60,9 @@ const Damnlist = () => {
           <div className="content-wrapper">
             <p>땜빵구해요</p>
           </div>
+        </div>
+        <div className="damnlist-filtering">
+          <Filter />
         </div>
 
         <div className="damnlistcount">
@@ -80,7 +83,7 @@ const Damnlist = () => {
         </div>
 
         <div className="brown-line1"></div>
-        <DamnlistBoard/>
+        <DamnlistBoard />
 
         <Chatting />
       </div>

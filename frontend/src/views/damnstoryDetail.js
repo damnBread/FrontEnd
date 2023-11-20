@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Headers/Header";
 import "../assets/css/damnstoryDetail.css";
-import "../components/Footers/Footer";
 import damnstorycomment2 from "../assets/img/damnstorycomment2.png";
 import damnstorysearchcount2 from "../assets/img/damnstorysearchcount2.png";
 import Button from "@mui/material/Button";
@@ -16,7 +15,8 @@ const sectionStyle = {
 const DamnstoryDetail = ({ user }) => {
   const { storyid } = useParams();
   const [post, setPost] = useState(null);
-  const [writerName, setWriterName] = useState("");
+  const [commentList, setCommentList] = useState([]); // Initialize commentList as an empty array
+  const [currentComment, setCurrentComment] = useState(""); // Initialize currentComment as an empty string
 
   const sessionToken = sessionStorage.getItem("token");
 
@@ -29,24 +29,19 @@ const DamnstoryDetail = ({ user }) => {
         console.log(response);
         setPost(response.data);
 
-        let writerResponse;
+        // Fetch comments for the post
+        const commentsResponse = await axios.get(
+          `http://localhost:3000/damnstory/${storyid}/comment`
+        );
 
-        if (response.data.writer) {
-          const writerId = response.data.writer;
-          console.log("Writer", writerId);
-
-          writerResponse = await axios.get(
-            `http://localhost:3000/user/${writerId}`
+        if (Array.isArray(commentsResponse.data)) {
+          setCommentList(commentsResponse.data);
+          console.log("Comments:", commentsResponse.data);
+        } else {
+          console.error(
+            "Comments data is not an array:",
+            commentsResponse.data
           );
-          if (writerResponse.status === 200) {
-            setWriterName(writerResponse.data.nickname);
-            console.log("nickname", writerResponse.data.nickname);
-          } else if (writerResponse.status === 404) {
-            console.log("User not found");
-            // Handle the case where the user is not found
-          } else {
-            console.error("Error fetching user:", writerResponse.status);
-          }
         }
       } catch (error) {
         console.error("Error fetching post:", error);
@@ -55,20 +50,18 @@ const DamnstoryDetail = ({ user }) => {
     fetchData();
   }, [storyid, user]);
 
-  const [comment, setComment] = useState("");
-
   const handleCommentChange = (event) => {
-    setComment(event.target.value);
+    setCurrentComment(event.target.value);
   };
 
   const handleCommentSubmit = async () => {
     try {
       const commentData = {
-        content: comment,
-        createdAt: new Date().toISOString(), // 필드명 변경
+        content: currentComment,
+        createdAt: new Date().toLocaleString(),
       };
 
-      const currentURL = window.location.href; //현재의 url을 의미
+      const currentURL = window.location.href;
       const commentEndpoint = `${currentURL}/comment`;
 
       const response = await axios.post(commentEndpoint, commentData, {
@@ -80,7 +73,12 @@ const DamnstoryDetail = ({ user }) => {
       alert("댓글이 등록되었습니다.");
       console.log("Comment submitted:", response.data);
       console.log("commentData", commentData);
-      setComment("");
+
+      // Update the comments list with the new comment
+      setCommentList([...commentList, commentData]);
+
+      // Clear the current comment input
+      setCurrentComment("");
     } catch (error) {
       console.error("Error submitting comment:", error);
     }
@@ -96,7 +94,7 @@ const DamnstoryDetail = ({ user }) => {
               <div className="damnstorydetailtitle">{post.title}</div>
               <div className="content-container">
                 <div className="left-content1">
-                  {post.writerName} | {post.createDate}
+                  {post.writer} | {post.createDate}
                 </div>
                 <div className="right-content1">
                   <div className="right-content-item">
@@ -128,25 +126,25 @@ const DamnstoryDetail = ({ user }) => {
 
               <div className="gray-line2"></div>
 
-              {/* 이 사이에 댓글창 추가하기 */}
               <div className="comment-recycler">
-                <div className="commentlist">
-                  {Array.isArray(comment) &&
-                    comment.map((comment, index) => (
-                      <div key={index} className="comment-item">
-                        <p>{comment.content}</p>
-                        <p>{comment.createdAt}</p>
-                      </div>
-                    ))}
-                  <div className="gray-line2"></div>
-                </div>
+                {commentList.map((commentItem, index) => (
+                  <div key={index} className="comment-item">
+                    <div className="comment-content">
+                      <p>{commentItem.content}</p>
+                    </div>
+                    <div className="comment-writer">
+                      <p>{commentItem.writer}</p>
+                      <p>{commentItem.createdAt}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               <div className="comment-section">
                 <input
                   type="text"
                   placeholder="댓글을 입력해 주세요."
-                  value={comment}
+                  value={currentComment}
                   onChange={handleCommentChange}
                   className="comment-input"
                 />

@@ -15,7 +15,7 @@ const MainPage = () => {
     <div>
       <CookiesProvider>
         <Header />
-        <MainPageRecommend/>
+        {/* <MainPageRecommend/> */}
         <Page1Header/>
         <Footer/>
         <Chatting/>

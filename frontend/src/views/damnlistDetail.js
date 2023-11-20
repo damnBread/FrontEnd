@@ -14,10 +14,10 @@ import damnlistworktime from "../assets/img/damnlistworktime.png";
 import damnlistscrap from "../assets/img/damnlistscrap.png";
 import damnlistscrapclick from "../assets/img/damnlistscrapclick.png";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import * as StompJs from '@stomp/stompjs';
+import * as StompJs from "@stomp/stompjs";
 import Modal from "react-bootstrap/Modal";
 import { TextField } from "@material-ui/core";
-import send from "../assets/img/send.png"
+import send from "../assets/img/send.png";
 
 const getCoordinatesFromAddress = async (address) => {
   const apiKey = "AIzaSyBSAd6eYUYY8l9LV9eY8FXiJXAPU6zPDCk";
@@ -67,7 +67,7 @@ const DamnlistDetail = () => {
 
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
-  const [showChat, setShowChat] = useState(false);  //채팅 시작 모달창
+  const [showChat, setShowChat] = useState(false); //채팅 시작 모달창
 
   const scarphandleClick = () => {
     if (scrapisClicked) {
@@ -166,23 +166,23 @@ const DamnlistDetail = () => {
   const [publisher_id, setPublisher_id] = useState(0);
 
   const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
-  const [chat, setChat] = useState(''); // 입력되는 채팅
+  const [chat, setChat] = useState(""); // 입력되는 채팅
   const client = useRef({});
 
   const handleChatClose = () => {
-    setShowChat(false);   //채팅 시작 모달창 닫기
-  }
+    setShowChat(false); //채팅 시작 모달창 닫기
+  };
 
   const connect = () => {
     client.current = new StompJs.Client({
-      brokerURL: 'ws://localhost:8080/ws',
+      brokerURL: "ws://localhost:8080/ws",
       onConnect: () => {
-        console.log('success');
+        console.log("success");
         subscribe();
       },
-    //   connectHeaders: { // 이 부분 새로 추가
-    //     Authorization: "Bearer " + sessionToken,
-    //   },
+      //   connectHeaders: { // 이 부분 새로 추가
+      //     Authorization: "Bearer " + sessionToken,
+      //   },
     });
     client.current.activate();
   };
@@ -191,50 +191,55 @@ const DamnlistDetail = () => {
     if (!client.current.connected) return;
 
     client.current.publish({
-      destination: '/pub/chat/' + appliance_id + "/" + publisher_id,
+      destination: "/pub/chat/" + appliance_id + "/" + publisher_id,
       body: JSON.stringify({
         chat: chat,
         publisher_id: publisher_id,
-        appliance_id: appliance_id
+        appliance_id: appliance_id,
       }),
     });
 
-    setChat('');
+    setChat("");
   };
 
   const subscribe = () => {
-    client.current.subscribe('/sub/chat/' + appliance_id + "/" + publisher_id, (body) => {
-      const json_body = JSON.parse(body.body);
-      setChatList((_chat_list) => [
-        ..._chat_list, json_body
-      ]);
-    });
+    client.current.subscribe(
+      "/sub/chat/" + appliance_id + "/" + publisher_id,
+      (body) => {
+        const json_body = JSON.parse(body.body);
+        setChatList((_chat_list) => [..._chat_list, json_body]);
+      }
+    );
   };
 
   const disconnect = () => {
     client.current.deactivate();
   };
 
-  const handleChange = (event) => { // 채팅 입력 시 state에 값 설정
+  const handleChange = (event) => {
+    // 채팅 입력 시 state에 값 설정
     setChat(event.target.value);
   };
 
-  const handleSubmit = (event, chat) => { // 보내기 버튼 눌렀을 때 publish
+  const handleSubmit = (event, chat) => {
+    // 보내기 버튼 눌렀을 때 publish
     event.preventDefault();
 
     publish(chat);
 
     axios
-    .post(`http://localhost:3000/damnlist/${1}/chat`, {},
-    {
-      headers: {
-        Authorization: "Bearer " + sessionToken
-      },
-    })
-      .then(async response => {
-          console.log(response);
-          console.log("채팅 보내기 끝 !");
-          
+      .post(
+        `http://localhost:3000/damnlist/${1}/chat`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + sessionToken,
+          },
+        }
+      )
+      .then(async (response) => {
+        console.log(response);
+        console.log("채팅 보내기 끝 !");
       })
       .catch((error) => {
         if (error.response) {
@@ -244,12 +249,12 @@ const DamnlistDetail = () => {
         } else if (error.request) {
           console.log("4", error.request);
         } else {
-          console.log('Error', error.message);
+          console.log("Error", error.message);
         }
         console.log("5", error.config);
-      })
+      });
   };
-  
+
   useEffect(() => {
     connect();
 
@@ -466,38 +471,51 @@ const DamnlistDetail = () => {
             </div>
 
             {/* 채팅 시작 모달창 */}
-            <Modal dialogClassName="modal-whole-rank1" show={showChat} onHide={handleChatClose}>
-              {(
-                  <div className="custom-rank-content">
-                      <Modal.Body>
-                          <div style={{overflowY: "auto", maxHeight: "740px", maxWidth: "1300px"}}>
-                            <b>{appliance_id}</b>
-                          </div>
-                          <hr />
-
-
-                          {/* 채팅 메세지 */}
-                          <div>
-
-                          </div>
-
-
-                          {/* 채팅 메세지 textField */}
-                          <div>
-                            <TextField label="채팅" multiline rows={1} variant="outlined" style = {{width: 570}} onChange={handleChange}/>
-
-                            <button onClick={handleSubmit} className="footer-style footer-button-chatting" varient="primary">
-                                <img src={send} id="send" width="30" alt="send"/>
-                            </button>
-                          </div>
-                          
-                      </Modal.Body>
-
+            <Modal
+              dialogClassName="modal-whole-rank1"
+              show={showChat}
+              onHide={handleChatClose}
+            >
+              {
+                <div className="custom-rank-content">
+                  <Modal.Body>
+                    <div
+                      style={{
+                        overflowY: "auto",
+                        maxHeight: "740px",
+                        maxWidth: "1300px",
+                      }}
+                    >
+                      <b>{appliance_id}</b>
                     </div>
-                  )}
-                      
-              </Modal>
+                    <hr />
 
+                    {/* 채팅 메세지 */}
+                    <div></div>
+
+                    {/* 채팅 메세지 textField */}
+                    <div>
+                      <TextField
+                        label="채팅"
+                        multiline
+                        rows={1}
+                        variant="outlined"
+                        style={{ width: 570 }}
+                        onChange={handleChange}
+                      />
+
+                      <button
+                        onClick={handleSubmit}
+                        className="footer-style footer-button-chatting"
+                        varient="primary"
+                      >
+                        <img src={send} id="send" width="30" alt="send" />
+                      </button>
+                    </div>
+                  </Modal.Body>
+                </div>
+              }
+            </Modal>
           </div>
         )}
       </div>

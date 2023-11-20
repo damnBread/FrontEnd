@@ -1,71 +1,65 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useHistory } from "react-router-dom"; // Import Link and useHistory
 import "../assets/css/Page1Header.css";
 
 const Page1Header = () => {
   const linkStyle = {
-    textDecoration: 'none', // Removes the underline
-    color: 'black' // Sets the text color to black
+    textDecoration: "none",
+    color: "black",
   };
 
+  //땜빵 리스트 가져오기(마감임박, 최신, 추천, 근처땜빵)
+  //받아와야할것: damnBranch(rowData.branchName), damnLocation(rowData.location), damnPay(rowData.hourPay)
+
+  const sessionToken = sessionStorage.getItem("token");
+
+  useEffect(() => {
+    fetchDamnList();
+  }, []);
+
+  const [damnData, setDamnData] = useState([
+    //최신 data
+    {
+      damnpostId: "",
+      damnBranch: "",
+      damnLocation: "",
+      damnPay: "",
+    },
+  ]);
+
+  function fetchDamnList() {
+    const page = 1;
+
+    axios
+      .get(`http://localhost:3000/damnlist`, {
+        params: { page },
+        headers: {
+          Authorization: "Bearer " + sessionToken,
+        },
+      })
+      .then((response) => {
+        console.log("list: ", response.data);
+
+        const _inputData = response.data.map((rowData) => ({
+          damnpostId: rowData.postId,
+          damnBranch: rowData.branchName,
+          damnLocation: rowData.location,
+          damnPay: rowData.hourPay,
+        }));
+        setDamnData(_inputData);
+        console.log("damn: ", damnData);
+      })
+      .catch((error) => {
+        //error handler
+      });
+  }
+
   return (
-    <div className="damnhomeelementwhole">
-      <div className="neardaum" style={{ fontFamily: 'GmarketSans, sans-bold' }}>근처땜빵</div>
-
-      <div className="elements-container">
-        <Link to="/details1" style={linkStyle}>
-            <div className="round-rectangle-basic">
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>슬로우캘리 노원역점</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>서울 노원구</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>시급: 10000원</p>
-            </div>
-          </Link>
-
-          <Link to="/details2" style={linkStyle}>
-            <div className="round-rectangle-basic1">
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>투썸플레이스 노원문화점</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>서울 노원구</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>시급: 11000원</p>
-            </div>
-          </Link>
-
-          <Link to="/details3" style={linkStyle}>
-            <div className="round-rectangle-basic2">
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>컴포즈 공릉점</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>서울 노원구</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>시급: 11000원</p>
-            </div>
-          </Link>
+    <div className="damnhomeelement-whole">
+      <div className="damnhome-recent">
+        <p>안녕하세요</p>
       </div>
-
-      <div className="elements-container">
-        <Link to="/details4" style={linkStyle}>
-            <div className="round-rectangle-basic">
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>인생네컷 노원역점</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>서울 노원구</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>시급: 10000원</p>
-            </div>
-          </Link>
-
-          <Link to="/details5" style={linkStyle}>
-            <div className="round-rectangle-basic1">
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>새마을식당 노원문화점</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>서울 노원구</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>시급: 11000원</p>
-            </div>
-          </Link>
-
-          <Link to="/details6" style={linkStyle}>
-            <div className="round-rectangle-basic2">
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>이디아 공릉점</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>서울 노원구</p>
-              <p className="daumtitle" style={{ fontFamily: 'GmarketSans, sans-light', textDecoration: 'none' }}>시급: 11000원</p>
-            </div>
-          </Link>
-      </div>
-
-
-
     </div>
   );
 };

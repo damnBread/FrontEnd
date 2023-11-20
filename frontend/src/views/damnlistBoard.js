@@ -12,7 +12,7 @@ const sectionStyle = {
 
 const DamnlistBoard = () => {
   const history = useHistory(); // Create history object for navigation
-  const sessionToken = sessionStorage.getItem('token');
+  const sessionToken = sessionStorage.getItem("token");
 
   useEffect(() => {
     fetchDamnList();
@@ -38,9 +38,9 @@ const DamnlistBoard = () => {
       .get(`http://localhost:3000/damnlist`, {
         params: { page },
         headers: {
-          Authorization: "Bearer " + sessionToken
-        }}
-      )
+          Authorization: "Bearer " + sessionToken,
+        },
+      })
       .then((response) => {
         console.log("list: ", response.data);
 
@@ -83,6 +83,10 @@ const DamnlistBoard = () => {
     const time1 = timecv[0] + " " + timecv2[0] + ":" + timecv2[1];
     return time1;
   };
+
+  if (damnData === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="boardlist">

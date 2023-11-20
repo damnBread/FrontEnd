@@ -75,3 +75,247 @@
     margin-left: 1500px;
     margin-top: 50px;
   }
+
+  .items-align-rank {
+    display: flex;
+    justify-content: center;
+    margin-left: 500px;
+    margin-right: 500px;
+}
+
+.default-filter-rank {
+    margin-top: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.filter-rank {
+    margin-top: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.filter1-rank {
+    margin-top: 50px;
+    margin-left: 20px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.filter-select-rank  {
+    margin-top: 50px;
+    margin-left: 500px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.select-icon-rank {
+    margin-bottom: 3px;
+}
+
+.custom-modal-box-whole-rank {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 500px;
+    margin-right: 500px;
+  }
+
+.custom-modal-content-rank {
+    display: flex;
+    border: 1px solid #E7E6E6;
+    width: 1000%; /* Adjust the width as per your requirement */
+    max-width: 1000px; /* Optional: Add a max-width to limit the modal's width */
+    height: 90%;
+}
+
+.jobicon-margin {
+  margin-top: 20px;
+}
+
+.custom-modal-content-rank1 {
+  border: 1px solid #E7E6E6;
+  width: 1000%; /* Adjust the width as per your requirement */
+  max-width: 1000px; /* Optional: Add a max-width to limit the modal's width */
+  height: 100%;
+  max-height: 332px;
+  margin-top: 20px;
+  margin-left: 500px;
+  margin-right: 500px;
+}
+
+.custom-modal-box-rank {
+  width: 300px;
+  border: 1px solid #E7E6E6;
+  padding: 10px;
+}
+
+.custom-modal-box1-rank {
+    display: inline-block;
+    width: 33%;
+    box-sizing: border-box;
+    border: 1px solid #E7E6E6;
+    padding: 10px;
+  }
+
+.select-rank {
+  background-color: #bf5f491f;
+  border: 2px solid #bf5f4977;
+}
+
+.items-container-rank {
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 300%; 
+    max-width: 1280px;
+}
+
+.city-items-container-rank {
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 330%; 
+    max-width: 1000px;
+}
+
+.dong-items-container-rank {
+  margin-left: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 600%; 
+  max-width: 1000px;
+  margin-right: 10px;
+}
+
+.scrollable-container-rank {
+  max-height: 300px;
+  max-width: 1000px;
+  overflow-y: auto;
+}
+
+  .addedWorkArea-style-rank {
+    background-color: #bf5f491f;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+.added-work-areas-rank {
+  width: 1000px;
+  margin-left: 500px;
+  margin-right: 500px;
+}
+
+.work-icon1 {
+  display: flex;
+  flex-direction: row;
+}
+
+.close-rank {
+  right: 10px;
+  border: none;
+  color: #ce9a75;
+  background-color: #bf5f4900;
+}
+
+.left-align-footer-rank {
+  display: flex;
+  flex-direction: row; /* Arrange items horizontally */
+  flex-wrap: nowrap; /* Wrap items to the next row if they overflow */
+  justify-content: flex-start;
+}
+
+.left-align-footer-rank > div{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.label-style {
+  margin-top: 30px;
+  margin-left: 40px;
+  position: relative;
+}
+
+.label-style1 {
+  margin-top: 60px;
+  margin-left: 40px;
+  position: relative;
+}
+
+.label-style2 {
+  margin-top: 60px;
+  margin-left: 105px;
+  position: relative;
+}
+
+.gender-style {
+  margin-left: 20px;
+  border-radius: 12px;
+  color:#b5b4b4;
+  background-color: white;
+  border: 2px solid #D2D2D2;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.gender-style1 {
+  margin-left: 100px;
+  border-radius: 12px;
+  color:#b5b4b4;
+  background-color: white;
+  border: 2px solid #D2D2D2;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.gender-select-style {
+  background-color: #bf5f491f;
+  border: 2px solid #bf5f4977;
+  color: #bf5f49;
+}
+
+.margin-bottom-conditions {
+  margin-bottom: 30px;
+}
+
+.inputAge-style {
+  border-radius: 15px;
+  margin-left: 30px;
+  background-color: white;
+  border: 3px solid #D2D2D2;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.inputAge-btn-style {
+  border-radius: 15px;
+  margin-left: 10px;
+  color:#b5b4b4;
+  background-color: white;
+  border: 2px solid #D2D2D2;
+}
+
+.inputAge-label-style {
+  color:#b5b4b4;
+  background-color: white;
+}

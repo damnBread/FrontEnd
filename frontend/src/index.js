@@ -61,10 +61,12 @@ createRoot(document.getElementById("root")).render(
       <Route exact path="/damnstory" component={damnstory} />
       <Route exact path="/damnstory/new" component={damnstorywrite} />
       <Route exact path="/damnstory/:storyid" component={DamnstoryDetail} />
+
       <Route exact path="/damnlistBoard" component={damnlistBoard} />
       <Route exact path="/damnlist" component={damnlist} />
       <Route exact path="/damnlist/new" component={damnlistwrite} />
       <Route exact path="/damnlist/:postid" component={damnlistDetail} />
+      {/* <Route exact path="/damnlist/:postid/comments" component={damnlistComment} /> */}
       <Route exact path="/damnprofile" component={damnprofile}/>
     </Switch>
   </BrowserRouter>
