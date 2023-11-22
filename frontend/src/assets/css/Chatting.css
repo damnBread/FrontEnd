@@ -54,14 +54,15 @@
 }
 
 .chatting-message {
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column; 
+    gap: 20px 0px;
 }
 
 .left-message {
     background-color: #D9AA89;
     border: 1px solid #D9AA89;
+    margin-top: 5px;
     border-radius: 15px;
     padding-left: 15px;
     padding-right: 15px;
@@ -73,7 +74,7 @@
     max-width: 300px;
     height: auto;
     flex-direction: column;
-    display: inline-flex;
+    align-items: flex-start;
     word-break: break-all;
 }
 
@@ -93,12 +94,37 @@
     max-width: 300px;
     height: auto;
     flex-direction: column;
-    display: inline-flex;
+    align-items: flex-end;
     justify-content: flex-end;
     word-break: break-all;
 }
 
 .chatting-date-style {
+    margin-top: 5px;
     font-size: 14px;
+}
+
+.chatting-date-left {
     margin-left: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    word-break: break-all;
+}
+
+.chatting-date-right {
+    float: right;
+    margin-right: 10px;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    word-break: break-all;
+}
+
+.chatting-read-style {
+    margin-left: 15px;
+    flex-direction: column;
+    word-break: break-all;
+    font-size: 11px;
+    color: red;
+    margin-top: -5px;
 }

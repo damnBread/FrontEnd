@@ -19,7 +19,7 @@ function Chatting() {
     const handleCloseChat = () => {setShowChat(false)};
 
     const [showChatRoom, setShowChatRoom] = useState(false);
-    const handleShowChatRoom = () => {setShowChatRoom(true); getChatMessage();};
+    const handleShowChatRoom = () => {setShowChatRoom(true);};
     const handleCloseChatRoom = () => {setShowChatRoom(false)};
 
     const [roomId, setRoomId] = useState(0);
@@ -50,8 +50,6 @@ function Chatting() {
         receiver: 0,
         sender: 0
     }])
-
-    let [date, setDate] = useState("");
 
     const connect = () => {
         client.current = new StompJs.Client({
@@ -168,11 +166,11 @@ function Chatting() {
       }
 
 
-      function getChatMessage() {
+      function getChatMessage(room_id) {
         axios
         .get(`http://localhost:3000/chatlist/enter`,{
           params: {
-            roomId: roomId
+            roomId: room_id
           }
         } ,{
           headers: {
@@ -182,16 +180,19 @@ function Chatting() {
         .then((response) => {
             console.log("message: ", response.data);
             const _inputData = response.data.map((mdata) => ({
-                chatId: mdata.chatId,
+                chatId: mdata.chat,
                 chatRoomId: mdata.chatRoomId,
                 content: mdata.content,
-                date: mdata.date,
+                date: dateToSimpleDate(mdata.date),
                 read: mdata.read,
                 receiver: mdata.receiver,
                 sender: mdata.sender
             }))
 
+            _inputData.sort((a, b) => a.date.localeCompare(b.date));
+
             setMessageData(_inputData);
+          
         })
         .catch((error) => {
             console.log("message error: ", error);
@@ -199,24 +200,34 @@ function Chatting() {
       }
 
       function getMessage(receiver) {
-        // console.log("usreID:: ", (userId));
-        // console.log("message Re:: ", (receiver));
         if (receiver.toString() === userId) {
           return true;
         } else {
           return false;
         }
-
       }
 
-      //  function dateToSimpleDate(date) {
-      //     console.log(typeof(date));
-      //     const simpleDate = (date||'').split("T");
-      //     const simple1 = simpleDate[0];
-      //     const simple2 = simpleDate[1].split(".")[0];
-      //     const result = simple1 + " " + simple2;
-      //     return result;
-      // }
+      function getMessageRead(receiver, read) {
+        if(read === false && receiver.toString() !== userId) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+       function dateToSimpleDate(date) {
+          const simpleDate = (date||'').split("T");
+          const simple1 = simpleDate[0];                // 2023-11-07
+          const simple2 = simpleDate[1].split(".")[0];  // 05:34:10
+          const simple3 = simple2.split(":")[0] + ":" + simple2.split(":")[1];
+          const result = simple1 + " " + simple3; // 2023-11-07 05:34
+          return result;
+      }
+
+      function setSortDate(date) {
+          console.log("sort date:: ", date)
+          return date;
+      }
 
 
     return (
@@ -244,8 +255,9 @@ function Chatting() {
                                         {chatData.map(rowData => (
                                         <div key={rowData.id}
                                             onClick={() => {
-                                              handleShowChatRoom();
                                               selectRoomId(rowData.id, rowData.user_publisher_id, rowData.user_appliance_id);
+                                              handleShowChatRoom();
+                                              getChatMessage(rowData.id);
                                             }}
                                             className="chatting-content-box">
                                               <div style={{marginLeft: "25px", marginTop: "20px"}}>
@@ -284,8 +296,12 @@ function Chatting() {
                                                           <b>{rowData.content}</b>
                                                           
                                                       </div>
-                                                      <span className="chatting-date-style">
+                                                      <span className={`chatting-date-style ${getMessage(rowData.receiver) === true ? "chatting-date-left" : "chatting-date-right"}`}>
                                                           {(rowData.date)}
+
+                                                          <span className={`${getMessage(rowData.receiver) === true ? "chatting-read-style" : ""}`} >
+                                                            {getMessageRead(rowData.receiver, rowData.read) === false ? "" : 1}
+                                                          </span>
                                                           
                                                         </span>
 

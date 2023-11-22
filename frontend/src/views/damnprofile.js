@@ -875,8 +875,8 @@ useEffect(() => {
                     damnPublisher: rowData.publisher,
                     damnTitle: rowData.title,
                     damnCreated: rowData.createdDate,
-                    damnStart: rowData.workStart,
-                    damnEnd: rowData.workEnd,
+                    damnStart: timeConversion(rowData.workStart),
+                    damnEnd: timeConversion(rowData.workEnd),
                     damnBranch: rowData.branchName,
                     damnPay: rowData.hourPay
                   })
@@ -917,8 +917,7 @@ useEffect(() => {
                     damnPublisher: rowData.publisher,
                     damnTitle: rowData.title,
                     damnCreated: rowData.createdDate,
-                    damnStart: rowData.workStart,
-                    damnEnd: rowData.workEnd,
+                    damnStart: timeConversion(rowData.workStart),
                     damnBranch: rowData.branchName,
                     damnPay: rowData.hourPay,
                     damnMatchedUser: rowData.matched_user
@@ -948,6 +947,7 @@ useEffect(() => {
                 const timecv1 = timecv[1].split('.');
                 const timecv2 = timecv1[0].split(":");
                 const time1 = timecv[0] + " " + timecv2[0] + ":" + timecv2[1];
+                console.log("tiem1:: ", time1)
                 return time1;
               }
 
@@ -1115,7 +1115,7 @@ useEffect(() => {
             //리뷰 남기기 test 필요
             function profileReview() {
               console.log("REVIEW: ", matchUser)
-              if (matchUser.length === 0) {
+              if (matchUser === null) {
                 Swal.fire({
                   icon: "warning",
                   title: "매칭된 지원자 없음",
@@ -1762,8 +1762,8 @@ useEffect(() => {
                                         </div>
 
                                         <div>
-                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
-                                          {(rowData.damnStart)} ~ {(rowData.damnEnd)}
+                                          <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무일시</label>
+                                          {(rowData.damnStart)}
                                         </div>
                                           <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
                                             {rowData.damnBranch}
@@ -1797,8 +1797,8 @@ useEffect(() => {
                                           </div>
 
                                           <div onClick={() => onClickDamnList(rowData.damnpostId)}>
-                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무날짜</label>
-                                            {(rowData.damnStart)} ~ {(rowData.damnEnd)}
+                                            <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px"}}>근무일시</label>
+                                            {(rowData.damnStart)}
                                           </div>
                                             <label className="content-label-style-profile" style={{zIndex: 1, marginTop: "15px", marginLeft: "40px", fontSize: "15px", marginRight: "105px"}}>근무지</label>
                                               {rowData.damnBranch}
