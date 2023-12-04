@@ -44,7 +44,6 @@ function Chatting() {
 
     const [roomId, setRoomId] = useState(0);
 
-
     const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
     const [chat, setChat] = useState(''); // 입력되는 채팅
     const client = useRef({});
@@ -153,13 +152,13 @@ function Chatting() {
                     }).then((res) => {
                     });
                 } else {
-                    console.log("rere: ", response.data);
+                    console.log("rere1234: ", response.data);
                     const _inputData = response.data.map((setData) => ({
                         id: setData.id,
                         user_appliance_id: setData.user_appliance_id,
                         user_publisher_id: setData.user_publisher_id
                       }))
-          
+                      
                       setChatData(_inputData);
                 }
             })
@@ -315,12 +314,17 @@ function Chatting() {
                                                           
                                                       </div>
                                                       <span className={`chatting-date-style ${getMessage(rowData.receiver) === true ? "chatting-date-left" : "chatting-date-right"}`}>
+                                                          {getMessage(rowData.receiver) === false ? (
+                                                            <span className={`${getMessageRead(rowData.read) === false ? "chatting-read-style1" : "chatting-read-style"}`}>
+                                                              {getMessageRead(rowData.read) === false ? 1 : ""}
+                                                            </span>
+                                                          ) : null}
                                                           {(rowData.date)}
-
-                                                          <span className={`${getMessage(rowData.receiver) === true ? "chatting-read-style" : ""}`} >
-                                                            {getMessageRead(rowData.read) === false ? 1 : ""}
-                                                          </span>
-                                                          
+                                                          {getMessage(rowData.receiver) === true ? (
+                                                            <span className={`${getMessageRead(rowData.read) === false ? "chatting-read-style" : "chatting-read-style1"}`}>
+                                                              {getMessageRead(rowData.read) === false ? 1 : ""}
+                                                            </span>
+                                                          ) : null}
                                                         </span>
 
                                                         
