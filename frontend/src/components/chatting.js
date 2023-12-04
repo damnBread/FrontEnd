@@ -67,6 +67,10 @@ function Chatting() {
 
       const publish = (chat) => {
         if (!client.current.connected) return;
+
+        console.log("chat:: ", chat)
+        console.log("sender:: ", publisher_id);
+        console.log("receiver:: ", appliance_id)
     
         client.current.publish({
           destination: '/pub/chat',
@@ -99,6 +103,7 @@ function Chatting() {
     
       const handleSubmit = (event, chat) => { // 보내기 버튼 눌렀을 때 publish
         event.preventDefault();
+        console.log("chat:: ", chat)
     
         publish(chat);
       };

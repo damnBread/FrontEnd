@@ -203,8 +203,11 @@ const DamnrankBoard = () => {
               }
             })
             .then((response) => {
-                // console.log(response.data);
-                console.log("디테일 완료");
+                console.log(response.data);
+                console.log("디테일 완료"); 
+                setAppliance_id(response.data.userId);
+                setPublisher_id(userId);
+                console.log("userid:: ", response.data.userId, " userId;; ", userId)
             })
             .catch((error)=>{
               if (error.response) {
@@ -302,19 +305,18 @@ const DamnrankBoard = () => {
            console.log("DD: ", selectedDamn);
         }
 
+        const [appliance_id, setAppliance_id] = useState(0);  // 지원자
+
+        const [publisher_id, setPublisher_id] = useState(0);  // 게시자
+      
+        const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
+        let [chat, setChat] = useState('');         // 입력되는 채팅
+        const client = useRef({});
 
         // 채팅
         function chatting() {
           setShowChat(true);
         }
-
-        const [appliance_id, setAppliance_id] = useState(0);
-
-        const [publisher_id, setPublisher_id] = useState(0);
-      
-        const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
-        let [chat, setChat] = useState('');         // 입력되는 채팅
-        const client = useRef({});
       
         const connect = () => {
           client.current = new StompJs.Client({
@@ -332,6 +334,8 @@ const DamnrankBoard = () => {
       
         const publish = (chat) => {
           if (!client.current.connected) return;
+
+          console.log("Chat:: ", chat, " sender:: ", appliance_id, " receiver:: ", publisher_id)
       
           client.current.publish({
             destination: '/pub/chat',
@@ -370,9 +374,6 @@ const DamnrankBoard = () => {
           publish(chat);  // 채팅 보내기 누르면 실행
       
           console.log("chta:: ", chat);
-      
-          console.log("app:: ", appliance_id);
-          console.log("pub:: ", publisher_id);
 
         };
         
