@@ -225,7 +225,20 @@ const DamnlistDetail = () => {
   const handleSubmit = (event) => { // 보내기 버튼 눌렀을 때 publish
     event.preventDefault();
 
-    publish(chat);  // 채팅 보내기 누르면 실행
+    if (chat === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "경고",
+        text: "메세지를 입력해주세요.",
+        showCancelButton: false,
+        confirmButtonText: "확인",
+        width: 800,
+        height: 100,
+    }).then((res) => {
+    });
+    } else {
+      publish(chat);  // 채팅 보내기 누르면 실행
+    }
 
     console.log("chta:: ", chat);
 

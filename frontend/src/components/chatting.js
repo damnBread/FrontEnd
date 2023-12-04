@@ -190,7 +190,7 @@ function Chatting() {
             }))
 
             _inputData.sort((a, b) => a.date.localeCompare(b.date));
-
+          
             setMessageData(_inputData);
           
         })
@@ -207,8 +207,9 @@ function Chatting() {
         }
       }
 
-      function getMessageRead(receiver, read) {
-        if(read === false && receiver.toString() !== userId) {
+      function getMessageRead(read) {
+        console.log("READ:: ", read)
+        if(read === false) {
           return false;
         } else {
           return true;
@@ -220,13 +221,8 @@ function Chatting() {
           const simple1 = simpleDate[0];                // 2023-11-07
           const simple2 = simpleDate[1].split(".")[0];  // 05:34:10
           const simple3 = simple2.split(":")[0] + ":" + simple2.split(":")[1];
-          const result = simple1 + " " + simple3; // 2023-11-07 05:34
+          const result = simple1 + " " + simple2; // 2023-11-07 05:34:12
           return result;
-      }
-
-      function setSortDate(date) {
-          console.log("sort date:: ", date)
-          return date;
       }
 
 
@@ -300,7 +296,7 @@ function Chatting() {
                                                           {(rowData.date)}
 
                                                           <span className={`${getMessage(rowData.receiver) === true ? "chatting-read-style" : ""}`} >
-                                                            {getMessageRead(rowData.receiver, rowData.read) === false ? "" : 1}
+                                                            {getMessageRead(rowData.read) === false ? 1 : ""}
                                                           </span>
                                                           
                                                         </span>
