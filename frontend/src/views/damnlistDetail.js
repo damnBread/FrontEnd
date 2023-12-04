@@ -181,9 +181,9 @@ const DamnlistDetail = () => {
         console.log('success');  // 얘는 맨 처음에만 연결
         subscribe();  // 구독 ..
       },
-      // connectHeaders: { // 이 부분 새로 추가
-      //   Authorization: "Bearer " + sessionToken,
-      // },
+      connectHeaders: { // 이 부분 새로 추가
+        Authorization: "Bearer " + sessionToken,
+      },
     });
     client.current.activate();
   };

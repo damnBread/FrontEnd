@@ -44,16 +44,21 @@ const Damnstory = () => {
     axios
       .get("http://localhost:3000/damnstory", {
         params: {
-          page: 1, // Change this value to the appropriate page number
+          page: 1,
         },
-      }) // Replace with the actual endpoint for fetching posts
+      })
       .then((response) => {
         console.log(response);
         if (response.status === 204) {
           console.log("S: ", posts);
         }
-        setPosts(response.data); // Assuming the response contains an array of posts
-        console.log(setPosts);
+        // Check if response.data is not empty before updating state
+        if (response.data && response.data.length > 0) {
+          setPosts(response.data);
+          console.log("Posts updated:", response.data);
+        } else {
+          console.log("No data found in the response.");
+        }
       })
       .catch((error) => {
         if (error.response) {
@@ -81,6 +86,10 @@ const Damnstory = () => {
   const incrementClickCount = () => {
     setClickCount((prevClickCount) => prevClickCount + 1);
   };
+
+  if (posts === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="damnstorywhole">

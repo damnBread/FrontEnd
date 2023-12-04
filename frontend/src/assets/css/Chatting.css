@@ -26,6 +26,7 @@
     background-color: #F8F0EA;
     border: 4px solid #D9AA89;
     height: 390px;
+    overflow-y: auto;
 }
 
 .chatting-label-style {

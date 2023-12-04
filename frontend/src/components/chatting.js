@@ -15,7 +15,27 @@ import send from "../assets/img/send.png"
 function Chatting() {
 
     const [showChat, setShowChat] = useState(false);
-    const handleShowChat = () =>{setShowChat(true)};
+    const sessionToken = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem("idNum");
+
+    const handleShowChat = () =>{
+      if (sessionToken === null) {
+        setShowChat(false);
+        Swal.fire({
+          icon: "warning",
+          title: "경고",
+          text: "로그인이 필요한 서비스입니다. 로그인해주세요.",
+          showCancelButton: false,
+          confirmButtonText: "확인",
+          width: 800,
+          height: 100,
+      }).then((res) => {
+          document.location.href = "/Login";  //여기부터
+      });
+      } else {
+        setShowChat(true);
+      }
+    };
     const handleCloseChat = () => {setShowChat(false)};
 
     const [showChatRoom, setShowChatRoom] = useState(false);
@@ -31,9 +51,6 @@ function Chatting() {
 
     const [appliance_id, setAppliance_id] = useState(0);  // 지원자 id
     const [publisher_id, setPublisher_id] = useState(0);  // 의뢰인 id
-
-    const sessionToken = sessionStorage.getItem('token');
-    const userId = sessionStorage.getItem("idNum");
 
     const [chatData, setChatData] = useState([{         // 채팅방 리스트
             id: 0,
@@ -58,9 +75,9 @@ function Chatting() {
             console.log('success');
             subscribe();
           },
-        //   connectHeaders: { // 이 부분 새로 추가
-        //     Authorization: "Bearer " + sessionToken,
-        //   },
+          connectHeaders: { // 이 부분 새로 추가
+            Authorization: "Bearer " + sessionToken,
+          },
         });
         client.current.activate();
       };
@@ -101,7 +118,7 @@ function Chatting() {
         setChat(event.target.value);
       };
     
-      const handleSubmit = (event, chat) => { // 보내기 버튼 눌렀을 때 publish
+      const handleSubmit = (event) => { // 보내기 버튼 눌렀을 때 publish
         event.preventDefault();
         console.log("chat:: ", chat)
     
@@ -242,7 +259,7 @@ function Chatting() {
                 {(
                     <div className="custom-chatting-content">
                         <Modal.Body>
-                            <div>
+                            <div style={{overflowY: "auto", marginRight: "10px"}}>
                                 <label className="chatting-label-style"><b>메세지</b></label>
                                 
                                 <label className="chatting-label-style1" onClick={handleCloseChat}><b>닫기</b></label>
@@ -251,8 +268,8 @@ function Chatting() {
 
                                 <div>
                                 
-                                {(
-                                        <div style={{overflowY: "auto", marginRight: "10px"}}>
+                                {(// style={{overflowY: "auto", marginRight: "10px"}}
+                                        <div>
                                         {chatData.map(rowData => (
                                         <div key={rowData.id}
                                             onClick={() => {
