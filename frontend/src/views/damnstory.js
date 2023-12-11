@@ -49,8 +49,13 @@ const Damnstory = () => {
         if (response.status === 204) {
           console.log("S: ", posts);
         }
-        setPosts(response.data);
-        console.log("0", setPosts);
+        // Check if response.data is not empty before updating state
+        if (response.data && response.data.length > 0) {
+          setPosts(response.data);
+          console.log("Posts updated:", response.data);
+        } else {
+          console.log("No data found in the response.");
+        }
       })
       .catch((error) => {
         if (error.response) {
