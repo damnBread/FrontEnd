@@ -229,7 +229,6 @@ function Chatting() {
       }
 
       function getMessageRead(read) {
-        console.log("READ:: ", read)
         if(read === false) {
           return false;
         } else {

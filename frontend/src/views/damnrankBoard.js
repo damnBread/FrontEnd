@@ -27,6 +27,8 @@ const DamnrankBoard = () => {
   
   const [selectedDamn, setSelectedDamn] = useState(null);
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
   const [inputData, setInputData] = useState([{
     userid: 0,
     id: "",
@@ -52,6 +54,24 @@ const DamnrankBoard = () => {
     damnBranch: "",
     damnPay: ""
   }])
+
+  const [chatData, setChatData] = useState([{         // 채팅방 리스트
+    id: 0,
+    user_appliance_id: 0,
+    user_publisher_id: 0
+}])
+
+  const [messageData, setMessageData] = useState([{
+    chatId: 0,
+    chatRoomId: 0,
+    content: "",
+    date: "",
+    read: false,
+    receiver: 0,
+    sender: 0
+}])
+
+const [chattingRoom, setChattingRoom] = useState(0);
 
   const [show, setShow] = useState(false);   //모달창
 
@@ -195,33 +215,75 @@ const DamnrankBoard = () => {
       if (!show) {
         const selectedData = inputData.find((item) => item.id === userid);
         setSelectedItem(selectedData);
-        setShow(true)
-        axios
-            .get(`http://localhost:3000/damnrank/${userid}/detail`, {
-              headers: {
-                Authorization: "Bearer " + sessionToken
-              }
-            })
-            .then((response) => {
-                console.log(response.data);
-                console.log("디테일 완료"); 
-                setAppliance_id(response.data.userId);
-                setPublisher_id(userId);
-                console.log("userid:: ", response.data.userId, " userId;; ", userId)
-            })
-            .catch((error)=>{
-              if (error.response) {
-                console.log("1", error.response.data);
-                console.log("2", error.response.status);
-                console.log("3", error.response.headers);
-              } else if (error.request) {
-                console.log("4", error.request);
-              } else {
-                console.log('Error', error.message);
-              }
-              console.log("5", error.config);
-            })
-        }
+
+        if (selectedItem.userid === userId) {
+          setIsButtonDisabled(false);
+        } else {
+          setIsButtonDisabled(true);
+          setShow(true)
+          axios
+              .get(`http://localhost:3000/damnrank/${userid}/detail`, {
+                headers: {
+                  Authorization: "Bearer " + sessionToken
+                }
+              })
+              .then((response) => {
+                  console.log("SDS:: ",response.data);
+                  console.log("디테일 완료"); 
+                  setAppliance_id(response.data.userId);
+                  setPublisher_id(userId);
+                  console.log("상대방:: ", response.data.userId, " 나;; ", userId)
+
+                
+                    axios
+                        .get(`http://localhost:3000/chatlist`, {
+                          headers: {
+                            Authorization: "Bearer " + sessionToken
+                          }
+                        })
+                        .then((response) => {
+                            console.log("rere rank: ", response.data);
+                            const _inputData = response.data.map((setData) => ({
+                                id: setData.id,
+                                user_appliance_id: setData.user_appliance_id,
+                                user_publisher_id: setData.user_publisher_id
+                              }))
+                          
+                              setChatData(_inputData);
+
+                              console.log("Publisher:: ", typeof(publisher_id), " Appliance:: ", typeof(appliance_id))
+
+                              const matchingChat = chatData.find(item => item.user_publisher_id === parseInt(publisher_id, 10) && item.user_appliance_id === appliance_id);
+
+                                if (matchingChat) {
+                                    console.log('Found matching chat:', matchingChat);
+                                    console.log("matching data:: ", matchingChat.id);
+                                    setChattingRoom(matchingChat.id);
+                                  } else {
+                                    // No matching chat found
+                                    console.log('No matching chat found');
+                                  }
+                              
+                            
+                        })
+                        .catch((error) => {
+                            console.log("er: ", error);
+                        })
+                  })
+              .catch((error)=>{
+                if (error.response) {
+                  console.log("1", error.response.data);
+                  console.log("2", error.response.status);
+                  console.log("3", error.response.headers);
+                } else if (error.request) {
+                  console.log("4", error.request);
+                } else {
+                  console.log('Error', error.message);
+                }
+                console.log("5", error.config);
+              })
+          }
+      }
   };     //모달창 켜기
 
   function replaceWorkJob(workJob) {
@@ -316,6 +378,7 @@ const DamnrankBoard = () => {
         // 채팅
         function chatting() {
           setShowChat(true);
+          getChatMessage(chattingRoom);
         }
       
         const connect = () => {
@@ -372,8 +435,6 @@ const DamnrankBoard = () => {
           event.preventDefault();
       
           publish(chat);  // 채팅 보내기 누르면 실행
-      
-          console.log("chta:: ", chat);
 
         };
         
@@ -383,6 +444,63 @@ const DamnrankBoard = () => {
           return () => disconnect();
         }, []);
       
+        function getChatMessage(room_id) {
+          axios
+          .get(`http://localhost:3000/chatlist/enter`,{
+            params: {
+              roomId: room_id
+            }
+          } ,{
+            headers: {
+              Authorization: "Bearer " + sessionToken
+            }
+          })
+          .then((response) => {
+              console.log("message: ", response.data);
+              const _inputData = response.data.map((mdata) => ({
+                  chatId: mdata.chat,
+                  chatRoomId: mdata.chatRoomId,
+                  content: mdata.content,
+                  date: dateToSimpleDate(mdata.date),
+                  read: mdata.read,
+                  receiver: mdata.receiver,
+                  sender: mdata.sender
+              }))
+  
+              _inputData.sort((a, b) => a.date.localeCompare(b.date));
+            
+              setMessageData(_inputData);
+            
+          })
+          .catch((error) => {
+              console.log("message error: ", error);
+          })
+        }
+  
+        function getMessage(receiver) {
+          if (receiver.toString() === userId) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+  
+        function getMessageRead(read) {
+          if(read === false) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+  
+         function dateToSimpleDate(date) {
+            const simpleDate = (date||'').split("T");
+            const simple1 = simpleDate[0];                // 2023-11-07
+            const simple2 = simpleDate[1].split(".")[0];  // 05:34:10
+            const simple3 = simple2.split(":")[0] + ":" + simple2.split(":")[1];
+            const result = simple1 + " " + simple2; // 2023-11-07 05:34:12
+            return result;
+        }
       
 
         
@@ -496,10 +614,10 @@ const DamnrankBoard = () => {
                                         </div>
 
                                         <div className="footer-button">
-                                          <button className="footer-style footer-button-chatting" varient="primary" onClick={() => chatting()}>
+                                          <button className="footer-style footer-button-chatting" disabled={isButtonDisabled ? false : true} varient="primary" onClick={() => chatting()}>
                                               채팅하기
                                           </button>
-                                          <button className="footer-style footer-button-share" varient="primary" onClick={() => requestDamnbread()}>
+                                          <button className="footer-style footer-button-share" disabled={isButtonDisabled ? false : true} varient="primary" onClick={() => requestDamnbread()}>
                                               공고 전달하기
                                           </button>
                                         </div>
@@ -526,10 +644,38 @@ const DamnrankBoard = () => {
 
 
                                           {/* 채팅 메세지 */}
-                                          <div className="chatting-message">
+                                           {(
+                                                <div className="chatting-message">
+                                                {messageData.map(rowData => (
+                                                  <div key={rowData.chatId}>
+                                                      <div className={`message-box ${getMessage(rowData.receiver) === true ? "left-message" : "right-message"}`}>
+                                                          <b>{rowData.content}</b>
+                                                          
+                                                      </div>
+                                                      <span className={`chatting-date-style ${getMessage(rowData.receiver) === true ? "chatting-date-left" : "chatting-date-right"}`}>
+                                                          {getMessage(rowData.receiver) === false ? (
+                                                            <span className={`${getMessageRead(rowData.read) === false ? "chatting-read-style1" : "chatting-read-style"}`}>
+                                                              {getMessageRead(rowData.read) === false ? 1 : ""}
+                                                            </span>
+                                                          ) : null}
+                                                          {(rowData.date)}
+                                                          {getMessage(rowData.receiver) === true ? (
+                                                            <span className={`${getMessageRead(rowData.read) === false ? "chatting-read-style" : "chatting-read-style1"}`}>
+                                                              {getMessageRead(rowData.read) === false ? 1 : ""}
+                                                            </span>
+                                                          ) : null}
+                                                        </span>
 
+                                                        
+                                                    </div>
+                                                    
+                                                    ))}
+                                                </div>
 
-                                          </div>
+                                                
+                                                
+                                          )}
+
 
 
                                           {/* 채팅 메세지 textField */}
