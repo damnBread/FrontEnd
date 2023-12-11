@@ -160,6 +160,13 @@
   background-color: #bf5f4900;
 }
 
+.close-rank-gender {
+  right: 10px;
+  border: none;
+  color: #ce9a753f;
+  background-color: #bf5f4900;
+}
+
 .left-align-footer-rank {
   display: flex;
   flex-direction: row; /* Arrange items horizontally */

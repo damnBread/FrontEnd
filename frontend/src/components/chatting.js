@@ -15,15 +15,34 @@ import send from "../assets/img/send.png"
 function Chatting() {
 
     const [showChat, setShowChat] = useState(false);
-    const handleShowChat = () =>{setShowChat(true)};
+    const sessionToken = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem("idNum");
+
+    const handleShowChat = () =>{
+      if (sessionToken === null) {
+        setShowChat(false);
+        Swal.fire({
+          icon: "warning",
+          title: "경고",
+          text: "로그인이 필요한 서비스입니다. 로그인해주세요.",
+          showCancelButton: false,
+          confirmButtonText: "확인",
+          width: 800,
+          height: 100,
+      }).then((res) => {
+          document.location.href = "/Login";  //여기부터
+      });
+      } else {
+        setShowChat(true);
+      }
+    };
     const handleCloseChat = () => {setShowChat(false)};
 
     const [showChatRoom, setShowChatRoom] = useState(false);
-    const handleShowChatRoom = () => {setShowChatRoom(true); getChatMessage();};
+    const handleShowChatRoom = () => {setShowChatRoom(true);};
     const handleCloseChatRoom = () => {setShowChatRoom(false)};
 
     const [roomId, setRoomId] = useState(0);
-
 
     const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
     const [chat, setChat] = useState(''); // 입력되는 채팅
@@ -31,9 +50,6 @@ function Chatting() {
 
     const [appliance_id, setAppliance_id] = useState(0);  // 지원자 id
     const [publisher_id, setPublisher_id] = useState(0);  // 의뢰인 id
-
-    const sessionToken = sessionStorage.getItem('token');
-    const userId = sessionStorage.getItem("idNum");
 
     const [chatData, setChatData] = useState([{         // 채팅방 리스트
             id: 0,
@@ -51,8 +67,6 @@ function Chatting() {
         sender: 0
     }])
 
-    let [date, setDate] = useState("");
-
     const connect = () => {
         client.current = new StompJs.Client({
           brokerURL: 'ws://localhost:8080/ws',
@@ -60,15 +74,19 @@ function Chatting() {
             console.log('success');
             subscribe();
           },
-        //   connectHeaders: { // 이 부분 새로 추가
-        //     Authorization: "Bearer " + sessionToken,
-        //   },
+          connectHeaders: { // 이 부분 새로 추가
+            Authorization: "Bearer " + sessionToken,
+          },
         });
         client.current.activate();
       };
 
       const publish = (chat) => {
         if (!client.current.connected) return;
+
+        console.log("chat:: ", chat)
+        console.log("sender:: ", publisher_id);
+        console.log("receiver:: ", appliance_id)
     
         client.current.publish({
           destination: '/pub/chat',
@@ -99,8 +117,9 @@ function Chatting() {
         setChat(event.target.value);
       };
     
-      const handleSubmit = (event, chat) => { // 보내기 버튼 눌렀을 때 publish
+      const handleSubmit = (event) => { // 보내기 버튼 눌렀을 때 publish
         event.preventDefault();
+        console.log("chat:: ", chat)
     
         publish(chat);
       };
@@ -133,13 +152,13 @@ function Chatting() {
                     }).then((res) => {
                     });
                 } else {
-                    console.log("rere: ", response.data);
+                    console.log("rere1234: ", response.data);
                     const _inputData = response.data.map((setData) => ({
                         id: setData.id,
                         user_appliance_id: setData.user_appliance_id,
                         user_publisher_id: setData.user_publisher_id
                       }))
-          
+                      
                       setChatData(_inputData);
                 }
             })
@@ -168,11 +187,11 @@ function Chatting() {
       }
 
 
-      function getChatMessage() {
+      function getChatMessage(room_id) {
         axios
         .get(`http://localhost:3000/chatlist/enter`,{
           params: {
-            roomId: roomId
+            roomId: room_id
           }
         } ,{
           headers: {
@@ -182,16 +201,19 @@ function Chatting() {
         .then((response) => {
             console.log("message: ", response.data);
             const _inputData = response.data.map((mdata) => ({
-                chatId: mdata.chatId,
+                chatId: mdata.chat,
                 chatRoomId: mdata.chatRoomId,
                 content: mdata.content,
-                date: mdata.date,
+                date: dateToSimpleDate(mdata.date),
                 read: mdata.read,
                 receiver: mdata.receiver,
                 sender: mdata.sender
             }))
 
+            _inputData.sort((a, b) => a.date.localeCompare(b.date));
+          
             setMessageData(_inputData);
+          
         })
         .catch((error) => {
             console.log("message error: ", error);
@@ -199,24 +221,29 @@ function Chatting() {
       }
 
       function getMessage(receiver) {
-        // console.log("usreID:: ", (userId));
-        // console.log("message Re:: ", (receiver));
         if (receiver.toString() === userId) {
           return true;
         } else {
           return false;
         }
-
       }
 
-      //  function dateToSimpleDate(date) {
-      //     console.log(typeof(date));
-      //     const simpleDate = (date||'').split("T");
-      //     const simple1 = simpleDate[0];
-      //     const simple2 = simpleDate[1].split(".")[0];
-      //     const result = simple1 + " " + simple2;
-      //     return result;
-      // }
+      function getMessageRead(read) {
+        if(read === false) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+       function dateToSimpleDate(date) {
+          const simpleDate = (date||'').split("T");
+          const simple1 = simpleDate[0];                // 2023-11-07
+          const simple2 = simpleDate[1].split(".")[0];  // 05:34:10
+          const simple3 = simple2.split(":")[0] + ":" + simple2.split(":")[1];
+          const result = simple1 + " " + simple2; // 2023-11-07 05:34:12
+          return result;
+      }
 
 
     return (
@@ -230,7 +257,7 @@ function Chatting() {
                 {(
                     <div className="custom-chatting-content">
                         <Modal.Body>
-                            <div>
+                            <div style={{overflowY: "auto", marginRight: "10px"}}>
                                 <label className="chatting-label-style"><b>메세지</b></label>
                                 
                                 <label className="chatting-label-style1" onClick={handleCloseChat}><b>닫기</b></label>
@@ -239,13 +266,14 @@ function Chatting() {
 
                                 <div>
                                 
-                                {(
-                                        <div style={{overflowY: "auto", marginRight: "10px"}}>
+                                {(// style={{overflowY: "auto", marginRight: "10px"}}
+                                        <div>
                                         {chatData.map(rowData => (
                                         <div key={rowData.id}
                                             onClick={() => {
-                                              handleShowChatRoom();
                                               selectRoomId(rowData.id, rowData.user_publisher_id, rowData.user_appliance_id);
+                                              handleShowChatRoom();
+                                              getChatMessage(rowData.id);
                                             }}
                                             className="chatting-content-box">
                                               <div style={{marginLeft: "25px", marginTop: "20px"}}>
@@ -284,9 +312,18 @@ function Chatting() {
                                                           <b>{rowData.content}</b>
                                                           
                                                       </div>
-                                                      <span className="chatting-date-style">
+                                                      <span className={`chatting-date-style ${getMessage(rowData.receiver) === true ? "chatting-date-left" : "chatting-date-right"}`}>
+                                                          {getMessage(rowData.receiver) === false ? (
+                                                            <span className={`${getMessageRead(rowData.read) === false ? "chatting-read-style1" : "chatting-read-style"}`}>
+                                                              {getMessageRead(rowData.read) === false ? 1 : ""}
+                                                            </span>
+                                                          ) : null}
                                                           {(rowData.date)}
-                                                          
+                                                          {getMessage(rowData.receiver) === true ? (
+                                                            <span className={`${getMessageRead(rowData.read) === false ? "chatting-read-style" : "chatting-read-style1"}`}>
+                                                              {getMessageRead(rowData.read) === false ? 1 : ""}
+                                                            </span>
+                                                          ) : null}
                                                         </span>
 
                                                         

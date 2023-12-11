@@ -106,6 +106,10 @@ const Damnstory = () => {
     setPosts(updatedPosts);
   };
 
+  if (posts === null) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="damnstorywhole">
       <Header />

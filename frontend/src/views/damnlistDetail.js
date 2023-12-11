@@ -181,9 +181,9 @@ const DamnlistDetail = () => {
         console.log("success"); // 얘는 맨 처음에만 연결
         subscribe(); // 구독 ..
       },
-      // connectHeaders: { // 이 부분 새로 추가
-      //   Authorization: "Bearer " + sessionToken,
-      // },
+      connectHeaders: { // 이 부분 새로 추가
+        Authorization: "Bearer " + sessionToken,
+      },
     });
     client.current.activate();
   };
@@ -230,7 +230,20 @@ const DamnlistDetail = () => {
     // 보내기 버튼 눌렀을 때 publish
     event.preventDefault();
 
-    publish(chat); // 채팅 보내기 누르면 실행
+    if (chat === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "경고",
+        text: "메세지를 입력해주세요.",
+        showCancelButton: false,
+        confirmButtonText: "확인",
+        width: 800,
+        height: 100,
+    }).then((res) => {
+    });
+    } else {
+      publish(chat);  // 채팅 보내기 누르면 실행
+    }
 
     console.log("chta:: ", chat);
 
